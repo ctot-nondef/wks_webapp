@@ -1,0 +1,87 @@
+<div class="pagewrapper" layout="column" layout-align="start start">
+<div layout="row" layout-align="center start" layout-wrap>
+	<div class="pagecover" layout="column" flex="noshrink" layout-align="start start">
+		<div>
+			<img style="width: calc(100% - 10px);" src="{{'http://opacbasis.w07adlib1.arz.oeaw.ac.at/wwwopac.ashx?command=getcontent&server=images&value='+Model.SingleRecord['reproduction.reference'][0]+'&width=1000&height=200&scalemode=fill&fillmode=center&imageformat=jpg'}}">
+			<h2 class="md-display-1" style="color: #ffffff; position: relative; top: -40px; left: 10px;">{{Model.SingleRecord.title[0]}}</h2>
+		</div>
+	</div>
+	<div class="card subcard" layout="row" flex="noshrink" layout-align="start start">
+		<div style="width: 100%;" layout-padding>
+		    <md-list class="md-dense" flex>
+				<md-list-item class="vspinentry">
+				  	<h3 class="md-title" style="width:40%; padding-right: 15px;text-align: right;">First Line starts: </h3>
+				  <p style="width: 60%; text-align: justify;">{{Model.SingleRecord['Inscription.FirstLineStartsWith'][0].value[0]}}</p>
+				  <md-divider></md-divider>
+				</md-list-item>
+				<md-list-item class="vspinentry">
+				  	<h3 class="md-title" style="width:40%;padding-right: 15px;text-align: right;">Bustrophedon: </h3>
+				  <p style="width: 60%; text-align: justify;">{{Model.SingleRecord['Inscription.Bustrophedon'][0].value[0]}}</p>
+				  <md-divider></md-divider>
+				</md-list-item>
+				<md-list-item class="vspinentry">
+				  	<h3 class="md-title" style="width:40%;padding-right: 15px;text-align: right;">Quality: </h3>
+				  <p style="width: 60%; text-align: justify;">{{Model.SingleRecord['Inscription.Quality'][0].value[0]}}</p>
+				  <md-divider></md-divider>
+				</md-list-item>
+				<md-list-item class="vspinentry">
+				  	<h3 class="md-title" style="width:40%;padding-right: 15px;text-align: right;">Language: </h3>
+				  <p style="width: 60%; text-align: justify;">{{Model.SingleRecord['inscription.language'][0]}}</p>
+				  <md-divider></md-divider>
+				</md-list-item>
+				<md-list-item class="vspinentry">
+				  	<h3 class="md-title" style="width:40%;padding-right: 15px;text-align: right;">Period: </h3>
+				  <p style="width: 60%; text-align: justify;">{{Model.SingleRecord['period_enum'][0].value[0]}}</p>
+				  <md-divider></md-divider>
+				</md-list-item>
+				<md-list-item class="vspinentry">
+				  	<h3 class="md-title" style="width:40%;padding-right: 15px;text-align: right;">Site: </h3>
+				  <p style="width: 60%; text-align: justify;">{{Model.SingleRecord['production.place'][0]}}</p>
+				  <md-divider></md-divider>
+				</md-list-item>				
+			</md-list>	    
+		</div>
+	</div>
+	<md-whiteframe class="md-whiteframe-3dp card subcard" layout="column" flex="noshrink" layout-align="start start">
+	    <md-content layout-padding>
+	      <div>
+	        <h3 class="md-title">Geoinformation goes here</h3>
+	      </div>
+	    </md-content>
+  	</md-whiteframe>
+	<div class="card maincard" layout="row" flex="noshrink" layout-align="start start">
+		<div style="width: 100%;" layout-padding>
+			<h3 class="md-title">Available Digital Objects</h3>
+		    <md-list flex>
+		      <md-list-item class="vspinentry" ng-repeat="line in Model.SingleRecord['reproduction.reference.lref']" ui-sref="gl.fullImage({imgID: '{{Model.SingleRecord['reproduction.reference'][$index]}}'})" >
+		      	<img ng-src="{{'http://opacbasis.w07adlib1.arz.oeaw.ac.at/wwwopac.ashx?command=getcontent&server=images&value=' + Model.SingleRecord['reproduction.reference'][$index] + '&width=200&height=200&scalemode=fill&fillmode=center&imageformat=jpg'}}" class="md-avatar" alt="{{Model.SingleRecord['reproduction.reference.notes'][$index]}}" />
+		        <p style="width: 20%;">{{Model.SingleRecord['reproduction.notes'][$index]}}</p>
+		        <p style="width: 20%;">{{Model.SingleRecord['reproduction.reference'][$index]}}</p>
+		          <md-divider></md-divider>
+		      </md-list-item>
+		      <md-list-item class="vspinentry" ng-repeat="line in Model.SingleRecord['object_number']" ui-sref="gl.scan({scanID: '{{Model.SingleRecord['object_number'][$index]}}'})">
+		      	<img ng-src="{{'http://opacbasis.w07adlib1.arz.oeaw.ac.at/wwwopac.ashx?command=getcontent&server=images&value=' + Model.SingleRecord['reproduction.reference'][0] + '&width=200&height=200&scalemode=fill&fillmode=center&imageformat=jpg'}}" class="md-avatar" alt="{{Model.SingleRecord['reproduction.reference'][0]}}" />		     
+		        <p style="width: 20%;">3D - Scan</p>
+		        <p style="width: 20%;">{{line}}</p>
+		          <md-divider></md-divider>
+		      </md-list-item>		      
+		    </md-list>
+		</div>
+	</div>  	
+	<div class="card maincard" layout="row" flex="noshrink" layout-align="start start">
+		<div style="width: 100%;" layout-padding>
+		    <md-list flex>
+		      <md-list-item class="line vspinentry" style="margin-top: 0px;">
+		          <h3 class="md-title" style="width: 50%; text-align: justify; padding-right: 15px;">Transliteration</h3>
+		          <h3 class="md-title" style="width: 50%; text-align: justify; padding-right: 15px;">Translation</h3>
+		          <md-divider></md-divider>
+		      </md-list-item>
+		      <md-list-item class="line vspinentry" style="margin-top: 0px;" ng-repeat="line in Model.SingleRecord['inscription.transliteration']" >
+		          <p style="width: 50%; text-align: justify; padding-right: 15px;">{{line}}</p>
+		          <p style="width: 50%; text-align: justify;">{{Model.SingleRecord['inscription.translation'][$index]}}</p>
+		          <md-divider></md-divider>
+		      </md-list-item>
+		    </md-list>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,484 @@
+/******** App-Wide Fonts *********/
+@font-face{font-family:'Brandonbld';src:url('Brandon_bldWeb.eot');src:url('Brandon_bldWeb.woff') format('woff')}
+
+/******** base styles ***********/
+body {
+  
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Brandonbld',sans-serif;
+  margin: 0px;
+}
+
+
+
+/******** navigation elements *********/
+md-sidenav {
+  max-width: 100%!important;
+  width: 100%!important;
+  position: fixed!important;
+}
+
+md-backdrop {
+  position: fixed!important;
+}
+
+#quickmenu {
+  top: calc(100vh / 3);
+  left: 0px;
+  position: absolute;
+  width: 100px;
+}
+
+#caption {
+  position: absolute;
+  bottom: 150px;
+  left: 0px;
+  width: 100px;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+#logos {
+  position: absolute;
+  bottom: 20px;
+  left: 0px;
+  width: 100px;
+}
+
+md-icon.navicon {
+  color: #ffffff!important;
+  font-size: 30px;
+  width: 30px;
+  margin: 20px;
+  top: 0px;
+  cursor: pointer;
+}
+
+md-icon.panelicon {
+  color: #0D47A1!important;
+  font-size: 45px;
+  margin-right: 25px;
+  height: 50px;
+}
+
+md-icon.menuicon {
+  font-size: 50px;
+  width: 30px;
+  margin: 20px;
+  top: 0px;
+  line-height: 5px;
+  color: #0D47A1!important;
+}
+
+#closeicon {
+  display: none;
+}
+
+.open #quickmenu, .open #menuicon{
+  display: none;
+}
+
+.open #closeicon {
+  display: block;
+}
+
+.viewmenu {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+}
+
+/******** layout elements - splashpage *********/
+.splashtile {
+  margin: 8px;
+  padding: 8px;
+  height: 250px;
+  width: 220px;
+}
+.splashtext {
+  height: 80px;
+  overflow: hidden;
+}
+.splashhead {
+  height: 20px;
+  overflow: hidden;
+}
+
+.tile {
+  margin: 8px;
+  padding: 8px;
+  height: 220px;
+  width: 220px;
+}
+
+}
+
+md-icon.menuicon {
+  color: #000000!important;
+  font-size: 50px;
+  width: 30px;
+  margin: 20px;
+  top: 0px;
+  line-height: 5px;
+  color: #0D47A1!important;
+}
+
+#closeicon {
+  display: none;
+}
+
+.open #quickmenu, .open #menuicon{
+  display: none;
+}
+
+.open #closeicon {
+  display: block;
+}
+
+/******** layout elements - splashpage *********/
+.splashtile {
+  margin: 8px;
+  padding: 8px;
+  height: 250px;
+  width: 220px;
+}
+.splashtext {
+  height: 80px;
+  overflow: hidden;
+}
+.splashhead {
+  height: 20px;
+  overflow: hidden;
+}
+
+.tile {
+  margin: 8px;
+  padding: 8px;
+  height: 220px;
+  width: 220px;
+}
+
+/******** layout elements - singleRecord page *********/
+.projecttile {
+  width: 320px;
+  padding: 0px;
+}
+
+.line {
+  padding-top: 15px!important;
+  padding-bottom: 5px!important; 
+}
+
+/******** spinentry animation class - to be replaced by ngAnimate + transitions? *********/
+.spinentry{
+  -webkit-animation: spinentry 0.4s forwards; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: spinentry 0.4s forwards; /* Firefox < 16 */
+  -ms-animation: spinentry 0.4s forwards; /* Internet Explorer */
+  -o-animation: spinentry 0.4s forwards; /* Opera < 12.1 */
+  animation: spinentry 0.4s forwards;
+  transform: rotateY(90deg); /* setting initial value to animation startpoint - FF bugfix */
+}
+
+@keyframes spinentry {
+    from { transform: rotateY(90deg); }
+    to   { transform: rotateY(0deg);}
+}
+
+/* Firefox < 16 */
+@-moz-keyframes spinentry {
+    from { transform: rotateY(90deg);}
+    to   { transform: rotateY(0deg);}
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes spinentry {
+    from { transform: rotateY(90deg);}
+    to   { transform: rotateY(0deg);}
+}
+
+/* Internet Explorer */
+@-ms-keyframes spinentry {
+    from { transform: rotateY(90deg);}
+    to   { transform: rotateY(0deg);}
+}
+
+/* Opera < 12.1 */
+@-o-keyframes spinentry {
+    from { transform: rotateY(90deg);}
+    to   { transform: rotateY(0deg);}
+}
+
+/******** spinentry animation class - to be replaced by ngAnimate + transitions? *********/
+.vspinentry{
+  -webkit-animation: vspinentry 0.4s forwards; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: vspinentry 0.4s forwards; /* Firefox < 16 */
+  -ms-animation: vspinentry 0.4s forwards; /* Internet Explorer */
+  -o-animation: vspinentry 0.4s forwards; /* Opera < 12.1 */
+  animation: vspinentry 0.4s forwards;
+  transform: rotateX(90deg); /* setting initial value to animation startpoint - FF bugfix */
+}
+
+@keyframes vspinentry {
+    from { transform: rotateX(90deg); }
+    to   { transform: rotateX(0deg);}
+}
+
+/* Firefox < 16 */
+@-moz-keyframes vspinentry {
+    from { transform: rotateX(90deg);}
+    to   { transform: rotateX(0deg);}
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes vspinentry {
+    from { transform: rotateX(90deg);}
+    to   { transform: rotateX(0deg);}
+}
+
+/* Internet Explorer */
+@-ms-keyframes vspinentry {
+    from { transform: rotateX(90deg);}
+    to   { transform: rotateX(0deg);}
+}
+
+/* Opera < 12.1 */
+@-o-keyframes vspinentry {
+    from { transform: rotateX(90deg);}
+    to   { transform: rotateX(0deg);}
+}
+
+/******** layout elements - knowmore page *********/
+ md-grid-list {
+  margin: 8px; }
+ .gray {
+  background: #f5f5f5; }
+ .green {
+  background: #b9f6ca; }
+ .yellow {
+  background: #ffff8d; }
+ .blue {
+  background: #84ffff; }
+ .purple {
+  background: #b388ff; }
+ .red {
+  background: #ff8a80; }
+ md-grid-tile {
+  transition: all 200ms ease-out; 
+}
+
+/******** layout elements - result page *********/
+
+.squeezeicon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+/******** Containers *********/
+#sidebar{
+  width: 100px;
+  height: 100%;
+  background-color: #0D47A1;
+  top:0px;
+  position: fixed!important;
+  z-index: 1000;
+  left: 0px;
+}
+
+.ccontainer {
+  border: 15px;
+}
+
+#menucontainer {
+  left:100px;
+  height: 100vh;
+  max-width: 800px;
+  margin: auto;
+  /*background-color: #1565C0;*/
+  /*color: #ffffff;*/
+}
+
+.navcontainer {
+  width: 100%;
+  height: 100%;
+  left: 100px;
+  position: absolute;
+}
+
+.pointcontainer {
+  min-width: 330px;
+  display: flex;
+}
+
+md-table-container {
+  width:100%;
+}
+
+.pagewrapper {
+}
+
+/******** spinentry animation class - to be replaced by ngAnimate + transitions? *********/
+.spinentry{
+  -webkit-animation: spinentry 0.4s forwards; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: spinentry 0.4s forwards; /* Firefox < 16 */
+  -ms-animation: spinentry 0.4s forwards; /* Internet Explorer */
+  -o-animation: spinentry 0.4s forwards; /* Opera < 12.1 */
+  animation: spinentry 0.4s forwards;
+  transform: rotateY(90deg); /* setting initial value to animation startpoint - FF bugfix */
+}
+
+@keyframes spinentry {
+    from { transform: rotateY(90deg); }
+    to   { transform: rotateY(0deg);}
+}
+
+/* Firefox < 16 */
+@-moz-keyframes spinentry {
+    from { transform: rotateY(90deg);}
+    to   { transform: rotateY(0deg);}
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes spinentry {
+    from { transform: rotateY(90deg);}
+    to   { transform: rotateY(0deg);}
+}
+
+/* Internet Explorer */
+@-ms-keyframes spinentry {
+    from { transform: rotateY(90deg);}
+    to   { transform: rotateY(0deg);}
+}
+
+/* Opera < 12.1 */
+@-o-keyframes spinentry {
+    from { transform: rotateY(90deg);}
+    to   { transform: rotateY(0deg);}
+}
+
+
+/******** layout elements - knowmore page *********/
+ md-grid-list {
+  margin: 8px; }
+ .gray {
+  background: #f5f5f5; }
+ .green {
+  background: #b9f6ca; }
+ .yellow {
+  background: #ffff8d; }
+ .blue {
+  background: #84ffff; }
+ .purple {
+  background: #b388ff; }
+ .red {
+  background: #ff8a80; }
+ md-grid-tile {
+  transition: all 200ms ease-out; 
+}
+
+/******** Containers *********/
+#sidebar{
+  width: 100px;
+  height: 100%;
+  background-color: #0D47A1;
+  top:0px;
+  position: fixed!important;
+  z-index: 1000;
+  left: 0px;
+}
+
+.ccontainer {
+  border: 15px;
+}
+
+#menucontainer {
+  left:100px;
+  height: 100vh;
+  max-width: 800px;
+  margin: auto;
+  /*background-color: #1565C0;*/
+  /*color: #ffffff;*/
+}
+
+.navcontainer {
+  width: 100%;
+  height: 100%;
+  left: 100px;
+  position: absolute;
+}
+
+.pointcontainer {
+  min-width: 330px;
+  display: flex;
+}
+
+.pagewrapper {
+  width: 100%;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.card {
+  margin: 5px;
+
+}
+
+.maincard {
+  width: 95%;
+}
+
+.pagecover {
+  width: 100%
+}
+
+.subcard {
+  width: 310px;
+  flex-grow: 1;
+  flex-shrink: 1;
+  min-height: 400px;
+  max-height: calc(100% - 20px);
+}
+
+@media (min-width: 1280px) {
+
+}
+
+@media (max-width: 1279px) {
+
+}
+
+@media (min-width: 960px) {
+  .ccontainer, .navcontainer {
+    width: calc(100% - 100px);
+    height: 100%;
+  }
+  .ncontainer {
+    width: 100px;
+    height:100%;
+  }
+}
+@media (max-width: 959px) {
+  #sidebar {
+    display: none;
+  }
+  .ccontainer, .navcontainer {
+    left: 0px;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@media (min-width: 600px) {
+
+}
+@media (max-width: 599px) {
+
+}
+
+@media (max-height: 750px) {
+  #quickmenu {
+    display: none;
+  }
+}

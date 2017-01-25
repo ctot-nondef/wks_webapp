@@ -1,0 +1,15 @@
+<ifModule mod_rewrite.c>
+  RewriteEngine On
+
+  # allow social media crawlers to work by redirecting them to a server-rendered static version on the page
+  RewriteCond %{HTTP_USER_AGENT} (^facebookexternalhit) [OR]
+  RewriteCond %{HTTP_USER_AGENT} (baiduspider|facebookexternalhit|twitterbot|rogerbot|linkedinbot|embedly|quora\ link\ preview|showyoubot|outbrain|pinterest|Slackbot|Slack-ImgProxy|Slackbot-LinkExpanding|Site\ Analyzer|SiteAnalyzerBot|Viber|Whatsapp|Telegram) [OR]
+  RewriteCond %{HTTP_USER_AGENT} (Twitterbot|Pinterest|Google.*snippet|Google)
+  RewriteRule ^(.*)/gl/(.*)/(.*)$ http://glaser.acdh.oeaw.ac.at/snap.php?lang=$1&type=$2id=$3 [P]
+
+  # Required to allow direct-linking of pages so they can be processed by Angular
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_URI} !index
+  RewriteRule (.*) index.html [L]
+</ifModule>

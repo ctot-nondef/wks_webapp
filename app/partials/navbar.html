@@ -1,0 +1,27 @@
+<div id="sidebar" layout="column" layout-align="start center" id="outersidebar">
+  <md-icon id="menuicon" class="navicon" aria-label="Open Menu" ng-click="toggleLeft()">toc</md-icon>
+  <md-icon id="closeicon" class="navicon" aria-label="Open Menu" ng-click="toggleLeft()">skip_previous</md-icon>
+  <div id="quickmenu" layout="column" layout-align="start center">
+    <md-icon class="navicon" ng-repeat="Icon in Model.Menu" aria-label="{{Icon.arialabel}}" ui-sref="{{Icon.startpage}}">{{Icon.mdicon}}</md-icon>
+  </div>
+  <div id="caption" layout="column" layout-align="start center" ui-sref="start">
+    <h4>Wiener</h4>
+    <h4>Kunst-</h4>
+    <h4>sammlungen</h4>
+  </div>
+  <div id="logos" layout="column" layout-align="start center">
+    <img src="media/Uni_Logo_2016_weiss.png" width="60px">
+    <br>
+    <img src="media/OEAW_Logo_ACDH_w.png" width="60px">
+  </div>
+</div>
+<md-sidenav class="md-sidenav-left" md-component-id="sidenav" md-whiteframe="4">
+  <div class="navcontainer" layout="column" layout-align="start center">
+    <div id="menucontainer" layout="row" layout-align="space-between center" ng-click="toggleLeft()" layout-wrap>
+      <div class="pointcontainer" ng-repeat="Icon in Model.Menu" ui-sref="{{Icon.startpage}}">
+        <md-icon class="menuicon" aria-label="{{Icon.arialabel}}" ui-sref="{{Icon.startpage}}">{{Icon.mdicon}}</md-icon>
+        <h2 class="md-display-1">{{Icon.caption}}</h2>
+      </div>
+    </div>
+  </div>
+</md-sidenav>

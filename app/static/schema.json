@@ -1,0 +1,355 @@
+[
+  {
+  	"title": "wks_inventory",
+  	"type": "object",
+  	"properties": {
+      "title":{
+        "type": "String",
+        "required": true
+      },
+      "publisher":{
+          "type": "ObjectID"
+      },
+      "place":{
+        "type": "ObjectID"
+      },
+      "pagecount":{
+        "type": "Number",
+        "min": 0
+      },
+      "startdate":{
+        "type": "Date"
+      },
+      "enddate":{
+        "type": "Date"
+      },
+      "images":[{
+          "name":{
+            "type":"String",
+            "required":true
+          },
+          "reference":{
+            "type":"ObjectID",
+            "required":true
+          }
+      }],
+      "references":[{
+        "type":"ObjectID"
+      }],
+      "comments":[{
+          "type":"String"
+      }]
+  	}
+  },
+  {
+  	"title": "wks_entry",
+  	"type": "object",
+  	"properties": {
+      "title":{
+        "type":"String",
+        "required": true
+      },
+      "inventory":{
+        "type":"ObjectID",
+        "required": true
+      },
+      "representsobject":{
+        "type":"ObjectID"
+      },
+      "artist":{
+        "type":"ObjectID"
+      },
+      "originaltitle":{
+        "type":"String"
+      },
+      "transscription":{
+        "type":"String"
+      },
+      "material":{
+        "type":"ObjectID"
+      },
+      "dimensions": {
+        "type": "object",
+        "properties": {
+          "length": {
+            "type": "number"
+          },
+          "width": {
+            "type": "number"
+          },
+          "height": {
+            "type": "number"
+          }
+        }
+      },
+      "date": {
+        "type": "Date"
+      },
+      "provenance": {
+        "type": "object",
+        "properties": {
+          "person": {
+            "type": "ObjectID"
+          },
+          "date": {
+            "type": "Date"
+          },
+          "price": {
+            "type": "object",
+            "properties": {
+              "amount":{
+                "type":"Number"
+              },
+              "currency":{
+                "type":"ObjectID"
+              }
+            }
+          }
+        }
+      },
+      "classification":{
+        "type":"object",
+        "properties":{
+          "artform":"ObjectID",
+          "theme":"ObjectID",
+          "date":"Date"
+        }
+      },
+      "images":[{
+          "name":{
+            "type":"String",
+            "required":true
+          },
+          "reference":{
+            "type":"ObjectID",
+            "required":true
+          }
+      }],
+      "references":[{
+        "type":"ObjectID"
+      }],
+      "comments":[{
+          "type":"String"
+      }]
+    }
+  },
+  {
+  	"title": "wks_collection",
+  	"type": "object",
+  	"properties": {
+      "name":{
+        "type": "String",
+        "required": true
+      },
+      "collector": {
+        "type": "ObjectID"
+      },
+      "references":[{
+        "type":"ObjectID"
+      }],
+      "comments":[{
+          "type":"String"
+      }]
+  	}
+  },
+  {
+  	"title": "wks_object",
+  	"type": "object",
+  	"properties": {
+      "title":{
+        "type":"String",
+        "required": true
+      },
+      "ccollection":{
+        "type":"ObjectID",
+        "required": true
+      },
+      "institution":{
+        "type":"ObjectID"
+      },
+      "artist":{
+        "type":"ObjectID"
+      },
+      "originaltitle":{
+        "type":"String"
+      },
+      "transscription":{
+        "type":"String"
+      },
+      "material":{
+        "type":"ObjectID"
+      },
+      "dimensions": {
+        "type": "object",
+        "properties": {
+          "length": {
+            "type": "number"
+          },
+          "width": {
+            "type": "number"
+          },
+          "height": {
+            "type": "number"
+          },
+          "comments":{
+            "type":"String"
+          }
+        }
+      },
+      "date": {
+        "type": "Date"
+      },
+      "provenance": {
+        "type": "object",
+        "properties": {
+          "person": {
+            "type": "ObjectID"
+          },
+          "date": {
+            "type": "Date"
+          },
+          "price": {
+            "type": "object",
+            "properties": {
+              "amount":{
+                "type":"Number"
+              },
+              "currency":{
+                "type":"ObjectID"
+              }
+            }
+          }
+        }
+      },
+      "classification":{
+        "type":"object",
+        "properties":{
+          "artform":"ObjectID",
+          "theme":"ObjectID",
+          "date":"Date"
+        }
+      },
+      "images":[{
+          "name":{
+            "type":"String",
+            "required":true
+          },
+          "reference":{
+            "type":"ObjectID",
+            "required":true
+          }
+      }],
+      "references":[{
+        "type":"ObjectID"
+      }],
+      "comments":[{
+          "type":"String"
+      }]
+  	}
+  },
+  {
+  	"title": "wks_material",
+  	"type": "object",
+  	"properties": {
+      "name":{
+        "type": "String",
+        "required": true
+      },
+      "ID": {
+        "type": "String",
+        "required": true
+      }
+  	}
+  },
+  {
+  	"title": "wks_person",
+  	"type": "object",
+  	"properties": {
+      "lastname":{
+        "type": "String",
+        "required": true
+      },
+      "firstname":{
+        "type": "String",
+        "required": true
+      },
+      "ID": {
+        "type": "Object",
+        "properties":{
+            "key":"String",
+            "reference":"String"
+        }
+      }
+  	}
+  },
+  {
+  	"title": "wks_reference",
+  	"type": "object",
+  	"properties": {
+      "name":{
+        "type": "String",
+        "required": true
+      },
+      "ISBN": {
+        "type": "String"
+      },
+      "Page": {
+        "type": "Number"
+      }
+  	}
+  },
+  {
+  	"title": "wks_institution",
+  	"type": "object",
+    "properties": {
+      "name":{
+        "type": "String",
+        "required": true
+      },
+      "location":{
+        "type": "ObjectID"
+      },
+      "ID": {
+        "type": "Object",
+        "properties":{
+            "key":"String",
+            "reference":"String"
+        }
+      }
+  	}
+  },
+  {
+  	"title": "wks_place",
+  	"type": "object",
+    "properties": {
+      "name":{
+        "type": "String",
+        "required": true
+      },
+      "ID": {
+        "type": "Object",
+        "properties":{
+            "key":"String",
+            "reference":"String"
+        }
+      }
+  	}
+  },
+  {
+  	"title": "wks_currency",
+  	"type": "object",
+    "properties": {
+      "name":{
+        "type": "String",
+        "required": true
+      },
+      "ID": {
+        "type": "Object",
+        "properties":{
+            "key":"String",
+            "reference":"String"
+        }
+      }
+  	}
+  }
+]
