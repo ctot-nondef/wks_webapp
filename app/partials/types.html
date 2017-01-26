@@ -1,75 +1,28 @@
-<div ng-if="uiview.currentView=='grid'">
-	<h2 class="md-display-1">Search Results</h2>
-	<md-table-pagination md-limit="Model.Pagesize" md-limit-options="[10, 20, 40, 100]" md-page="Model.Page" md-total="{{Model.Total}}" md-on-paginate="getPage" md-page-select></md-table-pagination>
-	<md-grid-list
-	    md-cols="2" md-cols-sm="3" md-cols-md="5" md-cols-gt-md="8"
-	    md-row-height-gt-md="1:1" md-row-height="1:1"
-	    md-gutter="8px" md-gutter-gt-sm="4px" layout="row" layout-align="center start" ng-animate="'spinentry'">
-		<md-grid-tile ng-repeat="squeeze in Model.Result"
-					ui-sref="gl.singleRecord({refID: {{squeeze.priref[0]}}})"
-		            md-rowspan="1"
-		            md-colspan="1"
-		            md-colspan-sm="1"
-		            md-colspan-xs="1"
-		            class="spinentry" ng-style="dynStyle" ng-init="dynStyle={'animation-delay':$index/50+'s','overflow':'hidden'}">
-		  	<img ng-src="{{'http://opacbasis.w07adlib1.arz.oeaw.ac.at/wwwopac.ashx?command=getcontent&server=images&value='+squeeze['reproduction.reference'][0]+'&width=200&height=200&scalemode=fill&fillmode=center&imageformat=jpg'}}" style="width:100%;" />
-		  	<md-grid-tile-footer layout="column" layout-align="center center">
-		  		<h5 >{{squeeze.title[0]}}</h5>
-		  	</md-grid-tile-footer>
-		</md-grid-tile>
-	</md-grid-list>
-</div>
-<div ng-if="uiview.currentView=='list'" class="pagewrapper" layout="column" layout-align="start start" layout-padding>
-	<h2 class="md-display-1">Search Results</h2>
+
+<div class="pagewrapper" layout="column" layout-align="start start" layout-padding>
+	<h2 class="md-display-1">Data Types</h2>
 	<md-table-pagination md-limit="Model.Pagesize" md-limit-options="[10, 20, 40, 100]" md-page="Model.Page" md-total="{{Model.Total}}" md-on-paginate="getPage" md-page-select></md-table-pagination>
 	<md-table-container>
-	  <table md-table md-row-select multiple ng-model="selected" md-progress="promise">
+	  <table md-table ng-model="selected" md-progress="promise">
 	    <thead md-head md-order="" md-on-reorder="getNewOrder">
 	      <tr md-row>
-	      	<th md-column><span></span></th>
 	        <th md-column md-order-by="title"><span>Title</span></th>
-	        <th md-column md-order-by="inscription.language"><span>Language</span></th>
-	        <th md-column md-order-by="production.place"><span>Site</span></th>
-	        <th md-column md-order-by=""><span>Actions</span></th>
+	        <th md-column><span>UID</span></th>
+	        <th md-column><span>Created</span></th>
 	      </tr>
 	    </thead>
 	    <tbody md-body>
 	      <tr md-row
-	      		md-select="squeeze"
-	      		md-select-id="{{squeeze.priref[0]}}"
-	      		ng-repeat="squeeze in Model.Result"
-	      		ui-sref="gl.singleRecord({refID: {{squeeze.priref[0]}}})"
-	      		class="vspinentry" ng-style="dynStyle" ng-init="dynStyle={'animation-delay':$index/50+'s','overflow':'hidden'}" >
-			<td md-cell>
-				<img ng-src="{{'http://opacbasis.w07adlib1.arz.oeaw.ac.at/wwwopac.ashx?command=getcontent&server=images&value=' + squeeze['reproduction.reference'][0] + '&width=200&height=200&scalemode=fill&fillmode=center&imageformat=jpg'}}" class="squeezeicon" alt="{{squeeze['reproduction.reference'][0]}}" />
-			</td>
-	        <td md-cell>{{squeeze.title[0]}}</td>
-	        <td md-cell>{{squeeze['inscription.language'][0]}}</td>
-	        <td md-cell>{{squeeze['production.place'][0]}}</td>
-	        <td md-cell>{{squeeze['production.place'][0]}}</td>
+	      		md-select="schema"
+	      		md-select-id="{{schema.title}}"
+	      		ng-repeat="schema in schemas"
+	      		ui-sref="wks.singletype({id: '{{schema._id}}'})"
+	      		class="vspinentry" ng-style="dynStyle" ng-init="dynStyle={'animation-delay':$index/50+'s','overflow':'hidden'}">
+	        <td md-cell>{{schema.title}}</td>
+	        <td md-cell>{{schema._id}}</td>
+	        <td md-cell>{{}}</td>
 	      </tr>
 	    </tbody>
 	  </table>
 	</md-table-container>
-</div>
-<div class="viewmenu">
-	<md-fab-speed-dial ng-cloak md-open="uiview.menuOpen" md-direction="up" class="md-scale" ng-mouseenter="uiview.menuOpen=true" ng-mouseleave="uiview.menuOpen=false">
-		<md-fab-trigger >
-			<md-button aria-label="menu" class="md-fab md-warn">
-				<md-icon aria-label="{{Icon.arialabel}}">pageview</md-icon>
-			</md-button>
-		</md-fab-trigger>
-
-		<md-fab-actions>
-			<md-button aria-label="List" class="md-fab md-raised md-mini" ng-click="onGrid()">
-				<md-icon aria-label="{{Icon.arialabel}}">view_comfy</md-icon>
-			</md-button>
-			<md-button aria-label="List" class="md-fab md-raised md-mini" ng-click="onList()">
-				<md-icon aria-label="{{Icon.arialabel}}">view_list</md-icon>
-			</md-button>
-			<md-button aria-label="List" class="md-fab md-raised md-mini" ng-click="onMap()">
-				<md-icon aria-label="{{Icon.arialabel}}">map</md-icon>
-			</md-button>
-		</md-fab-actions>
-	</md-fab-speed-dial>
 </div>

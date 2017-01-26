@@ -56,7 +56,16 @@ function config($stateProvider, $urlRouterProvider, $locationProvider, $compileP
         views: {
             'content@': {
                 templateUrl: 'partials/types.html',
-                controller: 'WKSTypes'
+                controller: 'WKSTypeList'
+            }
+        }
+    })
+    .state('wks.singletype',{
+        url: '/stype/:id',
+        views: {
+            'content@': {
+                templateUrl: 'partials/stype.html',
+                controller: 'WKSSingleType'
             }
         }
     })
@@ -71,4 +80,7 @@ function config($stateProvider, $urlRouterProvider, $locationProvider, $compileP
         .accentPalette('red', {
           'default': '800'
         });
+    $mdThemingProvider.theme('docs-dark')
+     .primaryPalette('yellow')
+     .dark();
 }

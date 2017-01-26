@@ -8,10 +8,12 @@
         "required": true
       },
       "publisher":{
-          "type": "ObjectID"
+          "type": "ObjectID",
+          "ref":"wks_person"
       },
       "place":{
-        "type": "ObjectID"
+        "type": "ObjectID",
+        "ref":"wks_place"
       },
       "pagecount":{
         "type": "Number",
@@ -30,11 +32,13 @@
           },
           "reference":{
             "type":"ObjectID",
-            "required":true
+            "required":true,
+            "ref":"wks_reference"
           }
       }],
       "references":[{
-        "type":"ObjectID"
+        "type":"ObjectID",
+        "ref":"wks_reference"
       }],
       "comments":[{
           "type":"String"
@@ -51,13 +55,16 @@
       },
       "inventory":{
         "type":"ObjectID",
-        "required": true
+        "required": true,
+        "ref":"wks_inventory"
       },
       "representsobject":{
-        "type":"ObjectID"
+        "type":"ObjectID",
+        "ref":"wks_object"
       },
       "artist":{
-        "type":"ObjectID"
+        "type":"ObjectID",
+        "ref":"wks_person"
       },
       "originaltitle":{
         "type":"String"
@@ -66,7 +73,8 @@
         "type":"String"
       },
       "material":{
-        "type":"ObjectID"
+        "type":"ObjectID",
+        "ref":"wks_material"
       },
       "dimensions": {
         "type": "object",
@@ -89,7 +97,8 @@
         "type": "object",
         "properties": {
           "person": {
-            "type": "ObjectID"
+            "type": "ObjectID",
+            "ref":"wks_person"
           },
           "date": {
             "type": "Date"
@@ -101,7 +110,8 @@
                 "type":"Number"
               },
               "currency":{
-                "type":"ObjectID"
+                "type":"ObjectID",
+                "ref":"wks_currency"
               }
             }
           }
@@ -110,8 +120,8 @@
       "classification":{
         "type":"object",
         "properties":{
-          "artform":"ObjectID",
-          "theme":"ObjectID",
+          "artform":[{"type":"ObjectID","ref":""}],
+          "theme":[{"type":"ObjectID","ref":""}],
           "date":"Date"
         }
       },
@@ -126,7 +136,8 @@
           }
       }],
       "references":[{
-        "type":"ObjectID"
+        "type":"ObjectID",
+        "ref":"wks_reference"
       }],
       "comments":[{
           "type":"String"
