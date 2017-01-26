@@ -1,0 +1,90 @@
+<div class="pagewrapper" layout="column" layout-align="start stretch" layout-padding>
+  <h2 class="md-display-1">Type Editor</h2>
+  <form name="userForm">
+    <md-content md-theme="docs-dark" layout-padding>
+      <div layout-gt-sm="row" >
+        <md-input-container  class="md-block" flex-gt-xs>
+          <label>Title</label>
+          <input ng-model="schema.title">
+        </md-input-container>
+        <md-input-container  class="md-block" flex-gt-xs>
+          <label>UID</label>
+          <input ng-model="schema._id" disabled>
+        </md-input-container>
+      </div>
+    </md-content>
+    <md-content layout-padding>
+      <div>
+          <div layout-gt-xs="column" ng-repeat="(prop, value) in schema.properties">
+            <h4>{{prop}}</h4>
+            <div layout="row">
+              <div ng-repeat="(propp, val) in value" flex-gt-xs >
+                <md-input-container class="md-block" ng-if="propp == 'type'">
+                  <label>{{propp}}</label>
+                  <md-select ng-model="value.type">
+                    <md-option value="String">
+                      String
+                    </md-option>
+                    <md-option value="ObjectID">
+                      ObjectID
+                    </md-option>
+                  </md-select>
+                </md-input-container>
+                <md-switch ng-model="value.required" ng-if="propp == 'required'">
+                  required: {{ value.required }}
+                </md-switch>
+                <md-input-container class="md-block" ng-if="propp == 'ref'">
+                  <label>{{propp}}</label>
+                  <md-select ng-model="value.ref">
+                    <md-option value="type1">
+                      type1
+                    </md-option>
+                    <md-option value="type2">
+                      type2
+                    </md-option>
+                  </md-select>
+                </md-input-container>
+                <md-input-container class="md-block">
+                  <label>{{propp}}</label>
+                  <input ng-model="val">
+                </md-input-container>
+              </div>
+            </div>
+          </div>
+          <div layout-gt-sm="row">
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>State</label>
+              <md-select ng-model="user.state">
+                <md-option ng-repeat="state in states" value="{{state.abbrev}}">
+                  {{state.abbrev}}
+                </md-option>
+              </md-select>
+            </md-input-container>
+
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Postal Code</label>
+              <input name="postalCode" ng-model="user.postalCode" placeholder="12345"
+                     required ng-pattern="/^[0-9]{5}$/" md-maxlength="5">
+
+              <div ng-messages="userForm.postalCode.$error" role="alert" multiple>
+                <div ng-message="required" class="my-message">You must supply a postal code.</div>
+                <div ng-message="pattern" class="my-message">That doesn't look like a valid postal
+                  code.
+                </div>
+                <div ng-message="md-maxlength" class="my-message">
+                  Don't use the long version silly...we don't need to be that specific...
+                </div>
+              </div>
+            </md-input-container>
+          </div>
+
+          <md-input-container class="md-block">
+            <label>Biography</label>
+            <textarea ng-model="user.biography" md-maxlength="150" rows="5" md-select-on-focus></textarea>
+          </md-input-container>
+
+
+      </div>
+    </md-content>
+  </form>
+</div>
