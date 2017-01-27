@@ -39,10 +39,16 @@ WKSControllers
     $scope.Model = {};
     $scope.uiview = {"menuOpen":false};
     $scope.isArray = angular.isArray;
+    $scope.arefs = [];
   //********* END OF DECLARATIVE PART **************************************
-    var Promise = mongorest.getDoc('wkstest','schemas',$stateParams.id);
-    Promise.then(function(res){
+    var SPromise = mongorest.getDoc('wkstest','schemas',$stateParams.id);
+    SPromise.then(function(res){
       $scope.schema = res.data;
-      console.log(res);
-    })
+      var TPromise = mongorest.getColl('wkstest','schemas');
+      TPromise.then(function(res){
+        res.data.forEach(function(t){
+          if(t.title!=$scope.schema.title) $scope.arefs.push(t.title);
+        });
+      });
+    });
 }])
