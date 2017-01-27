@@ -38,6 +38,7 @@ WKSControllers
   //********* DECLARATIVE PART *********************************************
     $scope.Model = {};
     $scope.uiview = {"menuOpen":false};
+    $scope.isArray = angular.isArray;
   //********* END OF DECLARATIVE PART **************************************
     var Promise = mongorest.getDoc('wkstest','schemas',$stateParams.id);
     Promise.then(function(res){

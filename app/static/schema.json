@@ -120,9 +120,9 @@
       "classification":{
         "type":"object",
         "properties":{
+          "creationdate":{"type":"Date"},
           "artform":[{"type":"ObjectID","ref":""}],
-          "theme":[{"type":"ObjectID","ref":""}],
-          "date":"Date"
+          "theme":[{"type":"ObjectID","ref":""}]
         }
       },
       "images":[{
@@ -235,9 +235,9 @@
       "classification":{
         "type":"object",
         "properties":{
-          "artform":"ObjectID",
-          "theme":"ObjectID",
-          "date":"Date"
+          "creationdate":{"type":"Date"},
+          "artform":[{"type":"ObjectID","ref":""}],
+          "theme":[{"type":"ObjectID","ref":""}],
         }
       },
       "images":[{

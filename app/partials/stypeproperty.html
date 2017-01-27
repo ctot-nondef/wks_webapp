@@ -1,0 +1,69 @@
+<h4>{{property}}</h4>
+<div layout="row" ng-if="value.type!='object'&&!isArray(value)">
+  <div ng-repeat="(property, value) in value" flex-gt-xs >
+    <ng-form name="propertyform">
+      <md-input-container class="md-block" ng-if="property == 'type'">
+        <label>{{property}}</label>
+        <md-select ng-model="value">
+          <md-option value="String">
+            String
+          </md-option>
+          <md-option value="ObjectID">
+            ObjectID
+          </md-option>
+        </md-select>
+      </md-input-container>
+      <md-switch ng-model="value" ng-if="property == 'required'">
+        required: {{ value }}
+      </md-switch>
+      <md-input-container class="md-block" ng-if="property == 'ref'">
+        <label>{{property}}</label>
+        <md-select ng-model="value">
+          <md-option value="type1">
+            type1
+          </md-option>
+          <md-option value="type2">
+            type2
+          </md-option>
+        </md-select>
+      </md-input-container>
+    </ng-form>
+  </div>
+</div>
+<div layout="row" ng-if="isArray(value)&&value[0].type">
+  <div ng-repeat="(property, value) in value[0]" flex-gt-xs >
+    <ng-form name="propertyform">
+      <md-input-container class="md-block" ng-if="property == 'type'">
+        <label>{{property}}</label>
+        <md-select ng-model="value">
+          <md-option value="String">
+            String
+          </md-option>
+          <md-option value="ObjectID">
+            ObjectID
+          </md-option>
+        </md-select>
+      </md-input-container>
+      <md-switch ng-model="value" ng-if="property == 'required'">
+        required: {{ value }}
+      </md-switch>
+      <md-input-container class="md-block" ng-if="property == 'ref'">
+        <label>{{property}}</label>
+        <md-select ng-model="value">
+          <md-option value="type1">
+            type1
+          </md-option>
+          <md-option value="type2">
+            type2
+          </md-option>
+        </md-select>
+      </md-input-container>
+    </ng-form>
+  </div>
+</div>
+<div ng-if="value.type=='object'">
+  <div layout="column" ng-repeat="(property, value) in value.properties" ng-include="'partials/stypeproperty.html'" class="md-padding" ></div>
+</div>
+<div ng-if="isArray(value)&&!value[0].type">
+  <div layout="column" ng-repeat="(property, value) in value[0]" ng-include="'partials/stypeproperty.html'" class="md-padding" ></div>
+</div>
