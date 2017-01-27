@@ -5,11 +5,8 @@
       <md-input-container class="md-block" ng-if="property == 'type'">
         <label>{{property}}</label>
         <md-select ng-model="value">
-          <md-option value="String">
-            String
-          </md-option>
-          <md-option value="ObjectID">
-            ObjectID
+          <md-option value="{{t}}" ng-repeat="t in atypes">
+            {{t}}
           </md-option>
         </md-select>
       </md-input-container>
@@ -33,11 +30,8 @@
       <md-input-container class="md-block" ng-if="property == 'type'">
         <label>{{property}}</label>
         <md-select ng-model="value">
-          <md-option value="String">
-            String
-          </md-option>
-          <md-option value="ObjectID">
-            ObjectID
+          <md-option value="{{t}}" ng-repeat="t in atypes">
+            {{t}}
           </md-option>
         </md-select>
       </md-input-container>
@@ -47,11 +41,8 @@
       <md-input-container class="md-block" ng-if="property == 'ref'">
         <label>{{property}}</label>
         <md-select ng-model="value">
-          <md-option value="type1">
-            type1
-          </md-option>
-          <md-option value="type2">
-            type2
+          <md-option value="{{t}}" ng-repeat="t in arefs">
+            {{t}}
           </md-option>
         </md-select>
       </md-input-container>

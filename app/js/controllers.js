@@ -1,5 +1,16 @@
 'use strict';
 
+var mongooseTypes =  [
+  'String',
+  'Number',
+  'Date',
+  'Buffer',
+  'Boolean',
+  'Mixed',
+  'ObjectID',
+  'Array'
+];
+
 /* Controllers */
 
 var WKSControllers = angular.module('WKSControllers', ['MongoDBservices','GeoNamesServices']);
@@ -40,6 +51,7 @@ WKSControllers
     $scope.uiview = {"menuOpen":false};
     $scope.isArray = angular.isArray;
     $scope.arefs = [];
+    $scope.atypes = mongooseTypes;
   //********* END OF DECLARATIVE PART **************************************
     var SPromise = mongorest.getDoc('wkstest','schemas',$stateParams.id);
     SPromise.then(function(res){
