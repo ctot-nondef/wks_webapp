@@ -48,6 +48,7 @@ WKSControllers
 .controller('WKSSingleType',['$scope','$http', '$state', '$stateParams', 'mongorest', function($scope, $http, $state, $stateParams, mongorest){
   //********* DECLARATIVE PART *********************************************
     $scope.Model = {};
+    $scope.tb = {};
     $scope.uiview = {"menuOpen":false};
     $scope.isArray = angular.isArray;
     $scope.arefs = [];
@@ -55,6 +56,9 @@ WKSControllers
   //********* END OF DECLARATIVE PART **************************************
     var SPromise = mongorest.getDoc('wkstest','schemas',$stateParams.id);
     SPromise.then(function(res){
+      for(var key in res.data.properties) {
+        $scope.checkProps(key,res);
+      }
       $scope.schema = res.data;
       var TPromise = mongorest.getColl('wkstest','schemas');
       TPromise.then(function(res){
@@ -63,4 +67,13 @@ WKSControllers
         });
       });
     });
+  //********* Helper Functions *********************************************
+    $scope.checkProps = function(key,res){
+      if(res.data.properties[key].type) {
+        $scope.tb[key] = {'open':false};
+      }
+      else {
+
+      }
+    };
 }])

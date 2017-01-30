@@ -1,8 +1,10 @@
 <h4>{{property}}</h4>
 <!-- if it's a simple property -->
 <div layout="row" ng-if="!isArray(value)&&value.type">
+  <div ng-include="'partials/typeproptoolbar.html'"></div>
   <div ng-repeat="(property, value) in value" flex-gt-xs >
     <ng-form name="propertyform">
+      <!-- type value -->
       <md-input-container class="md-block" ng-if="property == 'type'">
         <label>{{property}}</label>
         <md-select ng-model="value">
@@ -11,9 +13,11 @@
           </md-option>
         </md-select>
       </md-input-container>
+      <!-- required validator -->
       <md-switch ng-model="value" ng-if="property == 'required'">
         required: {{ value }}
       </md-switch>
+      <!-- ref validator -->
       <md-input-container class="md-block" ng-if="property == 'ref'">
         <label>{{property}}</label>
         <md-select ng-model="value">
@@ -22,11 +26,17 @@
           </md-option>
         </md-select>
       </md-input-container>
+      <!-- min / max validator -->
+      <!-- enum validator -->
+      <!-- match validator -->
+      <!-- maxlength validator -->
+      <!-- minlength validator -->
     </ng-form>
   </div>
 </div>
 <!-- if it's a repeatable property -->
 <div layout="row" ng-if="isArray(value)&&value[0].type">
+  <div ng-include="'partials/typeproptoolbar.html'"></div>
   <div ng-repeat="(property, value) in value[0]" flex-gt-xs >
     <ng-form name="propertyform">
       <md-input-container class="md-block" ng-if="property == 'type'">
