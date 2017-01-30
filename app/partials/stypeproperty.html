@@ -1,5 +1,6 @@
 <h4>{{property}}</h4>
-<div layout="row" ng-if="value.type!='object'&&!isArray(value)">
+<!-- if it's a simple property -->
+<div layout="row" ng-if="!isArray(value)&&value.type">
   <div ng-repeat="(property, value) in value" flex-gt-xs >
     <ng-form name="propertyform">
       <md-input-container class="md-block" ng-if="property == 'type'">
@@ -24,6 +25,7 @@
     </ng-form>
   </div>
 </div>
+<!-- if it's a repeatable property -->
 <div layout="row" ng-if="isArray(value)&&value[0].type">
   <div ng-repeat="(property, value) in value[0]" flex-gt-xs >
     <ng-form name="propertyform">
@@ -49,9 +51,11 @@
     </ng-form>
   </div>
 </div>
-<div ng-if="value.type=='object'">
-  <div layout="column" ng-repeat="(property, value) in value.properties" ng-include="'partials/stypeproperty.html'" class="md-padding" ></div>
+<!-- if it's a nested document property -->
+<div ng-if="!isArray(value)&&!value.type">
+  <div layout="column" ng-repeat="(property, value) in value" ng-include="'partials/stypeproperty.html'" class="md-padding" ></div>
 </div>
+<!-- if it's a repeatable nested document property -->
 <div ng-if="isArray(value)&&!value[0].type">
   <div layout="column" ng-repeat="(property, value) in value[0]" ng-include="'partials/stypeproperty.html'" class="md-padding" ></div>
 </div>
