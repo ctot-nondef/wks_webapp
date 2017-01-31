@@ -48,7 +48,7 @@ WKSControllers
 .controller('WKSSingleType',['$scope','$http', '$state', '$stateParams', 'mongorest', function($scope, $http, $state, $stateParams, mongorest){
   //********* DECLARATIVE PART *********************************************
     $scope.Model = {};
-    $scope.tb = {};
+
     $scope.uiview = {"menuOpen":false};
     $scope.isArray = angular.isArray;
     $scope.arefs = [];
@@ -57,7 +57,7 @@ WKSControllers
     var SPromise = mongorest.getDoc('wkstest','schemas',$stateParams.id);
     SPromise.then(function(res){
       for(var key in res.data.properties) {
-        $scope.checkProps(key,res);
+        $scope.checkProps(key,res.data.properties);
       }
       $scope.schema = res.data;
       var TPromise = mongorest.getColl('wkstest','schemas');
@@ -69,11 +69,24 @@ WKSControllers
     });
   //********* Helper Functions *********************************************
     $scope.checkProps = function(key,res){
-      if(res.data.properties[key].type) {
-        $scope.tb[key] = {'open':false};
+      //console.log(key, res);
+      if(res[key] && res[key].type) {
+        console.log('simple', key);
       }
-      else {
-
+      else if(res[key] && res[key][0] && res[key][0].type) {
+        console.log('repeatable', key);
+      }
+      else if(res[key] && !res[key][0]){
+        console.log('simple object', key);
+        for(var subkey in res[key]) {
+          $scope.checkProps(subkey, res[key][subkey]);
+        }
+      }
+      else if(res[key] && res[key][0]){
+        console.log('repeatable object', key);
+        for(var subkey in res[key][0]) {
+          $scope.checkProps(subkey, res[key][0][subkey]);
+        }
       }
     };
 }])
