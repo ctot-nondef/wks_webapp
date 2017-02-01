@@ -1,8 +1,14 @@
 <!-- if it's a simple property -->
-<div layout="column" ng-if="!isArray(value)&&value.type">
-  <div layout="row">
+<div layout="column" ng-if="!isArray(value)&&value.type" class="innerbgbox greybox">
+  <div layout="row" layout-align="space-between center" >
     <h4>{{property}}</h4>
-    <div ng-include="'partials/typeproptoolbar.html'"></div>
+    <div layout="row" layout-align="end center">
+      <div ng-include="'partials/typeproptoolbar.html'"></div>
+      <md-button class="md-icon-button md-primary" aria-label="toggle repeatability">
+        <md-tooltip>Toggle Repeatability</md-tooltip>
+        <md-icon>filter_9_plus</md-icon>
+      </md-button>
+    </div>
   </div>
   <div layout="row">
     <div ng-repeat="(property, value) in value" flex-gt-xs >
@@ -39,10 +45,16 @@
   </div>
 </div>
 <!-- if it's a repeatable property -->
-<div layout="column" ng-if="isArray(value)&&value[0].type">
-  <div layout="row">
+<div layout="column" ng-if="isArray(value)&&value[0].type" class="innerbgbox greybox">
+  <div layout="row" layout-align="space-between center">
     <h4>{{property}}</h4>
-    <div ng-include="'partials/typeproptoolbar.html'"></div>
+    <div layout="row" layout-align="end center">
+      <div ng-include="'partials/typeproptoolbar.html'"></div>
+      <md-button class="md-icon-button md-primary" aria-label="toggle repeatability">
+        <md-tooltip>Toggle Repeatability</md-tooltip>
+        <md-icon>looks_one</md-icon>
+      </md-button>
+    </div>
   </div>
   <div layout="row">
     <div ng-repeat="(property, value) in value[0]" flex-gt-xs >
@@ -71,12 +83,30 @@
   </div>
 </div>
 <!-- if it's a nested document property -->
-<div ng-if="!isArray(value)&&!value.type">
-  <h4>{{property}}</h4>
+<div ng-if="!isArray(value)&&!value.type" class="innerbgbox descbox">
+  <div layout="row" layout-align="space-between center">
+    <h4>{{property}}</h4>
+    <div layout="row" layout-align="end center">
+      <div ng-include="'partials/typeobjtoolbar.html'"></div>
+      <md-button class="md-icon-button md-primary" aria-label="toggle repeatability">
+        <md-tooltip>Toggle Repeatability</md-tooltip>
+        <md-icon>filter_9_plus</md-icon>
+      </md-button>
+    </div>
+  </div>
   <div layout="column" ng-repeat="(property, value) in value" ng-include="'partials/stypeproperty.html'" class="md-padding" ></div>
 </div>
 <!-- if it's a repeatable nested document property -->
-<div ng-if="isArray(value)&&!value[0].type">
-  <h4>{{property}}</h4>
+<div ng-if="isArray(value)&&!value[0].type" class="innerbgbox descbox">
+  <div layout="row" layout-align="space-between center">
+    <h4>{{property}}</h4>
+    <div layout="row" layout-align="end center">
+      <div ng-include="'partials/typeobjtoolbar.html'"></div>
+      <md-button class="md-icon-button md-primary" aria-label="toggle repeatability">
+        <md-tooltip>Toggle Repeatability</md-tooltip>
+        <md-icon>looks_one</md-icon>
+      </md-button>
+    </div>
+  </div>
   <div layout="column" ng-repeat="(property, value) in value[0]" ng-include="'partials/stypeproperty.html'" class="md-padding" ></div>
 </div>

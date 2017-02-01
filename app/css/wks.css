@@ -3,7 +3,7 @@
 
 /******** base styles ***********/
 body {
-  
+
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -115,51 +115,6 @@ md-icon.menuicon {
 
 }
 
-md-icon.menuicon {
-  color: #000000!important;
-  font-size: 50px;
-  width: 30px;
-  margin: 20px;
-  top: 0px;
-  line-height: 5px;
-  color: #0D47A1!important;
-}
-
-#closeicon {
-  display: none;
-}
-
-.open #quickmenu, .open #menuicon{
-  display: none;
-}
-
-.open #closeicon {
-  display: block;
-}
-
-/******** layout elements - splashpage *********/
-.splashtile {
-  margin: 8px;
-  padding: 8px;
-  height: 250px;
-  width: 220px;
-}
-.splashtext {
-  height: 80px;
-  overflow: hidden;
-}
-.splashhead {
-  height: 20px;
-  overflow: hidden;
-}
-
-.tile {
-  margin: 8px;
-  padding: 8px;
-  height: 220px;
-  width: 220px;
-}
-
 /******** layout elements - singleRecord page *********/
 .projecttile {
   width: 320px;
@@ -168,7 +123,7 @@ md-icon.menuicon {
 
 .line {
   padding-top: 15px!important;
-  padding-bottom: 5px!important; 
+  padding-bottom: 5px!important;
 }
 
 /******** spinentry animation class - to be replaced by ngAnimate + transitions? *********/
@@ -210,7 +165,7 @@ md-icon.menuicon {
     to   { transform: rotateY(0deg);}
 }
 
-/******** spinentry animation class - to be replaced by ngAnimate + transitions? *********/
+/******** vspinentry animation class - to be replaced by ngAnimate + transitions? *********/
 .vspinentry{
   -webkit-animation: vspinentry 0.4s forwards; /* Safari, Chrome and Opera > 12.1 */
   -moz-animation: vspinentry 0.4s forwards; /* Firefox < 16 */
@@ -249,25 +204,6 @@ md-icon.menuicon {
     to   { transform: rotateX(0deg);}
 }
 
-/******** layout elements - knowmore page *********/
- md-grid-list {
-  margin: 8px; }
- .gray {
-  background: #f5f5f5; }
- .green {
-  background: #b9f6ca; }
- .yellow {
-  background: #ffff8d; }
- .blue {
-  background: #84ffff; }
- .purple {
-  background: #b388ff; }
- .red {
-  background: #ff8a80; }
- md-grid-tile {
-  transition: all 200ms ease-out; 
-}
-
 /******** layout elements - result page *********/
 
 .squeezeicon {
@@ -296,8 +232,6 @@ md-icon.menuicon {
   height: 100vh;
   max-width: 800px;
   margin: auto;
-  /*background-color: #1565C0;*/
-  /*color: #ffffff;*/
 }
 
 .navcontainer {
@@ -314,104 +248,6 @@ md-icon.menuicon {
 
 md-table-container {
   width:100%;
-}
-
-.pagewrapper {
-}
-
-/******** spinentry animation class - to be replaced by ngAnimate + transitions? *********/
-.spinentry{
-  -webkit-animation: spinentry 0.4s forwards; /* Safari, Chrome and Opera > 12.1 */
-  -moz-animation: spinentry 0.4s forwards; /* Firefox < 16 */
-  -ms-animation: spinentry 0.4s forwards; /* Internet Explorer */
-  -o-animation: spinentry 0.4s forwards; /* Opera < 12.1 */
-  animation: spinentry 0.4s forwards;
-  transform: rotateY(90deg); /* setting initial value to animation startpoint - FF bugfix */
-}
-
-@keyframes spinentry {
-    from { transform: rotateY(90deg); }
-    to   { transform: rotateY(0deg);}
-}
-
-/* Firefox < 16 */
-@-moz-keyframes spinentry {
-    from { transform: rotateY(90deg);}
-    to   { transform: rotateY(0deg);}
-}
-
-/* Safari, Chrome and Opera > 12.1 */
-@-webkit-keyframes spinentry {
-    from { transform: rotateY(90deg);}
-    to   { transform: rotateY(0deg);}
-}
-
-/* Internet Explorer */
-@-ms-keyframes spinentry {
-    from { transform: rotateY(90deg);}
-    to   { transform: rotateY(0deg);}
-}
-
-/* Opera < 12.1 */
-@-o-keyframes spinentry {
-    from { transform: rotateY(90deg);}
-    to   { transform: rotateY(0deg);}
-}
-
-
-/******** layout elements - knowmore page *********/
- md-grid-list {
-  margin: 8px; }
- .gray {
-  background: #f5f5f5; }
- .green {
-  background: #b9f6ca; }
- .yellow {
-  background: #ffff8d; }
- .blue {
-  background: #84ffff; }
- .purple {
-  background: #b388ff; }
- .red {
-  background: #ff8a80; }
- md-grid-tile {
-  transition: all 200ms ease-out; 
-}
-
-/******** Containers *********/
-#sidebar{
-  width: 100px;
-  height: 100%;
-  background-color: #0D47A1;
-  top:0px;
-  position: fixed!important;
-  z-index: 1000;
-  left: 0px;
-}
-
-.ccontainer {
-  border: 15px;
-}
-
-#menucontainer {
-  left:100px;
-  height: 100vh;
-  max-width: 800px;
-  margin: auto;
-  /*background-color: #1565C0;*/
-  /*color: #ffffff;*/
-}
-
-.navcontainer {
-  width: 100%;
-  height: 100%;
-  left: 100px;
-  position: absolute;
-}
-
-.pointcontainer {
-  min-width: 330px;
-  display: flex;
 }
 
 .pagewrapper {
@@ -439,6 +275,28 @@ md-table-container {
   flex-shrink: 1;
   min-height: 400px;
   max-height: calc(100% - 20px);
+}
+
+.bgbox {
+  padding: 15px;
+}
+
+.innerbgbox {
+  border-radius: 3px;
+  padding: 10px;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.greybox {
+  background-color: #EEEEEE;
+}
+
+.descbox {
+  border-left: 2px solid #EEEEEE;
+  border-top: 2px solid #EEEEEE;
+
 }
 
 @media (min-width: 1280px) {
