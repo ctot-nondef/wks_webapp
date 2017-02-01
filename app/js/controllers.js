@@ -45,10 +45,10 @@ WKSControllers
       console.log(res);
     })
 }])
-.controller('WKSSingleType',['$scope','$http', '$state', '$stateParams', 'mongorest', function($scope, $http, $state, $stateParams, mongorest){
+.controller('WKSSingleType',['$scope','$http', '$state', '$stateParams', 'mongorest', '$mdDialog', function($scope, $http, $state, $stateParams, mongorest, $mdDialog){
   //********* DECLARATIVE PART *********************************************
     $scope.Model = {};
-
+    $scope.status = "";
     $scope.uiview = {"menuOpen":false};
     $scope.isArray = angular.isArray;
     $scope.arefs = [];
@@ -67,22 +67,45 @@ WKSControllers
     });
   //********* Helper Functions *********************************************
     $scope.checkProps = function(res){
-      //console.log(key, res);
       for(var key in res){
+        //simple property
         if(res[key].type) {
           console.log('simple', key);
         }
+        //repeatable property
         else if($scope.isArray(res[key]) && res[key][0].type) {
           console.log('repeatable', key);
         }
+        //nested object
         else if(!$scope.isArray(res[key]) && !res[key].type){
           console.log('simple object', key);
           $scope.checkProps(res[key]);
         }
+        //repeatable nested object
         else if($scope.isArray(res[key]) && !res[key][0].type){
           console.log('repeatable object', key);
           $scope.checkProps(res[key][0]);
         }
       }
     };
+  //********* Edit Functions *********************************************
+    $scope.editName = function(ev, prop, value){
+      console.log(value);
+      // Appending dialog to document.body to cover sidenav in docs app
+      var confirm = $mdDialog.prompt()
+        .title('Rename Property "' + prop + '"')
+        .textContent('')
+        .placeholder('Dog name')
+        .ariaLabel('Dog name')
+        .initialValue(prop)
+        .targetEvent(ev)
+        .ok('Submit')
+        .cancel('Cancel');
+
+      $mdDialog.show(confirm).then(function(result) {
+        $scope.status = 'You decided to name your dog ' + result + '.';
+      }, function() {
+        $scope.status = 'You didn\'t name your dog.';
+      });
+    }
 }])
