@@ -56,9 +56,7 @@ WKSControllers
   //********* END OF DECLARATIVE PART **************************************
     var SPromise = mongorest.getDoc('wkstest','schemas',$stateParams.id);
     SPromise.then(function(res){
-      for(var key in res.data.properties) {
-        $scope.checkProps(key,res.data.properties);
-      }
+      $scope.checkProps(res.data.properties);
       $scope.schema = res.data;
       var TPromise = mongorest.getColl('wkstest','schemas');
       TPromise.then(function(res){
@@ -68,24 +66,22 @@ WKSControllers
       });
     });
   //********* Helper Functions *********************************************
-    $scope.checkProps = function(key,res){
+    $scope.checkProps = function(res){
       //console.log(key, res);
-      if(res[key] && res[key].type) {
-        console.log('simple', key);
-      }
-      else if(res[key] && res[key][0] && res[key][0].type) {
-        console.log('repeatable', key);
-      }
-      else if(res[key] && !res[key][0]){
-        console.log('simple object', key);
-        for(var subkey in res[key]) {
-          $scope.checkProps(subkey, res[key][subkey]);
+      for(var key in res){
+        if(res[key].type) {
+          console.log('simple', key);
         }
-      }
-      else if(res[key] && res[key][0]){
-        console.log('repeatable object', key);
-        for(var subkey in res[key][0]) {
-          $scope.checkProps(subkey, res[key][0][subkey]);
+        else if($scope.isArray(res[key]) && res[key][0].type) {
+          console.log('repeatable', key);
+        }
+        else if(!$scope.isArray(res[key]) && !res[key].type){
+          console.log('simple object', key);
+          $scope.checkProps(res[key]);
+        }
+        else if($scope.isArray(res[key]) && !res[key][0].type){
+          console.log('repeatable object', key);
+          $scope.checkProps(res[key][0]);
         }
       }
     };
