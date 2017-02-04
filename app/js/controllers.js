@@ -56,8 +56,9 @@ WKSControllers
   //********* END OF DECLARATIVE PART **************************************
     var SPromise = mongorest.getDoc('wkstest','schemas',$stateParams.id);
     SPromise.then(function(res){
-      $scope.checkProps(res.data.properties);
+      $scope.schemaMap = $scope.mapSchema(res.data.properties);
       $scope.schema = res.data;
+      console.log($scope.schemaMap);
       var TPromise = mongorest.getColl('wkstest','schemas');
       TPromise.then(function(res){
         res.data.forEach(function(t){
@@ -66,28 +67,35 @@ WKSControllers
       });
     });
   //********* Helper Functions *********************************************
-    $scope.checkProps = function(res){
+    $scope.mapSchema = function(res){
+      var m = new Map();
       for(var key in res){
         //simple property
         if(res[key].type) {
+          m.set(key,res[key]);
           console.log('simple', key);
         }
         //repeatable property
         else if($scope.isArray(res[key]) && res[key][0].type) {
+          m.set(key,res[key]);
           console.log('repeatable', key);
         }
         //nested object
         else if(!$scope.isArray(res[key]) && !res[key].type){
+          m.set(key,$scope.mapSchema(res[key]));
           console.log('simple object', key);
-          $scope.checkProps(res[key]);
         }
         //repeatable nested object
         else if($scope.isArray(res[key]) && !res[key][0].type){
+          m.set(key,[$scope.mapSchema(res[key][0])]);
           console.log('repeatable object', key);
-          $scope.checkProps(res[key][0]);
         }
       }
+      return m;
     };
+    $scope.parseObject = function(map){
+      var o = {}
+    }
   //********* Edit Functions *********************************************
     $scope.editName = function(ev, prop, value){
       console.log(value);
