@@ -69,9 +69,9 @@ WKSControllers
     });
   //********* Helper Functions *********************************************
   //********* Edit Functions *********************************************
-    $scope.editName = function(ev, prop, value){
-      console.log(ev, prop, value);
-      // Appending dialog to document.body to cover sidenav in docs app
+    $scope.editName = function(ev, prop, value, i){
+      console.log(ev, prop, value, i);
+      var path = $scope.fetchProp(ev.currentTarget);
       var confirm = $mdDialog.prompt()
         .title('Rename Property "' + prop + '"')
         .textContent('')
@@ -81,11 +81,35 @@ WKSControllers
         .targetEvent(ev)
         .ok('Submit')
         .cancel('Cancel');
-
       $mdDialog.show(confirm).then(function(result) {
-        $scope.status = 'You decided to name your dog ' + result + '.';
+        $scope.writeProp(path, result);
       }, function() {
-        $scope.status = 'You didn\'t name your dog.';
+
       });
+    }
+    $scope.fetchProp = function(el){
+      var path = [];
+      var top = false;
+      var cel = el;
+      do {
+        if(cel.id == "schema") top = true;
+        else if(cel.id == "") cel = cel.parentElement;
+        else {
+          path.push(cel.id);
+          cel = cel.parentElement;
+        }
+      } while (!top)
+      return path.reverse();
+    }
+    $scope.writeProp = function(path, val){
+      var i = 1;
+      path.forEach(function(p){
+
+        if(i=path.length){
+
+        }
+        i++;
+      });
+      $scope.schema = mongoose.parseObject($scope.schemaMap);
     }
 }])

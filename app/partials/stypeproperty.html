@@ -94,7 +94,7 @@
       </md-button>
     </div>
   </div>
-  <div layout="column" ng-repeat="(property, value) in value" ng-include="'partials/stypeproperty.html'" class="md-padding" ></div>
+  <div layout="column" id="{{property}}" ng-repeat="(property, value) in value" ng-include="'partials/stypeproperty.html'" class="md-padding" ></div>
 </div>
 <!-- if it's a repeatable nested document property -->
 <div ng-if="isArray(value)&&!value[0].type" class="innerbgbox descbox">
@@ -108,5 +108,5 @@
       </md-button>
     </div>
   </div>
-  <div layout="column" ng-repeat="(property, value) in value[0]" ng-include="'partials/stypeproperty.html'" class="md-padding" ></div>
+  <div layout="column" id="{{property}}" ng-repeat="(property, value) in value[0]" ng-include="'partials/stypeproperty.html'" class="md-padding" ></div>
 </div>
