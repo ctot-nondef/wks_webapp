@@ -59,6 +59,7 @@ WKSControllers
       $scope.schemaMap = $scope.mapSchema(res.data.properties);
       $scope.schema = res.data;
       console.log($scope.schemaMap);
+      console.log($scope.parseObject($scope.schemaMap));
       var TPromise = mongorest.getColl('wkstest','schemas');
       TPromise.then(function(res){
         res.data.forEach(function(t){
@@ -70,31 +71,38 @@ WKSControllers
     $scope.mapSchema = function(res){
       var m = new Map();
       for(var key in res){
-        //simple property
-        if(res[key].type) {
+        //simple or repeatable property
+        if(res[key].type || ($scope.isArray(res[key]) && res[key][0].type)) {
           m.set(key,res[key]);
-          console.log('simple', key);
-        }
-        //repeatable property
-        else if($scope.isArray(res[key]) && res[key][0].type) {
-          m.set(key,res[key]);
-          console.log('repeatable', key);
         }
         //nested object
         else if(!$scope.isArray(res[key]) && !res[key].type){
           m.set(key,$scope.mapSchema(res[key]));
-          console.log('simple object', key);
         }
         //repeatable nested object
         else if($scope.isArray(res[key]) && !res[key][0].type){
           m.set(key,[$scope.mapSchema(res[key][0])]);
-          console.log('repeatable object', key);
         }
       }
       return m;
     };
     $scope.parseObject = function(map){
       var o = {}
+      map.forEach(function(value, key, map){
+        //simple or repeatable property
+        if(value.type || ($scope.isArray(value) && value[0].type)) {
+          o[key] = value;
+        }
+        //nested object
+        else if(!$scope.isArray(value) && !value.type){
+          o[key] = $scope.parseObject(value);
+        }
+        //repeatable nested object
+        else if($scope.isArray(value) && !value[0].type){
+          o[key] = [$scope.parseObject(value[0])];
+        }
+      });
+      return o;
     }
   //********* Edit Functions *********************************************
     $scope.editName = function(ev, prop, value){
