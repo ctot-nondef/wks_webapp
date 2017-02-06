@@ -45,7 +45,7 @@ WKSControllers
       console.log(res);
     })
 }])
-.controller('WKSSingleType',['$scope','$http', '$state', '$stateParams', 'mongorest', '$mdDialog', function($scope, $http, $state, $stateParams, mongorest, $mdDialog){
+.controller('WKSSingleType',['$scope','$http', '$state', '$stateParams', 'mongorest', '$mdDialog', 'mongoose', function($scope, $http, $state, $stateParams, mongorest, $mdDialog, mongoose){
   //********* DECLARATIVE PART *********************************************
     $scope.Model = {};
     $scope.status = "";
@@ -56,10 +56,10 @@ WKSControllers
   //********* END OF DECLARATIVE PART **************************************
     var SPromise = mongorest.getDoc('wkstest','schemas',$stateParams.id);
     SPromise.then(function(res){
-      $scope.schemaMap = $scope.mapSchema(res.data.properties);
+      $scope.schemaMap = mongoose.mapSchema(res.data.properties);
       $scope.schema = res.data;
       console.log($scope.schemaMap);
-      console.log($scope.parseObject($scope.schemaMap));
+      console.log(mongoose.parseObject($scope.schemaMap));
       var TPromise = mongorest.getColl('wkstest','schemas');
       TPromise.then(function(res){
         res.data.forEach(function(t){
@@ -68,45 +68,9 @@ WKSControllers
       });
     });
   //********* Helper Functions *********************************************
-    $scope.mapSchema = function(res){
-      var m = new Map();
-      for(var key in res){
-        //simple or repeatable property
-        if(res[key].type || ($scope.isArray(res[key]) && res[key][0].type)) {
-          m.set(key,res[key]);
-        }
-        //nested object
-        else if(!$scope.isArray(res[key]) && !res[key].type){
-          m.set(key,$scope.mapSchema(res[key]));
-        }
-        //repeatable nested object
-        else if($scope.isArray(res[key]) && !res[key][0].type){
-          m.set(key,[$scope.mapSchema(res[key][0])]);
-        }
-      }
-      return m;
-    };
-    $scope.parseObject = function(map){
-      var o = {}
-      map.forEach(function(value, key, map){
-        //simple or repeatable property
-        if(value.type || ($scope.isArray(value) && value[0].type)) {
-          o[key] = value;
-        }
-        //nested object
-        else if(!$scope.isArray(value) && !value.type){
-          o[key] = $scope.parseObject(value);
-        }
-        //repeatable nested object
-        else if($scope.isArray(value) && !value[0].type){
-          o[key] = [$scope.parseObject(value[0])];
-        }
-      });
-      return o;
-    }
   //********* Edit Functions *********************************************
     $scope.editName = function(ev, prop, value){
-      console.log(value);
+      console.log(ev, prop, value);
       // Appending dialog to document.body to cover sidenav in docs app
       var confirm = $mdDialog.prompt()
         .title('Rename Property "' + prop + '"')

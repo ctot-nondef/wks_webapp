@@ -75,7 +75,6 @@ var GooseConfig = {
     "currentView":"list",
     "localStorage":"MongooseStorage",
 }
-
 MongoDBservices.service('mongoose', ['$http', '$localStorage' ,function($http,$localStorage){
 	if(!$localStorage[RestConfig.localStorage]) $localStorage[RestConfig.localStorage] = {};
 	if($localStorage[RestConfig.localStorage]['history']) var history = $localStorage[RestConfig.localStorage]['history'];
@@ -97,6 +96,43 @@ MongoDBservices.service('mongoose', ['$http', '$localStorage' ,function($http,$l
     var getDoc = function(db, collection, docid){console.log('getDocument Query: ', RestConfig.baseURL, db, collection, docid);
       return $http.get(RestConfig.baseURL+db+"/"+collection+"/"+docid);
     }
+  /////////////Callable Parser functions
+  var mapSchema = function(res){
+    var m = new Map();
+    for(var key in res){
+      //simple or repeatable property
+      if(res[key].type || (angular.isArray(res[key]) && res[key][0].type)) {
+        m.set(key,res[key]);
+      }
+      //nested object
+      else if(!angular.isArray(res[key]) && !res[key].type){
+        m.set(key,this.mapSchema(res[key]));
+      }
+      //repeatable nested object
+      else if(angular.isArray(res[key]) && !res[key][0].type){
+        m.set(key,[this.mapSchema(res[key][0])]);
+      }
+    }
+    return m;
+  }
+  var parseObject = function(map){
+    var o = {}
+    map.forEach(function(value, key, map){
+      //simple or repeatable property
+      if(value.type || (angular.isArray(value) && value[0].type)) {
+        o[key] = value;
+      }
+      //nested object
+      else if(!angular.isArray(value) && !value.type){
+        o[key] = this.parseObject(value);
+      }
+      //repeatable nested object
+      else if(angular.isArray(value) && !value[0].type){
+        o[key] = [this.parseObject(value[0])];
+      }
+    },this);
+    return o;
+  }
 	//////////// Parameter getters / setters ///////////////////////////////
 		var updateHistory = function(string, query, page, result){console.log('addtoHistory: ', query, result);
 			this.history.querystring.unshift(string);
@@ -128,6 +164,8 @@ MongoDBservices.service('mongoose', ['$http', '$localStorage' ,function($http,$l
     getCollList: getCollList,
     getColl: getColl,
     getDoc: getDoc,
+    mapSchema: mapSchema,
+    parseObject: parseObject,
   	updateHistory: updateHistory,
   	clearHistory: clearHistory,
   	updatePage: updatePage,
@@ -135,8 +173,9 @@ MongoDBservices.service('mongoose', ['$http', '$localStorage' ,function($http,$l
   	};
 }]);
 
+
+
 ///////////////// GeoNames Service Module
-//TODO: move to separate file
 var GeoNamesServices = angular.module('GeoNamesServices', ['ngStorage']);
 
 GeoNamesServices.service('GeoNamesServices', ['$http', '$localStorage', '$q', function($http, $localStorage, $q){
