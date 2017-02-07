@@ -71,7 +71,7 @@ WKSControllers
   //********* Edit Functions *********************************************
     $scope.editName = function(ev, prop, value, i){
       console.log(ev, prop, value, i);
-      var path = $scope.fetchProp(ev.currentTarget);
+      var path = $scope.fetchPath(ev.currentTarget);
       var confirm = $mdDialog.prompt()
         .title('Rename Property "' + prop + '"')
         .textContent('')
@@ -82,12 +82,12 @@ WKSControllers
         .ok('Submit')
         .cancel('Cancel');
       $mdDialog.show(confirm).then(function(result) {
-        $scope.writeProp(path, result);
+        $scope.writeProp($scope.schemaMap, path, result);
       }, function() {
 
       });
     }
-    $scope.fetchProp = function(el){
+    $scope.fetchPath = function(el){
       var path = [];
       var top = false;
       var cel = el;
@@ -98,18 +98,25 @@ WKSControllers
           path.push(cel.id);
           cel = cel.parentElement;
         }
-      } while (!top)
+      } while (!top);
       return path.reverse();
     }
-    $scope.writeProp = function(path, val){
-      var i = 1;
-      path.forEach(function(p){
-
-        if(i=path.length){
-
-        }
-        i++;
+    $scope.writeProp = function(map, path, val){
+      console.log(map, path, val);
+      path.forEach(function(p, i){
+          if(i+1 == path.length){
+            var a = 0;
+            var e = map.keys();
+            for(var v of map) {
+              console.log(v, p, val);
+              if(v[0] == p) v[0] = val;
+              a++;
+              console.log(v, p, val);
+            };
+          }
       });
-      $scope.schema = mongoose.parseObject($scope.schemaMap);
+      console.log(map);
+      $scope.schema.properties = {};
+      $scope.schema.properties = mongoose.parseObject(map);
     }
 }])
