@@ -87,6 +87,8 @@ WKSControllers
 
       });
     }
+
+
     $scope.fetchPath = function(el){
       var path = [];
       var top = false;
