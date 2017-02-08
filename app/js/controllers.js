@@ -71,17 +71,18 @@ WKSControllers
     $scope.editName = function(ev, prop, value, i){
       console.log(ev, prop, value, i);
       var path = $scope.fetchPath(ev.currentTarget);
+      console.log(path);
       var confirm = $mdDialog.prompt()
         .title('Rename Property "' + prop + '"')
         .textContent('')
-        .placeholder('Dog name')
-        .ariaLabel('Dog name')
+        .placeholder('property name')
+        .ariaLabel('property name')
         .initialValue(prop)
         .targetEvent(ev)
         .ok('Submit')
         .cancel('Cancel');
       $mdDialog.show(confirm).then(function(result) {
-        $scope.writeProp($scope.schemaMap, path, result);
+        $scope.schemaMap = $scope.writeProp($scope.schemaMap, path, result);
       }, function() {
 
       });
@@ -102,7 +103,20 @@ WKSControllers
     }
     $scope.writeProp = function(map, path, val){
       console.log(map);
-      $scope.schema.properties = {};
-      //$scope.schema.properties = mongoose.parseObject(map);
+      var nm = {};
+      if(path.length == 1) {
+        for(var p in map){
+          if(p == path[0]) nm[val] = map[p];
+          else if(p != path[0]) nm[p] = map[p];
+        };
+      }
+      else {
+        var s = path.slice(1);
+        for(var p in map){
+          if(p == path[0]) nm[p] = $scope.writeProp(map[path[0]],s,val);
+          else if(p != path[0]) nm[p] = map[p];
+        };
+      }
+      return nm;
     }
 }])

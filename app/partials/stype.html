@@ -1,6 +1,6 @@
-<div class="pagewrapper" layout="column" layout-align="start stretch" layout-padding>
+<div class="pagewrapper md-inline-form" layout="column" layout-align="start stretch" layout-padding>
   <h2 class="md-display-1">Type Editor</h2>
-  <form name="userForm">
+  <form name="typeForm">
     <md-content md-theme="docs-dark" layout-padding>
       <div layout-gt-sm="row" >
         <md-input-container  class="md-block" flex-gt-xs>
@@ -11,6 +11,7 @@
           <label>UID</label>
           <input ng-model="schema._id" disabled>
         </md-input-container>
+        <md-button class="md-raised md-warn">SAVE</md-button>
       </div>
     </md-content>
     <md-content layout-padding>

@@ -40,7 +40,7 @@
           repeatable: {{ value }}
         </md-switch>
         <md-input-container class="md-block" ng-if="property == 'path'">
-          <label>{{property}}</label>
+          <label>original path</label>
           <input ng-model="value" disabled>
         </md-input-container>
       </ng-form>
@@ -61,7 +61,7 @@
 </div>
 <div ng-if="property == 'path'">
   <md-input-container class="md-block" >
-    <label>{{property}}</label>
+    <label>original path</label>
     <input ng-model="value" disabled>
   </md-input-container>
 </div>
