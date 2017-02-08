@@ -56,10 +56,9 @@ WKSControllers
   //********* END OF DECLARATIVE PART **************************************
     var SPromise = mongorest.getDoc('wkstest','schemas',$stateParams.id);
     SPromise.then(function(res){
-      $scope.schemaMap = mongoose.mapSchema(res.data.properties);
-      $scope.schema = res.data;
+      $scope.schemaMap = mongoose.mapSchema(JSON.parse(JSON.stringify(res.data.properties)),[]);
+      $scope.schema = JSON.parse(JSON.stringify(res.data));
       console.log($scope.schemaMap);
-      console.log(mongoose.parseObject($scope.schemaMap));
       var TPromise = mongorest.getColl('wkstest','schemas');
       TPromise.then(function(res){
         res.data.forEach(function(t){
@@ -87,8 +86,6 @@ WKSControllers
 
       });
     }
-
-
     $scope.fetchPath = function(el){
       var path = [];
       var top = false;
@@ -104,21 +101,8 @@ WKSControllers
       return path.reverse();
     }
     $scope.writeProp = function(map, path, val){
-      console.log(map, path, val);
-      path.forEach(function(p, i){
-          if(i+1 == path.length){
-            var a = 0;
-            var e = map.keys();
-            for(var v of map) {
-              console.log(v, p, val);
-              if(v[0] == p) v[0] = val;
-              a++;
-              console.log(v, p, val);
-            };
-          }
-      });
       console.log(map);
       $scope.schema.properties = {};
-      $scope.schema.properties = mongoose.parseObject(map);
+      //$scope.schema.properties = mongoose.parseObject(map);
     }
 }])

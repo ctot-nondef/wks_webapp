@@ -97,41 +97,68 @@ MongoDBservices.service('mongoose', ['$http', '$localStorage' ,function($http,$l
       return $http.get(RestConfig.baseURL+db+"/"+collection+"/"+docid);
     }
   /////////////Callable Parser functions
-  var mapSchema = function(res){
-    var m = new Map();
-    for(var key in res){
-      //simple or repeatable property
-      if(res[key].type || (angular.isArray(res[key]) && res[key][0].type)) {
-        m.set(key,res[key]);
+  var mapSchema = function(schemaObj, path){
+    var o = {};
+    for(var key in schemaObj){
+      var cpath = path.slice();
+      //simple property
+      if(schemaObj[key].type) {
+        o[key] = schemaObj[key];
+        o[key]['repeatable'] = false;
+        o[key]['path'] = path.join('.');
+      }
+      //repeatable property
+      if(angular.isArray(schemaObj[key]) && schemaObj[key][0].type) {
+        o[key] = schemaObj[key][0];
+        o[key]['repeatable'] = true;
+        o[key]['path'] = path;
       }
       //nested object
-      else if(!angular.isArray(res[key]) && !res[key].type){
-        m.set(key,this.mapSchema(res[key]));
+      else if(!angular.isArray(schemaObj[key]) && !schemaObj[key].type){
+        cpath.push(key);
+        o[key] = this.mapSchema(schemaObj[key],cpath);
+        o[key]['repeatable'] = false;
+        o[key]['path'] = path;
       }
       //repeatable nested object
-      else if(angular.isArray(res[key]) && !res[key][0].type){
-        m.set(key,[this.mapSchema(res[key][0])]);
+      else if(angular.isArray(schemaObj[key]) && !schemaObj[key][0].type){
+        cpath.push(key);
+        o[key] = this.mapSchema(schemaObj[key][0],cpath);
+        o[key]['repeatable'] = true;
+        o[key]['path'] = path;
+      }
+    }
+    return o;
+  }
+  var parseObject = function(mapObj){
+    var m = {};
+    for(var key in mapObj){
+      //simple property
+      if(mapObj[key].type && !mapObj[key].repeatable) {
+        delete mapObj[key].repeatable;
+        delete mapObj[key].path;
+        m[key] = mapObj[key];
+      }
+      //repeatable property
+      if(mapObj[key].type && mapObj[key].repeatable) {
+        delete mapObj[key].repeatable;
+        delete mapObj[key].path;
+        m[key] = [mapObj[key]];
+      }
+      //nested object
+      else if(!mapObj[key].type && !mapObj[key].repeatable){
+        delete mapObj[key].repeatable;
+        delete mapObj[key].path;
+        m[key] = this.parseObject(mapObj[key]);
+      }
+      //repeatable nested object
+      else if(!mapObj[key].type && mapObj[key].repeatable){
+        delete mapObj[key].repeatable;
+        delete mapObj[key].path;
+        m[key] = [this.parseObject(mapObj[key])];
       }
     }
     return m;
-  }
-  var parseObject = function(map){
-    var o = {}
-    map.forEach(function(value, key, map){
-      //simple or repeatable property
-      if(value.type || (angular.isArray(value) && value[0].type)) {
-        o[key] = value;
-      }
-      //nested object
-      else if(!angular.isArray(value) && !value.type){
-        o[key] = this.parseObject(value);
-      }
-      //repeatable nested object
-      else if(angular.isArray(value) && !value[0].type){
-        o[key] = [this.parseObject(value[0])];
-      }
-    },this);
-    return o;
   }
 	//////////// Parameter getters / setters ///////////////////////////////
 		var updateHistory = function(string, query, page, result){console.log('addtoHistory: ', query, result);

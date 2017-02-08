@@ -15,7 +15,7 @@
     </md-content>
     <md-content layout-padding>
       <div id="schema">
-          <div layout="column" ng-repeat="(property, value) in schema.properties" id="{{property}}" ng-include="'partials/stypeproperty.html'" class="md-padding"></div>
+          <div layout="column" ng-repeat="(property, value) in schemaMap track by $index" id="{{property}}" path="{{path}}" ng-include="'partials/stypeproperty.html'" class="md-padding"></div>
       </div>
     </md-content>
   </form>
