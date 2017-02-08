@@ -67,11 +67,24 @@ WKSControllers
       });
     });
   //********* Helper Functions *********************************************
+    $scope.fetchPath = function(el){
+    var path = [];
+    var top = false;
+    var cel = el;
+    do {
+      if(cel.id == "schema") top = true;
+      else if(cel.id == "") cel = cel.parentElement;
+      else {
+        path.push(cel.id);
+        cel = cel.parentElement;
+      }
+    } while (!top);
+    return path.reverse();
+  }
   //********* Edit Functions *********************************************
     $scope.editName = function(ev, prop, value, i){
       console.log(ev, prop, value, i);
       var path = $scope.fetchPath(ev.currentTarget);
-      console.log(path);
       var confirm = $mdDialog.prompt()
         .title('Rename Property "' + prop + '"')
         .textContent('')
@@ -82,27 +95,13 @@ WKSControllers
         .ok('Submit')
         .cancel('Cancel');
       $mdDialog.show(confirm).then(function(result) {
-        $scope.schemaMap = $scope.writeProp($scope.schemaMap, path, result);
+        $scope.schemaMap = $scope.writeName($scope.schemaMap, path, result);
+        $scope.typeForm.$setDirty();
       }, function() {
 
       });
     }
-    $scope.fetchPath = function(el){
-      var path = [];
-      var top = false;
-      var cel = el;
-      do {
-        if(cel.id == "schema") top = true;
-        else if(cel.id == "") cel = cel.parentElement;
-        else {
-          path.push(cel.id);
-          cel = cel.parentElement;
-        }
-      } while (!top);
-      return path.reverse();
-    }
-    $scope.writeProp = function(map, path, val){
-      console.log(map);
+    $scope.writeName = function(map, path, val){
       var nm = {};
       if(path.length == 1) {
         for(var p in map){
@@ -113,10 +112,12 @@ WKSControllers
       else {
         var s = path.slice(1);
         for(var p in map){
-          if(p == path[0]) nm[p] = $scope.writeProp(map[path[0]],s,val);
+          if(p == path[0]) nm[p] = $scope.writeName(map[path[0]],s,val);
           else if(p != path[0]) nm[p] = map[p];
         };
       }
       return nm;
     }
+
+
 }])

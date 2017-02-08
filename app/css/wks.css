@@ -126,6 +126,16 @@ md-icon.menuicon {
   padding-bottom: 5px!important;
 }
 
+
+.fix-formhead {
+   position: fixed;
+   top: 10px;
+   z-index: 10;
+   left: calc(33% - 100px)!important;
+   width: calc(53% - 100px)!important;
+   height: 100px!important;
+ }
+
 /******** spinentry animation class - to be replaced by ngAnimate + transitions? *********/
 .spinentry{
   -webkit-animation: spinentry 0.4s forwards; /* Safari, Chrome and Opera > 12.1 */

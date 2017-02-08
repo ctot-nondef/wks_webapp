@@ -1,7 +1,7 @@
 <div class="pagewrapper md-inline-form" layout="column" layout-align="start stretch" layout-padding>
   <h2 class="md-display-1">Type Editor</h2>
-  <form name="typeForm">
-    <md-content md-theme="docs-dark" layout-padding>
+  <div ng-form="typeForm">
+    <md-content md-theme="docs-dark" layout-padding class="innerbgbox" id="formhead">
       <div layout-gt-sm="row" >
         <md-input-container  class="md-block" flex-gt-xs>
           <label>Title</label>
@@ -11,7 +11,8 @@
           <label>UID</label>
           <input ng-model="schema._id" disabled>
         </md-input-container>
-        <md-button class="md-raised md-warn">SAVE</md-button>
+        <md-button class="md-raised md-primary" ng-disabled="typeForm.$pristine">RESET</md-button>
+        <md-button class="md-raised md-warn" ng-disabled="typeForm.$pristine">SAVE</md-button>
       </div>
     </md-content>
     <md-content layout-padding>
@@ -19,5 +20,14 @@
           <div layout="column" ng-repeat="(property, value) in schemaMap track by $index" id="{{property}}" path="{{path}}" ng-include="'partials/stypeproperty.html'" class="md-padding"></div>
       </div>
     </md-content>
-  </form>
+  </div>
 </div>
+<script>
+  window.addEventListener("scroll", function(e) {
+    if ($(window).scrollTop() > 68) {
+      $("#formhead").addClass("fix-formhead");
+    } else {
+      $("#formhead").removeClass("fix-formhead");
+    }
+  });
+</script>
