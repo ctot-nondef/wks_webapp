@@ -84,3 +84,10 @@ function config($stateProvider, $urlRouterProvider, $locationProvider, $compileP
      .primaryPalette('yellow')
      .dark();
 }
+WKSApp.run(['$rootScope', '$state', '$stateParams', 'mongorest', function($rootScope, $state, $stateParams, mongorest){
+  $rootScope.$on('$stateChangeStart', function(event, toState, toStateParams){
+    $rootScope.toState = toState;
+    $rootScope.toStateParams = toStateParams;
+    console.log(toState, toStateParams);
+  });
+}]);

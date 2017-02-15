@@ -9,14 +9,23 @@ var RestConfig = {
 
 var MongoDBservices = angular.module('MongoDBservices', ['ngStorage']);
 MongoDBservices.service('mongorest', ['$http', '$localStorage' ,function($http,$localStorage){
-	if(!$localStorage[RestConfig.localStorage]) $localStorage[RestConfig.localStorage] = {};
-	if($localStorage[RestConfig.localStorage]['history']) var history = $localStorage[RestConfig.localStorage]['history'];
-	else {
-		var obj = {"history":{"querystring":[],"query":[],"result":[]}}
-		$localStorage[RestConfig.localStorage] = obj;
-		var history = $localStorage[RestConfig.localStorage]['history'];
-	}
 	//////////Callable retrieval functions///////////////////////////////
+    var initStorage = function(){console.log('initializing local storage');
+      if($localStorage[RestConfig.localStorage] && $localStorage[RestConfig.localStorage]['history'] && $localStorage[RestConfig.localStorage]['session']) var s = $localStorage[RestConfig.localStorage];
+      else {
+        $localStorage[RestConfig.localStorage] = {};
+        $localStorage[RestConfig.localStorage]['history'] = {"querystring":[],"query":[],"result":[]};
+        $localStorage[RestConfig.localStorage]['session'] = {"token":"","exp":"","user":""};
+        var s = $localStorage[RestConfig.localStorage];
+      }
+      return s;
+    }
+    var restLogin = function(user, password){console.log('logging in as user ', user);
+
+    }
+    var parseToken = function(){
+
+    }
 		var getDBList = function(){console.log('getDBList Query: ', RestConfig.baseURL);
 			return $http.get(RestConfig.baseURL+"dbs");
 		}
@@ -41,8 +50,8 @@ MongoDBservices.service('mongorest', ['$http', '$localStorage' ,function($http,$
 			else this.history.result.unshift({});
 		}
 		var clearHistory = function(){console.log('clearing History upon user request.');
-			$localStorage[RestConfig.localStorage]['history'] = {"querystring":[],"query":[],"result":[]};
-			this.history = $localStorage[RestConfig.localStorage]['history'];
+			$localStorage[RestConfig.localStorage]['history'] = {};
+			this.s = $localStorage[RestConfig.localStorage];
 		}
 		var updatePage = function(queryno, page, result){console.log('updatePage: ', queryno, page, result);
 			if(this.history.result[queryno]) {
@@ -54,16 +63,20 @@ MongoDBservices.service('mongorest', ['$http', '$localStorage' ,function($http,$
 				this.history.result[queryno] = obj;
 			}
 		}
+    var s = initStorage();
+    console.log(s);
 	///////////////// return Object //////////////////////////////////////////
 	return {
-  	getDBList: getDBList,
-    getCollList: getCollList,
-    getColl: getColl,
-    getDoc: getDoc,
-  	updateHistory: updateHistory,
-  	clearHistory: clearHistory,
-  	updatePage: updatePage,
-		history: history
+    initStorage,
+    restLogin,
+  	getDBList,
+    getCollList,
+    getColl,
+    getDoc,
+  	updateHistory,
+  	clearHistory,
+  	updatePage,
+	  s
   	};
 }]);
 

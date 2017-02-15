@@ -18,14 +18,37 @@ WKSControllers
 .controller('WKSStart',['$scope','$http', '$state', '$stateParams', 'mongorest', function($scope, $http, $state, $stateParams, mongorest){
   $scope.Model = {};
 }])
-.controller('WKSNav', ['$scope', '$timeout', '$mdSidenav', '$http', '$log', function ($scope, $timeout, $mdSidenav, $http, $log) {
+.controller('WKSNav', ['$scope', '$timeout', '$mdSidenav', '$http', '$log', 'mongorest','$mdDialog', function ($scope, $timeout, $mdSidenav, $http, $log, mongorest, $mdDialog) {
     $scope.Model = {};
+    // we'll need to check for a valid token right away in order to load the right view and menu options
     $http.get('static/menu.json').then(
       function(res){
         $scope.Model.Menu = res.data;
       },
       function(err){ console.log('err: ', err); }
     );
+    //********* Auth Functions *********************************************
+    $scope.loginDialog = function($event) {
+      $mdDialog.show({
+      controller: function ($timeout, $q, $scope, $mdDialog) {
+          var logon = this;
+          $scope.answer = function() {
+            $mdDialog.hide(logon);
+          };
+        },
+        controllerAs: 'logon',
+        templateUrl: 'partials/logonscreen.html',
+        parent: angular.element(document.body),
+        targetEvent: $event,
+        clickOutsideToClose:false,
+        locals: {parent: $scope},
+      })
+      .then(function(logon) {
+        console.log(logon);
+      });
+    };
+    $scope.loginDialog();
+    //********* SideMenu Functions *********************************************
     $scope.toggleLeft = function () {
       if(!$mdSidenav('sidenav').isOpen()) {$('#sidebar').addClass('open');}
       else {$('#sidebar').removeClass('open');}
