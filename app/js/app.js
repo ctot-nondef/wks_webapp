@@ -88,5 +88,6 @@ WKSApp.run(['$rootScope', '$state', '$stateParams', 'mongorest', function($rootS
   $rootScope.$on('$stateChangeStart', function(event, toState, toStateParams){
     $rootScope.toState = toState;
     $rootScope.toStateParams = toStateParams;
+    console.log(toState, toStateParams);
   });
 }]);
