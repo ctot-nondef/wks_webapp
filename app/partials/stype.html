@@ -11,7 +11,7 @@
           <label>UID</label>
           <input ng-model="schema._id" disabled>
         </md-input-container>
-        <md-button class="md-raised md-primary" ng-disabled="typeForm.$pristine">RESET</md-button>
+        <md-button class="md-raised md-primary" ng-disabled="typeForm.$pristine" ng-click="reset()">RESET</md-button>
         <md-button class="md-raised md-warn" ng-disabled="typeForm.$pristine">SAVE</md-button>
       </div>
     </md-content>

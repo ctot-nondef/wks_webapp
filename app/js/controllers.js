@@ -62,7 +62,7 @@ WKSControllers
       // Appending dialog to document.body to cover sidenav in docs app
       var confirm = $mdDialog.confirm()
             .title('Logout')
-            .textContent('Really logout User'+mongorest.s.session.user +'?')
+            .textContent('Really logout User '+mongorest.s.session.user +'?')
             .ariaLabel('logout')
             .targetEvent(ev)
             .ok('Go Ahead!')
@@ -116,19 +116,19 @@ WKSControllers
     });
   //********* Helper Functions *********************************************
     $scope.fetchPath = function(el){
-    var path = [];
-    var top = false;
-    var cel = el;
-    do {
-      if(cel.id == "schema") top = true;
-      else if(cel.id == "") cel = cel.parentElement;
-      else {
-        path.push(cel.id);
-        cel = cel.parentElement;
-      }
-    } while (!top);
-    return path.reverse();
-  }
+      var path = [];
+      var top = false;
+      var cel = el;
+      do {
+        if(cel.id == "schema") top = true;
+        else if(cel.id == "") cel = cel.parentElement;
+        else {
+          path.push(cel.id);
+          cel = cel.parentElement;
+        }
+      } while (!top);
+      return path.reverse();
+    }
   //********* Edit Functions *********************************************
     $scope.editName = function(ev, prop, value, i){
       console.log(ev, prop, value, i);
@@ -166,6 +166,10 @@ WKSControllers
       }
       return nm;
     }
-
-
+    $scope.reset = function(){
+      $state.reload();
+    }
+    $scope.save = function(){
+      console.log(schemaMap);
+    }
 }])

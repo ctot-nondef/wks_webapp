@@ -28,6 +28,7 @@ MongoDBservices.service('mongorest', ['$http', '$localStorage', '$q',function($h
             req.then(function(res){
               that.s.session.token = res.data.token;
               that.s.session.exp = res.data.created;
+              that.s.session.user = user;
               resolve(res.data);
             },
             function(err){
@@ -41,23 +42,20 @@ MongoDBservices.service('mongorest', ['$http', '$localStorage', '$q',function($h
       $localStorage[RestConfig.localStorage]['session'] = {"token":"","exp":"","user":""};
     }
     this.auth = function(){
-      if(this.s.session.token != "") return true;
+      if(this.s.session.token != "") return this.s.session.user;
       else return false;
     }
-    this.parseToken = function(){
-
-    }
 		this.getDBList = function(){console.log('getDBList Query: ', RestConfig.baseURL);
-			return $http.get(RestConfig.baseURL+"dbs");
+			return $http.get(RestConfig.baseURL+"dbs",{params: { token: this.s.session.token }});
 		}
     this.getCollList = function(db){console.log('getCollectionList Query: ', RestConfig.baseURL, db);
-			return $http.get(RestConfig.baseURL+db);
+			return $http.get(RestConfig.baseURL+db,{params: { token: this.s.session.token }});
 		}
     this.getColl = function(db, collection){console.log('getCollection Query: ', RestConfig.baseURL, db, collection);
-			return $http.get(RestConfig.baseURL+db+"/"+collection);
+			return $http.get(RestConfig.baseURL+db+"/"+collection,{params: { token: this.s.session.token }});
 		}
     this.getDoc = function(db, collection, docid){console.log('getDocument Query: ', RestConfig.baseURL, db, collection, docid);
-      return $http.get(RestConfig.baseURL+db+"/"+collection+"/"+docid);
+      return $http.get(RestConfig.baseURL+db+"/"+collection+"/"+docid,{params: { token: this.s.session.token }});
     }
 	//////////// Parameter getters / setters ///////////////////////////////
 		this.updateHistory = function(string, query, page, result){console.log('addtoHistory: ', query, result);
