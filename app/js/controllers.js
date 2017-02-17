@@ -18,8 +18,9 @@ WKSControllers
 .controller('WKSStart',['$scope','$http', '$state', '$stateParams', 'mongorest', function($scope, $http, $state, $stateParams, mongorest){
   $scope.Model = {};
 }])
-.controller('WKSNav', ['$scope', '$timeout', '$mdSidenav', '$http', '$log', 'mongorest','$mdDialog', function ($scope, $timeout, $mdSidenav, $http, $log, mongorest, $mdDialog) {
+.controller('WKSNav', ['$scope', '$timeout', '$mdSidenav', '$http', '$log', 'mongorest','$mdDialog', '$rootScope', function ($scope, $timeout, $mdSidenav, $http, $log, mongorest, $mdDialog, $rootScope) {
     $scope.Model = {};
+    $rootScope.auth = mongorest.auth();
     // we'll need to check for a valid token right away in order to load the right view and menu options
     $http.get('static/menu.json').then(
       function(res){
@@ -30,24 +31,48 @@ WKSControllers
     //********* Auth Functions *********************************************
     $scope.loginDialog = function($event) {
       $mdDialog.show({
-      controller: function ($timeout, $q, $scope, $mdDialog) {
+      controller: function ($timeout, $q, $scope, $mdDialog, $rootScope) {
           var logon = this;
           $scope.answer = function() {
-            $mdDialog.hide(logon);
+            console.log(logon);
+            var a = mongorest.restLogin(logon.username, logon.password);
+            a.then(function(res){
+              console.log($scope.$parent);
+              $rootScope.auth = mongorest.auth();
+              console.log($scope.auth);
+              $mdDialog.hide();
+            },
+            function(err){
+              console.log(err);
+            });
           };
+          $scope.cancel = function() {
+            $mdDialog.cancel();
+          }
         },
         controllerAs: 'logon',
         templateUrl: 'partials/logonscreen.html',
         parent: angular.element(document.body),
         targetEvent: $event,
-        clickOutsideToClose:false,
+        clickOutsideToClose:true,
         locals: {parent: $scope},
-      })
-      .then(function(logon) {
-        console.log(logon);
       });
     };
-    $scope.loginDialog();
+    $scope.logout = function(ev) {
+      // Appending dialog to document.body to cover sidenav in docs app
+      var confirm = $mdDialog.confirm()
+            .title('Logout')
+            .textContent('Really logout User'+mongorest.s.session.user +'?')
+            .ariaLabel('logout')
+            .targetEvent(ev)
+            .ok('Go Ahead!')
+            .cancel('Stay here');
+      $mdDialog.show(confirm).then(function() {
+        mongorest.logout();
+        $rootScope.auth = mongorest.auth();
+      }, function() {
+      });
+    };
     //********* SideMenu Functions *********************************************
     $scope.toggleLeft = function () {
       if(!$mdSidenav('sidenav').isOpen()) {$('#sidebar').addClass('open');}

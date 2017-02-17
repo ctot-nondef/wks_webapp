@@ -15,7 +15,7 @@ var WKSApp = angular.module('WKSApp', [
 
 
 WKSApp.config(config);
-function config($stateProvider, $urlRouterProvider, $locationProvider, $compileProvider,$logProvider,$mdThemingProvider){
+function config($stateProvider, $urlRouterProvider, $locationProvider, $compileProvider,$logProvider,$mdThemingProvider, $httpProvider){
   $compileProvider.debugInfoEnabled(true);
   $logProvider.debugEnabled(true);
   $urlRouterProvider.otherwise('/');
@@ -83,6 +83,11 @@ function config($stateProvider, $urlRouterProvider, $locationProvider, $compileP
     $mdThemingProvider.theme('docs-dark')
      .primaryPalette('yellow')
      .dark();
+     //Reset headers to avoid OPTIONS request (aka preflight)
+    $httpProvider.defaults.headers.common = {};
+    $httpProvider.defaults.headers.post = {};
+    $httpProvider.defaults.headers.put = {};
+    $httpProvider.defaults.headers.patch = {};
 }
 WKSApp.run(['$rootScope', '$state', '$stateParams', 'mongorest', function($rootScope, $state, $stateParams, mongorest){
   $rootScope.$on('$stateChangeStart', function(event, toState, toStateParams){

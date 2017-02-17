@@ -2,12 +2,21 @@
   <md-icon id="menuicon" class="navicon" aria-label="Open Menu" ng-click="toggleLeft()">toc</md-icon>
   <md-icon id="closeicon" class="navicon" aria-label="Open Menu" ng-click="toggleLeft()">skip_previous</md-icon>
   <div id="quickmenu" layout="column" layout-align="start center">
-    <md-icon class="navicon" ng-repeat="Icon in Model.Menu" aria-label="{{Icon.arialabel}}" ui-sref="{{Icon.startpage}}">{{Icon.mdicon}}</md-icon>
+    <md-button class="md-icon-button md-primary" ng-repeat="Icon in Model.Menu" aria-label="{{Icon.arialabel}}" ui-sref="{{Icon.startpage}}">
+      <md-tooltip md-direction="right">{{Icon.caption}}</md-tooltip>
+      <md-icon class="quickicon">{{Icon.mdicon}}</md-icon>
+    </md-button>
+    <md-button class="md-icon-button md-warn" aria-label="Login" ng-click="loginDialog()" ng-if="!auth">
+      <md-tooltip md-direction="right">Login</md-tooltip>
+      <md-icon >enhanced_encryption</md-icon>
+    </md-button>
+    <md-button class="md-icon-button md-warn" aria-label="Login" ng-click="logout()" ng-if="auth">
+      <md-tooltip md-direction="right">Logout</md-tooltip>
+      <md-icon >no_encryption</md-icon>
+    </md-button>
   </div>
   <div id="caption" layout="column" layout-align="start center" ui-sref="start">
-    <h4>Wiener</h4>
-    <h4>Kunst-</h4>
-    <h4>sammlungen</h4>
+    <h4>VCHC</h4>
   </div>
   <div id="logos" layout="column" layout-align="start center">
     <img src="media/Uni_Logo_2016_weiss.png" width="60px">
