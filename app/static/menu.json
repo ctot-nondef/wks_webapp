@@ -2,7 +2,7 @@
 	{
 		"caption":"Settings",
 		"arialabel":"",
-		"mdicon":"settings_ethernet",
+		"mdicon":"settings",
 		"abstract":"",
 		"startpage":"wks.settings",
 		"items":"",

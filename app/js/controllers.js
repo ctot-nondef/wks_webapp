@@ -82,6 +82,7 @@ WKSControllers
 }])
 .controller('WKSSettings',['$scope','$http', '$state', '$stateParams', 'mongorest', function($scope, $http, $state, $stateParams, mongorest){
   $scope.Model = {};
+  $scope.selectedIndex = 0;  
 }])
 .controller('WKSTypeList',['$scope','$http', '$state', '$stateParams', 'mongorest', function($scope, $http, $state, $stateParams, mongorest){
   //********* DECLARATIVE PART *********************************************

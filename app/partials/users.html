@@ -1,5 +1,4 @@
 <div class="pagewrapper" layout="column" layout-align="start start" layout-padding>
-	<h2 class="md-display-1">User Management</h2>
 	<md-table-pagination md-limit="Model.Pagesize" md-limit-options="[10, 20, 40, 100]" md-page="Model.Page" md-total="{{Model.Total}}" md-on-paginate="getPage" md-page-select></md-table-pagination>
 	<md-table-container>
 	  <table md-table ng-model="selected" md-progress="promise">
