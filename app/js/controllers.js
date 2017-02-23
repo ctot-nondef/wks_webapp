@@ -82,7 +82,7 @@ WKSControllers
 }])
 .controller('WKSSettings',['$scope','$http', '$state', '$stateParams', 'mongorest', function($scope, $http, $state, $stateParams, mongorest){
   $scope.Model = {};
-  $scope.selectedIndex = 0;  
+  $scope.selectedIndex = 0;
 }])
 .controller('WKSTypeList',['$scope','$http', '$state', '$stateParams', 'mongorest', function($scope, $http, $state, $stateParams, mongorest){
   //********* DECLARATIVE PART *********************************************
@@ -180,24 +180,15 @@ WKSControllers
 .controller('WKSUsers',['$scope','$http', '$state', '$stateParams', 'mongorest', '$mdDialog', 'mongoose', function($scope, $http, $state, $stateParams, mongorest, $mdDialog, mongoose){
   //********* DECLARATIVE PART *********************************************
     $scope.Model = {};
-    $scope.status = "";
     $scope.uiview = {"menuOpen":false};
-    $scope.isArray = angular.isArray;
-    $scope.arefs = [];
-    $scope.atypes = mongooseTypes;
+    $scope.selected = [];
+    $scope.Model.Page = 1;
   //********* END OF DECLARATIVE PART **************************************
-    var SPromise = mongorest.getDoc('wkstest','schemas',$stateParams.id);
-    SPromise.then(function(res){
-      $scope.schemaMap = mongoose.mapSchema(JSON.parse(JSON.stringify(res.data.properties)),[]);
-      $scope.schema = JSON.parse(JSON.stringify(res.data));
-      console.log($scope.schemaMap);
-      var TPromise = mongorest.getColl('wkstest','schemas');
-      TPromise.then(function(res){
-        res.data.forEach(function(t){
-          if(t.title!=$scope.schema.title) $scope.arefs.push(t.title);
-        });
-      });
-    });
+    var Promise = mongorest.getColl('auth','users');
+    Promise.then(function(res){
+      $scope.users = res.data;
+      console.log(res);
+    })
 }])
 .controller('WKSSingleUser',['$scope','$http', '$state', '$stateParams', 'mongorest', '$mdDialog', 'mongoose', function($scope, $http, $state, $stateParams, mongorest, $mdDialog, mongoose){
   //********* DECLARATIVE PART *********************************************
