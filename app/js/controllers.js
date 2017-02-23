@@ -80,6 +80,9 @@ WKSControllers
       $mdSidenav('sidenav').toggle();
     };
 }])
+.controller('WKSSettings',['$scope','$http', '$state', '$stateParams', 'mongorest', function($scope, $http, $state, $stateParams, mongorest){
+  $scope.Model = {};
+}])
 .controller('WKSTypeList',['$scope','$http', '$state', '$stateParams', 'mongorest', function($scope, $http, $state, $stateParams, mongorest){
   //********* DECLARATIVE PART *********************************************
     $scope.Model = {};
@@ -172,4 +175,48 @@ WKSControllers
     $scope.save = function(){
       console.log(schemaMap);
     }
+}])
+.controller('WKSUsers',['$scope','$http', '$state', '$stateParams', 'mongorest', '$mdDialog', 'mongoose', function($scope, $http, $state, $stateParams, mongorest, $mdDialog, mongoose){
+  //********* DECLARATIVE PART *********************************************
+    $scope.Model = {};
+    $scope.status = "";
+    $scope.uiview = {"menuOpen":false};
+    $scope.isArray = angular.isArray;
+    $scope.arefs = [];
+    $scope.atypes = mongooseTypes;
+  //********* END OF DECLARATIVE PART **************************************
+    var SPromise = mongorest.getDoc('wkstest','schemas',$stateParams.id);
+    SPromise.then(function(res){
+      $scope.schemaMap = mongoose.mapSchema(JSON.parse(JSON.stringify(res.data.properties)),[]);
+      $scope.schema = JSON.parse(JSON.stringify(res.data));
+      console.log($scope.schemaMap);
+      var TPromise = mongorest.getColl('wkstest','schemas');
+      TPromise.then(function(res){
+        res.data.forEach(function(t){
+          if(t.title!=$scope.schema.title) $scope.arefs.push(t.title);
+        });
+      });
+    });
+}])
+.controller('WKSSingleUser',['$scope','$http', '$state', '$stateParams', 'mongorest', '$mdDialog', 'mongoose', function($scope, $http, $state, $stateParams, mongorest, $mdDialog, mongoose){
+  //********* DECLARATIVE PART *********************************************
+    $scope.Model = {};
+    $scope.status = "";
+    $scope.uiview = {"menuOpen":false};
+    $scope.isArray = angular.isArray;
+    $scope.arefs = [];
+    $scope.atypes = mongooseTypes;
+  //********* END OF DECLARATIVE PART **************************************
+    var SPromise = mongorest.getDoc('wkstest','schemas',$stateParams.id);
+    SPromise.then(function(res){
+      $scope.schemaMap = mongoose.mapSchema(JSON.parse(JSON.stringify(res.data.properties)),[]);
+      $scope.schema = JSON.parse(JSON.stringify(res.data));
+      console.log($scope.schemaMap);
+      var TPromise = mongorest.getColl('wkstest','schemas');
+      TPromise.then(function(res){
+        res.data.forEach(function(t){
+          if(t.title!=$scope.schema.title) $scope.arefs.push(t.title);
+        });
+      });
+    });
 }])

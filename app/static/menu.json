@@ -1,10 +1,11 @@
 [
 	{
-		"caption":"Data Types",
+		"caption":"Settings",
 		"arialabel":"",
 		"mdicon":"settings_ethernet",
 		"abstract":"",
-		"startpage":"wks.types",
-		"items":""
+		"startpage":"wks.settings",
+		"items":"",
+		"auth":true
 	}
 ]

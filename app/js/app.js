@@ -51,6 +51,15 @@ function config($stateProvider, $urlRouterProvider, $locationProvider, $compileP
     ////////////////////////////////////////////////////////
     // various content states, views ref to index.html    //
     ////////////////////////////////////////////////////////
+    .state('wks.settings',{
+        url: '/settings',
+        views: {
+            'content@': {
+                templateUrl: 'partials/settings.html',
+                controller: 'WKSSettings'
+            }
+        }
+    })
     .state('wks.types',{
         url: '/types',
         views: {
