@@ -11,7 +11,9 @@ var MongoDBservices = angular.module('MongoDBservices', ['ngStorage']);
 MongoDBservices.service('mongorest', ['$http', '$localStorage', '$q',function($http,$localStorage, $q){
 	//////////Callable retrieval functions///////////////////////////////
     this.initStorage = function(){console.log('initializing local storage');
-      if($localStorage[RestConfig.localStorage] && $localStorage[RestConfig.localStorage]['history'] && $localStorage[RestConfig.localStorage]['session']) var s = $localStorage[RestConfig.localStorage];
+      if($localStorage[RestConfig.localStorage] && $localStorage[RestConfig.localStorage]['history'] && $localStorage[RestConfig.localStorage]['session']) {
+        var s = $localStorage[RestConfig.localStorage];
+      }
       else {
         $localStorage[RestConfig.localStorage] = {};
         $localStorage[RestConfig.localStorage]['history'] = {"querystring":[],"query":[],"result":[]};
@@ -19,6 +21,10 @@ MongoDBservices.service('mongorest', ['$http', '$localStorage', '$q',function($h
         var s = $localStorage[RestConfig.localStorage];
       }
       return s;
+    }
+    this.checktoken = function(){
+      var d = new Date(this.s.session.exp);
+      console.log(d);
     }
     this.restLogin = function(user, password){console.log('logging in as user ', user);
       var that = this;
@@ -83,6 +89,7 @@ MongoDBservices.service('mongorest', ['$http', '$localStorage', '$q',function($h
 			}
 		}
     this.s = this.initStorage();
+    this.checktoken();
     console.log(this.s);
 }]);
 
