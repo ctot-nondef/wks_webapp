@@ -24,7 +24,7 @@ MongoDBservices.service('mongorest', ['$http', '$localStorage', '$q',function($h
     }
     this.checktoken = function(){
       var d = new Date(this.s.session.exp);
-      console.log(d);
+      console.log(d.getTime());
     }
     this.restLogin = function(user, password){console.log('logging in as user ', user);
       var that = this;

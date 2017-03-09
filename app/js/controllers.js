@@ -18,7 +18,7 @@ WKSControllers
 .controller('WKSStart',['$scope','$http', '$state', '$stateParams', 'mongorest', function($scope, $http, $state, $stateParams, mongorest){
   $scope.Model = {};
 }])
-.controller('WKSNav', ['$scope', '$timeout', '$mdSidenav', '$http', '$log', 'mongorest','$mdDialog', '$rootScope', function ($scope, $timeout, $mdSidenav, $http, $log, mongorest, $mdDialog, $rootScope) {
+.controller('WKSNav', ['$scope', '$timeout', '$mdSidenav', '$http', '$state', '$log', 'mongorest','$mdDialog', '$rootScope', function ($scope, $timeout, $mdSidenav, $http, $state, $log, mongorest, $mdDialog, $rootScope) {
     $scope.Model = {};
     $rootScope.auth = mongorest.auth();
     // we'll need to check for a valid token right away in order to load the right view and menu options
@@ -70,6 +70,7 @@ WKSControllers
       $mdDialog.show(confirm).then(function() {
         mongorest.logout();
         $rootScope.auth = mongorest.auth();
+        $state.go('start');
       }, function() {
       });
     };
