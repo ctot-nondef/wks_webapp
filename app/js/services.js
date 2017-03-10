@@ -4,7 +4,8 @@
 
 var RestConfig = {
     "baseURL":"https://wksrest.hephaistos.arz.oeaw.ac.at/",
-    "localStorage":"MongoRestStorage"
+    "localStorage":"MongoRestStorage",
+    "tokenvalidity": 24 //in hours
 }
 
 var MongoDBservices = angular.module('MongoDBservices', ['ngStorage']);
@@ -24,7 +25,8 @@ MongoDBservices.service('mongorest', ['$http', '$localStorage', '$q',function($h
     }
     this.checktoken = function(){
       var d = new Date(this.s.session.exp);
-      console.log(d.getTime());
+      if(d.setTime(d.getTime() + (RestConfig.tokenvalidity*60*60*1000)) > Date.now()) return true;
+
     }
     this.restLogin = function(user, password){console.log('logging in as user ', user);
       var that = this;
