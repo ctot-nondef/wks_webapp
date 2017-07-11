@@ -1,11 +1,10 @@
 [
 	{
-		"caption":"Settings",
+		"caption":"Data Types",
 		"arialabel":"",
-		"mdicon":"settings",
+		"mdicon":"search",
 		"abstract":"",
-		"startpage":"wks.settings",
-		"items":"",
-		"auth":true
+		"startpage":"wks.types",
+		"items":""
 	}
 ]

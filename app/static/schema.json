@@ -77,20 +77,25 @@
         "ref":"wks_material"
       },
       "dimensions": {
-        "length": {
-          "type": "number"
-        },
-        "width": {
-          "type": "number"
-        },
-        "height": {
-          "type": "number"
+        "type": "object",
+        "properties": {
+          "length": {
+            "type": "number"
+          },
+          "width": {
+            "type": "number"
+          },
+          "height": {
+            "type": "number"
+          }
         }
       },
-      "creationdate": {
+      "date": {
         "type": "Date"
       },
       "provenance": {
+        "type": "object",
+        "properties": {
           "person": {
             "type": "ObjectID",
             "ref":"wks_person"
@@ -99,6 +104,8 @@
             "type": "Date"
           },
           "price": {
+            "type": "object",
+            "properties": {
               "amount":{
                 "type":"Number"
               },
@@ -106,11 +113,17 @@
                 "type":"ObjectID",
                 "ref":"wks_currency"
               }
+            }
           }
+        }
       },
       "classification":{
+        "type":"object",
+        "properties":{
+          "creationdate":{"type":"Date"},
           "artform":[{"type":"ObjectID","ref":""}],
           "theme":[{"type":"ObjectID","ref":""}]
+        }
       },
       "images":[{
           "name":{
@@ -178,23 +191,28 @@
         "type":"ObjectID"
       },
       "dimensions": {
-        "length": {
-          "type": "number"
-        },
-        "width": {
-          "type": "number"
-        },
-        "height": {
-          "type": "number"
-        },
-        "comments":{
-          "type":"String"
+        "type": "object",
+        "properties": {
+          "length": {
+            "type": "number"
+          },
+          "width": {
+            "type": "number"
+          },
+          "height": {
+            "type": "number"
+          },
+          "comments":{
+            "type":"String"
+          }
         }
       },
-      "creationdate": {
+      "date": {
         "type": "Date"
       },
       "provenance": {
+        "type": "object",
+        "properties": {
           "person": {
             "type": "ObjectID"
           },
@@ -202,17 +220,25 @@
             "type": "Date"
           },
           "price": {
+            "type": "object",
+            "properties": {
               "amount":{
                 "type":"Number"
               },
               "currency":{
                 "type":"ObjectID"
               }
+            }
           }
+        }
       },
       "classification":{
+        "type":"object",
+        "properties":{
+          "creationdate":{"type":"Date"},
           "artform":[{"type":"ObjectID","ref":""}],
-          "theme":[{"type":"ObjectID","ref":""}]
+          "theme":[{"type":"ObjectID","ref":""}],
+        }
       },
       "images":[{
           "name":{
@@ -241,12 +267,8 @@
         "required": true
       },
       "ID": {
-        "key":{
-          "type":"String"
-        },
-        "reference":{
-          "type":"String"
-        }
+        "type": "String",
+        "required": true
       }
   	}
   },
@@ -263,11 +285,10 @@
         "required": true
       },
       "ID": {
-        "key":{
-          "type":"String"
-        },
-        "reference":{
-          "type":"String"
+        "type": "Object",
+        "properties":{
+            "key":"String",
+            "reference":"String"
         }
       }
   	}
@@ -300,11 +321,10 @@
         "type": "ObjectID"
       },
       "ID": {
-        "key":{
-          "type":"String"
-        },
-        "reference":{
-          "type":"String"
+        "type": "Object",
+        "properties":{
+            "key":"String",
+            "reference":"String"
         }
       }
   	}
@@ -318,11 +338,10 @@
         "required": true
       },
       "ID": {
-        "key":{
-          "type":"String"
-        },
-        "reference":{
-          "type":"String"
+        "type": "Object",
+        "properties":{
+            "key":"String",
+            "reference":"String"
         }
       }
   	}
@@ -336,11 +355,10 @@
         "required": true
       },
       "ID": {
-        "key":{
-          "type":"String"
-        },
-        "reference":{
-          "type":"String"
+        "type": "Object",
+        "properties":{
+            "key":"String",
+            "reference":"String"
         }
       }
   	}
