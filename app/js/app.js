@@ -15,7 +15,7 @@ var WKSApp = angular.module('WKSApp', [
 
 
 WKSApp.config(config);
-function config($stateProvider, $urlRouterProvider, $locationProvider, $compileProvider,$logProvider,$mdThemingProvider, $httpProvider){
+function config($stateProvider, $urlRouterProvider, $locationProvider, $compileProvider,$logProvider,$mdThemingProvider){
   $compileProvider.debugInfoEnabled(true);
   $logProvider.debugEnabled(true);
   $urlRouterProvider.otherwise('/');
@@ -51,15 +51,6 @@ function config($stateProvider, $urlRouterProvider, $locationProvider, $compileP
     ////////////////////////////////////////////////////////
     // various content states, views ref to index.html    //
     ////////////////////////////////////////////////////////
-    .state('wks.settings',{
-        url: '/settings',
-        views: {
-            'content@': {
-                templateUrl: 'partials/settings.html',
-                controller: 'WKSSettings'
-            }
-        }
-    })
     .state('wks.types',{
         url: '/types',
         views: {
@@ -93,10 +84,3 @@ function config($stateProvider, $urlRouterProvider, $locationProvider, $compileP
      .primaryPalette('yellow')
      .dark();
 }
-WKSApp.run(['$rootScope', '$state', '$stateParams', 'mongorest', function($rootScope, $state, $stateParams, mongorest){
-  $rootScope.$on('$stateChangeStart', function(event, toState, toStateParams){
-    $rootScope.toState = toState;
-    $rootScope.toStateParams = toStateParams;
-    console.log(toState);
-  });
-}]);
