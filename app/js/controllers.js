@@ -64,7 +64,7 @@ WKSControllers
             .title('Logout')
             .textContent('Really logout User '+mongorest.s.session.user +'?')
             .ariaLabel('logout')
-            .targetEvent(ev)
+            .targetEvent(ev)  
             .ok('Go Ahead!')
             .cancel('Stay here');
       $mdDialog.show(confirm).then(function() {
