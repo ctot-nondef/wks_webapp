@@ -17,6 +17,7 @@
     "ui-leaflet":"1.0.0",
     "angular-cookies":"1.5.10",
     "angular-material-data-table":"0.10.10",
-    "ngstorage":"0.3.11"
+    "ngstorage":"0.3.11",
+    "auth0-angular":"4.2.5"
   }
 }

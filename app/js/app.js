@@ -10,7 +10,8 @@ var WKSApp = angular.module('WKSApp', [
   'WKSControllers',
   'WKSFilters',
   'md.data.table',
-  'ui-leaflet'
+  'ui-leaflet',
+  'auth0.auth0'
 ]);
 
 
