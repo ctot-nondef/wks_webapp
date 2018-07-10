@@ -2,11 +2,8 @@
 /* eslint no-param-reassign: ["error", { "props": false }] */
 /* eslint-disable no-underscore-dangle */
 const state = {
-  clearcachedialog: { status: false },
-  storedialog: { status: false },
-  deletesubjectdialog: { status: false, uri: '' },
-  addnewsubjectmodal: { status: false, item: {}, changedItem: {} },
-  filesizedialog: { status: false, file: '', size: '', result: '' },
+  loginDialog: { status: false },
+  logoutDialog: { status: false },
 };
 
 const getters = {

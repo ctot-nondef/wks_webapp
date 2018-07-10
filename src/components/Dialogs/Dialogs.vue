@@ -1,17 +1,20 @@
 <template lang="html">
   <div>
-      <storedialog></storedialog>
+      <logindialog></logindialog>
+      <logoutdialog></logoutdialog>
   </div>
 </template>
 
 <script>
-import storedialog from './StoreDialog';
+import logindialog from './LoginDialog';
+import logoutdialog from './LogoutDialog';
 
 
 
 export default {
   components: {
-    storedialog,    // directly opens itself. -> old session restore
+    logindialog,
+    logoutdialog,
   },
 };
 </script>

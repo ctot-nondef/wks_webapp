@@ -39,6 +39,22 @@
                     <v-list-tile-title class="toolbarcaption">{{item.caption}}</v-list-tile-title>
                   </v-list-tile-content>
               </v-list-tile>
+              <v-list-tile value="true" @click.stop="openDialog('loginDialog')" v-if="!$store.state.app.loggedin">
+                  <v-btn icon>
+                    <v-icon>input</v-icon>
+                  </v-btn>
+                  <v-list-tile-content >
+                    <v-list-tile-title class="toolbarcaption">LOGIN</v-list-tile-title>
+                  </v-list-tile-content>
+              </v-list-tile>
+              <v-list-tile value="true" @click.stop="openDialog('logoutDialog')" v-if="$store.state.app.loggedin">
+                  <v-btn icon>
+                    <v-icon>power_settings_new</v-icon>
+                  </v-btn>
+                  <v-list-tile-content >
+                    <v-list-tile-title class="toolbarcaption">LOGOUT</v-list-tile-title>
+                  </v-list-tile-content>
+              </v-list-tile>
             </v-list>
             <v-list>
               <v-list-tile>
@@ -114,7 +130,7 @@
 </template>
 
 <script>
-import { mapActions, mapMutations } from 'vuex';
+import { mapState, mapActions, mapMutations } from 'vuex';
 
 /* eslint no-console: ["error", { allow: ["log"] }] */
 /* eslint no-return-assign: "off" */
@@ -126,15 +142,11 @@ export default {
   },
   name: 'FundamentNav',
   methods: {
-    ...mapActions('jowl', [
-      'setOntology',
-      'constructJOWL',
-    ]),
     ...mapMutations('JSONschema', [
       'constructJSONschema',
     ]),
-    ...mapActions('n3', [
-      'constructN3',
+    ...mapMutations('dialogs', [
+      'openDialog',
     ]),
     ...mapActions('app', [
       'toggleAppMode',

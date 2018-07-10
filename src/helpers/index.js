@@ -6,37 +6,11 @@ import axios from 'axios';
 /* eslint-disable spaced-comment */
 // this could go to an external file, to be excluded from commits etc
 const CONFIG = {
-  ARCHE: {
-    BASEURL: 'https://fedora.apollo.arz.oeaw.ac.at/browser/api/',
+  WKS: {
+    BASEURL: 'https://wksgoose.eos.arz.oeaw.ac.at/api/v1/',
     ENDPOINTS: {
-      PERSONS: 'persons/',
-      BASE: '',
-      ORGANISATIONS: 'organisations/',
-      PLACES: 'places/',
-      CONCEPTS: 'concepts/',
-      PUBLICATIONS: 'publications/',
-      METADATA: 'getMetadata/',
-      AUTOCOMPLETE: 'getData/',
-      ID: 'checkIdentifier/',
-    },
-    TIMEOUT: 15000,
-    PARAMS: {
-      _format: 'json',
-    },
-    HEADERS: {},
-  },
-  ARCHE2: {
-    BASEURL: 'https://fedora.hephaistos.arz.oeaw.ac.at/browser/api/',
-    ENDPOINTS: {
-      PERSONS: 'persons/',
-      BASE: '',
-      ORGANISATIONS: 'organisations/',
-      PLACES: 'places/',
-      CONCEPTS: 'concepts/',
-      PUBLICATIONS: 'publications/',
-      METADATA: 'getMetadata/',
-      AUTOCOMPLETE: 'getData/',
-      ID: 'checkIdentifier/',
+      JSONSCHEMA: 'jsonschema/',
+      BASE: '/'
     },
     TIMEOUT: 15000,
     PARAMS: {
@@ -73,7 +47,7 @@ const CONFIG = {
 let APIS = {};
 
 const VALID_TYPES = {
-  ARCHE: [
+  WKS: [
     'PERSONS',
     'ORGANISATIONS',
     'PLACES',
@@ -82,45 +56,6 @@ const VALID_TYPES = {
     'METADATA',
   ],
 };
-
-/*
- atomic mapping of types to API-Calls by using APIS
- example) type: { APITYPE1: [ 'enpoint1', 'endoint2' ], APITYPE2: [ 'enpoint1', 'endoint2' ] }
- in the example above 4 apicalls would be made and all results concatted into one
- for the user to select.
- 'ARCHE_ALL' is a wildcard for all endoints within ARCHE.
- used in getMultipleApiCallsByTypeAndID.
-*/
-const RANGE_TO_APICALLS = {
-  agent: {
-    ARCHE: ['ORGANISATIONS', 'PERSONS'],
-  },
-  person: {
-    ARCHE: ['PERSONS'],
-  },
-  place: {
-    ARCHE: ['PLACES'],
-  },
-  organisation: {
-    ARCHE: ['ORGANISATIONS'],
-  },
-  publication: {
-    ARCHE: ['PUBLICATIONS'],
-  },
-  collection: {
-    ARCHE: ['COLLECTIONS'],
-  },
-  vocabstest: {
-    VOCABS: ['ARCHE_CATEGORY', 'ARCHE_LIFECYCLE_STATUS'],
-  },
-  container: 'ARCHE_ALL',
-  reme: 'ARCHE_ALL',
-  resource: 'ARCHE_ALL',
-  main: 'ARCHE_ALL',
-  repoobject: 'ARCHE_ALL',
-  anyuri: 'ARCHE_ALL',
-};
-
 
 function buildFetchers(extconf) {
   // this.$info('Helpers', 'buildFetchers(extconf)', extconf);
@@ -156,6 +91,14 @@ export default {
     };
   },
   methods: {
+    loginReq(username, password) {
+      this.$info('Helpers', 'login', username);
+      return APIS.WKS.BASE.post(`/login`, {username: username, password: password}).then(response => Promise.resolve(response.data));
+    },
+    logoutReq(username, password) {
+      this.$info('Helpers', 'logout');
+      return APIS.WKS.BASE.get(`/logout`).then(response => Promise.resolve(response.data));
+    },
     /* fetches the JSON-schema from the specified API in the config and returns it.
      */
     getMetadataByType(type) {
