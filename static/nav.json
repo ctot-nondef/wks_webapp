@@ -1,0 +1,62 @@
+{
+	"logo":"/static/fundament_logo.svg",
+	"title":"MetaDataEditor",
+	"color":"teal lighten-3",
+	"homestate":{
+		"name": "start",
+		"params": {
+			"lang": "en" }
+		},
+	"menu":
+		[
+			{
+				"caption":"Home",
+				"arialabel":"",
+				"icon":"home",
+				"abstract":"",
+				"startpage":{
+					"name": "start",
+					"params": {
+						"lang": "en" }
+					},
+				"items":""
+			},
+			{
+				"caption":"Data",
+				"arialabel":"",
+				"icon":"share",
+				"abstract":"",
+				"startpage":{
+					"name": "store",
+					"params": {
+						"lang": "en" }
+					},
+				"items":""
+			},
+			{
+				"caption":"Edit",
+				"arialabel":"",
+				"icon":"edit",
+				"abstract":"",
+				"startpage":{
+					"name": "create",
+					"params": {
+						"lang": "en" }
+					},
+				"items":""
+			},
+			{
+				"caption":"Ontology",
+				"arialabel":"",
+				"icon":"device_hub",
+				"abstract":"",
+				"startpage":{
+					"name": "schema",
+					"params": {
+						"lang": "en" }
+					},
+				"items":""
+			}
+		],
+	"repo":""
+}
