@@ -3,18 +3,18 @@
 }
 
 .border-bottom {
-  border-bottom: 4px solid #80cbc4!important;
+  border-bottom: 4px solid #003263!important;
 }
 
 .border-top {
-  border-top: 4px solid #80cbc4!important;
+  border-top: 4px solid #003263!important;
 }
 
 h1:after, h3:after {
   content: '';
   display: block;
   width: 60px;
-  border-top: 4px solid #80cbc4!important;
+  border-top: 4px solid #003263!important;
   margin-top: 20px;
   margin-bottom: 20px;
 }

@@ -12,7 +12,7 @@
       <v-card-actions v-if="link">
         <v-btn
           flat
-          class="teak lighten-3"
+          class="primary"
           :to="link"
           >
         More</v-btn>

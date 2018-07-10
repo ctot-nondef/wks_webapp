@@ -36,12 +36,6 @@ export default {
     ...mapMutations('JSONschema', [
       'constructJSONschema',
     ]),
-    ...mapActions('n3', [
-      'constructN3',
-    ]),
-    ...mapMutations('localStorageInfo', [
-      'constructLocalStorageInfo',
-    ]),
     discard() {
       this.dialogShow = false;
       this.deleteOldSessions();
@@ -49,8 +43,6 @@ export default {
     restore(reload = true) {
       // this.constructJOWL(this.latestSession);
       this.constructJSONschema(this.latestSession);
-      this.constructN3(this.latestSession);
-      this.constructLocalStorageInfo(this.latestSession);
       this.discard();
       if (reload) {
         this.$router.go(this.$router.currentRoute);
@@ -58,16 +50,7 @@ export default {
     },
   },
   created() {
-    this.latestSession = this.getLatestSession();
-    if (this.latestSession) {
-      this.$log('latestSession', this.latestSession);
-      this.date = this.dateToString(new Date(this.latestSession.date));
-      if (Date.now() - this.latestSession.date < 300000) {
-        this.restore(false);
-      } else {
-        this.dialogShow = true;
-      }
-    }
+    this.dialogShow = true;
   },
 };
 </script>

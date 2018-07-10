@@ -1,7 +1,7 @@
 {
 	"logo":"/static/fundament_logo.svg",
 	"title":"MetaDataEditor",
-	"color":"teal lighten-3",
+	"color":"primary",
 	"homestate":{
 		"name": "start",
 		"params": {

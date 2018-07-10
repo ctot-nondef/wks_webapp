@@ -17,9 +17,9 @@
           <v-layout column justify-space-between>
             <v-list>
               <v-list-tile>
-                <v-btn icon @click.stop="toggleAppMode()">
+                <!-- <v-btn icon @click.stop="toggleAppMode()">
                   <v-icon>view_day</v-icon>
-                </v-btn>
+                </v-btn> -->
                 <v-btn icon @click.stop="toggleNavDrawerClipped()">
                   <v-icon v-html="$store.state.app.drawerclipped?'first_page':'last_page'" v-if="!$store.state.app.miniVariant"></v-icon>
                 </v-btn>
@@ -42,6 +42,13 @@
             </v-list>
             <v-list>
               <v-list-tile>
+                <router-link :to="{ name: 'start' }">
+                  <div class="logo">
+                    <h5 style="font-weight: 200; padding: 0px; margin: 0px;letter-spacing: 3px!important; line-height:25px;text-decoration-line: none!important;">VC</h5>
+                    <h5 style="font-weight: 800; padding: 0px; margin: 0px;letter-spacing: 2px!important; line-height:25px;text-decoration-line: none!important;">HC</h5>
+                  </div>
+                  Database
+                </router-link>
               </v-list-tile>
             </v-list>
           </v-layout>
@@ -55,21 +62,21 @@
         height="90"
         class="border-bottom"
         >
-        <v-btn icon @click.stop="toggleAppMode()">
+        <!-- <v-btn icon @click.stop="toggleAppMode()">
           <v-icon>view_quilt</v-icon>
-        </v-btn>
+        </v-btn> -->
         <v-container row >
           <v-layout row class="compensation">
             <v-flex xs3 >
               <v-layout column justify-center fill-height>
                 <v-toolbar-title>
-                  <v-avatar
-                    size="35"
-                    class="teal lighten-3"
-                  >
-                    <img :src="$store.state.app.config.logo" alt="alt">
-                  </v-avatar>
-                  {{$store.state.app.config.title}}
+                  <router-link :to="{ name: 'start' }">
+                    <div class="logo">
+                      <h5 style="font-weight: 200; padding: 0px; margin: 0px;letter-spacing: 3px!important; line-height:25px;">VC</h5>
+                      <h5 style="font-weight: 800; padding: 0px; margin: 0px;letter-spacing: 2px!important; line-height:25px;">HC</h5>
+                    </div>
+                    Database
+                  </router-link>
                 </v-toolbar-title>
               </v-layout>
             </v-flex>
@@ -154,6 +161,11 @@ export default {
 }
 .toolbarcaption {
   color:white;
+}
+.logo {
+  color:white;
+  white-space: nowrap;
+  font-family: 'Montserrat', sans-serif;
 }
 
 </style>

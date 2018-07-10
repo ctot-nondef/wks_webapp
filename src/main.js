@@ -22,9 +22,18 @@ Vue.use(vueLogger, {
   levels: ['log', 'warn', 'debug', 'error', 'dir', 'info'],
 });
 
+
+
 Vue.use(VueAxios, axios);
 
-Vue.use(Vuetify);
+Vue.use(Vuetify, {
+  theme: {
+    primary: '#003263',
+    accent: '#2c76be',
+    secondary: '#2c76be',
+    info: '#B2DFDB'
+  }
+});
 
 sync(store, router);
 

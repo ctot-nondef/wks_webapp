@@ -2,8 +2,8 @@
 /* eslint no-param-reassign: ["error", { "props": false }] */
 
 const state = {
-  drawer: false,
-  drawerclipped: false,
+  drawer: true,
+  drawerclipped: true,
   fixed: false,
   config: {},
   miniVariant: false,
