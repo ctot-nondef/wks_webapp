@@ -1,6 +1,7 @@
-# mde-vuetify
+# WKS WebApp
 
-> A Linked Data Editor in VueJS
+Frontend for the VCHC Project Database.
+http://vchc.univie.ac.at/#/de/db
 
 ## Build Setup
 
