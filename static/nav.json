@@ -22,9 +22,9 @@
 				"items":""
 			},
 			{
-				"caption":"Data",
+				"caption":"Inventare",
 				"arialabel":"",
-				"icon":"share",
+				"icon":"description",
 				"abstract":"",
 				"startpage":{
 					"name": "store",
@@ -34,9 +34,9 @@
 				"items":""
 			},
 			{
-				"caption":"Edit",
+				"caption":"Personen",
 				"arialabel":"",
-				"icon":"edit",
+				"icon":"person",
 				"abstract":"",
 				"startpage":{
 					"name": "create",
@@ -46,9 +46,33 @@
 				"items":""
 			},
 			{
-				"caption":"Ontology",
+				"caption":"Bibliographie",
+				"arialabel":"",
+				"icon":"book",
+				"abstract":"",
+				"startpage":{
+					"name": "schema",
+					"params": {
+						"lang": "en" }
+					},
+				"items":""
+			},
+			{
+				"caption":"Thesaurus",
 				"arialabel":"",
 				"icon":"device_hub",
+				"abstract":"",
+				"startpage":{
+					"name": "schema",
+					"params": {
+						"lang": "en" }
+					},
+				"items":""
+			},
+			{
+				"caption":"Import / Export",
+				"arialabel":"",
+				"icon":"build",
 				"abstract":"",
 				"startpage":{
 					"name": "schema",

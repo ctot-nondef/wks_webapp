@@ -2,55 +2,50 @@
   <div class="">
       <fundamentjumbo
         src="/static/intro_bg.jpg"
-        caption="MetaDataEditor"
-        subtitle="I'm supposed to be able to load and Edit ttl files for ingest in Arche."
+        caption="VCHC Projekt Datenbank"
+        subtitle=""
       >
       </fundamentjumbo>
-      <v-container grid-list-md>
+      <v-container grid-list-md v-if="$store.state.app.loggedin">
         <v-layout justify-space-around row wrap>
-          <fundamentsectiondiv icon="stars" caption="Getting Started"></fundamentsectiondiv>
+          <fundamentsectiondiv icon="description" caption="Sammlungsdaten"></fundamentsectiondiv>
           <v-flex xs12 sm6>
             <fundamentcard
-              caption="Load an existing ttl File."
+              caption="Anlegen eines neuen Inventars."
               :link="{ name: 'store', params: { lang: 'en' }}"
             >
-              <p class="card-text">Load and edit an existing file from your Disk.</p>
+              <p class="card-text"></p>
             </fundamentcard>
           </v-flex>
           <v-flex xs12 sm6>
             <fundamentcard
-              caption="Create a new Project"
+              caption="Anlegen einer neuen Sammlung."
               :link="{ name: 'create', params: { lang: 'en' }}"
             >
-              <p class="card-text">Create a new Project for archival in Arche.</p>
+              <p class="card-text"></p>
             </fundamentcard>
           </v-flex>
-          <fundamentsectiondiv icon="description" caption="Documentation"></fundamentsectiondiv>
-          <v-flex xs12 sm4>
+          <fundamentsectiondiv icon="device_hub" caption="Normdaten"></fundamentsectiondiv>
+          <v-flex xs12 sm6>
             <fundamentcard
-              caption="Load an existing ttl File."
+              caption="Anlegen einer neuen Person."
               :link="{ name: 'store', params: { lang: 'en' }}"
             >
-              <p class="card-text">Load and edit an existing file from your Disk.</p>
+              <p class="card-text"></p>
             </fundamentcard>
           </v-flex>
-          <v-flex xs12 sm4>
+          <v-flex xs12 sm6>
             <fundamentcard
-              caption="Create a new Project"
+              caption="Anlegen eines neuen Thesauruseintrags."
               :link="{ name: 'create', params: { lang: 'en' }}"
             >
-              <p class="card-text">Create a new Project for archival in Arche.</p>
-            </fundamentcard>
-          </v-flex>
-          <v-flex xs12 sm4>
-            <fundamentcard
-              caption="Create a new Project"
-              :link="{ name: 'create', params: { lang: 'en' }}"
-            >
-              <p class="card-text">Create a new Project for archival in Arche.</p>
+              <p class="card-text"></p>
             </fundamentcard>
           </v-flex>
         </v-layout>
+      </v-container>
+      <v-container grid-list-md v-if="!$store.state.app.loggedin">
+        Bitte loggen Sie sich ein um die Datenbank zu benutzen.
       </v-container>
   </div>
 </template>
@@ -59,6 +54,7 @@
 import fundamentjumbo from './Fundament/FundamentJumbo';
 import fundamentcard from './Fundament/FundamentCard';
 import fundamentsectiondiv from './Fundament/FundamentSectionDiv';
+import { mapState, mapActions, mapMutations } from 'vuex';
 
 export default {
   components: {
