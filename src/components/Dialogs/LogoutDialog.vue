@@ -22,6 +22,7 @@
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex';
 import HELPERS from '../../helpers';
+import { getLogout } from '../../assets/api.js';
 
 export default {
   data() {
@@ -44,7 +45,7 @@ export default {
       this.closeDialog('logoutDialog');
     },
     logout() {
-      this.logoutReq().then((res) => {
+      getLogout().then((res) => {
         this.logoutMut();
         this.closeDialog('logoutDialog');
       })

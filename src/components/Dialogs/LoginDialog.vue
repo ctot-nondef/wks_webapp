@@ -23,6 +23,7 @@
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex';
 import HELPERS from '../../helpers';
+import { postLogin } from '../../assets/api.js';
 
 export default {
   data() {
@@ -45,7 +46,12 @@ export default {
       this.closeDialog('loginDialog');
     },
     login() {
-      this.loginReq(this.username, this.password).then((res) => {
+      postLogin({
+        user: {
+          username: this.username,
+          password: this.password
+        }
+      }).then((res) => {
         this.loginMut();
         this.closeDialog('loginDialog');
       })
