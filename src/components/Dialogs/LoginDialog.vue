@@ -21,9 +21,8 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex';
+import { mapGetters, mapState, mapActions, mapMutations } from 'vuex';
 import HELPERS from '../../helpers';
-import { postLogin } from '../../assets/api.js';
 
 export default {
   data() {
@@ -46,7 +45,7 @@ export default {
       this.closeDialog('loginDialog');
     },
     login() {
-      postLogin({
+      this.f('postLogin')({
         user: {
           username: this.username,
           password: this.password
@@ -60,6 +59,9 @@ export default {
   computed: {
     ...mapState('dialogs',[
       'loginDialog',
+    ]),
+    ...mapGetters('api',[
+      'f',
     ])
   },
   created() {

@@ -6,6 +6,7 @@ import VueAxios from 'vue-axios';
 import JSONschema from './modules/JSONschema/index';
 import app from './modules/app/index';
 import dialogs from './modules/dialogs/index';
+import api from './modules/api/index';
 import plugins from './plugins';
 
 
@@ -22,6 +23,7 @@ export default new Vuex.Store({
     JSONschema,
     app,
     dialogs,
+    api
   },
   plugins,
   strict: false,
