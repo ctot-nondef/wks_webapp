@@ -27,7 +27,7 @@
 				"icon":"description",
 				"abstract":"",
 				"startpage":{
-					"name": "store",
+					"name": "i",
 					"params": {
 						"lang": "en" }
 					},

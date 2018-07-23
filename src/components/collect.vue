@@ -1,17 +1,22 @@
 <template>
-  <div>
-    <h3>Collections</h3>
-    <v-data-table
-      :headers="headers"
-      :items="tabledata"
-      class="elevation-1"
-    >
-      <template slot="items" slot-scope="props">
-        <td>{{ props.item.name }}</td>
-        <td>{{ props.item.type }}</td>
-        <td>{{ props.item.range }}</td>
-      </template>
-    </v-data-table>
+  <div class="">
+    <v-container grid-list-md v-if="$store.state.app.loggedin">
+      <h3>Collections</h3>
+      <v-data-table
+        :headers="headers"
+        :items="tabledata"
+        class="elevation-1"
+      >
+        <template slot="items" slot-scope="props">
+          <td>{{ props.item.name }}</td>
+          <td>{{ props.item.type }}</td>
+          <td>{{ props.item.range }}</td>
+        </template>
+      </v-data-table>
+    </v-container>
+    <v-container grid-list-md v-if="!$store.state.app.loggedin">
+      Bitte loggen Sie sich ein um die Datenbank zu benutzen.
+    </v-container>    
   </div>
 </template>
 
@@ -27,7 +32,6 @@ export default {
   mixins: [HELPERS],
   components: {
   },
-  props: ['uri'],
   data() {
     return {
       tabledata: [],
@@ -39,34 +43,18 @@ export default {
     };
   },
   methods: {
-    ...mapActions('jowl', [
-      'fetchClasses',
-      'fetchSubClassOf',
-      'fetchPropertiesByURI',
+    ...mapActions('api', [
+      'get',
+      'post',
+      'delete'
     ]),
   },
   computed: {
-    ...mapGetters('jowl', [
-      'getQuery',
-    ]),
   },
-  watch: {
-    uri: function getProps(newClass) {
-      this.$info('DataTable', 'getProps(newClass)', newClass);
-      this.tabledata = [];
-      this.fetchPropertiesByURI({ q: newClass, uri: newClass }).then((res) => {
-        let idx = res.length - 1;
-        while (idx + 1) {
-          this.tabledata.push({
-            name: res[idx]['?p'].name,
-            type: res[idx]['?p'].type,
-            range: res[idx]['?p'].range,
-          });
-          idx -= 1;
-        }
-        this.$log('Tabledata', this.tabledata);
-      });
-    },
+  created() {
+    this.get({type:'Collect'}).then((res) => {
+      console.log(res);
+    })
   },
 };
 </script>
