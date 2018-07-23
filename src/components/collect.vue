@@ -16,12 +16,12 @@
     </v-container>
     <v-container grid-list-md v-if="!$store.state.app.loggedin">
       Bitte loggen Sie sich ein um die Datenbank zu benutzen.
-    </v-container>    
+    </v-container>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
 
 import HELPERS from '../helpers';
 
@@ -46,15 +46,15 @@ export default {
     ...mapActions('api', [
       'get',
       'post',
-      'delete'
+      'delete',
     ]),
   },
   computed: {
   },
   created() {
-    this.get({type:'Collect'}).then((res) => {
+    this.get({ type: 'Collect' }).then((res) => {
       console.log(res);
-    })
+    });
   },
 };
 </script>

@@ -19,7 +19,7 @@ const mutations = {
   setConfig(s, config) {
     s.config = config;
   },
-  loginMut(s, username) {
+  loginMut(s) {
     s.loggedin = true;
   },
   logoutMut(s) {

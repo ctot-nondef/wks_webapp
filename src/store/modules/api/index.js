@@ -18,7 +18,7 @@ const getters = {
   availableEndpoints: s => s.apilib.keys,
   f: s => name => s.apilib[name],
   schema: s => name => s.schemas[name],
-  types: s => s.schemas.keys
+  types: s => s.schemas.keys,
 };
 
 const mutations = {
@@ -33,7 +33,7 @@ const mutations = {
     s.loading = false;
     s.loadmsg = '';
   },
-  setSchema(s, {type, attributes}) {
+  setSchema(s, { type, attributes }) {
     if (type && attributes) {
       s.schemas[type] = attributes;
     }
@@ -44,27 +44,25 @@ const actions = {
   init({ state, commit }) {
     commit('setLoading', 'Loading Database Configuration.');
     state.apilib.get().then((res) => {
-      if(res.data.data && res.data.data.length > 0) {
-        let sa = res.data.data;
-        for (var i = 0; i < sa.length; i++) {
+      if (res.data.data && res.data.data.length > 0) {
+        const sa = res.data.data;
+        for (let i = 0; i < sa.length; i++) {
           commit('setSchema', sa[i]);
         }
         commit('setLoadingFinished');
       }
-    })
+    });
   },
-  get({ state, commit }, {type, id, sort, skip, limit, query, populate}) {
+  get({ state, commit }, { type, id, sort, skip, limit, query, populate }) {
     let p = {};
     return new Promise((resolve, reject) => {
-      if(type && id) {
+      if (type && id) {
         commit('setLoading', `Getting ${type} ${id} from Database`);
-        p = state.apilib[`get${type}ByID`]({id});
-      }
-      else if (type && !id) {
+        p = state.apilib[`get${type}ByID`]({ id });
+      } else if (type && !id) {
         commit('setLoading', `Getting Queryset of ${type} from Database`);
-        p = state.apilib[`get${type}`]({sort, skip, limit, query, populate});
-      }
-      else reject('Invalid or Insufficient Parameters');
+        p = state.apilib[`get${type}`]({ sort, skip, limit, query, populate });
+      } else reject('Invalid or Insufficient Parameters');
       p.then((res) => {
         commit('setLoadingFinished');
         resolve(res);
@@ -75,18 +73,16 @@ const actions = {
       });
     });
   },
-  post({ state, commit }, {type, id, body}) {
+  post({ state, commit }, { type, id, body }) {
     let p = {};
     return new Promise((resolve, reject) => {
-      if(type && id) {
+      if (type && id) {
         commit('setLoading', `Updating ${type} ${id} to Database`);
-        p = state.apilib[`post${type}ByID`]({id,[type]:body});
-      }
-      else if (type && !id) {
+        p = state.apilib[`post${type}ByID`]({ id, [type]: body });
+      } else if (type && !id) {
         commit('setLoading', `Creating a ${type} in Database`);
-        p = state.apilib[`post${type}`]({[type]:body});
-      }
-      else reject('Invalid or Insufficient Parameters');
+        p = state.apilib[`post${type}`]({ [type]: body });
+      } else reject('Invalid or Insufficient Parameters');
       p.then((res) => {
         commit('setLoadingFinished');
         resolve(res);
@@ -97,14 +93,13 @@ const actions = {
       });
     });
   },
-  delete({ state, commit }, {type, id}) {
+  delete({ state, commit }, { type, id }) {
     let p = {};
     return new Promise((resolve, reject) => {
-      if(type && id) {
+      if (type && id) {
         commit('setLoading', `Deleting ${type} ${id} in Database`);
-        p = state.apilib[`delete${type}ByID`]({id})
-      }
-      else reject('Invalid or Insufficient Parameters');
+        p = state.apilib[`delete${type}ByID`]({ id });
+      } else reject('Invalid or Insufficient Parameters');
       p.then((res) => {
         commit('setLoadingFinished');
         resolve(res);
@@ -123,5 +118,5 @@ export default {
   state,
   getters,
   mutations,
-  actions
+  actions,
 };

@@ -21,7 +21,7 @@ export default new Vuex.Store({
   modules: {
     app,
     dialogs,
-    api
+    api,
   },
   plugins,
   strict: false,

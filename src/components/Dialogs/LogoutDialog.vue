@@ -30,10 +30,10 @@ export default {
   },
   mixins: [HELPERS],
   computed: {
-    ...mapState('dialogs',[
+    ...mapState('dialogs', [
       'logoutDialog',
     ]),
-    ...mapGetters('api',[
+    ...mapGetters('api', [
       'f',
     ]),
   },
@@ -48,10 +48,10 @@ export default {
       this.closeDialog('logoutDialog');
     },
     logout() {
-      this.f('getLogout')().then((res) => {
+      this.f('getLogout')().then(() => {
         this.logoutMut();
         this.closeDialog('logoutDialog');
-      })
+      });
     },
   },
 };

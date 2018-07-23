@@ -16,16 +16,11 @@ import store from './store/index';
 import router from './router';
 import './components/Fundament/Fundament.css';
 
-
-
-
 Vue.use(vueLogger, {
   dev: process.env.NODE_ENV !== 'production',
   shortname: true,
   levels: ['log', 'warn', 'debug', 'error', 'dir', 'info'],
 });
-
-
 
 Vue.use(VueAxios, axios);
 
@@ -34,8 +29,8 @@ Vue.use(Vuetify, {
     primary: '#003263',
     accent: '#2c76be',
     secondary: '#2c76be',
-    info: '#B2DFDB'
-  }
+    info: '#B2DFDB',
+  },
 });
 
 sync(store, router);

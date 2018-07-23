@@ -33,12 +33,12 @@ export default {
     };
   },
   computed: {
-    ...mapState('dialogs',[
+    ...mapState('dialogs', [
       'loginDialog',
     ]),
-    ...mapGetters('api',[
+    ...mapGetters('api', [
       'f',
-    ])
+    ]),
   },
   methods: {
     ...mapMutations('app', [
@@ -54,12 +54,12 @@ export default {
       this.f('postLogin')({
         user: {
           username: this.username,
-          password: this.password
-        }
-      }).then((res) => {
+          password: this.password,
+        },
+      }).then(() => {
         this.loginMut();
         this.closeDialog('loginDialog');
-      })
+      });
     },
   },
 };

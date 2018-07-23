@@ -9,8 +9,6 @@
 import logindialog from './LoginDialog';
 import logoutdialog from './LogoutDialog';
 
-
-
 export default {
   components: {
     logindialog,
