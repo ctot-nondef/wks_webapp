@@ -56,13 +56,21 @@ const actions = {
   get({ state, commit }, {type, id, sort, skip, limit, query, populate}) {
     let p = {};
     return new Promise((resolve, reject) => {
-      if(type && id) p = state.apilib[`get${type}ByID`]({id});
-      else if (type && !id) p = state.apilib[`get${type}`]({sort, skip, limit, query, populate});
+      if(type && id) {
+        commit('setLoading', `Getting ${type} ${id} from Database`);
+        p = state.apilib[`get${type}ByID`]({id});
+      }
+      else if (type && !id) {
+        commit('setLoading', `Getting Queryset of ${type} from Database`);
+        p = state.apilib[`get${type}`]({sort, skip, limit, query, populate});
+      }
       else reject('Invalid or Insufficient Parameters');
       p.then((res) => {
+        commit('setLoadingFinished');
         resolve(res);
       })
       .catch((error) => {
+        commit('setLoadingFinished');
         reject(error);
       });
     });
@@ -70,13 +78,21 @@ const actions = {
   post({ state, commit }, {type, id, body}) {
     let p = {};
     return new Promise((resolve, reject) => {
-      if(type && id) p = state.apilib[`post${type}ByID`]({id,[type]:body});
-      else if (type && !id) p = state.apilib[`post${type}`]({[type]:body});
+      if(type && id) {
+        commit('setLoading', `Updating ${type} ${id} to Database`);
+        p = state.apilib[`post${type}ByID`]({id,[type]:body});
+      }
+      else if (type && !id) {
+        commit('setLoading', `Creating a ${type} in Database`);
+        p = state.apilib[`post${type}`]({[type]:body});
+      }
       else reject('Invalid or Insufficient Parameters');
       p.then((res) => {
+        commit('setLoadingFinished');
         resolve(res);
       })
       .catch((error) => {
+        commit('setLoadingFinished');
         reject(error);
       });
     });
@@ -84,13 +100,17 @@ const actions = {
   delete({ state, commit }, {type, id}) {
     let p = {};
     return new Promise((resolve, reject) => {
-      if(type && id) p = state.apilib[`delete${type}ByID`]({id});
-      else if (type && !id) p = state.apilib[`delete${type}`]();
+      if(type && id) {
+        commit('setLoading', `Deleting ${type} ${id} in Database`);
+        p = state.apilib[`delete${type}ByID`]({id})
+      }
       else reject('Invalid or Insufficient Parameters');
       p.then((res) => {
+        commit('setLoadingFinished');
         resolve(res);
       })
       .catch((error) => {
+        commit('setLoadingFinished');
         reject(error);
       });
     });
