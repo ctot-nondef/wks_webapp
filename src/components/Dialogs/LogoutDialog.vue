@@ -22,7 +22,6 @@
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex';
 import HELPERS from '../../helpers';
-import { getLogout } from '../../assets/api.js';
 
 export default {
   data() {

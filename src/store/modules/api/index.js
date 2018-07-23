@@ -1,7 +1,10 @@
-import * as api from '../../../assets/api.js';
+import * as api from './api';
+
+api.setDomain('https://wksgoose.eos.arz.oeaw.ac.at/api/v1');
+
 
 const state = {
-  api: api,
+  api,
   state: '',
   p: ['entries'],
 };

@@ -15,9 +15,8 @@ import vueLogger from 'vue-logger';
 import store from './store/index';
 import router from './router';
 import './components/Fundament/Fundament.css';
-import * as api from './assets/api.js';
-api['setDomain']('https://wksgoose.eos.arz.oeaw.ac.at/api/v1');
-console.log(api);
+
+
 
 
 Vue.use(vueLogger, {
