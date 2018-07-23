@@ -33,24 +33,67 @@ const mutations = {
     s.loading = false;
     s.loadmsg = '';
   },
-  setSchema(s, schema) {
-    if (schema.type && schema.attributes) {
-      s.schemas[schema.type] = schema.attributes;
+  setSchema(s, {type, attributes}) {
+    if (type && attributes) {
+      s.schemas[type] = attributes;
     }
   },
 };
 
 const actions = {
   init({ state, commit }) {
+    commit('setLoading', 'Loading Database Configuration.');
     state.apilib.get().then((res) => {
       if(res.data.data && res.data.data.length > 0) {
         let sa = res.data.data;
         for (var i = 0; i < sa.length; i++) {
           commit('setSchema', sa[i]);
         }
-        console.log(state);
+        commit('setLoadingFinished');
       }
     })
+  },
+  get({ state, commit }, {type, id, sort, skip, limit, query, populate}) {
+    let p = {};
+    return new Promise((resolve, reject) => {
+      if(type && id) p = state.apilib[`get${type}ByID`]({id});
+      else if (type && !id) p = state.apilib[`get${type}`]({sort, skip, limit, query, populate});
+      else reject('Invalid or Insufficient Parameters');
+      p.then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+    });
+  },
+  post({ state, commit }, {type, id, body}) {
+    let p = {};
+    return new Promise((resolve, reject) => {
+      if(type && id) p = state.apilib[`post${type}ByID`]({id,[type]:body});
+      else if (type && !id) p = state.apilib[`post${type}`]({[type]:body});
+      else reject('Invalid or Insufficient Parameters');
+      p.then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+    });
+  },
+  delete({ state, commit }, {type, id}) {
+    let p = {};
+    return new Promise((resolve, reject) => {
+      if(type && id) p = state.apilib[`delete${type}ByID`]({id});
+      else if (type && !id) p = state.apilib[`delete${type}`]();
+      else reject('Invalid or Insufficient Parameters');
+      p.then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+    });
   },
 };
 
