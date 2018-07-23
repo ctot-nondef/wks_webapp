@@ -33,23 +33,24 @@ const mutations = {
     s.loading = false;
     s.loadmsg = '';
   },
-  setSchema(s, { name, schema }) {
-    if (name && schema) {
-      s.schemas[name] = schema;
+  setSchema(s, schema) {
+    if (schema.type && schema.attributes) {
+      s.schemas[schema.type] = schema.attributes;
     }
-  },
-  setEntry(s, { name, entry }) {
-    this._vm.$log(name, entry);
-    if (name && entry) {
-      s.entries[name] = entry;
-    }
-    // s.entries = JSON.parse(JSON.stringify(s.entries));
   },
 };
 
 const actions = {
-  init({ commit }) {
-
+  init({ state, commit }) {
+    state.apilib.get().then((res) => {
+      if(res.data.data && res.data.data.length > 0) {
+        let sa = res.data.data;
+        for (var i = 0; i < sa.length; i++) {
+          commit('setSchema', sa[i]);
+        }
+        console.log(state);
+      }
+    })
   },
 };
 

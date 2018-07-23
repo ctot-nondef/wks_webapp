@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import Axios from 'axios';
 import VueAxios from 'vue-axios';
-// import createLogger from 'vuex/dist/logger';
+import createLogger from 'vuex/dist/logger';
 import app from './modules/app/index';
 import dialogs from './modules/dialogs/index';
 import api from './modules/api/index';
@@ -14,7 +14,7 @@ Vue.use(VueAxios, Axios);
 
 
 if (process.env.NODE_ENV !== 'production') {
-  // plugins.push(createLogger());
+  plugins.push(createLogger());
 }
 
 export default new Vuex.Store({

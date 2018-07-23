@@ -48,7 +48,7 @@ export default {
       this.closeDialog('logoutDialog');
     },
     logout() {
-      f('getLogout')().then((res) => {
+      this.f('getLogout')().then((res) => {
         this.logoutMut();
         this.closeDialog('logoutDialog');
       })

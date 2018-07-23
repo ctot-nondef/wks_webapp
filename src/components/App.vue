@@ -30,8 +30,8 @@ export default {
     dialogs,
   },
   methods: {
-    ...mapActions('n3', [
-      'constructN3',
+    ...mapActions('api', [
+      'init',
     ]),
     ...mapMutations('app', [
       'setConfig',
@@ -41,6 +41,7 @@ export default {
     axios.get('/static/nav.json')
       .then(res => this.setConfig(res.data))
       .catch(error => this.$log(error));
+    this.init();
   },
 };
 </script>
