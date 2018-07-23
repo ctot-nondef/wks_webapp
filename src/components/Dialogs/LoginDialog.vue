@@ -21,19 +21,25 @@
 </template>
 
 <script>
-import { mapGetters, mapState, mapActions, mapMutations } from 'vuex';
+import { mapGetters, mapState, mapMutations } from 'vuex';
 import HELPERS from '../../helpers';
 
 export default {
+  mixins: [HELPERS],
   data() {
     return {
-      show1: false,
-      dialogShow: false,
       username: '',
       password: '',
     };
   },
-  mixins: [HELPERS],
+  computed: {
+    ...mapState('dialogs',[
+      'loginDialog',
+    ]),
+    ...mapGetters('api',[
+      'f',
+    ])
+  },
   methods: {
     ...mapMutations('app', [
       'loginMut',
@@ -55,17 +61,6 @@ export default {
         this.closeDialog('loginDialog');
       })
     },
-  },
-  computed: {
-    ...mapState('dialogs',[
-      'loginDialog',
-    ]),
-    ...mapGetters('api',[
-      'f',
-    ])
-  },
-  created() {
-    this.dialogShow = true;
   },
 };
 </script>

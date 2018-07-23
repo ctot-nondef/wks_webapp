@@ -3,7 +3,6 @@ import Vuex from 'vuex';
 import Axios from 'axios';
 import VueAxios from 'vue-axios';
 // import createLogger from 'vuex/dist/logger';
-import JSONschema from './modules/JSONschema/index';
 import app from './modules/app/index';
 import dialogs from './modules/dialogs/index';
 import api from './modules/api/index';
@@ -20,7 +19,6 @@ if (process.env.NODE_ENV !== 'production') {
 
 export default new Vuex.Store({
   modules: {
-    JSONschema,
     app,
     dialogs,
     api

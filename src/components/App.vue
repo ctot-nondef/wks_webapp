@@ -30,30 +30,17 @@ export default {
     dialogs,
   },
   methods: {
-    ...mapMutations('JSONschema', [
-      'constructJSONschema',
-    ]),
     ...mapActions('n3', [
       'constructN3',
     ]),
-    ...mapActions('app', [
-      'toggleAppMode',
-    ]),
     ...mapMutations('app', [
       'setConfig',
-      'toggleNavDrawerMini',
-      'setNavDrawerMini',
-      'setNavDrawerMaxi',
-      'toggleNavDrawerClipped',
-      'toggleRightDrawer',
-      'toggleDrawer',
-      'toggleNavbar',
     ]),
   },
   created() {
     axios.get('/static/nav.json')
       .then(res => this.setConfig(res.data))
-      .catch(error => this.$log(error));    
+      .catch(error => this.$log(error));
   },
 };
 </script>

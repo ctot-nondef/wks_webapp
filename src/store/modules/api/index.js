@@ -4,25 +4,34 @@ api.setDomain('https://wksgoose.eos.arz.oeaw.ac.at/api/v1');
 
 
 const state = {
-  api,
-  state: '',
-  p: ['entries'],
+  apilib: api,
+  loading: false,
+  loadmsg: '',
+  schemas: {},
+
 };
 
 /* eslint no-param-reassign: ["error", { "props": false }] */
 /* eslint no-console: ["error", { allow: ["log"] }] */
 /* eslint-disable no-underscore-dangle */
 const getters = {
-  f: s => name => s.api[name],
+  availableEndpoints: s => s.apilib.keys,
+  f: s => name => s.apilib[name],
+  schema: s => name => s.schemas[name],
+  types: s => s.schemas.keys
 };
 
 const mutations = {
-  constructJSONschema(s, { pState }) {
-    this._vm.$info('constructJSONschema(s, { pState })', JSON.stringify(s), JSON.stringify(pState));
-    for (let i = 0; i < s.p.length; i += 1) {
-      s[s.p[i]] = pState.JSONschema[s.p[i]];
-      // this._vm.$debug(`Found One: s[${s.p[i]}] = ${JSON.stringify(pState.JSONschema[s.p[i]])}`);
-    }
+  setConfig(s, config) {
+    s.config = config;
+  },
+  setLoading(s, msg) {
+    s.loading = true;
+    s.loadmsg = msg;
+  },
+  setLoadingFinished(s) {
+    s.loading = false;
+    s.loadmsg = '';
   },
   setSchema(s, { name, schema }) {
     if (name && schema) {
@@ -38,9 +47,17 @@ const mutations = {
   },
 };
 
+const actions = {
+  init({ commit }) {
+
+  },
+};
+
+
 export default {
   namespaced: true,
   state,
   getters,
   mutations,
+  actions
 };

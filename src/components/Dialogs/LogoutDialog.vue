@@ -20,19 +20,23 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex';
+import { mapGetters, mapState, mapMutations } from 'vuex';
 import HELPERS from '../../helpers';
 
 export default {
   data() {
     return {
-      show1: false,
-      dialogShow: false,
-      username: '',
-      password: '',
     };
   },
   mixins: [HELPERS],
+  computed: {
+    ...mapState('dialogs',[
+      'logoutDialog',
+    ]),
+    ...mapGetters('api',[
+      'f',
+    ]),
+  },
   methods: {
     ...mapMutations('app', [
       'logoutMut',
@@ -44,19 +48,11 @@ export default {
       this.closeDialog('logoutDialog');
     },
     logout() {
-      getLogout().then((res) => {
+      f('getLogout')().then((res) => {
         this.logoutMut();
         this.closeDialog('logoutDialog');
       })
     },
-  },
-  computed: {
-    ...mapState('dialogs',[
-      'logoutDialog',
-    ])
-  },
-  created() {
-    this.dialogShow = true;
   },
 };
 </script>
