@@ -2965,6 +2965,346 @@ export const deleteEntryByIdURL = function(parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '')
 }
 /**
+ * Returns the number of documents of type institution
+ * request: getInstitutionCount
+ * url: getInstitutionCountURL
+ * method: getInstitutionCount_TYPE
+ * raw_url: getInstitutionCount_RAW_URL
+ */
+export const getInstitutionCount = function(parameters = {}) {
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  const config = parameters.$config
+  let path = '/institution/count'
+  let body
+  let queryParameters = {}
+  let form = {}
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    });
+  }
+  return request('get', domain + path, body, queryParameters, form, config)
+}
+export const getInstitutionCount_RAW_URL = function() {
+  return '/institution/count'
+}
+export const getInstitutionCount_TYPE = function() {
+  return 'get'
+}
+export const getInstitutionCountURL = function(parameters = {}) {
+  let queryParameters = {}
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  let path = '/institution/count'
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    })
+  }
+  let keys = Object.keys(queryParameters)
+  return domain + path + (keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '')
+}
+/**
+ * Returns a List of institutions
+ * request: getInstitution
+ * url: getInstitutionURL
+ * method: getInstitution_TYPE
+ * raw_url: getInstitution_RAW_URL
+ * @param sort - Key Name to Sort by, preceded by '-' for descending, default: _id
+ * @param skip - Number of records to skip from start, default: 0
+ * @param limit - Number of records to return, default: 10
+ * @param query - MongoDB Query as a well formed JSON String, ie {"name":"Bob"}
+ * @param populate - Path to a MongoDB reference to populate, ie [{"path":"customer"},{"path":"products"}]
+ */
+export const getInstitution = function(parameters = {}) {
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  const config = parameters.$config
+  let path = '/institution'
+  let body
+  let queryParameters = {}
+  let form = {}
+  if (parameters['sort'] !== undefined) {
+    queryParameters['sort'] = parameters['sort']
+  }
+  if (parameters['skip'] !== undefined) {
+    queryParameters['skip'] = parameters['skip']
+  }
+  if (parameters['limit'] !== undefined) {
+    queryParameters['limit'] = parameters['limit']
+  }
+  if (parameters['query'] !== undefined) {
+    queryParameters['query'] = parameters['query']
+  }
+  if (parameters['populate'] !== undefined) {
+    queryParameters['populate'] = parameters['populate']
+  }
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    });
+  }
+  return request('get', domain + path, body, queryParameters, form, config)
+}
+export const getInstitution_RAW_URL = function() {
+  return '/institution'
+}
+export const getInstitution_TYPE = function() {
+  return 'get'
+}
+export const getInstitutionURL = function(parameters = {}) {
+  let queryParameters = {}
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  let path = '/institution'
+  if (parameters['sort'] !== undefined) {
+    queryParameters['sort'] = parameters['sort']
+  }
+  if (parameters['skip'] !== undefined) {
+    queryParameters['skip'] = parameters['skip']
+  }
+  if (parameters['limit'] !== undefined) {
+    queryParameters['limit'] = parameters['limit']
+  }
+  if (parameters['query'] !== undefined) {
+    queryParameters['query'] = parameters['query']
+  }
+  if (parameters['populate'] !== undefined) {
+    queryParameters['populate'] = parameters['populate']
+  }
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    })
+  }
+  let keys = Object.keys(queryParameters)
+  return domain + path + (keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '')
+}
+/**
+ * Creates a new instance of institution
+ * request: postInstitution
+ * url: postInstitutionURL
+ * method: postInstitution_TYPE
+ * raw_url: postInstitution_RAW_URL
+ * @param institution - 
+ */
+export const postInstitution = function(parameters = {}) {
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  const config = parameters.$config
+  let path = '/institution'
+  let body
+  let queryParameters = {}
+  let form = {}
+  if (parameters['institution'] !== undefined) {
+    body = parameters['institution']
+  }
+  if (parameters['institution'] === undefined) {
+    return Promise.reject(new Error('Missing required  parameter: institution'))
+  }
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    });
+  }
+  return request('post', domain + path, body, queryParameters, form, config)
+}
+export const postInstitution_RAW_URL = function() {
+  return '/institution'
+}
+export const postInstitution_TYPE = function() {
+  return 'post'
+}
+export const postInstitutionURL = function(parameters = {}) {
+  let queryParameters = {}
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  let path = '/institution'
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    })
+  }
+  let keys = Object.keys(queryParameters)
+  return domain + path + (keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '')
+}
+/**
+ * Deletes the entire contents of collection institution
+ * request: deleteInstitution
+ * url: deleteInstitutionURL
+ * method: deleteInstitution_TYPE
+ * raw_url: deleteInstitution_RAW_URL
+ */
+export const deleteInstitution = function(parameters = {}) {
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  const config = parameters.$config
+  let path = '/institution'
+  let body
+  let queryParameters = {}
+  let form = {}
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    });
+  }
+  return request('delete', domain + path, body, queryParameters, form, config)
+}
+export const deleteInstitution_RAW_URL = function() {
+  return '/institution'
+}
+export const deleteInstitution_TYPE = function() {
+  return 'delete'
+}
+export const deleteInstitutionURL = function(parameters = {}) {
+  let queryParameters = {}
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  let path = '/institution'
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    })
+  }
+  let keys = Object.keys(queryParameters)
+  return domain + path + (keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '')
+}
+/**
+ * Returns a List of institutions
+ * request: getInstitutionById
+ * url: getInstitutionByIdURL
+ * method: getInstitutionById_TYPE
+ * raw_url: getInstitutionById_RAW_URL
+ * @param id - MongoDB document _id
+ */
+export const getInstitutionById = function(parameters = {}) {
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  const config = parameters.$config
+  let path = '/institution/{id}'
+  let body
+  let queryParameters = {}
+  let form = {}
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters['id'] === undefined) {
+    return Promise.reject(new Error('Missing required  parameter: id'))
+  }
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    });
+  }
+  return request('get', domain + path, body, queryParameters, form, config)
+}
+export const getInstitutionById_RAW_URL = function() {
+  return '/institution/{id}'
+}
+export const getInstitutionById_TYPE = function() {
+  return 'get'
+}
+export const getInstitutionByIdURL = function(parameters = {}) {
+  let queryParameters = {}
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  let path = '/institution/{id}'
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    })
+  }
+  let keys = Object.keys(queryParameters)
+  return domain + path + (keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '')
+}
+/**
+ * Updates the document with the given ID
+ * request: postInstitutionById
+ * url: postInstitutionByIdURL
+ * method: postInstitutionById_TYPE
+ * raw_url: postInstitutionById_RAW_URL
+ * @param id - MongoDB document _id
+ * @param institution - 
+ */
+export const postInstitutionById = function(parameters = {}) {
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  const config = parameters.$config
+  let path = '/institution/{id}'
+  let body
+  let queryParameters = {}
+  let form = {}
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters['id'] === undefined) {
+    return Promise.reject(new Error('Missing required  parameter: id'))
+  }
+  if (parameters['institution'] !== undefined) {
+    body = parameters['institution']
+  }
+  if (parameters['institution'] === undefined) {
+    return Promise.reject(new Error('Missing required  parameter: institution'))
+  }
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    });
+  }
+  return request('post', domain + path, body, queryParameters, form, config)
+}
+export const postInstitutionById_RAW_URL = function() {
+  return '/institution/{id}'
+}
+export const postInstitutionById_TYPE = function() {
+  return 'post'
+}
+export const postInstitutionByIdURL = function(parameters = {}) {
+  let queryParameters = {}
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  let path = '/institution/{id}'
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    })
+  }
+  let keys = Object.keys(queryParameters)
+  return domain + path + (keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '')
+}
+/**
+ * Deletes the document with the given ID
+ * request: deleteInstitutionById
+ * url: deleteInstitutionByIdURL
+ * method: deleteInstitutionById_TYPE
+ * raw_url: deleteInstitutionById_RAW_URL
+ * @param id - MongoDB document _id
+ */
+export const deleteInstitutionById = function(parameters = {}) {
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  const config = parameters.$config
+  let path = '/institution/{id}'
+  let body
+  let queryParameters = {}
+  let form = {}
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters['id'] === undefined) {
+    return Promise.reject(new Error('Missing required  parameter: id'))
+  }
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    });
+  }
+  return request('delete', domain + path, body, queryParameters, form, config)
+}
+export const deleteInstitutionById_RAW_URL = function() {
+  return '/institution/{id}'
+}
+export const deleteInstitutionById_TYPE = function() {
+  return 'delete'
+}
+export const deleteInstitutionByIdURL = function(parameters = {}) {
+  let queryParameters = {}
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  let path = '/institution/{id}'
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    })
+  }
+  let keys = Object.keys(queryParameters)
+  return domain + path + (keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '')
+}
+/**
  * Returns the number of documents of type inventory
  * request: getInventoryCount
  * url: getInventoryCountURL
