@@ -18,6 +18,19 @@ const CONFIG = {
     },
     HEADERS: {},
   },
+  ADLIB: {
+    BASEURL: 'http://kgunivie.w07adlibdb1.arz.oeaw.ac.at/wwwopac.ashx',
+    ENDPOINTS: {
+      BASE: '/'
+    },
+    TIMEOUT: 15000,
+    PARAMS: {
+      output: 'json',
+      action: 'search',
+      database: 'collect',
+    },
+    HEADERS: {},
+  },
   VIAF: {
     BASEURL: 'https://www.viaf.org/viaf/',
     ENDPOINTS: {
@@ -91,25 +104,6 @@ export default {
     };
   },
   methods: {
-    loginReq(username, password) {
-      this.$info('Helpers', 'login', username);
-      return APIS.WKS.BASE.post(`/login`, {username: username, password: password}).then(response => Promise.resolve(response.data));
-    },
-    logoutReq(username, password) {
-      this.$info('Helpers', 'logout');
-      return APIS.WKS.BASE.get(`/logout`).then(response => Promise.resolve(response.data));
-    },
-    /* fetches the JSON-schema from the specified API in the config and returns it.
-     */
-    getMetadataByType(type) {
-      this.$info('Helpers', 'getMetadataByType(type)', type);
-      return APIS.ARCHE2.METADATA.get(`${type}/en`).then(response => Promise.resolve(response.data));
-    },
-    keyInValidTypes(k, subType) {
-      //  this.$info('Helpers', 'keyInValidTypes(key, obj)', k, obj);
-      //  const key = k.trim();
-      return VALID_TYPES[subType].indexOf(k) >= 0;
-    },
     getViafByID(id) {
       this.$info('Helpers', 'getViafByID(id)', id);
       if (id) {
@@ -123,34 +117,6 @@ export default {
       }
       this.$log('errortree, no id');
       return Promise.reject('no ID was given');
-    },
-    getArchePromise(id, typ) {
-      const type = typ.toUpperCase().trim();
-      this.$info('Helpers', 'getArchePromise(id, type)', id, type);
-      return APIS.ARCHE[type].get(`${id}`);
-    },
-    isIdentifier(id) {
-      if (id) {
-        return APIS.ARCHE2.ID.get(`${id}`).then((response) => {
-          this.$log('response', response.data);
-          return Promise.resolve(response.data.title ? response.data : false);
-        });
-      }
-      return Promise.reject('no identifier were given');
-    },
-    getArcheByID(id, typ) {
-      const type = typ.toUpperCase().trim();
-      this.$info('Helpers', 'getArcheByID(id, type)', id, type);
-      if (id && type && APIS.ARCHE2[type]) {
-        return APIS.ARCHE2[type].get(`${id}`).then((response) => {
-          this.$log('response', response.data);
-          return Promise.resolve(response.data);
-        }, (error) => {
-          this.$log('errortree, request failed', error);
-          return Promise.reject(error);
-        });
-      }
-      return Promise.reject('no ID or Type was given');
     },
     getVocabsPromise(id, typ) {
       const type = typ.toUpperCase();
@@ -213,7 +179,7 @@ export default {
       if (!id || !typ) {
         return Promise.reject('no ID or Type was given');
       }
-  /*    if (id && type && APIS.ARCHE[type]) {
+      /*if (id && type && APIS.ARCHE[type]) {
         return this.getArcheByID(id, type);
       } */
       type = type.toLowerCase();
@@ -295,16 +261,6 @@ export default {
     },
     useNull() {
       return null;
-    },
-    urlToType(url) {
-      const urlA = url.split('/');
-      for (let i = urlA.length - 1; i >= 0; i -= 1) {
-        const val = urlA[i];
-        if (val && val !== undefined && val !== 'search') {
-          return val;
-        }
-      }
-      return 'not_found';
     },
     typeicon(typ) {
       if (typ) {
