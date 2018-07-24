@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import App from '../components/App';
 import Start from '../components/Start';
 import Collect from '../components/Collect';
+import Import from '../components/Import';
 
 Vue.use(Router);
 
@@ -38,6 +39,13 @@ export default new Router({
           name: 'i',
           components: {
             Content: Collect,
+          },
+        },
+        {
+          path: 'import',
+          name: 'import',
+          components: {
+            Content: Import,
           },
         },
         {

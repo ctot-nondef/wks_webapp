@@ -75,7 +75,7 @@
 				"icon":"build",
 				"abstract":"",
 				"startpage":{
-					"name": "schema",
+					"name": "import",
 					"params": {
 						"lang": "en" }
 					},
