@@ -1,4 +1,5 @@
 <template lang="html">
+  <v-layout column justify-space-between>
     <v-dialog
         v-model="createDialog.status"
         id="askForStore"
@@ -7,25 +8,22 @@
         transition="dialog-bottom-transition"
         scrollable
       >
-      <v-toolbar card dark color="primary">
-        <v-btn icon dark @click.native="discard">
-          <v-icon>close</v-icon>
-        </v-btn>
-        <v-toolbar-title>{{ createDialog.type }}</v-toolbar-title>
-        <v-spacer></v-spacer>
-        <v-toolbar-items>
-          <v-btn dark flat @click.native="submit">Save</v-btn>
-        </v-toolbar-items>
-        <v-menu bottom right offset-y>
-          <v-btn slot="activator" dark icon>
-            <v-icon>more_vert</v-icon>
-          </v-btn>
-        </v-menu>
-      </v-toolbar>
       <v-card>
-        <v-card-title>
-          Create a new {{ createDialog.type }}
-        </v-card-title>
+        <v-toolbar dark color="primary">
+          <v-btn icon dark @click.native="discard">
+            <v-icon>close</v-icon>
+          </v-btn>
+          <v-toolbar-title>{{ createDialog.type }}</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-toolbar-items>
+            <v-btn dark flat @click.native="submit">Save</v-btn>
+          </v-toolbar-items>
+          <v-menu bottom right offset-y>
+            <v-btn slot="activator" dark icon>
+              <v-icon>more_vert</v-icon>
+            </v-btn>
+          </v-menu>
+        </v-toolbar>
         <v-card-text>
           <form-schema v-if="model" @input="saveEntry(); $emit('input', model)" :schema="schema(`${createDialog.type}`)" v-model="model" @submit="submit">
             <v-btn variant="primary" @click="submit">Load into Store</v-btn>
@@ -35,10 +33,10 @@
             </v-btn>
           </form-schema>
         </v-card-text>
-        <v-card-actions>
-      </v-card-actions>
+        <div style="flex: 1 1 auto;"></div>
     </v-card>
     </v-dialog>
+    </v-layout>
 </template>
 
 <script>
