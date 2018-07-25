@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState, mapMutations } from 'vuex';
+import { mapGetters, mapState, mapMutations, mapActions } from 'vuex';
 import HELPERS from '../../helpers';
 
 export default {
@@ -41,6 +41,9 @@ export default {
     ]),
   },
   methods: {
+    ...mapActions('api', [
+      'init',
+    ]),
     ...mapMutations('app', [
       'loginMut',
     ]),
@@ -58,6 +61,7 @@ export default {
         },
       }).then(() => {
         this.loginMut();
+        this.init();
         this.closeDialog('loginDialog');
       });
     },

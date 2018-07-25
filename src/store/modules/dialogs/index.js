@@ -4,6 +4,7 @@
 const state = {
   loginDialog: { status: false },
   logoutDialog: { status: false },
+  createDialog: { status: false, type: '' },
 };
 
 const getters = {
@@ -16,6 +17,10 @@ const mutations = {
   },
   closeDialog(s, name) {
     s[name].status = false;
+  },
+  openCreateDialog(s, type) {
+    s.createDialog.type = type;
+    s.createDialog.status = true;
   },
   switchDialog(s, name) {
     s[name].status = !s[name];

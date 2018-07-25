@@ -54,10 +54,10 @@ export default {
   computed: {
   },
   created() {
-    this.get({ type: 'Collect', id:this.$route.params.id }).then((res) => {
+    this.get({ type: 'Inventory', id:this.$route.params.id }).then((res) => {
       this.view = res.data;
     });
-    this.get({ type: 'Inventory', query:`{"partOf":"${this.$route.params.id}"}` }).then((res) => {
+    this.get({ type: 'Entry', query:`{"partOf":"${this.$route.params.id}"}` }).then((res) => {
       this.data = res.data;
     });
   },

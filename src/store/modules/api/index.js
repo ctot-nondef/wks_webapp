@@ -46,7 +46,7 @@ const mutations = {
 const actions = {
   init({ state, commit }) {
     commit('setLoading', 'Loading Database Configuration.');
-    state.apilib.get().then((res) => {
+    state.apilib.get( { $config } ).then((res) => {
       if (res.data.data && res.data.data.length > 0) {
         const sa = res.data.data;
         for (let i = 0; i < sa.length; i++) {
@@ -62,7 +62,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       if (type && id) {
         commit('setLoading', `Getting ${type} ${id} from Database`);
-        p = state.apilib[`get${t}ByID`]({ id, $config });
+        p = state.apilib[`get${t}ById`]({ id, $config });
       } else if (type && !id) {
         commit('setLoading', `Getting Queryset of ${type} from Database`);
         p = state.apilib[`get${t}`]({ sort, skip, limit, query, populate, $config });

@@ -12,9 +12,10 @@
           <v-flex xs12 sm6>
             <fundamentcard
               caption="Anlegen eines neuen Inventars."
-              :link="{ name: 'store', params: { lang: 'en' }}"
             >
-              <p class="card-text"></p>
+              <p class="card-text">
+                <v-btn @click="openCreateDialog('inventory')" color="info">Create</v-btn>
+              </p>
             </fundamentcard>
           </v-flex>
           <v-flex xs12 sm6>
@@ -51,6 +52,7 @@
 </template>
 
 <script>
+import { mapGetters, mapState, mapMutations } from 'vuex';
 import fundamentjumbo from './Fundament/FundamentJumbo';
 import fundamentcard from './Fundament/FundamentCard';
 import fundamentsectiondiv from './Fundament/FundamentSectionDiv';
@@ -65,6 +67,11 @@ export default {
   data() {
     return {
     };
+  },
+  methods: {
+    ...mapMutations('dialogs', [
+      'openCreateDialog',
+    ]),
   },
 };
 </script>

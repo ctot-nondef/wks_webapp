@@ -2,8 +2,10 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import App from '../components/App';
 import Start from '../components/Start';
-import Collect from '../components/Collect';
 import Import from '../components/Import';
+import Collect from '../components/Collect';
+import I from '../components/i';
+import E from '../components/e';
 
 Vue.use(Router);
 
@@ -38,7 +40,21 @@ export default new Router({
           path: 'i',
           name: 'i',
           components: {
+            Content: I,
+          },
+        },
+        {
+          path: 'c/:id',
+          name: 'c',
+          components: {
             Content: Collect,
+          },
+        },
+        {
+          path: 'e/:id',
+          name: 'e',
+          components: {
+            Content: E,
           },
         },
         {
