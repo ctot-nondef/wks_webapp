@@ -12,9 +12,7 @@ const CONFIG = {
       BASE: '/',
     },
     TIMEOUT: 15000,
-    PARAMS: {
-      _format: 'json',
-    },
+    PARAMS: {},
     HEADERS: {},
   },
   ADLIB: {
@@ -54,18 +52,6 @@ const CONFIG = {
     HEADERS: {},
   },
 };
-
-const MAPS = {
-  "collect_collect":{
-    "edit.date":"editdate",
-    "edit.time":"edittime",
-    "edit.name":"editname",
-    "title":"name_0",
-    "description":"description_0",
-    "current_owner.lref":"collector_people"
-  },
-};
-
 
 let APIS = {};
 
@@ -141,6 +127,7 @@ export default {
     },
     getViafByID(id) {
       this.$info('Helpers', 'getViafByID(id)', id);
+
       if (id) {
         return APIS.VIAF.BASE.get(`${id}/`).then((response) => {
           this.$log('response', response.data);
@@ -149,9 +136,10 @@ export default {
           this.$log('errortree, request failed', error);
           return Promise.reject(error);
         });
+      } else {
+        this.$log('errortree, no id');
+        return Promise.reject('no ID was given');
       }
-      this.$log('errortree, no id');
-      return Promise.reject('no ID was given');
     },
     getVocabsPromise(id, typ) {
       const type = typ.toUpperCase();

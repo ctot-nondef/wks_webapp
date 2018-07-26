@@ -2,13 +2,13 @@
   <v-layout column justify-space-between>
     <v-dialog
         v-model="createDialog.status"
-        id="askForStore"
+        id="createEntity"
         fullscreen
         hide-overlay
         transition="dialog-bottom-transition"
         scrollable
       >
-      <v-card>
+      <v-card v-if="this.schema(`${this.createDialog.type}`)">
         <v-toolbar dark color="primary">
           <v-btn icon dark @click.native="discard">
             <v-icon>close</v-icon>
@@ -24,14 +24,12 @@
             </v-btn>
           </v-menu>
         </v-toolbar>
+        <form-schema v-if="model" :schema="schema(`${createDialog.type}`)" v-model="model" @submit="submit">
+          <v-btn variant="primary" @click="submit">SUBMIT</v-btn>
+          <v-btn @click="resetForm();" variant="secondary">RESET</v-btn>
+          <v-btn @click="discard" color="secondary">CANCEL</v-btn>
+        </form-schema>
         <v-card-text>
-          <form-schema v-if="model" @input="saveEntry(); $emit('input', model)" :schema="schema(`${createDialog.type}`)" v-model="model" @submit="submit">
-            <v-btn variant="primary" @click="submit">Load into Store</v-btn>
-            <v-btn @click="resetForm();" variant="secondary">Reset Form</v-btn>
-            <v-btn @click="discard" large color="secondary">
-              CANCEL
-            </v-btn>
-          </form-schema>
         </v-card-text>
         <div style="flex: 1 1 auto;"></div>
     </v-card>
@@ -73,8 +71,13 @@ export default {
       this.closeDialog('createDialog');
     },
     submit() {
+      console.log(this.createDialog.type);
+      console.log(this.schema(`${this.createDialog.type}`));
       this.closeDialog('createDialog');
     },
+  },
+  created() {
+
   },
 };
 </script>
