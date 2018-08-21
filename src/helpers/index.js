@@ -7,7 +7,7 @@ import axios from 'axios';
 // this could go to an external file, to be excluded from commits etc
 const CONFIG = {
   WKS: {
-    BASEURL: 'https://wksgoose.eos.arz.oeaw.ac.at/api/v1/',
+    BASEURL: 'https://wksgoose.hephaistos.arz.oeaw.ac.at/api/v1/',
     ENDPOINTS: {
       BASE: '/',
     },
