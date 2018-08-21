@@ -46,7 +46,7 @@ export default {
   mixins: [HELPERS],
   data() {
     return {
-      model:{},
+      model: {},
     };
   },
   components: {

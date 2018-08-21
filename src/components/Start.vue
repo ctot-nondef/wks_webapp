@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState, mapMutations } from 'vuex';
+import { mapMutations } from 'vuex';
 import fundamentjumbo from './Fundament/FundamentJumbo';
 import fundamentcard from './Fundament/FundamentCard';
 import fundamentsectiondiv from './Fundament/FundamentSectionDiv';

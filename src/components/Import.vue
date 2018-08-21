@@ -65,9 +65,9 @@ export default {
     return {
       target: '',
       done: 0,
-      db:'',
-      query:'',
-      dboptions:['collect', 'people', 'thesau'],
+      db: '',
+      query: '',
+      dboptions: ['collect', 'people', 'thesau'],
       tabledata: [],
       headers: [
         { text: 'ID', value: 'priref' },
@@ -88,18 +88,18 @@ export default {
       'delete',
     ]),
     getRecords() {
-      this.getAdlibRecordsByQuery(this.db,this.query).then((res) => {
+      this.getAdlibRecordsByQuery(this.db, this.query).then((res) => {
         this.tabledata = res.adlibJSON.recordList.record;
       });
     },
     importRecords() {
-      for (var i = 0; i < this.tabledata.length; i++) {
-        //first check if it's already there
-        let r = this.tabledata[i];
+      for (let i = 0; i < this.tabledata.length; i++) {
+        // first check if it's already there
+        const r = this.tabledata[i];
         this.checkIfPresent(this.target, this.db, r.priref[0])
         .then((res) => {
-          if(res.data.length == 0) {
-            let mr = this.mapRecord(this.db, this.target, r);
+          if (res.data.length === 0) {
+            const mr = this.mapRecord(this.db, this.target, r);
             this.post({
               type: this.target,
               body: mr,
@@ -111,12 +111,9 @@ export default {
     checkIfPresent(type, source, priref) {
       return this.get({
         type,
-        query: `{"adlib":"${source}_${priref}"}`
+        query: `{"adlib":"${source}_${priref}"}`,
       });
-    }
-
-  },
-  computed: {
+    },
   },
   created() {
 
