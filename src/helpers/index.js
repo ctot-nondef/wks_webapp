@@ -95,8 +95,8 @@ export default {
         return APIS.ADLIB.BASE.get('', {
           params: {
             database: db,
-            search: `priref=${id}`
-          }
+            search: `priref=${id}`,
+          },
         }).then((response) => {
           this.$log('response', response.data);
           return Promise.resolve(response.data);
@@ -114,7 +114,7 @@ export default {
           params: {
             database: db,
             search: query,
-          }
+          },
         }).then((response) => {
           this.$log('response', response.data);
           return Promise.resolve(response.data);
@@ -196,76 +196,22 @@ export default {
         Promise.reject('Could not receive data', res);
       });
     },
-    typeicon(typ) {
-      if (typ) {
-        const type = typ.toUpperCase();
-        switch (type) {
-          case 'X':
-            return 'highlight_off';
-          case 'check':
-            return 'check_circle';
-          case 'KEYBOARD':
-            return 'keyboard';
-          case 'https://vocabs.acdh.oeaw.ac.at/schema#Resource':
-            return 'developer_board';
-          case 'PERSONS':
-          case 'persons':
-          case 'https://vocabs.acdh.oeaw.ac.at/schema#Persons':
-            return 'person';
-          case 'PLACES':
-          case 'https://vocabs.acdh.oeaw.ac.at/schema#Place':
-            return 'place';
-          case 'ORGANISATIONS':
-          case 'https://vocabs.acdh.oeaw.ac.at/schema#Organisation':
-            return 'device_hub';
-          case 'ARCHE_CATEGORY':
-            return 'folder_open';
-          case 'ARCHE_LIFECYCLE_STATUS':
-            return 'donut_large';
-          default: return 'folder';
-        }
-      }
-      return 'folder';
-    },
-    stringToBlob(str) {
-      return new Blob([str], {
-        type: 'text/ttl;',
-      });
-    },
-    dateToString(date) {
-      const y = date.getFullYear() - 2000;
-      let m;
-      if (date.getMonth() < 10) {
-        m = '0'.toString() + (date.getMonth() + 1);
-      } else {
-        m = date.getMonth() + 1;
-      }
-      let d;
-      if (date.getDate() < 10) {
-        d = '0'.toString() + date.getDate();
-      } else {
-        d = date.getDate();
-      }
-      return `${d}/${m}/${y} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
-    },
     mapRecord(source, target, record) {
       let t = {};
-      let map = MAPS[`${source}_${target}`];
-      let keys = Object.keys(map);
+      const map = [`${source}_${target}`];
+      const keys = Object.keys(map);
       console.log(map, keys, record);
-      for (var i = 0; i < keys.length; i++) {
-        if(record[keys[i]] && map[keys[i]].split('_').length == 1) {
-          t[map[keys[i]]] = record[keys[i]]
-        }
-        else if (record[keys[i]] && map[keys[i]].split('_')[1] == '0') {
-          t[map[keys[i]].split('_')[0]] = record[keys[i]][0]
-        }
-        else if (record[keys[i]] &&  map[keys[i]].split('_')[1] && map[keys[i]].split('_')[1] != '0') {
-          t[map[keys[i]].split('_')[0]] = `${map[keys[i]].split('_')[1]}_${record[keys[i]]}`
+      for (let i = 0; i < keys.length; i++) {
+        if (record[keys[i]] && map[keys[i]].split('_').length === 1) {
+          t[map[keys[i]]] = record[keys[i]];
+        } else if (record[keys[i]] && map[keys[i]].split('_')[1] === '0') {
+          t[map[keys[i]].split('_')[0]] = record[keys[i]][0];
+        } else if (record[keys[i]] && map[keys[i]].split('_')[1] && map[keys[i]].split('_')[1] !== '0') {
+          t[map[keys[i]].split('_')[0]] = `${map[keys[i]].split('_')[1]}_${record[keys[i]]}`;
         }
       }
       return t;
-    }
+    },
   },
   created() {
     this.$info('Helpers', 'created');
