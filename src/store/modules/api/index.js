@@ -1,6 +1,6 @@
 import * as api from './api';
 
-api.setDomain('https://wksgoose.hephaistos.arz.oeaw.ac.at/api/v1');
+api.setDomain('https://wksgoose.acdh-dev.oeaw.ac.at/api/v1');
 
 
 const state = {
