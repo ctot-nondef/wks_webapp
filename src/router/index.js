@@ -3,9 +3,9 @@ import Router from 'vue-router';
 import App from '../components/App';
 import Start from '../components/Start';
 import Import from '../components/Import';
-import Collect from '../components/Collect';
-import I from '../components/i';
-import E from '../components/e';
+import collections from '../components/collections';
+import collectionsingle from '../components/collectionsingle';
+import inventorysingle from '../components/inventorysingle';
 
 Vue.use(Router);
 
@@ -37,24 +37,24 @@ export default new Router({
           },
         },
         {
-          path: 'i',
-          name: 'i',
+          path: 'collections',
+          name: 'collections',
           components: {
-            Content: I,
+            Content: collections,
           },
         },
         {
-          path: 'c/:id',
-          name: 'c',
+          path: 'collections/:id',
+          name: 'collectionsingle',
           components: {
-            Content: Collect,
+            Content: collectionsingle,
           },
         },
         {
-          path: 'e/:id',
-          name: 'e',
+          path: 'inventory/:id',
+          name: 'inventorysingle',
           components: {
-            Content: E,
+            Content: inventorysingle,
           },
         },
         {

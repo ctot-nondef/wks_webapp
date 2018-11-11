@@ -47,6 +47,9 @@ export default {
     ...mapMutations('app', [
       'loginMut',
     ]),
+    ...mapMutations('api', [
+      'setToken',
+    ]),
     ...mapMutations('dialogs', [
       'closeDialog',
     ]),
@@ -59,7 +62,8 @@ export default {
           username: this.username,
           password: this.password,
         },
-      }).then(() => {
+      }).then((res) => {
+        this.setToken({token: res.data.session, user: res.data.user})
         this.loginMut();
         this.init();
         this.closeDialog('loginDialog');

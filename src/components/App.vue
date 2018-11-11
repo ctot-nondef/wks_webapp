@@ -18,7 +18,10 @@ import dialogs from './Dialogs/Dialogs';
 /* eslint no-console: ["error", { allow: ["log"] }] */
 /* eslint no-return-assign: "off" */
 
+import HELPERS from '../helpers';
+
 export default {
+  mixins: [HELPERS],
   data() {
     return {
     };
@@ -30,9 +33,12 @@ export default {
     dialogs,
   },
   methods: {
-    ...mapActions('api', [
-      'init',
-    ]),
+    ...mapActions('api', {
+      dbInit: 'init',
+    }),
+    ...mapActions('app', {
+      appInit: 'init',
+    }),
     ...mapMutations('app', [
       'setConfig',
     ]),
@@ -41,7 +47,10 @@ export default {
     axios.get('/static/nav.json')
       .then(res => this.setConfig(res.data))
       .catch(error => this.$log(error));
-    this.init();
+    const pstate = this.getLatestSession();
+    this.deleteOldSessions();
+    this.dbInit(pstate);
+    this.appInit(pstate);
   },
 };
 </script>

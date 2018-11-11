@@ -6,9 +6,10 @@ const state = {
   drawerclipped: true,
   fixed: false,
   config: {},
-  miniVariant: false,
+  miniVariant: true,
   rightDrawer: false,
   loggedin: false,
+  p: ['loggedin', 'miniVariant'],
 };
 
 const getters = {
@@ -16,6 +17,11 @@ const getters = {
 };
 
 const mutations = {
+  setState(s, pstate) {
+    for (const key in pstate) {
+      if (pstate.hasOwnProperty(key) && s.hasOwnProperty(key)) s[key] = pstate[key];
+    }
+  },
   setConfig(s, config) {
     s.config = config;
   },
@@ -46,6 +52,9 @@ const mutations = {
 };
 
 const actions = {
+  init({ commit }, pstate) {
+    if (pstate.pState.app) commit('setState', pstate.pState.app);
+  },  
   toggleAppMode({ commit }) {
     commit('toggleDrawer');
     commit('toggleRightDrawer');

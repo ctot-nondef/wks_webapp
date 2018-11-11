@@ -22,12 +22,12 @@
 				"items":""
 			},
 			{
-				"caption":"Inventare",
+				"caption":"Collections",
 				"arialabel":"",
 				"icon":"description",
 				"abstract":"",
 				"startpage":{
-					"name": "i",
+					"name": "collections",
 					"params": {
 						"lang": "en" }
 					},
@@ -46,36 +46,12 @@
 				"items":""
 			},
 			{
-				"caption":"Bibliographie",
-				"arialabel":"",
-				"icon":"book",
-				"abstract":"",
-				"startpage":{
-					"name": "schema",
-					"params": {
-						"lang": "en" }
-					},
-				"items":""
-			},
-			{
 				"caption":"Thesaurus",
 				"arialabel":"",
 				"icon":"device_hub",
 				"abstract":"",
 				"startpage":{
 					"name": "schema",
-					"params": {
-						"lang": "en" }
-					},
-				"items":""
-			},
-			{
-				"caption":"Import / Export",
-				"arialabel":"",
-				"icon":"build",
-				"abstract":"",
-				"startpage":{
-					"name": "import",
 					"params": {
 						"lang": "en" }
 					},

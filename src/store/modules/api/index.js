@@ -5,9 +5,12 @@ api.setDomain('https://wksgoose.acdh-dev.oeaw.ac.at/api/v1');
 
 const state = {
   apilib: api,
+  user: '',
+  token: null,
   loading: false,
   loadmsg: '',
   schemas: {},
+  p: ['user', 'token'],
 };
 
 const $config = {
@@ -27,6 +30,21 @@ const getters = {
 const mutations = {
   setConfig(s, config) {
     s.config = config;
+  },
+  setState(s, pstate) {
+    for (const key in pstate) {
+      if (pstate.hasOwnProperty(key) && s.hasOwnProperty(key)) s[key] = pstate[key];
+    }
+  },
+  setToken(s, { token, user }) {
+    s.token = token;
+    s.user = user;
+  },
+  setPage(s, page) {
+    s.page = page;
+  },
+  setSize(s, size) {
+    s.size = size;
   },
   setLoading(s, msg) {
     s.loading = true;

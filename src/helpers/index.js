@@ -6,28 +6,6 @@ import axios from 'axios';
 /* eslint-disable spaced-comment */
 // this could go to an external file, to be excluded from commits etc
 const CONFIG = {
-  WKS: {
-    BASEURL: 'https://wksgoose.hephaistos.arz.oeaw.ac.at/api/v1/',
-    ENDPOINTS: {
-      BASE: '/',
-    },
-    TIMEOUT: 15000,
-    PARAMS: {},
-    HEADERS: {},
-  },
-  ADLIB: {
-    BASEURL: 'http://kgunivie.w07adlibdb1.arz.oeaw.ac.at',
-    ENDPOINTS: {
-      BASE: '/wwwopac.ashx',
-    },
-    TIMEOUT: 15000,
-    PARAMS: {
-      output: 'json',
-      action: 'search',
-      limit: '1000',
-    },
-    HEADERS: {},
-  },
   VIAF: {
     BASEURL: 'https://www.viaf.org/viaf/',
     ENDPOINTS: {
@@ -89,128 +67,66 @@ export default {
     };
   },
   methods: {
-    getAdlibRecordByID(db, id) {
-      this.$info('Helpers', 'getAdlibRecordByID', db, id);
-      if (db && id) {
-        return APIS.ADLIB.BASE.get('', {
-          params: {
-            database: db,
-            search: `priref=${id}`,
-          },
-        }).then((response) => {
-          this.$log('response', response.data);
-          return Promise.resolve(response.data);
-        }, (error) => {
-          this.$log('errortree, request failed', error);
-          return Promise.reject(error);
-        });
+    // Store Functions
+    /*
+    gets the latest session out of the local storage.
+    // TODO: since we currently obly store one session, this function coud be much shorter.
+    */
+    getLatestSession() {
+      let localStorage;
+      try {
+        localStorage = window.localStorage;
+      } catch (e) {
+        // Access denied :-(
+        return e;
       }
-      return Promise.reject('no ID was given');
-    },
-    getAdlibRecordsByQuery(db, query) {
-      this.$info('Helpers', 'getAdlibRecordByQuery', db, query);
-      if (db && query) {
-        return APIS.ADLIB.BASE.get('', {
-          params: {
-            database: db,
-            search: query,
-          },
-        }).then((response) => {
-          this.$log('response', response.data);
-          return Promise.resolve(response.data);
-        }, (error) => {
-          this.$log('errortree, request failed', error);
-          return Promise.reject(error);
-        });
+      let latest = {
+        date: -1,
+      };
+      let sessions = {};
+      let sessionVals = {};
+      try {
+        sessions = Object.keys(JSON.parse(localStorage.MetaDataEditor));
+        sessionVals = Object.values(JSON.parse(localStorage.MetaDataEditor));
+      } catch (e) {
+        return null;
       }
-      return Promise.reject('no ID was given');
-    },
-    getViafByID(id) {
-      this.$info('Helpers', 'getViafByID(id)', id);
-
-      if (id) {
-        return APIS.VIAF.BASE.get(`${id}/`).then((response) => {
-          this.$log('response', response.data);
-          return Promise.resolve(response.data);
-        }, (error) => {
-          this.$log('errortree, request failed', error);
-          return Promise.reject(error);
-        });
-      } else {
-        this.$log('errortree, no id');
-        return Promise.reject('no ID was given');
-      }
-    },
-    getVocabsPromise(id, typ) {
-      const type = typ.toUpperCase();
-      this.$info('Helpers', 'getVocabsPromise(id, type)', id, type);
-      return APIS.VOCABS[type].get('', {
-        params: {
-          query: `${id}*`,
-        },
-      });
-    },
-    getVocabsByID(id, typ) {
-      const type = typ.toUpperCase();
-      this.$info('Helpers', 'getVocabsByID(id, type)', id, type);
-      if (id && type && APIS.VOCABS[type]) {
-        return APIS.VOCABS[type].get('', {
-          params: {
-            query: `${id}*`,
-          },
-        }).then((response) => {
-          this.$log('response', response);
-          return Promise.resolve(response.data);
-        }, (error) => {
-          this.$log('errortree, request failed', error);
-          return Promise.reject(error);
-        });
-      }
-      return Promise.reject('failed to recieve vocabs');
-    },
-    splitToGetMultipleCalls(id, typ) {
-      this.$info('Helpers', 'splitToGetMultipleCalls(id, type)', id, typ);
-      if (typ.indexOf('Or') === -1) {
-        return this.getMultipleApiCallsByTypeAndID(id, typ);
-      }
-      const typen = typ.split('Or');
-      const promises = [];
-      for (let i = 0; i < typen.length; i += 1) {
-        promises.push(this.getMultipleApiCallsByTypeAndID(id, typen[i]).catch(this.useNull));
-      }
-      return Promise.all(promises).then((res) => {
-        // this.$debug('res All promises', res);
-        const data = [];
-        for (let i = 0; i < res.length; i += 1) {
-          if (res[i] !== null) {
-            const o = res[i];
-            for (let j = 0; j < o.length; j += 1) {
-              data.push(o[j]);
-            }
-          }
-        }
-        // this.$debug('Data', data);
-        return Promise.resolve(data);
-      })
-      .catch((res) => {
-        Promise.reject('Could not receive data', res);
-      });
-    },
-    mapRecord(source, target, record) {
-      let t = {};
-      const map = [`${source}_${target}`];
-      const keys = Object.keys(map);
-      console.log(map, keys, record);
-      for (let i = 0; i < keys.length; i++) {
-        if (record[keys[i]] && map[keys[i]].split('_').length === 1) {
-          t[map[keys[i]]] = record[keys[i]];
-        } else if (record[keys[i]] && map[keys[i]].split('_')[1] === '0') {
-          t[map[keys[i]].split('_')[0]] = record[keys[i]][0];
-        } else if (record[keys[i]] && map[keys[i]].split('_')[1] && map[keys[i]].split('_')[1] !== '0') {
-          t[map[keys[i]].split('_')[0]] = `${map[keys[i]].split('_')[1]}_${record[keys[i]]}`;
+      for (let i = 0; i < sessions.length; i += 1) {
+        if (sessionVals[i].date > latest.date && Date.now() - sessionVals[i].date > 50) {
+          latest = sessionVals[i];
         }
       }
-      return t;
+      if (latest.date === -1) {
+        latest = null;
+      }
+      return latest;
+    },
+    /*
+    deletes the whole local Storage of the key 'MetaDataEditor'.
+    // TODO: the key is currently hardcoded. should be imported from some config.
+    */
+    deleteOldSessions() {
+      let localStorage;
+      try {
+        localStorage = window.localStorage;
+      } catch (e) {
+        // Access denied :-(
+        return e;
+      }
+      try {
+        localStorage.setItem('MetaDataEditor', '');
+      } catch (e) {
+        return null;
+      }
+      return null;
+    },
+    /*
+    deletes * from the local storage
+    and reroutes to the current page in order do clear the vuex Storage.
+    */
+    clearCache() {
+      this.deleteOldSessions();
+      this.$router.go(this.$router.currentRoute);
     },
   },
   created() {
