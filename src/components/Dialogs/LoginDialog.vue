@@ -41,9 +41,6 @@ export default {
     ]),
   },
   methods: {
-    ...mapActions('api', [
-      'init',
-    ]),
     ...mapMutations('app', [
       'loginMut',
     ]),
@@ -65,7 +62,6 @@ export default {
       }).then((res) => {
         this.setToken({token: res.data.session, user: res.data.user})
         this.loginMut();
-        this.init();
         this.closeDialog('loginDialog');
       });
     },

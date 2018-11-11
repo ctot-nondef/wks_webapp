@@ -47,7 +47,7 @@ export default {
     axios.get('/static/nav.json')
       .then(res => this.setConfig(res.data))
       .catch(error => this.$log(error));
-    const pstate = this.getLatestSession();
+    const pstate = this.getLatestSession();    
     this.deleteOldSessions();
     this.dbInit(pstate);
     this.appInit(pstate);

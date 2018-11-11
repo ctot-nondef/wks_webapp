@@ -10,6 +10,8 @@ const triggerMutations = [
   'api/setToken',
   'app/loginMut',
   'app/logoutMut',
+  'api/setState',
+  'app/setState',
 ];
 
 // helper function for filtering for properties that need to be persistent.

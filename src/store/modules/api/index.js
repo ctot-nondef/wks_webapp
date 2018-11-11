@@ -62,7 +62,8 @@ const mutations = {
 };
 
 const actions = {
-  init({ state, commit }) {
+  init({ state, commit }, pstate) {
+    if (pstate.pState.api) commit('setState', pstate.pState.api);
     commit('setLoading', 'Loading Database Configuration.');
     state.apilib.get( { $config } ).then((res) => {
       if (res.data.data && res.data.data.length > 0) {
