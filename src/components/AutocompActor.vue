@@ -10,7 +10,7 @@
       item-text="name"
       return-object
       @input="$emit('input', select)"
-      multiple = "multi"
+      :multiple="multiple"
       >
       <template slot="selection" slot-scope="data">
           <v-chip :selected="data.selected" close class="chip--select-multi" @input="remove(data.item)" color="white">
@@ -41,14 +41,12 @@ export default {
     'label',
     'multiple',
   ],
-  name: 'AutocompCategories',
   data() {
     return {
       loading: false,
-      items: this.value || [],
+      items: [],
       select: this.value || [],
       search: null,
-      multi: this.multiple || false,
     };
   },
   watch: {
@@ -60,6 +58,7 @@ export default {
     value(val) {
       console.log(val);
       this.select = val;
+      this.items = val;
     },
   },
   methods: {
@@ -88,7 +87,7 @@ export default {
       console.log(item, this.select);
        const index = this.select.findIndex(r => r._id === item._id);
        console.log(index);
-       if (index >= 0) this.select.splice(index, 1)
+       if (index >= 0) this.select.splice(index, 1);
      }
   },
   created() {

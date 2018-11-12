@@ -83,7 +83,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       if (type && id) {
         commit('setLoading', `Getting ${type} ${id} from Database`);
-        p = state.apilib[`get${t}ById`]({ id, $config });
+        p = state.apilib[`get${t}ById`]({ id, $config, populate });
       } else if (type && !id) {
         commit('setLoading', `Getting Queryset of ${type} from Database`);
         p = state.apilib[`get${t}`]({ sort, skip, limit, query, populate, $config });
@@ -104,11 +104,12 @@ const actions = {
       $config
     }
     params[type] = body;
+    params.id = id;
     let t = type.charAt(0).toUpperCase() + type.slice(1);
     return new Promise((resolve, reject) => {
       if (type && id) {
         commit('setLoading', `Updating ${type} ${id} to Database`);
-        p = state.apilib[`post${t}ByID`]({ id, [type]: body, $config });
+        p = state.apilib[`post${t}ById`](params);
       } else if (type && !id) {
         commit('setLoading', `Creating a ${type} in Database`);
         p = state.apilib[`post${t}`](params);
@@ -129,7 +130,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       if (type && id) {
         commit('setLoading', `Deleting ${type} ${id} in Database`);
-        p = state.apilib[`delete${t}ByID`]({ id });
+        p = state.apilib[`delete${t}ById`]({ id });
       } else reject('Invalid or Insufficient Parameters');
       p.then((res) => {
         commit('setLoadingFinished');

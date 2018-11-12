@@ -91,7 +91,9 @@ export default {
       'delete',
     ]),
     addCollection() {
-      if(this.newcollection.place) this.newcollection.place = this.newcollection.place._id;
+      if(this.newcollection.place) this.newcollection.place.forEach((el, idx, c) => {
+        c[idx] = el._id;
+      });
       if(this.newcollection.collector) this.newcollection.collector.forEach((el, idx, c) => {
         c[idx] = el._id;
       });

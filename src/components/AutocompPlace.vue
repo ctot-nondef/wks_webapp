@@ -10,7 +10,7 @@
       item-text="name"
       return-object
       @input="$emit('input', select)"
-      :multiple="multi"
+      :multiple="multiple"
       >
       <template slot="selection" slot-scope="data">
           <v-chip :selected="data.selected" close class="chip--select-multi" @input="remove(data.item)" color="white">
@@ -45,10 +45,9 @@ export default {
   data() {
     return {
       loading: false,
-      items: this.value || [],
-      select: this.value || [],
+      items: [],
+      select: [],
       search: null,
-      multi: this.multiple || false,
     };
   },
   watch: {
@@ -60,6 +59,7 @@ export default {
     value(val) {
       console.log(val);
       this.select = val;
+      this.items = val;
     },
   },
   methods: {

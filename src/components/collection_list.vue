@@ -16,7 +16,7 @@
             <v-btn fab dark small :to="{ name: 'collectionsingle', params: { id:  props.item._id  }}" color="primary">
               <v-icon dark>collections_bookmark</v-icon>
             </v-btn>
-            <v-btn fab dark small color="warning" @click="editCollection(props.item)">
+            <v-btn fab dark small color="warning" @click="editCollection(props.item._id)">
               <v-icon dark>edit</v-icon>
             </v-btn>
             <v-btn fab dark small color="error" @click="deleteCollection(props.item._id)">
@@ -133,20 +133,43 @@ export default {
         }
       });
     },
-    editCollection(obj) {
-      this.collectiondialog = true;
-      this.cedit = obj;
+    editCollection(_id) {
+      this.get({
+        type: 'Collect',
+        query: JSON.stringify({
+          _id: _id,
+        }),
+        populate: JSON.stringify([
+          {"path":"collector"},
+          {"path":"place"}
+        ]),
+      }).then((res) => {
+        this.cedit = res.data[0];
+        this.collectiondialog = true;
+      });
     },
     saveCollection() {
-      if (this.cedits.url) {
-        this.put({ type: 'collections', url: this.cedits.url, data: this.cedits }).then((res) => {
+      console.log(this.cedits);
+      if (this.cedits._id) {
+        console.log(this.cedits);
+        if(this.cedits.place) this.cedits.place.forEach((el, idx, c) => {
+          c[idx] = el._id;
+        });
+        if(this.cedits.collector) this.cedits.collector.forEach((el, idx, c) => {
+          c[idx] = el._id;
+        });
+        console.log(this.cedits);
+        this.post({ type: 'collect', id: this.cedits._id, body: this.cedits }).then((res) => {
           this.getRecords();
         });
       }
       this.collectiondialog = false;
     },
-    deleteCollection(url) {
-      this.delete({ type: 'collections', url }).then((res) => {
+    deleteCollection(_id) {
+      this.delete({ type: 'Collect', id: _id }).then((res) => {
+        this.getRecords();
+      })
+      .catch((err) => {
         this.getRecords();
       });
     },
