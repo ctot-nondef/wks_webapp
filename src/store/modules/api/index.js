@@ -10,6 +10,8 @@ const state = {
   loading: false,
   loadmsg: '',
   schemas: {},
+  page: 1,
+  size: 50,
   p: ['user', 'token'],
 };
 

@@ -45,7 +45,7 @@ import collectionform from './collection_form';
 export default {
   components: {
     fundamentcard,
-    collectionform,    
+    collectionform,
   },
   data() {
     return {
@@ -84,9 +84,13 @@ export default {
     ]),
     getRecords() {
       this.loading = true;
-      this.setSize(this.pagination.rowsPerPage);
-      this.setPage(this.pagination.page);
-      this.get({ type: 'Collect' }).then((res) => {
+      console.log(this.pagination);
+      this.get({
+        type: 'Collect',
+        sort: this.pagination.descending ? `-${this.pagination.sortBy}` : this.pagination.sortBy,
+        limit: this.pagination.rowsPerPage,
+        skip: (this.pagination.page - 1) * this.pagination.rowsPerPage,
+      }).then((res) => {
         this.loading = false;
         this.data = res.data;
         this.totalHits = res.data.length;
