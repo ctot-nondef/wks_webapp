@@ -1,24 +1,29 @@
 <template>
   <div class="">
-    <v-text-field v-model="title" label="Title" @input="returnObject()"></v-text-field>
+    <v-text-field v-model="collection.name" label="Name" @input="returnObject()"></v-text-field>
+    <autocompactor v-model="collection.collector" label="Collector" multpiple="true" @input="collection.collector=$event;returnObject();"></autocompactor>
+    <autocompplace v-model="collection.place" label="Place" @input="collection.place=$event;returnObject();"></autocompplace>
+    <v-text-field v-model="collection.beginOfExistence" label="Begin of Existence" @input="returnObject()"></v-text-field>
+    <v-text-field v-model="collection.endOfExistence" label="End of Existence" @input="returnObject()"></v-text-field>
     <v-textarea v-model="description" label="Description" @input="returnObject()"></v-textarea>
-    <v-textarea v-model="comment" label="Comment" @input="returnObject()"></v-textarea>
-    <v-checkbox v-model="public" :label="`Public: ${public.toString()}`"  @input="returnObject()"></v-checkbox>
   </div>
 </template>
 <script>
-import autocompcategories from './AutocompCategories';
+import autocompactor from './AutocompActor';
+import autocompplace from './AutocompPlace';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 export default {
   components: {
-    autocompcategories,
+    autocompactor,
+    autocompplace,
   },
   props: [
     'value',
   ],
   data() {
     return {
+      collection: {},
       title: '',
       description: '',
       comment: '',
@@ -28,22 +33,12 @@ export default {
   },
   watch: {
     value(val) {
-      this.title = val.title;
-      this.description = val.description;
-      this.comment = val.comment;
-      this.public = val.public;
-      this.url = val.url;
+      this.collection = val;
     },
   },
   methods: {
     returnObject() {
-      this.$emit('input', {
-        title: this.title,
-        description: this.description,
-        comment: this.comment,
-        public: this.public,
-        url: this.url,
-      });
+      this.$emit('input', this.collection);
     },
   },
 };

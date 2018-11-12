@@ -100,6 +100,10 @@ const actions = {
   },
   post({ state, commit }, { type, id, body }) {
     let p = {};
+    let params = {
+      $config
+    }
+    params[type] = body;
     let t = type.charAt(0).toUpperCase() + type.slice(1);
     return new Promise((resolve, reject) => {
       if (type && id) {
@@ -107,7 +111,7 @@ const actions = {
         p = state.apilib[`post${t}ByID`]({ id, [type]: body, $config });
       } else if (type && !id) {
         commit('setLoading', `Creating a ${type} in Database`);
-        p = state.apilib[`post${t}`]({ [type]: body, $config });
+        p = state.apilib[`post${t}`](params);
       } else reject('Invalid or Insufficient Parameters');
       p.then((res) => {
         commit('setLoadingFinished');

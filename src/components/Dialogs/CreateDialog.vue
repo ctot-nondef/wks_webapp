@@ -15,8 +15,7 @@
           </v-btn>
           <v-toolbar-title>{{ createDialog.type }}</v-toolbar-title>
           <v-spacer></v-spacer>
-          <v-toolbar-items>
-            <v-btn dark flat @click.native="submit">Save</v-btn>
+          <v-toolbar-items>            
           </v-toolbar-items>
           <v-menu bottom right offset-y>
             <v-btn slot="activator" dark icon>
