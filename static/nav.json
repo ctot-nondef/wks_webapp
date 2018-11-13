@@ -39,7 +39,7 @@
 				"icon":"person",
 				"abstract":"",
 				"startpage":{
-					"name": "create",
+					"name": "actors",
 					"params": {
 						"lang": "en" }
 					},

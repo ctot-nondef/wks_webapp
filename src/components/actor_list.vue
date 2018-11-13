@@ -13,13 +13,18 @@
       <template slot="items" slot-scope="props" >
           <td>{{ props.item.name }}</td>
           <td>
-            <v-btn fab dark small :to="{ name: 'collectionsingle', params: { id:  props.item._id  }}" color="primary">
+            <div v-if="props.item.instanceOf">
+              {{ props.item.instanceOf.name }}
+            </div>
+          </td>
+          <td>
+            <v-btn fab dark small :to="{ name: 'actorsingle', params: { id:  props.item._id  }}" color="primary">
               <v-icon dark>collections_bookmark</v-icon>
             </v-btn>
-            <v-btn fab dark small color="warning" @click="editCollection(props.item._id)">
+            <v-btn fab dark small color="warning" @click="editactor(props.item._id)">
               <v-icon dark>edit</v-icon>
             </v-btn>
-            <v-btn fab dark small color="error" @click="deleteCollection(props.item._id)">
+            <v-btn fab dark small color="error" @click="deleteactor(props.item._id)">
               <v-icon dark>delete</v-icon>
             </v-btn>
           </td>
@@ -27,8 +32,8 @@
     </v-data-table>
     <v-layout column justify-space-between>
       <v-dialog
-        v-model="collectiondialog"
-        @keydown.esc="collectiondialog=false"
+        v-model="actordialog"
+        @keydown.esc="actordialog=false"
         fullscreen
         hide-overlay
         transition="dialog-bottom-transition"
@@ -36,10 +41,10 @@
         >
         <v-card>
           <v-toolbar dark color="primary">
-            <v-btn icon dark @click.native="collectiondialog=false">
+            <v-btn icon dark @click.native="actordialog=false">
               <v-icon>close</v-icon>
             </v-btn>
-            <v-toolbar-title>Edit Collection</v-toolbar-title>
+            <v-toolbar-title>Edit actor</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
             </v-toolbar-items>
@@ -49,13 +54,13 @@
               </v-btn>
             </v-menu>
           </v-toolbar>
-          <fundamentcard caption="Collection Data">
+          <fundamentcard caption="actor Data">
             <div slot="content">
               <v-card color="grey lighten-2" class="pa-4">
-                <collectionform :value="cedit" @input="cedits=$event"></collectionform>
+                <actorform :value="cedit" @input="cedits=$event"></actorform>
                 <v-layout justify-end row fill-height>
-                  <v-btn color="warning" @click="saveCollection()">Save</v-btn>
-                  <v-btn color="primary" flat @click.native="collectiondialog=false">Discard</v-btn>
+                  <v-btn color="warning" @click="saveactor()">Save</v-btn>
+                  <v-btn color="primary" flat @click.native="actordialog=false">Discard</v-btn>
                 </v-layout>
               </v-card>
             </div>
@@ -70,7 +75,7 @@
 import { mapMutations, mapActions } from 'vuex';
 
 import fundamentcard from './Fundament/FundamentCard';
-import collectionform from './collection_form';
+import actorform from './actor_form';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 /* eslint no-console: ["error", { allow: ["log"] }] */
@@ -78,19 +83,20 @@ import collectionform from './collection_form';
 export default {
   components: {
     fundamentcard,
-    collectionform,
+    actorform,
   },
   data() {
     return {
       data: [],
       cedit: {},
       cedits: {},
-      collectiondialog: false,
+      actordialog: false,
       loading: false,
-      itemOptions: [10, 10, 50],
+      itemOptions: [10, 20, 50],
       totalHits: 0,
       headers: [
         { text: 'Name', value: 'name' },
+        { text: 'Type', value: 'instanceOf' },
         { text: 'Actions', value: 'actions' },
       ],
       pagination: {},
@@ -118,22 +124,26 @@ export default {
       this.loading = true;
       console.log(this.pagination);
       this.get({
-        type: 'Collect',
+        type: 'Actor',
         sort: this.pagination.descending ? `-${this.pagination.sortBy}` : this.pagination.sortBy,
         limit: this.pagination.rowsPerPage,
         skip: (this.pagination.page - 1) * this.pagination.rowsPerPage,
+        populate: JSON.stringify([
+          {"path":"instanceOf"}
+        ]),
       }).then((res) => {
         this.loading = false;
         this.data = res.data;
         this.totalHits = parseInt(res.headers['x-total-count']);
       }).catch((err) => {
+        console.log(err);
         if (err.response.data && err.response.data.detail === 'Invalid page.') {
           this.pagination.page -= 1;
           this.getRecords();
         }
       });
     },
-    editCollection(_id) {
+    editactor(_id) {
       this.get({
         type: 'Collect',
         query: JSON.stringify({
@@ -145,10 +155,10 @@ export default {
         ]),
       }).then((res) => {
         this.cedit = res.data[0];
-        this.collectiondialog = true;
+        this.actordialog = true;
       });
     },
-    saveCollection() {
+    saveactor() {
       console.log(this.cedits);
       if (this.cedits._id) {
         console.log(this.cedits);
@@ -163,9 +173,9 @@ export default {
           this.getRecords();
         });
       }
-      this.collectiondialog = false;
+      this.actordialog = false;
     },
-    deleteCollection(_id) {
+    deleteactor(_id) {
       this.delete({ type: 'Collect', id: _id }).then((res) => {
         this.getRecords();
       })

@@ -6,6 +6,7 @@ import Import from '../components/Import';
 import collections from '../components/collections';
 import collectionsingle from '../components/collectionsingle';
 import inventorysingle from '../components/inventorysingle';
+import actors from '../components/actors';
 
 Vue.use(Router);
 
@@ -48,6 +49,13 @@ export default new Router({
           name: 'collectionsingle',
           components: {
             Content: collectionsingle,
+          },
+        },
+        {
+          path: 'actors',
+          name: 'actors',
+          components: {
+            Content: actors,
           },
         },
         {
