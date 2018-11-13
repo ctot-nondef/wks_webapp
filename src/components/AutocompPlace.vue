@@ -69,7 +69,7 @@ export default {
       this.get({
         type: 'descriptor',
         query: JSON.stringify({
-          name: {"$regex": escape((this.search || '').trim()) },
+          name: {"$regex": this.search || '' },
           instanceOf: "5be884e8add30d031e41bc10",
         })
       })
@@ -87,7 +87,8 @@ export default {
     ]),
     remove (item) {
        const index = this.select.findIndex(r => r._id === item._id);
-       if (index >= 0) this.select.splice(index, 1)
+       if (index >= 0) this.select.splice(index, 1);
+       this.$emit('input', this.select);
      }
   },
   created() {

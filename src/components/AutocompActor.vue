@@ -68,7 +68,7 @@ export default {
       this.get({
         type: 'actor',
         query: JSON.stringify({
-          name: {"$regex": escape((this.search || '').trim()) },
+          name: {"$regex": this.search || '' },
         })
       })
       .then((res) => {
@@ -84,10 +84,9 @@ export default {
       'get',
     ]),
     remove (item) {
-      console.log(item, this.select);
        const index = this.select.findIndex(r => r._id === item._id);
-       console.log(index);
        if (index >= 0) this.select.splice(index, 1);
+       this.$emit('input', this.select);
      }
   },
   created() {
