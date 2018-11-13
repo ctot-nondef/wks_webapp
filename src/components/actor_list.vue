@@ -1,25 +1,30 @@
 <template>
   <div class="">
-    <v-flex xs5>
-       <v-select
-         v-model="classfilter"
-         :items="$store.state.api.classes.Actor"
-         item-text="labels[4].label"
-         item-value="_id"
-         label="Filter by Type"
-         @input="getRecords()"
-         append-icon="close"
-         :append-icon-cb="clearClassFilter"
-       ></v-select>
-     </v-flex>
-     <v-flex xs5>
-       <v-text-field
-          v-model="namefilter"
-          label="Filter By Name"
+  <v-card color="grey lighten-2" class="pa-4 mb-3">
+    <v-layout justify-end row fill-height>
+      <v-flex xs6>
+        <v-select
+          v-model="classfilter"
+          :items="$store.state.api.classes.Actor"
+          item-text="labels[4].label"
+          item-value="_id"
+          label="Filter by Type"
           @input="getRecords()"
           append-icon="close"
-        ></v-text-field>
+          :append-icon-cb="clearClassFilter"
+        ></v-select>
       </v-flex>
+      <v-flex xs6>
+        <v-text-field
+           v-model="namefilter"
+           label="Filter By Name"
+           @input="getRecords()"
+           append-icon="close"
+           :append-icon-cb="clearNameFilter"
+         ></v-text-field>
+       </v-flex>
+     </v-layout>
+    </v-card>
     <v-data-table
       :headers="headers"
       :items="data"
@@ -210,7 +215,11 @@ export default {
     clearClassFilter() {
       this.classfilter = '';
       this.getRecords()
-    }
+    },
+    clearNameFilter() {
+      this.namefilter = '';
+      this.getRecords()
+    },
   },
   created() {
 
