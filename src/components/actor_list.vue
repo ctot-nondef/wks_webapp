@@ -1,5 +1,25 @@
 <template>
   <div class="">
+    <v-flex xs5>
+       <v-select
+         v-model="classfilter"
+         :items="$store.state.api.classes.Actor"
+         item-text="labels[4].label"
+         item-value="_id"
+         label="Filter by Type"
+         @input="getRecords()"
+         append-icon="close"
+         :append-icon-cb="clearClassFilter"
+       ></v-select>
+     </v-flex>
+     <v-flex xs5>
+       <v-text-field
+          v-model="namefilter"
+          label="Filter By Name"
+          @input="getRecords()"
+          append-icon="close"
+        ></v-text-field>
+      </v-flex>
     <v-data-table
       :headers="headers"
       :items="data"
@@ -14,7 +34,7 @@
           <td>{{ props.item.name }}</td>
           <td>
             <div v-if="props.item.instanceOf">
-              {{ props.item.instanceOf.name }}
+              {{ props.item.instanceOf.labels[4].label }}
             </div>
           </td>
           <td>
@@ -44,7 +64,7 @@
             <v-btn icon dark @click.native="actordialog=false">
               <v-icon>close</v-icon>
             </v-btn>
-            <v-toolbar-title>Edit actor</v-toolbar-title>
+            <v-toolbar-title>Edit Actor</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
             </v-toolbar-items>
@@ -54,7 +74,7 @@
               </v-btn>
             </v-menu>
           </v-toolbar>
-          <fundamentcard caption="actor Data">
+          <fundamentcard caption="Actor Data">
             <div slot="content">
               <v-card color="grey lighten-2" class="pa-4">
                 <actorform :value="cedit" @input="cedits=$event"></actorform>
@@ -94,6 +114,8 @@ export default {
       loading: false,
       itemOptions: [10, 20, 50],
       totalHits: 0,
+      classfilter: '',
+      namefilter: '',
       headers: [
         { text: 'Name', value: 'name' },
         { text: 'Type', value: 'instanceOf' },
@@ -122,7 +144,9 @@ export default {
     ]),
     getRecords() {
       this.loading = true;
-      console.log(this.pagination);
+      let q = {}
+      if (this.classfilter != '') q.instanceOf = this.classfilter;
+      if (this.namefilter != '') q.name = {"$regex": this.namefilter };
       this.get({
         type: 'Actor',
         sort: this.pagination.descending ? `-${this.pagination.sortBy}` : this.pagination.sortBy,
@@ -131,6 +155,7 @@ export default {
         populate: JSON.stringify([
           {"path":"instanceOf"}
         ]),
+        query: JSON.stringify(q),
       }).then((res) => {
         this.loading = false;
         this.data = res.data;
@@ -145,13 +170,12 @@ export default {
     },
     editactor(_id) {
       this.get({
-        type: 'Collect',
+        type: 'Actor',
         query: JSON.stringify({
           _id: _id,
         }),
         populate: JSON.stringify([
-          {"path":"collector"},
-          {"path":"place"}
+          {"path":"instanceOf"}
         ]),
       }).then((res) => {
         this.cedit = res.data[0];
@@ -169,22 +193,27 @@ export default {
           c[idx] = el._id;
         });
         console.log(this.cedits);
-        this.post({ type: 'collect', id: this.cedits._id, body: this.cedits }).then((res) => {
+        this.post({ type: 'Actor', id: this.cedits._id, body: this.cedits }).then((res) => {
           this.getRecords();
         });
       }
       this.actordialog = false;
     },
     deleteactor(_id) {
-      this.delete({ type: 'Collect', id: _id }).then((res) => {
+      this.delete({ type: 'Actor', id: _id }).then((res) => {
         this.getRecords();
       })
       .catch((err) => {
         this.getRecords();
       });
     },
+    clearClassFilter() {
+      this.classfilter = '';
+      this.getRecords()
+    }
   },
   created() {
+
   },
 }
 </script>

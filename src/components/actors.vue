@@ -14,7 +14,7 @@
             <v-flex xs12>
               <actorlist ref="actorlist"></actorlist>
             </v-flex>
-          </v-layout>actor
+          </v-layout>
         </div>
       </fundamentcard>
       <v-layout column justify-space-between>
@@ -31,7 +31,7 @@
               <v-btn icon dark @click.native="actordialog=false">
                 <v-icon>close</v-icon>
               </v-btn>
-              <v-toolbar-title>Create actor</v-toolbar-title>
+              <v-toolbar-title>Create Actor</v-toolbar-title>
               <v-spacer></v-spacer>
               <v-toolbar-items>
               </v-toolbar-items>
@@ -41,7 +41,7 @@
                 </v-btn>
               </v-menu>
             </v-toolbar>
-            <fundamentcard caption="actor Data">
+            <fundamentcard caption="Actor Data">
               <div slot="content">
                 <v-card color="grey lighten-2" class="pa-4">
                   <actorform :value="newactor" @input="newactor=$event"></actorform>
@@ -97,7 +97,7 @@ export default {
       if(this.newactor.collector) this.newactor.collector.forEach((el, idx, c) => {
         c[idx] = el._id;
       });
-      this.post({ type: 'collect', body: this.newactor }).then((res) => {
+      this.post({ type: 'actor', body: this.newactor }).then((res) => {
         this.newactor = {};
         this.actordialog = false;
         this.$refs.actorlist.getRecords();
