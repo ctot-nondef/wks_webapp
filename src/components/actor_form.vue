@@ -1,7 +1,20 @@
 <template>
   <div class="">
-    <v-text-field v-model="actor.name" label="Name" @input="returnObject()"></v-text-field>
-    
+    <v-layout justify-end row fill-height>
+      <v-flex xs6>
+        <v-text-field v-model="actor.name" label="Name" @input="returnObject()"></v-text-field>
+      </v-flex>
+      <v-flex xs6>
+        <v-select
+          v-model="actor.instanceOf"
+          :items="$store.state.api.classes.Actor"
+          item-text="labels[4].label"
+          item-value="_id"
+          label="Type"
+          @input="returnObject()"
+        ></v-select>
+      </v-flex>
+     </v-layout>
     <!-- <autocompactor v-model="collection.collector" label="Collector" :multiple="true" @input="actor.collector=$event;returnObject();"></autocompactor> -->
     <!-- <autocompplace v-model="collection.place" label="Place" :multiple="true" @input="actor.place=$event;returnObject();"></autocompplace> -->
     <v-text-field v-model="actor.beginOfExistence" label="Begin of Existence" @input="returnObject()"></v-text-field>

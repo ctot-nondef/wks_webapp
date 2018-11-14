@@ -41,8 +41,7 @@
                 </v-btn>
               </v-menu>
             </v-toolbar>
-            <fundamentcard caption="Actor Data">
-              <div slot="content">
+            <v-container grid-list-md text-xs-center>
                 <v-card color="grey lighten-2" class="pa-4">
                   <actorform :value="newactor" @input="newactor=$event"></actorform>
                   <v-layout justify-end row fill-height>
@@ -50,8 +49,7 @@
                     <v-btn color="primary" flat @click.native="actordialog=false">Discard</v-btn>
                   </v-layout>
                 </v-card>
-              </div>
-            </fundamentcard>
+            </v-container>
           </v-card>
         </v-dialog>
       </v-layout>
