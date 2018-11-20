@@ -29,6 +29,36 @@ const CONFIG = {
     },
     HEADERS: {},
   },
+  GND: {
+    BASEURL: 'https://lobid.org/gnd/',
+    ENDPOINTS: {
+      DIRECT: '',
+      SEARCH: 'search',
+    },
+    TIMEOUT: 5000,
+    PARAMS: {
+    },
+    HEADERS: {
+      "Accept":"application/json",
+    },
+  },
+};
+
+const IMPORT = {
+  GND: {
+    Person: {
+      preferredName: "name",
+      dateOfBirth: "beginOfExistence",
+      dateOfDeath: "endOfExistence",
+      biographicalOrHistoricalInformation: "description",
+    },
+    CorporateBody: {
+      preferredName: "name",
+      dateOfEstablishment: "beginOfExistence",
+      dateOfTermination: "endOfExistence",
+    },
+
+  },
 };
 
 let APIS = {};
@@ -64,6 +94,7 @@ export default {
   data() {
     return {
       APIS,
+      IMPORT,
     };
   },
   methods: {
@@ -127,6 +158,22 @@ export default {
     clearCache() {
       this.deleteOldSessions();
       this.$router.go(this.$router.currentRoute);
+    },
+    /*
+    maps imported Object according to mapping in this.IMPORT
+    returns mapped object for DB
+    */
+    mapGNDImport(type, obj) {
+      console.log(this.IMPORT.GND[type]);
+      let map = Object.keys(this.IMPORT.GND[type]);
+      let idx = map.length - 1;
+      let res = {};
+      while(idx + 1) {
+        res[this.IMPORT.GND[type][map[idx]]] = obj[map[idx]];
+        idx -= 1;
+      }
+      res.identifier = [`GND:${obj.gndIdentifier}`];
+      return res;
     },
   },
   created() {

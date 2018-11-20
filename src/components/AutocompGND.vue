@@ -7,23 +7,25 @@
       :label="label"
       flat
       hide-no-data
-      item-text="name"
+      item-text="label"
       return-object
       @input="$emit('input', select)"
       :multiple="multiple"
       >
       <template slot="selection" slot-scope="data">
-          <v-chip :selected="data.selected" close class="chip--select-multi" @input="remove(data.item)" color="white">
-            {{ data.item.name }}
+          <v-chip :selected="data.selected" close class="chip--select-multi" color="white">
+            {{ data.item.label }}
           </v-chip>
       </template>
       <template slot="item" slot-scope="data">
-        <template v-if="typeof data.item !== 'object'">
-          <v-list-tile-content v-text="data.item"></v-list-tile-content>
-        </template>
-        <template v-else>
-          <v-list-tile-content>
-            <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
+        <template>
+            <v-list-tile-avatar>
+                 <img v-if="data.item.image" :src="data.item.image">
+                 <v-icon v-if="!data.item.image">person</v-icon>
+               </v-list-tile-avatar>
+            <v-list-tile-content>
+            <v-list-tile-title v-html="data.item.label"></v-list-tile-title>
+            <v-list-tile-sub-title v-html="data.item.category"></v-list-tile-sub-title>
           </v-list-tile-content>
         </template>
       </template>
@@ -40,6 +42,7 @@ export default {
     'value',
     'label',
     'multiple',
+    'type',
   ],
   data() {
     return {
@@ -64,15 +67,16 @@ export default {
   methods: {
     querySelections() {
       this.loading = true;
-      // this.$info(vm);
-      this.get({
-        type: 'actor',
-        query: JSON.stringify({
-          name: {"$regex": this.search || '' },
-        })
+      this.APIS.GND.SEARCH.get('',{ params:
+        {
+          q: this.search,
+          format: "json:suggest",
+          filter: this.type ? `type:${this.type}` : '',
+        },
       })
       .then((res) => {
-        if (Array.isArray(res.data)) this.items = res.data;
+        console.log(res.data);
+        this.items = res.data;
         this.loading = false;
       })
       .catch((res) => {

@@ -6,6 +6,8 @@ import Import from '../components/Import';
 import collections from '../components/collections';
 import collectionsingle from '../components/collectionsingle';
 import inventorysingle from '../components/inventorysingle';
+import actors from '../components/actors';
+import descriptors from '../components/descriptors';
 
 Vue.use(Router);
 
@@ -58,10 +60,17 @@ export default new Router({
           },
         },
         {
-          path: 'import',
-          name: 'import',
+          path: 'actors',
+          name: 'actors',
           components: {
-            Content: Import,
+            Content: actors,
+          },
+        },
+        {
+          path: 'descriptors',
+          name: 'descriptors',
+          components: {
+            Content: descriptors,
           },
         },
         {

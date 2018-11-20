@@ -10,6 +10,7 @@ const state = {
   loading: false,
   loadmsg: '',
   schemas: {},
+  classes: {},
   page: 1,
   size: 50,
   p: ['user', 'token'],
@@ -61,6 +62,11 @@ const mutations = {
       s.schemas[type] = attributes;
     }
   },
+  setClasses(s, { type, classlist }) {
+    if (type && classlist) {
+      s.classes[type] = classlist;
+    }
+  },
 };
 
 const actions = {
@@ -75,6 +81,24 @@ const actions = {
         }
         commit('setLoadingFinished');
       }
+    });
+    state.apilib.getDescriptor({
+      $config,
+      type: 'Descriptor',
+      query: JSON.stringify({
+        description: "Class of Actor",
+      }),
+    }).then((res) => {
+      commit('setClasses', { type: 'Actor', classlist: res.data});
+    });
+    state.apilib.getDescriptor({
+      $config,
+      type: 'Descriptor',
+      query: JSON.stringify({
+        description: "Class of Descriptor",
+      }),
+    }).then((res) => {
+      commit('setClasses', { type: 'Descriptor', classlist: res.data});
     });
   },
   get({ state, commit }, { type, id, sort, skip, limit, query, populate }) {
