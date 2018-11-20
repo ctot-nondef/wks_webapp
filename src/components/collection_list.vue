@@ -39,7 +39,7 @@
             <v-btn icon dark @click.native="collectiondialog=false">
               <v-icon>close</v-icon>
             </v-btn>
-            <v-toolbar-title>Create Collection</v-toolbar-title>
+            <v-toolbar-title>Edit Collection</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
             </v-toolbar-items>
@@ -49,17 +49,15 @@
               </v-btn>
             </v-menu>
           </v-toolbar>
-          <fundamentcard caption="Collection Data">
-            <div slot="content">
-              <v-card color="grey lighten-2" class="pa-4">
-                <collectionform :value="cedit" @input="cedits=$event"></collectionform>
-                <v-layout justify-end row fill-height>
-                  <v-btn color="warning" @click="saveCollection()">Save</v-btn>
-                  <v-btn color="primary" flat @click.native="collectiondialog=false">Discard</v-btn>
-                </v-layout>
-              </v-card>
-            </div>
-          </fundamentcard>
+          <v-container grid-list-md text-xs-center>
+            <v-card color="grey lighten-2" class="pa-4">
+              <collectionform :value="cedit" @input="cedits=$event"></collectionform>
+              <v-layout justify-end row fill-height>
+                <v-btn color="warning" @click="saveCollection()">Save</v-btn>
+                <v-btn color="primary" flat @click.native="collectiondialog=false">Discard</v-btn>
+              </v-layout>
+            </v-card>
+          </v-container>
         </v-card>
       </v-dialog>
     </v-layout>
@@ -87,7 +85,7 @@ export default {
       cedits: {},
       collectiondialog: false,
       loading: false,
-      itemOptions: [50, 100, 200],
+      itemOptions: [10, 10, 50],
       totalHits: 0,
       headers: [
         { text: 'Name', value: 'name' },
@@ -125,7 +123,7 @@ export default {
       }).then((res) => {
         this.loading = false;
         this.data = res.data;
-        this.totalHits = res.data.length;
+        this.totalHits = parseInt(res.headers['x-total-count']);
       }).catch((err) => {
         if (err.response.data && err.response.data.detail === 'Invalid page.') {
           this.pagination.page -= 1;
@@ -175,7 +173,6 @@ export default {
     },
   },
   created() {
-    this.getRecords();
   },
 }
 </script>

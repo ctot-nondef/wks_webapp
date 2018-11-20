@@ -41,17 +41,15 @@
                 </v-btn>
               </v-menu>
             </v-toolbar>
-            <fundamentcard caption="Collection Data">
-              <div slot="content">
-                <v-card color="grey lighten-2" class="pa-4">
-                  <collectionform :value="newcollection" @input="newcollection=$event"></collectionform>
-                  <v-layout justify-end row fill-height>
-                    <v-btn color="warning" @click="addCollection()">Save</v-btn>
-                    <v-btn color="primary" flat @click.native="collectiondialog=false">Discard</v-btn>
-                  </v-layout>
-                </v-card>
-              </div>
-            </fundamentcard>
+            <v-container grid-list-md text-xs-center>
+              <v-card color="grey lighten-2" class="pa-4">
+                <collectionform :value="newcollection" @input="newcollection=$event"></collectionform>
+                <v-layout justify-end row fill-height>
+                  <v-btn color="warning" @click="addCollection()">Save</v-btn>
+                  <v-btn color="primary" flat @click.native="collectiondialog=false">Discard</v-btn>
+                </v-layout>
+              </v-card>
+            </v-container>
           </v-card>
         </v-dialog>
       </v-layout>
