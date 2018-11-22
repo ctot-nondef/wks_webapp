@@ -66,7 +66,7 @@ export default {
       this.loading = true;
       // this.$info(vm);
       this.get({
-        type: 'actor',
+        type: 'descriptor',
         query: JSON.stringify({
           name: {"$regex": this.search || '' },
         })

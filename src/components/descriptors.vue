@@ -43,7 +43,7 @@
             </v-toolbar>
             <v-container grid-list-md text-xs-center>
               <v-card color="grey lighten-2" class="pa-4 mb-4">
-                <v-select v-model="itype" :items="['Person','CorporateBody']" label="Type"></v-select>
+                <v-select v-model="itype" :items="['PlaceOrGeographicName','SubjectHeading']" label="Type"></v-select>
                 <autocompgnd :value="idescriptor" :type="itype" :multiple="false" @input="idescriptor=$event"></autocompgnd>
                 <v-layout justify-end row fill-height>
                   <v-btn color="warning" @click="importdescriptor()">Import</v-btn>
@@ -94,7 +94,7 @@ export default {
       descriptordialog: false,
       newdescriptor: {},
       idescriptor: {},
-      itype: 'Person',
+      itype: 'PlaceOrGeographicName',
     };
   },
   methods: {

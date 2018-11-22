@@ -24,7 +24,6 @@
           fullscreen
           hide-overlay
           transition="dialog-bottom-transition"
-          scrollable
           >
           <v-card>
             <v-toolbar dark color="primary">

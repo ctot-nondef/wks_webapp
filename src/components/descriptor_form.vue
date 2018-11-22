@@ -15,8 +15,33 @@
         ></v-select>
       </v-flex>
      </v-layout>
-     
-    <v-textarea v-model="descriptor.description" label="Description" @input="returnObject()"></v-textarea>
+     <v-list two-line>
+       <template v-for="(item, index) in descriptor.labels">
+         <v-list-tile>
+           <v-list-tile-content>
+             <v-list-tile-title v-html="item.label"></v-list-tile-title>
+             <v-list-tile-sub-title v-html="item.lang"></v-list-tile-sub-title>
+           </v-list-tile-content>
+           <v-btn fab dark small color="error" @click="removelabel(index)">
+             <v-icon dark>delete</v-icon>
+           </v-btn>
+         </v-list-tile>
+       </template>
+     </v-list>
+     <v-layout justify-end row fill-height>
+       <v-flex xs8>
+         <v-text-field label="Label" v-model='newlabel.label'></v-text-field>
+       </v-flex>
+       <v-flex xs2>
+         <v-select v-model="newlabel.lang" :items="['en','de']" label="Language"></v-select>
+       </v-flex>
+       <v-flex xs2>
+         <v-btn fab dark small color="warning" @click="addlabel()">
+           <v-icon dark>edit</v-icon>
+         </v-btn>
+       </v-flex>
+      </v-layout>
+     <v-textarea v-model="descriptor.description" label="Description" @input="returnObject()"></v-textarea>
   </div>
 </template>
 <script>
@@ -40,6 +65,7 @@ export default {
       comment: '',
       public: false,
       url: '',
+      newlabel: {lang: 'de'},
     };
   },
   watch: {
@@ -50,6 +76,16 @@ export default {
   methods: {
     returnObject() {
       this.$emit('input', this.descriptor);
+    },
+    removelabel(index) {
+      this.descriptor.labels.splice(index, 1);
+      this.returnObject();
+    },
+    addlabel() {
+      if(!this.descriptor.labels) this.descriptor.labels = [];
+      this.descriptor.labels.push(this.newlabel);
+      this.returnObject();
+      this.newlabel = {};
     },
   },
 };
