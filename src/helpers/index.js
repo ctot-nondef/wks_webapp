@@ -57,7 +57,15 @@ const IMPORT = {
       dateOfEstablishment: "beginOfExistence",
       dateOfTermination: "endOfExistence",
     },
-
+    PlaceOrGeographicName: {
+      preferredName: "name",
+      biographicalOrHistoricalInformation: "description",
+      definition: "description",
+    },
+    SubjectHeading: {
+      preferredName: "name",
+      definition: "description",
+    }
   },
 };
 
@@ -173,6 +181,10 @@ export default {
         idx -= 1;
       }
       res.identifier = [`GND:${obj.gndIdentifier}`];
+      res.labels = [{
+        lang: "de",
+        label: obj.preferredName,
+      }];
       return res;
     },
   },
