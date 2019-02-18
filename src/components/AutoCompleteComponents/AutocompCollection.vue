@@ -94,7 +94,7 @@ export default {
       this.loading = true;
       // this.$info(vm);
       this.get({
-        type: 'collection',
+        type: 'collect',
         query: JSON.stringify({
           name: {"$regex": this.search || '' }
         })
