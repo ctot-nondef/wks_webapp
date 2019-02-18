@@ -7,25 +7,29 @@
       :label="label"
       flat
       hide-no-data
-      item-text="label"
+      item-text="name"
       return-object
+      cache-items
       @input="$emit('input', select)"
       :multiple="multiple"
       >
-      <template slot="selection" slot-scope="data">
-          <v-chip :selected="data.selected" close class="chip--select-multi" color="white">
-            {{ data.item.label }}
+       <template slot="selection" slot-scope="data">
+        <template v-if="multiple">
+          <v-chip :selected="data.selected" close class="chip--select-multi" @input="remove(data.item)" color="white">
+            {{ data.item.name }} 
           </v-chip>
+        </template>
+        <template v-else>
+           {{ data.item.name }}
+        </template>
       </template>
       <template slot="item" slot-scope="data">
-        <template>
-            <v-list-tile-avatar>
-                 <img v-if="data.item.image" :src="data.item.image">
-                 <v-icon v-if="!data.item.image">person</v-icon>
-               </v-list-tile-avatar>
-            <v-list-tile-content>
-            <v-list-tile-title v-html="data.item.label"></v-list-tile-title>
-            <v-list-tile-sub-title v-html="data.item.category"></v-list-tile-sub-title>
+        <template v-if="typeof data.item !== 'object'">
+          <v-list-tile-content v-text="data.item"></v-list-tile-content>
+        </template>
+        <template v-else>
+          <v-list-tile-content>
+            <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
           </v-list-tile-content>
         </template>
       </template>
@@ -34,7 +38,7 @@
 
 <script>
 import { mapActions } from 'vuex';
-import HELPERS from '../helpers';
+import HELPERS from '../../helpers';
 
 export default {
   mixins: [HELPERS],
@@ -42,13 +46,13 @@ export default {
     'value',
     'label',
     'multiple',
-    'type',
   ],
+  name: 'AutocompCategories',
   data() {
     return {
       loading: false,
       items: [],
-      select: this.value || [],
+      select: [] || '',
       search: null,
     };
   },
@@ -67,16 +71,16 @@ export default {
   methods: {
     querySelections() {
       this.loading = true;
-      this.APIS.GND.SEARCH.get('',{ params:
-        {
-          q: this.search,
-          format: "json:suggest",
-          filter: this.type ? `type:${this.type}` : '',
-        },
+      // this.$info(vm);
+      this.get({
+        type: 'descriptor',
+        query: JSON.stringify({
+          name: {"$regex": this.search || '' },
+          instanceOf: "5be884e8add30d031e41bc10",
+        })
       })
       .then((res) => {
-        console.log(res.data);
-        this.items = res.data;
+        if (Array.isArray(res.data)) this.items = res.data;
         this.loading = false;
       })
       .catch((res) => {

@@ -74,9 +74,9 @@ import { mapActions } from 'vuex';
 import HELPERS from '../helpers';
 
 import fundamentcard from './Fundament/FundamentCard';
-import descriptorlist from './descriptor_list';
-import descriptorform from './descriptor_form';
-import autocompgnd from './AutocompGND';
+import descriptorlist from './ListViews/descriptor_list';
+import descriptorform from './Forms/descriptor_form';
+import autocompgnd from './AutoCompleteComponents/AutocompGND';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 /* eslint no-console: ["error", { allow: ["log"] }] */

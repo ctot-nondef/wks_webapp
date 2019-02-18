@@ -69,14 +69,14 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 import HELPERS from '../helpers';
 
 import fundamentcard from './Fundament/FundamentCard';
-import actorlist from './actor_list';
-import actorform from './actor_form';
-import autocompgnd from './AutocompGND';
+import actorlist from './ListViews/actor_list';
+import actorform from './Forms/actor_form';
+import autocompgnd from './AutoCompleteComponents/AutocompGND';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 /* eslint no-console: ["error", { allow: ["log"] }] */
@@ -127,6 +127,9 @@ export default {
     },
   },
   computed: {
+    ...mapGetters('api', [
+      'apiloaded',
+    ]),
   },
   created() {
   },

@@ -1,4 +1,5 @@
 <template>
+<div>
     <v-autocomplete
       :loading="loading"
       :items="items"
@@ -6,16 +7,22 @@
       v-model="select"
       :label="label"
       flat
-      hide-no-data
       item-text="name"
+      item-value="_id"
+      cache-items
       return-object
       @input="$emit('input', select)"
       :multiple="multiple"
       >
-      <template slot="selection" slot-scope="data">
+    <template slot="selection" slot-scope="data">
+        <template v-if="multiple">
           <v-chip :selected="data.selected" close class="chip--select-multi" @input="remove(data.item)" color="white">
-            {{ data.item.name }}
+            {{ data.item.name }} 
           </v-chip>
+        </template>
+        <template v-else>
+           {{ data.item.name }}
+        </template>
       </template>
       <template slot="item" slot-scope="data">
         <template v-if="typeof data.item !== 'object'">
@@ -27,12 +34,12 @@
           </v-list-tile-content>
         </template>
       </template>
-    </v-autocomplete>
+    </v-autocomplete></div>
 </template>
 
 <script>
 import { mapActions } from 'vuex';
-import HELPERS from '../helpers';
+import HELPERS from '../../helpers';
 
 export default {
   mixins: [HELPERS],
@@ -40,12 +47,14 @@ export default {
     'value',
     'label',
     'multiple',
+    'filter',
+    'parententity'
   ],
   data() {
     return {
       loading: false,
       items: [],
-      select: this.value || [],
+      select:[] || '',
       search: null,
     };
   },
@@ -55,20 +64,39 @@ export default {
         this.querySelections(newval);
       }
     },
-    value(val) {
-      console.log(val);
-      this.select = val;
-      this.items = val;
-    },
+    parententity() {
+     console.log("log something");
+      console.log(this.select);
+      this.select.length = 0;
+      this.items.length = 0;
+      console.log(this.value);
+       if (this.value.length > 0) {
+      var that = this;
+      this.value.forEach(ref => {
+        if (that.select.indexOf(ref) === -1) {
+          console.log("ref: " + ref);
+          this.get({
+            type: "descriptor",
+            query: JSON.stringify({
+              _id: ref
+            })
+          }).then(res => {
+            that.addItem(res.data[0], that.select);
+            that.addItem(res.data[0], that.items);
+          });
+        }
+      });
+    }
+   }
   },
   methods: {
     querySelections() {
       this.loading = true;
       // this.$info(vm);
       this.get({
-        type: 'actor',
+        type: 'collection',
         query: JSON.stringify({
-          name: {"$regex": this.search || '' },
+          name: {"$regex": this.search || '' }
         })
       })
       .then((res) => {

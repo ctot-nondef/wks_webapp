@@ -1,36 +1,36 @@
 <template>
   <div class="">
     <v-container grid-list-md v-if="$store.state.app.loggedin">
-      <fundamentcard caption="Collections">
+      <fundamentcard caption="Inventories">
         <div slot="content">
           <v-layout justify-center column fill-height>
             <v-flex xs12>
               <v-layout justify-end row fill-height>
-                <v-btn fab dark small color="warning" @click="collectiondialog=true">
+                <v-btn fab dark small color="warning" @click="inventorydialog=true">
                   <v-icon dark>edit</v-icon>
                 </v-btn>
               </v-layout>
             </v-flex>
             <v-flex xs12>
-              <collectionlist ref="collectionlist"></collectionlist>
+              <inventorylist ref="inventorylist"></inventorylist>
             </v-flex>
           </v-layout>
         </div>
       </fundamentcard>
       <v-layout column justify-space-between>
         <v-dialog
-          v-model="collectiondialog"
-          @keydown.esc="collectiondialog=false"
+          v-model="inventorydialog"
+          @keydown.esc="inventorydialog=false"
           fullscreen
           hide-overlay
           transition="dialog-bottom-transition"
           >
           <v-card>
             <v-toolbar dark color="primary">
-              <v-btn icon dark @click.native="collectiondialog=false">
+              <v-btn icon dark @click.native="inventorydialog=false">
                 <v-icon>close</v-icon>
               </v-btn>
-              <v-toolbar-title>Create Collection</v-toolbar-title>
+              <v-toolbar-title>Create Inventory</v-toolbar-title>
               <v-spacer></v-spacer>
               <v-toolbar-items>
               </v-toolbar-items>
@@ -42,10 +42,10 @@
             </v-toolbar>
             <v-container grid-list-md text-xs-center>
               <v-card color="grey lighten-2" class="pa-4">
-                <collectionform :value="newcollection" @input="newcollection=$event"></collectionform>
+                <inventoryform :value="newinventory" @input="newinventory=$event"></inventoryform>
                 <v-layout justify-end row fill-height>
-                  <v-btn color="warning" @click="addCollection()">Save</v-btn>
-                  <v-btn color="primary" flat @click.native="collectiondialog=false">Discard</v-btn>
+                  <v-btn color="warning" @click="addInventory()">Save</v-btn>
+                  <v-btn color="primary" flat @click.native="inventorydialog=false">Discard</v-btn>
                 </v-layout>
               </v-card>
             </v-container>
@@ -63,8 +63,8 @@
 import { mapActions } from 'vuex';
 
 import fundamentcard from './Fundament/FundamentCard';
-import collectionlist from './ListViews/collection_list';
-import collectionform from './Forms/collection_form';
+import inventorylist from './ListViews/inventory_list';
+import inventoryform from './Forms/inventory_form';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 /* eslint no-console: ["error", { allow: ["log"] }] */
@@ -72,13 +72,13 @@ import collectionform from './Forms/collection_form';
 export default {
   components: {
     fundamentcard,
-    collectionlist,
-    collectionform,
+    inventorylist,
+    inventoryform,
   },
   data() {
     return {
-      collectiondialog: false,
-      newcollection: {},
+      inventorydialog: false,
+      newinventory: {},
     };
   },
   methods: {
@@ -87,17 +87,17 @@ export default {
       'post',
       'delete',
     ]),
-    addCollection() {
-      if(this.newcollection.place) this.newcollection.place.forEach((el, idx, c) => {
+    addInventory() {
+      if(this.newinventory.place) this.newinventory.place.forEach((el, idx, c) => {
         c[idx] = el._id;
       });
-      if(this.newcollection.collector) this.newcollection.collector.forEach((el, idx, c) => {
+      if(this.newinventory.collector) this.newinventory.collector.forEach((el, idx, c) => {
         c[idx] = el._id;
       });
-      this.post({ type: 'collect', body: this.newcollection }).then((res) => {
-        this.newcollection = {};
-        this.collectiondialog = false;
-        this.$refs.collectionlist.getRecords();
+      this.post({ type: 'inventory', body: this.newinventory }).then((res) => {
+        this.newinventory = {};
+        this.iventorydialog = false;
+        this.$refs.inventorylist.getRecords();
       });
     },
   },

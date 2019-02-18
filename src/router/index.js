@@ -8,6 +8,8 @@ import collectionsingle from '../components/collectionsingle';
 import inventorysingle from '../components/inventorysingle';
 import actors from '../components/actors';
 import descriptors from '../components/descriptors';
+import inventories from '../components/inventories';
+import objects from '../components/objects';
 
 Vue.use(Router);
 
@@ -67,10 +69,24 @@ export default new Router({
           },
         },
         {
+          path: 'objects',
+          name: 'objects',
+          components: {
+            Content: objects,
+          },
+        },
+        {
           path: 'descriptors',
           name: 'descriptors',
           components: {
             Content: descriptors,
+          },
+        },
+        {
+          path: 'inventories',
+          name: 'inventories',
+          components: {
+            Content: inventories,
           },
         },
         {

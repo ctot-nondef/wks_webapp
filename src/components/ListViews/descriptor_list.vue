@@ -5,7 +5,7 @@
       <v-flex xs6>
         <v-select
           v-model="classfilter"
-          :items="$store.state.api.classes.Actor"
+          :items="$store.state.api.classes.Descriptor"
           item-text="labels[4].label"
           item-value="_id"
           label="Filter by Type"
@@ -42,14 +42,15 @@
               {{ props.item.instanceOf.labels[4].label }}
             </div>
           </td>
+          <td>{{ props.item.description }}</td>
           <td>
-            <v-btn fab dark small :to="{ name: 'actorsingle', params: { id:  props.item._id  }}" color="primary">
+            <v-btn fab dark small :to="{ name: 'descriptorsingle', params: { id:  props.item._id  }}" color="primary">
               <v-icon dark>collections_bookmark</v-icon>
             </v-btn>
-            <v-btn fab dark small color="warning" @click="editactor(props.item._id)">
+            <v-btn fab dark small color="warning" @click="editdescriptor(props.item._id)">
               <v-icon dark>edit</v-icon>
             </v-btn>
-            <v-btn fab dark small color="error" @click="deleteactor(props.item._id)">
+            <v-btn fab dark small color="error" @click="deletedescriptor(props.item._id)">
               <v-icon dark>delete</v-icon>
             </v-btn>
           </td>
@@ -57,8 +58,8 @@
     </v-data-table>
     <v-layout column justify-space-between>
       <v-dialog
-        v-model="actordialog"
-        @keydown.esc="actordialog=false"
+        v-model="descriptordialog"
+        @keydown.esc="descriptordialog=false"
         fullscreen
         hide-overlay
         transition="dialog-bottom-transition"
@@ -66,10 +67,10 @@
         >
         <v-card>
           <v-toolbar dark color="primary">
-            <v-btn icon dark @click.native="actordialog=false">
+            <v-btn icon dark @click.native="descriptordialog=false">
               <v-icon>close</v-icon>
             </v-btn>
-            <v-toolbar-title>Edit Actor</v-toolbar-title>
+            <v-toolbar-title>Edit descriptor</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
             </v-toolbar-items>
@@ -81,10 +82,10 @@
           </v-toolbar>
           <v-container grid-list-md text-xs-center>
             <v-card color="grey lighten-2" class="pa-4">
-              <actorform :value="cedit" @input="cedits=$event"></actorform>
+              <descriptorform :value="cedit" @input="cedits=$event"></descriptorform>
               <v-layout justify-end row fill-height>
-                <v-btn color="warning" @click="saveactor()">Save</v-btn>
-                <v-btn color="primary" flat @click.native="actordialog=false">Discard</v-btn>
+                <v-btn color="warning" @click="savedescriptor()">Save</v-btn>
+                <v-btn color="primary" flat @click.native="descriptordialog=false">Discard</v-btn>
               </v-layout>
             </v-card>
           </v-container>
@@ -97,8 +98,8 @@
 <script>
 import { mapMutations, mapActions } from 'vuex';
 
-import fundamentcard from './Fundament/FundamentCard';
-import actorform from './actor_form';
+import fundamentcard from '../Fundament/FundamentCard';
+import descriptorform from '../Forms/descriptor_form';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 /* eslint no-console: ["error", { allow: ["log"] }] */
@@ -106,14 +107,14 @@ import actorform from './actor_form';
 export default {
   components: {
     fundamentcard,
-    actorform,
+    descriptorform,
   },
   data() {
     return {
       data: [],
       cedit: {},
       cedits: {},
-      actordialog: false,
+      descriptordialog: false,
       loading: false,
       itemOptions: [10, 20, 50],
       totalHits: 0,
@@ -122,6 +123,7 @@ export default {
       headers: [
         { text: 'Name', value: 'name' },
         { text: 'Type', value: 'instanceOf' },
+        { text: 'Description', value: 'description' },
         { text: 'Actions', value: 'actions' },
       ],
       pagination: {},
@@ -151,7 +153,7 @@ export default {
       if (this.classfilter != '') q.instanceOf = this.classfilter;
       if (this.namefilter != '') q.name = {"$regex": this.namefilter };
       this.get({
-        type: 'Actor',
+        type: 'Descriptor',
         sort: this.pagination.descending ? `-${this.pagination.sortBy}` : this.pagination.sortBy,
         limit: this.pagination.rowsPerPage,
         skip: (this.pagination.page - 1) * this.pagination.rowsPerPage,
@@ -171,9 +173,9 @@ export default {
         }
       });
     },
-    editactor(_id) {
+    editdescriptor(_id) {
       this.get({
-        type: 'Actor',
+        type: 'Descriptor',
         query: JSON.stringify({
           _id: _id,
         }),
@@ -182,10 +184,10 @@ export default {
         ]),
       }).then((res) => {
         this.cedit = res.data[0];
-        this.actordialog = true;
+        this.descriptordialog = true;
       });
     },
-    saveactor() {
+    savedescriptor() {
       console.log(this.cedits);
       if (this.cedits._id) {
         console.log(this.cedits);
@@ -196,14 +198,14 @@ export default {
           c[idx] = el._id;
         });
         console.log(this.cedits);
-        this.post({ type: 'actor', id: this.cedits._id, body: this.cedits }).then((res) => {
+        this.post({ type: 'descriptor', id: this.cedits._id, body: this.cedits }).then((res) => {
           this.getRecords();
         });
       }
-      this.actordialog = false;
+      this.descriptordialog = false;
     },
-    deleteactor(_id) {
-      this.delete({ type: 'Actor', id: _id }).then((res) => {
+    deletedescriptor(_id) {
+      this.delete({ type: 'Descriptor', id: _id }).then((res) => {
         this.getRecords();
       })
       .catch((err) => {

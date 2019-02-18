@@ -13,13 +13,13 @@
       <template slot="items" slot-scope="props" >
           <td>{{ props.item.name }}</td>
           <td>
-            <v-btn fab dark small :to="{ name: 'collectionsingle', params: { id:  props.item._id  }}" color="primary">
+            <v-btn fab dark small :to="{ name: 'inventorysingle', params: { id:  props.item._id  }}" color="primary">
               <v-icon dark>collections_bookmark</v-icon>
             </v-btn>
-            <v-btn fab dark small color="warning" @click="editCollection(props.item._id)">
+            <v-btn fab dark small color="warning" @click="editInventory(props.item._id)">
               <v-icon dark>edit</v-icon>
             </v-btn>
-            <v-btn fab dark small color="error" @click="deleteCollection(props.item._id)">
+            <v-btn fab dark small color="error" @click="deleteInventory(props.item._id)">
               <v-icon dark>delete</v-icon>
             </v-btn>
           </td>
@@ -27,18 +27,18 @@
     </v-data-table>
     <v-layout column justify-space-between>
       <v-dialog
-        v-model="collectiondialog"
-        @keydown.esc="collectiondialog=false"
+        v-model="inventorydialog"
+        @keydown.esc="inventorydialog=false"
         fullscreen
         hide-overlay
         transition="dialog-bottom-transition"
         >
         <v-card>
           <v-toolbar dark color="primary">
-            <v-btn icon dark @click.native="collectiondialog=false">
+            <v-btn icon dark @click.native="inventorydialog=false">
               <v-icon>close</v-icon>
             </v-btn>
-            <v-toolbar-title>Edit Collection</v-toolbar-title>
+            <v-toolbar-title>Edit Inventory</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
             </v-toolbar-items>
@@ -50,10 +50,10 @@
           </v-toolbar>
           <v-container grid-list-md text-xs-center>
             <v-card color="grey lighten-2" class="pa-4">
-              <collectionform :value="cedit" @input="cedits=$event"></collectionform>
+              <inventoryform   :value="cedit" @input="cedits=$event"></inventoryform>
               <v-layout justify-end row fill-height>
-                <v-btn color="warning" @click="saveCollection()">Save</v-btn>
-                <v-btn color="primary" flat @click.native="collectiondialog=false">Discard</v-btn>
+                <v-btn color="warning" @click="saveInventory()">Save</v-btn>
+                <v-btn color="primary" flat @click.native="inventorydialog=false">Discard</v-btn>
               </v-layout>
             </v-card>
           </v-container>
@@ -66,8 +66,8 @@
 <script>
 import { mapMutations, mapActions } from 'vuex';
 
-import fundamentcard from './Fundament/FundamentCard';
-import collectionform from './collection_form';
+import fundamentcard from '../Fundament/FundamentCard';
+import inventoryform from '../Forms/inventory_form';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 /* eslint no-console: ["error", { allow: ["log"] }] */
@@ -75,14 +75,14 @@ import collectionform from './collection_form';
 export default {
   components: {
     fundamentcard,
-    collectionform,
+    inventoryform,
   },
   data() {
     return {
       data: [],
       cedit: {},
       cedits: {},
-      collectiondialog: false,
+      inventorydialog: false,
       loading: false,
       itemOptions: [10, 10, 50],
       totalHits: 0,
@@ -113,9 +113,8 @@ export default {
     ]),
     getRecords() {
       this.loading = true;
-      console.log(this.pagination);
       this.get({
-        type: 'Collect',
+        type: 'Inventory',
         sort: this.pagination.descending ? `-${this.pagination.sortBy}` : this.pagination.sortBy,
         limit: this.pagination.rowsPerPage,
         skip: (this.pagination.page - 1) * this.pagination.rowsPerPage,
@@ -130,40 +129,41 @@ export default {
         }
       });
     },
-    editCollection(_id) {
+    editInventory(_id) {
       this.get({
-        type: 'Collect',
+        type: 'Inventory',
         query: JSON.stringify({
           _id: _id,
         }),
         populate: JSON.stringify([
-          {"path":"collector"},
+          {"path":"inventory"},
           {"path":"place"}
         ]),
       }).then((res) => {
         this.cedit = res.data[0];
-        this.collectiondialog = true;
+        this.inventorydialog = true;
       });
     },
-    saveCollection() {
-      console.log(this.cedits);
-      if (this.cedits._id) {
-        console.log(this.cedits);
-        if(this.cedits.place) this.cedits.place.forEach((el, idx, c) => {
-          c[idx] = el._id;
+    saveInventory() {
+      if (this.cedit._id) {
+        if(this.cedit.creator) this.cedit.creator.forEach((el, idx, c) => {
+          c[idx] = {};
+          c[idx].id = el.actorref._id;
+          c[idx].role = el.descref._id;
+          c[idx].note = el.note;
         });
-        if(this.cedits.collector) this.cedits.collector.forEach((el, idx, c) => {
-          c[idx] = el._id;
-        });
-        console.log(this.cedits);
-        this.post({ type: 'collect', id: this.cedits._id, body: this.cedits }).then((res) => {
+        if(this.cedit.place) { 
+          this.cedit.place = this.cedit.place._id
+        }
+        console.log(this.cedit);
+      /*  this.post({ type: 'inventory', id: this.cedits._id, body: this.cedits }).then((res) => {
           this.getRecords();
-        });
+        });*/
       }
-      this.collectiondialog = false;
+      this.inventorydialog = false;
     },
-    deleteCollection(_id) {
-      this.delete({ type: 'Collect', id: _id }).then((res) => {
+    deleteInventory(_id) {
+      this.delete({ type: 'Inventory', id: _id }).then((res) => {
         this.getRecords();
       })
       .catch((err) => {

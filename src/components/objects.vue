@@ -1,36 +1,37 @@
 <template>
   <div class="">
     <v-container grid-list-md v-if="$store.state.app.loggedin">
-      <fundamentcard caption="Collections">
+      <fundamentcard caption="Objects">
         <div slot="content">
           <v-layout justify-center column fill-height>
             <v-flex xs12>
               <v-layout justify-end row fill-height>
-                <v-btn fab dark small color="warning" @click="collectiondialog=true">
+                <v-btn fab dark small color="warning" @click="objectdialog=true">
                   <v-icon dark>edit</v-icon>
                 </v-btn>
               </v-layout>
             </v-flex>
             <v-flex xs12>
-              <collectionlist ref="collectionlist"></collectionlist>
+              <objectlist ref="objectlist"></objectlist>
             </v-flex>
           </v-layout>
         </div>
       </fundamentcard>
       <v-layout column justify-space-between>
         <v-dialog
-          v-model="collectiondialog"
-          @keydown.esc="collectiondialog=false"
+          v-model="objectdialog"
+          @keydown.esc="objectdialog=false"
           fullscreen
           hide-overlay
           transition="dialog-bottom-transition"
+          scrollable
           >
           <v-card>
             <v-toolbar dark color="primary">
-              <v-btn icon dark @click.native="collectiondialog=false">
+              <v-btn icon dark @click.native="objectdialog=false">
                 <v-icon>close</v-icon>
               </v-btn>
-              <v-toolbar-title>Create Collection</v-toolbar-title>
+              <v-toolbar-title>Create Object</v-toolbar-title>
               <v-spacer></v-spacer>
               <v-toolbar-items>
               </v-toolbar-items>
@@ -41,11 +42,11 @@
               </v-menu>
             </v-toolbar>
             <v-container grid-list-md text-xs-center>
-              <v-card color="grey lighten-2" class="pa-4">
-                <collectionform :value="newcollection" @input="newcollection=$event"></collectionform>
+            <v-card color="grey lighten-2" class="pa-4">
+                <objectform :value="newobject" @input="newobject=$event"></objectform>
                 <v-layout justify-end row fill-height>
-                  <v-btn color="warning" @click="addCollection()">Save</v-btn>
-                  <v-btn color="primary" flat @click.native="collectiondialog=false">Discard</v-btn>
+                  <v-btn color="warning" @click="addobject()">Save</v-btn>
+                  <v-btn color="primary" flat @click.native="objectdialog=false">Discard</v-btn>
                 </v-layout>
               </v-card>
             </v-container>
@@ -60,25 +61,30 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
+
+import HELPERS from '../helpers';
 
 import fundamentcard from './Fundament/FundamentCard';
-import collectionlist from './ListViews/collection_list';
-import collectionform from './Forms/collection_form';
+import objectlist from './ListViews/object_list';
+import objectform from './Forms/object_form';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 /* eslint no-console: ["error", { allow: ["log"] }] */
 
 export default {
+  mixins: [HELPERS],
   components: {
     fundamentcard,
-    collectionlist,
-    collectionform,
+    objectlist,
+    objectform,
   },
   data() {
     return {
-      collectiondialog: false,
-      newcollection: {},
+      objectdialog: false,
+      newobject: {},
+      iobject: {},
+      itype: 'Object',
     };
   },
   methods: {
@@ -87,21 +93,24 @@ export default {
       'post',
       'delete',
     ]),
-    addCollection() {
-      if(this.newcollection.place) this.newcollection.place.forEach((el, idx, c) => {
+    addobject() {
+      if(this.newobject.place) this.newobject.place.forEach((el, idx, c) => {
         c[idx] = el._id;
       });
-      if(this.newcollection.collector) this.newcollection.collector.forEach((el, idx, c) => {
+      if(this.newobject.collector) this.newobject.collector.forEach((el, idx, c) => {
         c[idx] = el._id;
       });
-      this.post({ type: 'collect', body: this.newcollection }).then((res) => {
-        this.newcollection = {};
-        this.collectiondialog = false;
-        this.$refs.collectionlist.getRecords();
+      this.post({ type: 'object', body: this.newobject }).then((res) => {
+        this.newobject = {};
+        this.objectdialog = false;
+        this.$refs.objectlist.getRecords();
       });
     },
   },
   computed: {
+    ...mapGetters('api', [
+      'apiloaded',
+    ]),
   },
   created() {
   },

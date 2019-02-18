@@ -22,9 +22,9 @@
 				"items":""
 			},
 			{
-				"caption":"Collections",
+				"caption":"Sammlungen",
 				"arialabel":"",
-				"icon":"description",
+				"icon":"collections",
 				"abstract":"",
 				"startpage":{
 					"name": "collections",
@@ -40,6 +40,30 @@
 				"abstract":"",
 				"startpage":{
 					"name": "actors",
+					"params": {
+						"lang": "en" }
+					},
+				"items":""
+			},
+			{
+				"caption":"Objekte",
+				"arialabel":"",
+				"icon":"description",
+				"abstract":"",
+				"startpage":{
+					"name": "objects",
+					"params": {
+						"lang": "en" }
+					},
+				"items":""
+			},
+			{
+				"caption":"Inventare",
+				"arialabel":"",
+				"icon":"assignment",
+				"abstract":"",
+				"startpage":{
+					"name": "inventories",
 					"params": {
 						"lang": "en" }
 					},

@@ -187,6 +187,19 @@ export default {
       }];
       return res;
     },
+    /* (js) collection helpers */
+    addItem(item, items) {
+      if (!item.textval) {
+        const newitem = Object.assign({}, item);
+        items.push(newitem);
+      }
+      else {
+        items.push(item.textval);
+      }
+    },
+    removeItem(index, items) {
+      items.splice(index, 1);
+    },
   },
   created() {
     this.$info('Helpers', 'created');

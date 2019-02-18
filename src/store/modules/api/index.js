@@ -7,7 +7,6 @@ const state = {
   apilib: api,
   user: '',
   token: null,
-  loading: false,
   loadmsg: '',
   schemas: {},
   classes: {},
@@ -28,6 +27,7 @@ const getters = {
   f: s => name => s.apilib[name],
   schema: s => name => s.schemas[name],
   types: s => s.schemas.keys,
+  apiloaded: s => s.apiloaded,
 };
 
 const mutations = {
@@ -71,7 +71,7 @@ const mutations = {
 
 const actions = {
   init({ state, commit }, pstate) {
-    if (pstate.pState.api) commit('setState', pstate.pState.api);
+    if (pstate!= null && pstate.pState.api) commit('setState', pstate.pState.api);
     commit('setLoading', 'Loading Database Configuration.');
     state.apilib.get( { $config } ).then((res) => {
       if (res.data.data && res.data.data.length > 0) {
