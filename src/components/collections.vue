@@ -7,7 +7,7 @@
             <v-flex xs12>
               <v-layout justify-end row fill-height>
                 <v-btn fab dark small color="warning" @click="collectiondialog=true">
-                  <v-icon dark>edit</v-icon>
+                  <v-icon dark>add</v-icon>
                 </v-btn>
               </v-layout>
             </v-flex>
@@ -42,7 +42,7 @@
             </v-toolbar>
             <v-container grid-list-md text-xs-center>
               <v-card color="grey lighten-2" class="pa-4">
-                <collectionform :value="newcollection" @input="newcollection=$event"></collectionform>
+                <collectionform v-if="$store.state.api.schemas.collect" :value="newcollection" @input="newcollection=$event"></collectionform>
                 <v-layout justify-end row fill-height>
                   <v-btn color="warning" @click="addCollection()">Save</v-btn>
                   <v-btn color="primary" flat @click.native="collectiondialog=false">Discard</v-btn>

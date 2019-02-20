@@ -1,7 +1,6 @@
 <template>
   <div>
-    <v-list-tile-title v-if="styletype==='title'" v-text="name || refsto" ></v-list-tile-title>
-    <v-list-tile-sub-title v-if="styletype==='subtitle'" v-text="name || refsto"></v-list-tile-sub-title>
+    <v-text-field :label="label" readonly :value="name"></v-text-field>
   </div>
 </template>
 
@@ -15,28 +14,38 @@ export default {
   props: [
     'styletype',
     'itemprop',
-    'refsto'
+    'refsto',
+    'reftype',
+    'label'
   ],
   data() {
     return {
         name:null
       };
   },
+  created(){
+      this.getText(this.refsto);
+  },
   methods: {
     ...mapActions("api", ["get"]),
-  },
- /* created() {
-    if (this.itemprop["x-ref"]) {
+      getText(refid) {
+      if (refid && refid !== '') {
     this.get({
-            type: this.itemprop["x-ref"],
+            type: this.reftype,
             query: JSON.stringify({
-              _id: this.refsto
+              _id: refid
             })
     }).then(res => {
-        console.log(res.data);
+        
         this.name = res.data[0].name;
     });
     }
-  },*/
+    },
+  },
+  watch: {
+    'refsto': function() {
+      this.getText(this.refsto);
+    }
+  },
 };
 </script>

@@ -7,7 +7,7 @@
             <v-flex xs12>
               <v-layout justify-end row fill-height>
                 <v-btn fab dark small color="warning" @click="objectdialog=true">
-                  <v-icon dark>edit</v-icon>
+                  <v-icon dark>add</v-icon>
                 </v-btn>
               </v-layout>
             </v-flex>
@@ -43,7 +43,7 @@
             </v-toolbar>
             <v-container grid-list-md text-xs-center>
             <v-card color="grey lighten-2" class="pa-4">
-                <objectform :value="newobject" @input="newobject=$event"></objectform>
+                <objectform v-if="$store.state.api.schemas.object" :value="newobject" @input="newobject=$event"></objectform>
                 <v-layout justify-end row fill-height>
                   <v-btn color="warning" @click="addobject()">Save</v-btn>
                   <v-btn color="primary" flat @click.native="objectdialog=false">Discard</v-btn>

@@ -81,7 +81,7 @@
           </v-toolbar>
           <v-container grid-list-md text-xs-center>
             <v-card color="grey lighten-2" class="pa-4">
-              <actorform :value="cedit" @input="cedits=$event"></actorform>
+              <actorform v-if="$store.state.api.schemas.actor" :value="cedit" @input="cedits=$event"></actorform>
               <v-layout justify-end row fill-height>
                 <v-btn color="warning" @click="saveactor()">Save</v-btn>
                 <v-btn color="primary" flat @click.native="actordialog=false">Discard</v-btn>
@@ -156,7 +156,7 @@ export default {
         limit: this.pagination.rowsPerPage,
         skip: (this.pagination.page - 1) * this.pagination.rowsPerPage,
         populate: JSON.stringify([
-          {"path":"instanceOf"}
+          {"path":"instanceOf"},
         ]),
         query: JSON.stringify(q),
       }).then((res) => {
@@ -178,7 +178,8 @@ export default {
           _id: _id,
         }),
         populate: JSON.stringify([
-          {"path":"instanceOf"}
+          {"path":"instanceOf"},
+          {"path":"relations.target", "select":"name"},
         ]),
       }).then((res) => {
         this.cedit = res.data[0];
@@ -189,13 +190,20 @@ export default {
       console.log(this.cedit);
       if (this.cedit._id) {
         console.log(this.cedit);
-        if(this.cedit.place) this.cedits.place.forEach((el, idx, c) => {
+        if(this.cedit.place) this.cedit.place.forEach((el, idx, c) => {
           c[idx] = el._id;
         });
-        if(this.cedit.collector) this.cedits.collector.forEach((el, idx, c) => {
+        if(this.cedit.collector) this.cedit.collector.forEach((el, idx, c) => {
           c[idx] = el._id;
         });
-        this.post({ type: 'actor', id: this.cedit._id, body: this.cedit }).then((res) => {
+        if(this.cedit.relations) this.cedit.relations.forEach((el, idx, c) => {
+          var rel = {};
+          Object.keys(el).forEach((key) => {
+            rel[key] = el[key]._id || el[key];
+          });
+          c[idx] = rel;
+        });
+      this.post({ type: 'actor', id: this.cedit._id, body: this.cedit }).then((res) => {
           this.getRecords();
         });
       }

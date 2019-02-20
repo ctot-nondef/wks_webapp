@@ -1,5 +1,18 @@
 <template>
   <div class="">
+    <v-card color="grey lighten-2" class="pa-4 mb-3">
+      <v-layout justify-start row fill-height>
+      <v-flex xs6>
+        <v-text-field
+           v-model="namefilter"
+           label="Filter By Name"
+           @input="getRecords()"
+           append-icon="close"
+           :append-icon-cb="clearNameFilter"
+         ></v-text-field>
+       </v-flex>
+     </v-layout>
+    </v-card>
     <v-data-table
       :headers="headers"
       :items="data"
@@ -50,7 +63,7 @@
           </v-toolbar>
           <v-container grid-list-md text-xs-center>
             <v-card color="grey lighten-2" class="pa-4">
-              <inventoryform   :value="cedit" @input="cedits=$event"></inventoryform>
+              <inventoryform v-if="$store.state.api.schemas.inventory" :value="cedit" @input="cedits=$event"></inventoryform>
               <v-layout justify-end row fill-height>
                 <v-btn color="warning" @click="saveInventory()">Save</v-btn>
                 <v-btn color="primary" flat @click.native="inventorydialog=false">Discard</v-btn>
@@ -86,6 +99,7 @@ export default {
       loading: false,
       itemOptions: [10, 10, 50],
       totalHits: 0,
+      namefilter: '',
       headers: [
         { text: 'Name', value: 'name' },
         { text: 'Actions', value: 'actions' },
@@ -113,11 +127,14 @@ export default {
     ]),
     getRecords() {
       this.loading = true;
+      let q = {}
+      if (this.namefilter != '') q.name = {"$regex": this.namefilter };
       this.get({
         type: 'Inventory',
         sort: this.pagination.descending ? `-${this.pagination.sortBy}` : this.pagination.sortBy,
         limit: this.pagination.rowsPerPage,
         skip: (this.pagination.page - 1) * this.pagination.rowsPerPage,
+        query: JSON.stringify(q),
       }).then((res) => {
         this.loading = false;
         this.data = res.data;
@@ -137,7 +154,12 @@ export default {
         }),
         populate: JSON.stringify([
           {"path":"inventory"},
-          {"path":"place"}
+          {"path":"place","select":"name"},
+          {"path":"partOf","select":"name"},
+          {"path":"creator.role","select":"name"},
+          {"path":"creator.id","select":"name"},
+          {"path":"classification.aspect","select":"name"},
+          {"path":"classification.descriptor","select":"name"}
         ]),
       }).then((res) => {
         this.cedit = res.data[0];
@@ -147,18 +169,31 @@ export default {
     saveInventory() {
       if (this.cedit._id) {
         if(this.cedit.creator) this.cedit.creator.forEach((el, idx, c) => {
-          c[idx] = {};
-          c[idx].id = el.actorref._id;
-          c[idx].role = el.descref._id;
-          c[idx].note = el.note;
+          if(this.cedit.creator) this.cedit.creator.forEach((el, idx, c) => {
+          var rel = {};
+          Object.keys(el).forEach((key) => {
+            rel[key] = el[key]._id || el[key];
+          });
+          c[idx] = rel;
         });
-        if(this.cedit.place) { 
+        });
+         if(this.cedit.classification) this.cedit.classification.forEach((el, idx, c) => {
+          var rel = {};
+          Object.keys(el).forEach((key) => {
+            rel[key] = el[key]._id || el[key];
+          });
+          c[idx] = rel;
+        });
+       if(this.cedit.place) { 
           this.cedit.place = this.cedit.place._id
         }
+         if(this.cedit.partOf) { 
+          this.cedit.partOf = this.cedit.partOf._id
+        }
         console.log(this.cedit);
-      /*  this.post({ type: 'inventory', id: this.cedits._id, body: this.cedits }).then((res) => {
+        this.post({ type: 'inventory', id: this.cedit._id, body: this.cedit }).then((res) => {
           this.getRecords();
-        });*/
+        });
       }
       this.inventorydialog = false;
     },
@@ -169,6 +204,10 @@ export default {
       .catch((err) => {
         this.getRecords();
       });
+    },
+    clearNameFilter() {
+      this.namefilter = '';
+      this.getRecords()
     },
   },
   created() {

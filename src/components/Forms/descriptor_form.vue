@@ -30,7 +30,7 @@
          <v-select :items="$store.state.api.schemas.actor.properties.relations.items.properties.kind.enum" label="Relation Type" v-model='props.newitem.kind'></v-select>
        </v-flex>
         <v-flex x12>
-       <autocompdescriptor v-model="selecteddescriptor"  label="Descriptor" :multiple="false" @input="props.newitem.target = selecteddescriptor._id;returnObject();"></autocompdescriptor>
+       <autocompdescriptor v-model="selecteddescriptor"  label="Descriptor" :multiple="false" @input="props.newitem.target = selecteddescriptor;returnObject();"></autocompdescriptor>
       </v-flex>
       <v-flex xs10>
         <v-textarea v-model="props.newitem.annotation" label="Annotation" /> 
@@ -41,7 +41,6 @@
 </template>
 <script>
 import autocompdescriptor from '../AutoCompleteComponents/AutocompDescriptor';
-import autocompplace from '../AutoCompleteComponents/AutocompPlace';
 import formlistcomponent from '../FormComponents/FormListComponent';
 import chips from '../FormComponents/Chips';
 import { mapGetters} from 'vuex';
@@ -51,7 +50,6 @@ import HELPERS from '../../helpers';
 export default {
   components: {
     autocompdescriptor,
-    autocompplace,
     formlistcomponent,
     chips
   },

@@ -24,7 +24,7 @@
       ref="picker"
       v-model="dateval"
       :max="new Date().toISOString().substr(0, 10)"
-      min="1950-01-01"
+      min="1550-01-01"
       @change="save"
     ></v-date-picker>
   </v-menu>

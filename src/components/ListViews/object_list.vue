@@ -70,7 +70,7 @@
           </v-toolbar>
           <v-container grid-list-md text-xs-center>
             <v-card color="grey lighten-2" class="pa-4">
-              <objectform :value="cedit" @input="cedits=$event"></objectform>
+              <objectform v-if="$store.state.api.schemas.object" :value="cedit" @input="cedits=$event"></objectform>
               <v-layout justify-end row fill-height>
                 <v-btn color="warning" @click="saveobject()">Save</v-btn>
                 <v-btn color="primary" flat @click.native="objectdialog=false">Discard</v-btn>
@@ -145,7 +145,7 @@ export default {
         limit: this.pagination.rowsPerPage,
         skip: (this.pagination.page - 1) * this.pagination.rowsPerPage,
         populate: JSON.stringify([
-          {"path":"instanceOf"}
+          {"path":"instanceOf"},
         ]),
         query: JSON.stringify(q),
       }).then((res) => {
@@ -167,7 +167,16 @@ export default {
           _id: _id,
         }),
         populate: JSON.stringify([
-          {"path":"instanceOf"}
+          {"path":"instanceOf"},
+          {"path":"currentOwner","select":"name"},
+           {"path":"material","select":"name"},
+          {"path":"technique","select":"name"},
+          {"path":"creator.role","select":"name"},
+          {"path":"creator.id","select":"name"},
+          {"path":"dimensions.aspect","select":"name"},
+          {"path":"dimensions.unit","select":"name"},
+          {"path":"classification.aspect","select":"name"},
+          {"path":"classification.descriptor","select":"name"}
         ]),
       }).then((res) => {
         this.cedit = res.data[0];
@@ -175,17 +184,42 @@ export default {
       });
     },
     saveobject() {
-      console.log(this.cedits);
-      if (this.cedits._id) {
-        console.log(this.cedits);
-        if(this.cedits.place) this.cedits.place.forEach((el, idx, c) => {
+      if (this.cedit._id) {
+        if(this.cedit.currentOwner) this.cedit.currentOwner.forEach((el, idx, c) => {
           c[idx] = el._id;
         });
-        if(this.cedits.collector) this.cedits.collector.forEach((el, idx, c) => {
+        if(this.cedit.material) this.cedit.material.forEach((el, idx, c) => {
           c[idx] = el._id;
         });
-        console.log(this.cedits);
-        this.post({ type: 'object', id: this.cedits._id, body: this.cedits }).then((res) => {
+        if(this.cedit.technique) this.cedit.technique.forEach((el, idx, c) => {
+          c[idx] = el._id;
+        });
+        if(this.cedit.creator) this.cedit.creator.forEach((el, idx, c) => {
+          var rel = {};
+          Object.keys(el).forEach((key) => {
+            rel[key] = el[key]._id || el[key];
+          });
+          c[idx] = rel;
+        });
+        if(this.cedit.dimensions) this.cedit.dimensions.forEach((el, idx, c) => {
+          var rel = {};
+          Object.keys(el).forEach((key) => {
+            rel[key] = el[key]._id || el[key];
+          });
+          c[idx] = rel;
+        });
+        if(this.cedit.classification) this.cedit.classification.forEach((el, idx, c) => {
+          var rel = {};
+          Object.keys(el).forEach((key) => {
+            rel[key] = el[key]._id || el[key];
+          });
+          c[idx] = rel;
+        });
+        if(this.cedit.collector) this.cedit.collector.forEach((el, idx, c) => {
+          c[idx] = el._id;
+        });
+        console.log(this.cedit);
+        this.post({ type: 'object', id: this.cedit._id, body: this.cedit }).then((res) => {
           this.getRecords();
         });
       }

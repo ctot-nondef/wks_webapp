@@ -44,7 +44,7 @@ import HELPERS from "../../helpers";
 
 export default {
   mixins: [HELPERS],
-  props: ['value', 'label', 'multiple','parententity'],
+  props: ['value', 'label', 'multiple'],
   data() {
     return {
       loading: false,
@@ -59,28 +59,6 @@ export default {
         this.querySelections(newval);
       }
     },
-   parententity() {
-     console.log("log something");
-      this.select.length = 0;
-      this.items.length = 0;
-       if (this.value.length > 0) {
-      var that = this;
-      this.value.forEach(ref => {
-        if (that.select.indexOf(ref) === -1) {
-          console.log("ref: " + ref);
-          this.get({
-            type: "actor",
-            query: JSON.stringify({
-              _id: ref
-            })
-          }).then(res => {
-            that.addItem(res.data[0], that.select);
-            that.addItem(res.data[0], that.items);
-          });
-        }
-      });
-    }
-   }, 
   },
   methods: {
     querySelections() {

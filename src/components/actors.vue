@@ -7,7 +7,7 @@
             <v-flex xs12>
               <v-layout justify-end row fill-height>
                 <v-btn fab dark small color="warning" @click="actordialog=true">
-                  <v-icon dark>edit</v-icon>
+                  <v-icon dark>add</v-icon>
                 </v-btn>
               </v-layout>
             </v-flex>
@@ -51,7 +51,7 @@
                 </v-layout>
               </v-card>
               <v-card color="grey lighten-2" class="pa-4">
-                <actorform :value="newactor" @input="newactor=$event"></actorform>
+                <actorform v-if="$store.state.api.schemas.actor" :value="newactor" @input="newactor=$event"></actorform>
                 <v-layout justify-end row fill-height>
                   <v-btn color="warning" @click="addactor()">Save</v-btn>
                   <v-btn color="primary" flat @click.native="actordialog=false">Discard</v-btn>

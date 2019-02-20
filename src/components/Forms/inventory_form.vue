@@ -10,10 +10,10 @@
     <formlistcomponent :items="inventory.creator" :itemprops="$store.state.api.schemas.inventory.properties.creator.items.properties" :listitemstyletypes="creatoritemstyletypes" label="Creator" nodatamessage="No creators added">
       <template slot="form" slot-scope="props">
        <v-flex xs5>
-          <autocompdescriptor filter="ROLE" v-model="selecteddescriptor" label="Role" :multiple="false" @input="props.newitem.role=$event._id;returnObject();"></autocompdescriptor>
+          <autocompdescriptor filter="ROLE" v-model="selecteddescriptor" label="Role" :multiple="false" @input="props.newitem.role=$event;returnObject();"></autocompdescriptor>
        </v-flex>
         <v-flex xs5>
-       <autocompactor v-model="selectedactor" label="Creator" :multiple="false" @input="props.newitem.id=$event._id;returnObject();"></autocompactor>
+       <autocompactor v-model="selectedactor" label="Creator" :multiple="false" @input="props.newitem.id=$event;returnObject();"></autocompactor>
       </v-flex>
       <v-flex xs12>
       <v-textarea  v-model="props.newitem.note" label="Note" /> 
@@ -21,11 +21,16 @@
       </template>
     </formlistcomponent>
     <!-- inventory place -->
-    <autocompplace filter="PLACE" v-model="inventory.place" label="Place" :multiple="false" @input="inventory.place=$event;returnObject();"></autocompplace>
+    <v-layout justify-start row fill-height>
+      <v-flex xs5>
+        <simpleautocompwrapper autocompletetype="descriptor" filter="PLACE" v-model="inventory.place" v-bind:prop.sync="inventory.place" label="Place"/>
+      </v-flex>
+     </v-layout>
     <!-- inventory begin of existence -->
     <datecomponent v-bind:date.sync="inventory.beginOfExistence" label="Begin of Existence"/>
     <!-- inventory end of existence -->
     <datecomponent v-bind:date.sync="inventory.endOfExistence" label="End of Existence"/>
+    <!-- inventory images or pagecount? -->
     <!-- inventory images or documents? -->
     <v-list two-line>
       <template v-for="(item, index) in inventory.documents">
@@ -50,39 +55,52 @@
     <formlistcomponent v-if="inventory.classification" :items="inventory.classification" :itemprops="$store.state.api.schemas.inventory.properties.classification.items.properties" :listitemstyletypes="classificationitemstyletypes" label="Classification" nodatamessage="No classifications added">
       <template slot="form" slot-scope="props">
        <v-flex xs5>
-          <autocompdescriptor  filter="ASPECT"  v-model="selectedclassificationaspect" label="Aspect"  @input="props.newitem.aspect = selectedclassificationaspect._id;returnObject();" :multiple="false"></autocompdescriptor>
+          <autocompdescriptor filter="KEYWORD"  v-model="selectedclassificationaspect" label="Aspect"  @input="props.newitem.aspect = selectedclassificationaspect;returnObject();" :multiple="false"></autocompdescriptor>
        </v-flex>
        <v-flex xs5>
-       <autocompdescriptor   v-model="selectedclassificationdescriptor" label="Descriptor" @input="props.newitem.descriptor = selectedclassificationdescriptor._id;returnObject();" :multiple="false"></autocompdescriptor>
+       <autocompdescriptor v-model="selectedclassificationdescriptor" label="Descriptor" @input="props.newitem.descriptor = selectedclassificationdescriptor;returnObject();" :multiple="false"></autocompdescriptor>
       </v-flex>
       </template>
     </formlistcomponent>
     <!-- inventory partOf -->
-     <v-flex xs5>
-          <autocompcollection  v-model="inventory.partOf" label="part Of Collection" :multiple="false"></autocompcollection>
+    <v-layout justify-start row fill-height>
+      <v-flex xs5>
+        <simpleautocompwrapper autocompletetype="collection" v-model="inventory.partOf" v-bind:prop.sync="inventory.partOf" label="Part Of Collection"/>
+      </v-flex>
+     </v-layout>
+     <!-- inventory comments -->
+    <formlistcomponent v-if="inventory.comments" :items="inventory.comments" :listitemstyletypes="['title']" label="Comments" nodatamessage="No comments added">
+      <template slot="form" slot-scope="props">
+       <v-flex xs5>
+          <v-textarea v-model="props.newitem.textval" label="New Comment"></v-textarea>
        </v-flex>
+      </template>
+    </formlistcomponent>
     </div>
 </template>
 <script>
 import axios from 'axios';
 import autocompactor from '../AutoCompleteComponents/AutocompActor';
-import autocompplace from '../AutoCompleteComponents/AutocompPlace';
 import datecomponent from '../FormComponents/DateComponent';
 import autocompdescriptor from '../AutoCompleteComponents/AutocompDescriptor';
 import autocompcollection from '../AutoCompleteComponents/AutocompCollection';
 import formlistcomponent from '../FormComponents/FormListComponent';
+import formtfreadview from '../FormComponents/FormTextFieldReadView';
+import simpleautocompwrapper from '../FormComponents/SimpleAutoCompleteWrapper';
 import chips from '../FormComponents/Chips';
+import { mapActions } from 'vuex';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 export default {
   components: {
     autocompactor,
-    autocompplace,
     autocompdescriptor,
     autocompcollection,
     formlistcomponent,
     datecomponent,
+    formtfreadview,
     chips,
+    simpleautocompwrapper
   },
   props: [
     'value',
@@ -100,6 +118,7 @@ export default {
       imageFile: '',
       selecteddescriptor:{},
       selectedactor:{},
+      selectedcollection:{},
       selectedclassificationaspect: null,
       selectedclassificationdescriptor: null,
       creatoritemstyletypes: [
@@ -111,20 +130,21 @@ export default {
         'title',
         'subtitle'
       ],
+      isEditingPlace: false,
+      isEditingPartOf: false,
     };
   },
-  watch: {
+   watch: {
     value(val) {
       this.inventory = val;
-      if(!this.inventory.creator) {
-        this.$set(this.inventory,'creator',[]);
-      }
-      else if (!this.inventory.classification) {
-        this.$set(this.inventory,'classification',[]);
-      }
+      this.selectedcollection = val.partOf || {};
     },
   },
   methods: {
+    setEditingToRead(prop) {
+      this.$set(this,prop,true);
+      console.log(this.isEditingPlace);
+    },
     returnObject() {
       this.$emit('input', this.inventory);
     },

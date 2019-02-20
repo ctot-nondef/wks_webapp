@@ -7,29 +7,29 @@
     <!-- collection name -->
     <v-text-field v-model="collection.name" label="Name" @input="returnObject()"></v-text-field>
     <!-- collection creators -->
-    <formlistcomponent :items="collection.collector" :itemprops="$store.state.api.schemas.collect.properties.creator.items.properties" :listitemstyletypes="creatoritemstyletypes" label="Creator" nodatamessage="No creators added">
+    <formlistcomponent :items="collection.creator" :itemprops="$store.state.api.schemas.collect.properties.creator.items.properties" :listitemstyletypes="creatoritemstyletypes" label="Creator" nodatamessage="No creators added">
       <template slot="form" slot-scope="props">
        <v-flex xs5>
-          <autocompdescriptor filter="ROLE" v-model="selecteddescriptor" label="Role" :multiple="false" @input="props.newitem.role=$event._id;returnObject();"></autocompdescriptor>
+          <autocompdescriptor filter="ROLE" v-model="selecteddescriptor" label="Role" :multiple="false" @input="props.newitem.role=selecteddescriptor;returnObject();"></autocompdescriptor>
        </v-flex>
         <v-flex xs5>
-       <autocompactor v-model="selectedactor" label="Collector" :multiple="false" @input="props.newitem.id=$event._id;returnObject();"></autocompactor>
+       <autocompactor v-model="selectedactor" label="Collector" :multiple="false" @input="props.newitem.id=selectedactor;returnObject();"></autocompactor>
       </v-flex>
       <v-flex xs12>
-      <v-textarea  v-model="props.newitem.note" label="Note" /> 
+      <v-textarea v-model="props.newitem.note" label="Note" /> 
       </v-flex> 
       </template>
     </formlistcomponent>
     <!-- collection places -->
-    <autocompplace filter="PLACE" v-model="collection.place" label="Place" :multiple="true" @input="collection.place=$event;returnObject();"></autocompplace>
+    <autocompdescriptor filter="PLACE" v-model="collection.place" label="Place" :multiple="true" @input="returnObject();"></autocompdescriptor>
     <!-- collection times -->
-    <autocompdescriptor filter="PERIOD" v-model="collection.time" label="Time" :multiple="false" @input="collection.time=$event;returnObject();"></autocompdescriptor>
+    <autocompdescriptor filter="PERIOD" v-model="collection.time" label="Time" :multiple="true" @input="returnObject();"></autocompdescriptor>
     <!-- collection description -->
     <v-textarea v-model="collection.description" label="Description" @input="returnObject()"></v-textarea>
     <!-- collection documents -->
     <v-list two-line>
       <template v-for="(item, index) in collection.documents">
-        <v-list-tile :key="item._id" avatar  @click="">
+        <v-list-tile :key="item._id" avatar @click="">
           <v-list-tile-avatar>
             <img :src="`https://wksgoose.acdh-dev.oeaw.ac.at/${item.path.split('.')[0]}_thumb.jpg`">
           </v-list-tile-avatar>
@@ -44,15 +44,15 @@
       </template>
     </v-list>
     <v-text-field label="Select Image" @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
-    <input type="file" style="display: none"  ref="image"  accept="image/*"  @change="onFilePicked">
+    <input type="file" style="display: none" ref="image" accept="image/*" @change="onFilePicked">
     <!-- collection classifications -->
     <formlistcomponent v-if="collection.classification" :items="collection.classification" :itemprops="$store.state.api.schemas.collect.properties.classification.items.properties" :listitemstyletypes="classificationitemstyletypes" label="Classification" nodatamessage="No classifications added">
       <template slot="form" slot-scope="props">
        <v-flex xs5>
-          <autocompdescriptor  filter="ASPECT"  v-model="selectedclassificationaspect" label="Aspect"  @input="props.newitem.aspect = selectedclassificationaspect._id;returnObject();" :multiple="false"></autocompdescriptor>
+          <autocompdescriptor filter="KEYWORD" v-model="selectedclassificationaspect" label="Aspect" @input="props.newitem.aspect = selectedclassificationaspect;returnObject();" :multiple="false"></autocompdescriptor>
        </v-flex>
        <v-flex xs5>
-       <autocompdescriptor   v-model="selectedclassificationdescriptor" label="Descriptor" @input="props.newitem.descriptor = selectedclassificationdescriptor._id;returnObject();" :multiple="false"></autocompdescriptor>
+       <autocompdescriptor v-model="selectedclassificationdescriptor" label="Descriptor" @input="props.newitem.descriptor = selectedclassificationdescriptor;returnObject();" :multiple="false"></autocompdescriptor>
       </v-flex>
       </template>
     </formlistcomponent>
@@ -64,10 +64,10 @@
     <v-textarea v-model="collection.destitution" label="Destitution" @input="returnObject()"></v-textarea>
     <!-- collection references -->
     <!-- collection comments -->
-    <formlistcomponent v-if="collection.comments" :items="collection.comments"  :listitemstyletypes="['title']" label="Comments" nodatamessage="No comments added">
+    <formlistcomponent v-if="collection.comments" :items="collection.comments" :listitemstyletypes="['title']" label="Comments" nodatamessage="No comments added">
       <template slot="form" slot-scope="props">
-       <v-flex xs5> 
-          <v-textarea  v-model="props.newitem.textval" label="New Comment"></v-textarea>
+       <v-flex xs5>
+          <v-textarea v-model="props.newitem.textval" label="New Comment"></v-textarea>
        </v-flex>
       </template>
     </formlistcomponent>
@@ -76,7 +76,6 @@
 <script>
 import axios from 'axios';
 import autocompactor from '../AutoCompleteComponents/AutocompActor';
-import autocompplace from '../AutoCompleteComponents/AutocompPlace';
 import autocompdescriptor from '../AutoCompleteComponents/AutocompDescriptor';
 import formlistcomponent from '../FormComponents/FormListComponent';
 import chips from '../FormComponents/Chips';
@@ -85,9 +84,9 @@ import HELPERS from "../../helpers";
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 export default {
+  mixins: [HELPERS],
   components: {
     autocompactor,
-    autocompplace,
     autocompdescriptor,
     formlistcomponent,
     datecomponent,
@@ -105,10 +104,11 @@ export default {
       public: false,
       url: '',
       imageName: '',
-  		imageUrl: '',
-  		imageFile: '',
+      imageUrl: '',
+      imageFile: '',
       selecteddescriptor:null,
       selectedactor:null,
+      selectedplace:null,
       selectedclassificationaspect: null,
       selectedclassificationdescriptor: null,
       creatoritemstyletypes: [

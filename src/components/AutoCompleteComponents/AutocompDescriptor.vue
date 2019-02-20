@@ -13,6 +13,8 @@
       return-object
       @input="$emit('input', select)"
       :multiple="multiple"
+      :append-outer-icon="icon"
+      @click:append-outer="runfunc"
       >
     <template slot="selection" slot-scope="data">
         <template v-if="multiple">
@@ -20,8 +22,8 @@
             {{ data.item.name }} 
           </v-chip>
         </template>
-        <template v-else>
-           {{ data.item.name }}
+        <template v-else>   
+         {{ data.item.name }}
         </template>
       </template>
       <template slot="item" slot-scope="data">
@@ -48,14 +50,15 @@ export default {
     'label',
     'multiple',
     'filter',
-    'parententity'
+    'icon',
+    'clickevent'
   ],
   data() {
     return {
       loading: false,
       items: [],
-      select:[] || '',
       search: null,
+      select: [] || ''
     };
   },
   watch: {
@@ -64,32 +67,20 @@ export default {
         this.querySelections(newval);
       }
     },
-    parententity() {
-     console.log("log something");
-      console.log(this.select);
-      this.select.length = 0;
-      this.items.length = 0;
-      console.log(this.value);
-       if (this.value.length > 0) {
-      var that = this;
-      this.value.forEach(ref => {
-        if (that.select.indexOf(ref) === -1) {
-          console.log("ref: " + ref);
-          this.get({
-            type: "descriptor",
-            query: JSON.stringify({
-              _id: ref
-            })
-          }).then(res => {
-            that.addItem(res.data[0], that.select);
-            that.addItem(res.data[0], that.items);
-          });
-        }
-      });
-    }
-   }
+    value(val) {
+      if (this.multiple === true) {
+        this.select = val;
+        this.items = val;
+      } 
+    },
   },
+
   methods: {
+    runfunc(func) {
+      if (this.clickevent) {
+        this.clickevent();
+      }
+    },
     querySelections() {
       this.loading = true;
       // this.$info(vm);

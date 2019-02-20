@@ -7,7 +7,7 @@
             <v-flex xs12>
               <v-layout justify-end row fill-height>
                 <v-btn fab dark small color="warning" @click="descriptordialog=true">
-                  <v-icon dark>edit</v-icon>
+                  <v-icon dark>add</v-icon>
                 </v-btn>
               </v-layout>
             </v-flex>
@@ -51,7 +51,7 @@
                 </v-layout>
               </v-card>
               <v-card color="grey lighten-2" class="pa-4">
-                <descriptorform :value="newdescriptor" @input="newdescriptor=$event"></descriptorform>
+                <descriptorform v-if="$store.state.api.schemas.descriptor" :value="newdescriptor" @input="newdescriptor=$event"></descriptorform>
                 <v-layout justify-end row fill-height>
                   <v-btn color="warning" @click="adddescriptor()">Save</v-btn>
                   <v-btn color="primary" flat @click.native="descriptordialog=false">Discard</v-btn>

@@ -82,7 +82,7 @@
           </v-toolbar>
           <v-container grid-list-md text-xs-center>
             <v-card color="grey lighten-2" class="pa-4">
-              <descriptorform :value="cedit" @input="cedits=$event"></descriptorform>
+              <descriptorform v-if="$store.state.api.schemas.descriptor" :value="cedit" @input="cedits=$event"></descriptorform>
               <v-layout justify-end row fill-height>
                 <v-btn color="warning" @click="savedescriptor()">Save</v-btn>
                 <v-btn color="primary" flat @click.native="descriptordialog=false">Discard</v-btn>
@@ -180,7 +180,8 @@ export default {
           _id: _id,
         }),
         populate: JSON.stringify([
-          {"path":"instanceOf"}
+          {"path":"instanceOf"},
+          {"path":"relations.target", "select":"name"},
         ]),
       }).then((res) => {
         this.cedit = res.data[0];
@@ -188,17 +189,16 @@ export default {
       });
     },
     savedescriptor() {
-      console.log(this.cedits);
-      if (this.cedits._id) {
-        console.log(this.cedits);
-        if(this.cedits.place) this.cedits.place.forEach((el, idx, c) => {
-          c[idx] = el._id;
+      console.log(this.cedit);
+      if (this.cedit._id) {
+        if(this.cedit.relations) this.cedit.relations.forEach((el, idx, c) => {
+          var rel = {};
+          Object.keys(el).forEach((key) => {
+            rel[key] = el[key]._id || el[key];
+          });
+          c[idx] = rel;
         });
-        if(this.cedits.collector) this.cedits.collector.forEach((el, idx, c) => {
-          c[idx] = el._id;
-        });
-        console.log(this.cedits);
-        this.post({ type: 'descriptor', id: this.cedits._id, body: this.cedits }).then((res) => {
+        this.post({ type: 'descriptor', id: this.cedit._id, body: this.cedit }).then((res) => {
           this.getRecords();
         });
       }

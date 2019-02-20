@@ -34,7 +34,7 @@
          <v-select :items="$store.state.api.schemas.actor.properties.relations.items.properties.kind.enum" label="Relation Type" v-model='props.newitem.kind'></v-select>
        </v-flex>
         <v-flex x12>
-       <autocompactor v-model="selectedactor"  label="Actor" :multiple="false" @input="props.newitem.target = selectedactor._id;returnObject();"></autocompactor>
+       <autocompactor v-model="selectedactor"  label="Actor" :multiple="false" @input="props.newitem.target = selectedactor;returnObject();"></autocompactor>
       </v-flex>
       <v-flex xs10>
         <v-textarea v-model="props.newitem.annotation" label="Annotation" /> 
@@ -45,7 +45,6 @@
 </template>
 <script>
 import autocompactor from '../AutoCompleteComponents/AutocompActor';
-import autocompplace from '../AutoCompleteComponents/AutocompPlace';
 import formlistcomponent from '../FormComponents/FormListComponent';
 import chips from '../FormComponents/Chips';
 import datecomponent from '../FormComponents/DateComponent';
@@ -54,7 +53,6 @@ import datecomponent from '../FormComponents/DateComponent';
 export default {
   components: {
     autocompactor,
-    autocompplace,
     formlistcomponent,
     datecomponent,
     chips,
