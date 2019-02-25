@@ -4,7 +4,7 @@
       <!-- actor identifiers -->
       <chips :items="actor.identifier"/>
     </v-layout>
-    <v-layout justify-end row fill-height>
+    <v-layout justify-start row fill-height>
       <v-flex xs6>
         <!-- actor name -->
         <v-text-field v-model="actor.name" label="Name" @input="returnObject()"></v-text-field>
@@ -20,27 +20,43 @@
           @input="returnObject()"
         ></v-select>
       </v-flex>
-     </v-layout>
-    <!-- actor begin of existence -->
-    <datecomponent v-bind:date.sync="actor.beginOfExistence" label="Begin of Existence"/>
-    <!-- actor end of existence -->
-    <datecomponent v-bind:date.sync="actor.endOfExistence" label="End of Existence"/>
-    <!-- actor description -->
-    <v-textarea v-model="actor.description" label="Description" @input="returnObject()"></v-textarea>
-     <!-- actor related actors -->
-     <formlistcomponent :items="actor.relations" :itemprops="$store.state.api.schemas.actor.properties.relations.items.properties" :listitemstyletypes="relationitemstyletypes" label="Related Actors" nodatamessage="No relations added">
-      <template slot="form" slot-scope="props">
-       <v-flex xs2>
-         <v-select :items="$store.state.api.schemas.actor.properties.relations.items.properties.kind.enum" label="Relation Type" v-model='props.newitem.kind'></v-select>
-       </v-flex>
-        <v-flex x12>
-       <autocompactor v-model="selectedactor"  label="Actor" :multiple="false" @input="props.newitem.target = selectedactor;returnObject();"></autocompactor>
+    </v-layout>
+    <v-layout justify-start row fill-height>
+      <v-flex xs6>
+        <!-- actor begin of existence -->
+        <datecomponent v-bind:date.sync="actor.beginOfExistence" label="Begin of Existence"/>
       </v-flex>
-      <v-flex xs10>
-        <v-textarea v-model="props.newitem.annotation" label="Annotation" /> 
-       </v-flex>
-      </template>
-    </formlistcomponent>
+    </v-layout>
+    <v-layout justify-start row fill-height>
+      <v-flex xs6>
+        <!-- actor end of existence -->
+        <datecomponent v-bind:date.sync="actor.endOfExistence" label="End of Existence"/>
+      </v-flex>
+    </v-layout>
+    <v-layout justify-start row fill-height>
+      <v-flex xs12>
+        <!-- actor description -->
+        <v-textarea v-model="actor.description" label="Description" @input="returnObject()"></v-textarea>
+      </v-flex>
+    </v-layout>
+    <v-layout justify-start row fill-height>
+      <v-flex xs12>
+        <!-- actor related actors -->
+        <formlistcomponent :items="actor.relations" :itemprops="$store.state.api.schemas.actor.properties.relations.items.properties" :listitemstyletypes="relationitemstyletypes" label="Related Actors" nodatamessage="No relations added">
+            <template slot="form" slot-scope="props">
+            <v-flex xs2>
+              <v-select :items="$store.state.api.schemas.actor.properties.relations.items.properties.kind.enum" label="Relation Type" v-model='props.newitem.kind'></v-select>
+            </v-flex>
+              <v-flex x12>
+            <autocompactor v-model="selectedactor"  label="Actor" :multiple="false" @input="props.newitem.target = selectedactor;returnObject();"></autocompactor>
+            </v-flex>
+            <v-flex xs10>
+              <v-textarea v-model="props.newitem.annotation" label="Annotation" /> 
+            </v-flex>
+            </template>
+          </formlistcomponent>
+      </v-flex>
+    </v-layout>
   </div>
 </template>
 <script>

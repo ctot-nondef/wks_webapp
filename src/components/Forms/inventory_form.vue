@@ -4,64 +4,87 @@
       <!-- inventory identifiers -->
       <chips :items="inventory.identifier"/>
     </v-layout>
-    <!-- inventory name -->
-    <v-text-field v-model="inventory.name" label="Name" @input="returnObject()"></v-text-field>
-    <!-- inventory creators -->
-    <formlistcomponent :items="inventory.creator" :itemprops="$store.state.api.schemas.inventory.properties.creator.items.properties" :listitemstyletypes="creatoritemstyletypes" label="Creator" nodatamessage="No creators added">
-      <template slot="form" slot-scope="props">
-       <v-flex xs5>
-          <autocompdescriptor filter="ROLE" v-model="selecteddescriptor" label="Role" :multiple="false" @input="props.newitem.role=$event;returnObject();"></autocompdescriptor>
-       </v-flex>
-        <v-flex xs5>
-       <autocompactor v-model="selectedactor" label="Creator" :multiple="false" @input="props.newitem.id=$event;returnObject();"></autocompactor>
+    <v-layout justify-end row fill-height>
+      <v-flex xs6>
+        <!-- inventory name -->
+        <v-text-field v-model="inventory.name" label="Name" @input="returnObject()"></v-text-field>
       </v-flex>
+    </v-layout>
+    <v-layout justify-end row fill-height>
       <v-flex xs12>
-      <v-textarea  v-model="props.newitem.note" label="Note" /> 
-      </v-flex> 
-      </template>
-    </formlistcomponent>
-    <!-- inventory place -->
+        <!-- inventory creators -->
+        <formlistcomponent :items="inventory.creator" :itemprops="$store.state.api.schemas.inventory.properties.creator.items.properties" :listitemstyletypes="creatoritemstyletypes" label="Creator" nodatamessage="No creators added">
+          <template slot="form" slot-scope="props">
+          <v-flex xs5>
+              <autocompdescriptor filter="ROLE" v-model="selecteddescriptor" label="Role" :multiple="false" @input="props.newitem.role=$event;returnObject();"></autocompdescriptor>
+          </v-flex>
+            <v-flex xs5>
+          <autocompactor v-model="selectedactor" label="Creator" :multiple="false" @input="props.newitem.id=$event;returnObject();"></autocompactor>
+          </v-flex>
+          <v-flex xs12>
+          <v-textarea  v-model="props.newitem.note" label="Note" /> 
+          </v-flex> 
+          </template>
+        </formlistcomponent>
+      </v-flex>
+    </v-layout>
     <v-layout justify-start row fill-height>
       <v-flex xs5>
+        <!-- inventory place -->
         <simpleautocompwrapper autocompletetype="descriptor" filter="PLACE" v-model="inventory.place" v-bind:prop.sync="inventory.place" label="Place"/>
       </v-flex>
-     </v-layout>
-    <!-- inventory begin of existence -->
-    <datecomponent v-bind:date.sync="inventory.beginOfExistence" label="Begin of Existence"/>
-    <!-- inventory end of existence -->
-    <datecomponent v-bind:date.sync="inventory.endOfExistence" label="End of Existence"/>
-    <!-- inventory images or pagecount? -->
-    <!-- inventory images or documents? -->
-    <v-list two-line>
-      <template v-for="(item, index) in inventory.documents">
-        <v-list-tile :key="item._id" avatar  @click="">
-          <v-list-tile-avatar>
-            <img :src="`https://wksgoose.acdh-dev.oeaw.ac.at/${item.path.split('.')[0]}_thumb.jpg`">
-          </v-list-tile-avatar>
-          <v-list-tile-content>
-            <v-list-tile-title v-html="item.name"></v-list-tile-title>
-            <v-list-tile-sub-title v-html="item.path"></v-list-tile-sub-title>
-          </v-list-tile-content>
-          <v-btn fab dark small color="error" @click="removeimage(index)">
-            <v-icon dark>delete</v-icon>
-          </v-btn>
-        </v-list-tile>
-      </template>
-    </v-list>
-    <v-text-field label="Select Image" @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
-    <input type="file" style="display: none"  ref="image"  accept="image/*"  @change="onFilePicked"/>
-    <!-- inventory references -->
-    <!-- inventory classifications -->
-    <formlistcomponent v-if="inventory.classification" :items="inventory.classification" :itemprops="$store.state.api.schemas.inventory.properties.classification.items.properties" :listitemstyletypes="classificationitemstyletypes" label="Classification" nodatamessage="No classifications added">
-      <template slot="form" slot-scope="props">
-       <v-flex xs5>
-          <autocompdescriptor filter="KEYWORD"  v-model="selectedclassificationaspect" label="Aspect"  @input="props.newitem.aspect = selectedclassificationaspect;returnObject();" :multiple="false"></autocompdescriptor>
-       </v-flex>
-       <v-flex xs5>
-       <autocompdescriptor v-model="selectedclassificationdescriptor" label="Descriptor" @input="props.newitem.descriptor = selectedclassificationdescriptor;returnObject();" :multiple="false"></autocompdescriptor>
+    </v-layout>
+    <v-layout justify-start row fill-height>
+      <v-flex xs6>
+        <!-- inventory begin of existence -->
+        <datecomponent v-bind:date.sync="inventory.beginOfExistence" label="Begin of Existence"/>
       </v-flex>
-      </template>
-    </formlistcomponent>
+    </v-layout>
+    <v-layout justify-start row fill-height>
+      <v-flex xs6>
+        <!-- inventory end of existence -->
+        <datecomponent v-bind:date.sync="inventory.endOfExistence" label="End of Existence"/>
+      </v-flex>
+    </v-layout>
+    <v-layout justify-start row fill-height>
+      <v-flex xs12>
+        <!-- inventory images or documents? -->
+        <v-list two-line>
+          <template v-for="(item, index) in inventory.documents">
+            <v-list-tile :key="item._id" avatar  @click="">
+              <v-list-tile-avatar>
+                <img :src="`https://wksgoose.acdh-dev.oeaw.ac.at/${item.path.split('.')[0]}_thumb.jpg`">
+              </v-list-tile-avatar>
+              <v-list-tile-content>
+                <v-list-tile-title v-html="item.name"></v-list-tile-title>
+                <v-list-tile-sub-title v-html="item.path"></v-list-tile-sub-title>
+              </v-list-tile-content>
+              <v-btn fab dark small color="error" @click="removeimage(index)">
+                <v-icon dark>delete</v-icon>
+              </v-btn>
+            </v-list-tile>
+          </template>
+        </v-list>
+        <v-text-field label="Select Image" @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
+        <input type="file" style="display: none"  ref="image"  accept="image/*"  @change="onFilePicked"/>
+      </v-flex>
+    </v-layout>
+    <!-- inventory references zotero? -->
+    <v-layout justify-start row fill-height>
+      <v-flex xs12>
+        <!-- inventory classifications -->
+        <formlistcomponent v-if="inventory.classification" :items="inventory.classification" :itemprops="$store.state.api.schemas.inventory.properties.classification.items.properties" :listitemstyletypes="classificationitemstyletypes" label="Classification" nodatamessage="No classifications added">
+          <template slot="form" slot-scope="props">
+          <v-flex xs5>
+              <autocompdescriptor filter="KEYWORD"  v-model="selectedclassificationaspect" label="Aspect"  @input="props.newitem.aspect = selectedclassificationaspect;returnObject();" :multiple="false"></autocompdescriptor>
+          </v-flex>
+          <v-flex xs5>
+          <autocompdescriptor v-model="selectedclassificationdescriptor" label="Descriptor" @input="props.newitem.descriptor = selectedclassificationdescriptor;returnObject();" :multiple="false"></autocompdescriptor>
+          </v-flex>
+          </template>
+        </formlistcomponent>
+      </v-flex>
+    </v-layout>
     <!-- inventory partOf -->
     <v-layout justify-start row fill-height>
       <v-flex xs5>
@@ -69,14 +92,18 @@
       </v-flex>
      </v-layout>
      <!-- inventory comments -->
-    <formlistcomponent v-if="inventory.comments" :items="inventory.comments" :listitemstyletypes="['title']" label="Comments" nodatamessage="No comments added">
-      <template slot="form" slot-scope="props">
-       <v-flex xs5>
-          <v-textarea v-model="props.newitem.textval" label="New Comment"></v-textarea>
-       </v-flex>
-      </template>
-    </formlistcomponent>
-    </div>
+    <v-layout justify-start row fill-height>
+      <v-flex xs12>
+        <formlistcomponent v-if="inventory.comments" :items="inventory.comments" :listitemstyletypes="['title']" label="Comments" nodatamessage="No comments added">
+          <template slot="form" slot-scope="props">
+          <v-flex xs5>
+              <v-textarea v-model="props.newitem.textval" label="New Comment"></v-textarea>
+          </v-flex>
+          </template>
+        </formlistcomponent>
+      </v-flex>
+    </v-layout>
+  </div>
 </template>
 <script>
 import axios from 'axios';

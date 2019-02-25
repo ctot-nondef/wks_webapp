@@ -20,23 +20,31 @@
           @input="returnObject()"
         ></v-select>
       </v-flex>
-     </v-layout>
-     <!-- descriptor description -->
-     <v-textarea v-model="descriptor.description" label="Description" @input="returnObject()"></v-textarea>
-     <!-- descriptor relations -->
-     <formlistcomponent :items="descriptor.relations" :itemprops="$store.state.api.schemas.descriptor.properties.relations.items.properties" :listitemstyletypes="relationitemstyletypes" label="Related Descriptors" nodatamessage="No relations added">
-      <template slot="form" slot-scope="props">
-       <v-flex xs2>
-         <v-select :items="$store.state.api.schemas.actor.properties.relations.items.properties.kind.enum" label="Relation Type" v-model='props.newitem.kind'></v-select>
-       </v-flex>
-        <v-flex x12>
-       <autocompdescriptor v-model="selecteddescriptor"  label="Descriptor" :multiple="false" @input="props.newitem.target = selecteddescriptor;returnObject();"></autocompdescriptor>
+    </v-layout>
+    <v-layout justify-end row fill-height>
+      <v-flex xs12>
+        <!-- descriptor description -->
+        <v-textarea v-model="descriptor.description" label="Description" @input="returnObject()"></v-textarea>
       </v-flex>
-      <v-flex xs10>
-        <v-textarea v-model="props.newitem.annotation" label="Annotation" /> 
-       </v-flex>
-      </template>
-    </formlistcomponent>
+    </v-layout>
+    <v-layout justify-end row fill-height>
+      <v-flex xs12>
+        <!-- descriptor relations -->
+        <formlistcomponent :items="descriptor.relations" :itemprops="$store.state.api.schemas.descriptor.properties.relations.items.properties" :listitemstyletypes="relationitemstyletypes" label="Related Descriptors" nodatamessage="No relations added">
+          <template slot="form" slot-scope="props">
+          <v-flex xs2>
+            <v-select :items="$store.state.api.schemas.actor.properties.relations.items.properties.kind.enum" label="Relation Type" v-model='props.newitem.kind'></v-select>
+          </v-flex>
+            <v-flex x12>
+          <autocompdescriptor v-model="selecteddescriptor"  label="Descriptor" :multiple="false" @input="props.newitem.target = selecteddescriptor;returnObject();"></autocompdescriptor>
+          </v-flex>
+          <v-flex xs10>
+            <v-textarea v-model="props.newitem.annotation" label="Annotation" /> 
+          </v-flex>
+          </template>
+        </formlistcomponent>
+      </v-flex>
+    </v-layout>
   </div>
 </template>
 <script>
