@@ -4,26 +4,67 @@
       <v-label>{{label}}</v-label>
     </v-layout>
     <p v-if="items && items.length === 0"><i>{{nodatamessage}}</i></p>
-    <v-list two-line v-if="items && items.length >= 1">
+<v-data-table v-if="items && items.length >= 1 && itemprops"
+    :headers="headers"
+    :items="items"
+    class="elevation-1"
+  >
+  <template slot="headers" slot-scope="props">
+    <th  v-for="header in props.headers">
+      {{ header.name}}
+    </th>
+  </template>
+  <template slot="items" slot-scope="props">
+       <tr @click="props.expanded = !props.expanded">
+          <td v-for="header in headers">
+           <template  v-if="typeof props.item === 'object' && props.item[header.name] && props.item[header.name].name && header.name !== '_id'"> {{props.item[header.name].name}}</template>
+            <template v-if="typeof props.item === 'object' && props.item[header.name] && typeof props.item[header.name] === 'string' || typeof props.item[header.name] === 'number'  && header.name !== '_id'">
+           {{props.item[header.name]}}
+           </template>
+         </td>
+         <td class="justify-center layout px-0">
+          <v-icon
+            small
+            class="mr-2"
+            @click="editItem(props.index)"
+            :disabled="editingMode"
+          >
+            edit
+          </v-icon>
+          <v-icon
+            small
+            :disabled="editingMode"
+            @click="removeItem(props.index,items)"
+          >
+            delete
+          </v-icon>
+        </td>
+        </tr>
+      </template>
+</v-data-table>
+   <v-list two-line v-if="items && !itemprops && items.length >= 1">
       <v-list-tile v-for="(item, index) in items" v-bind:key="index">
         <v-list-tile-content>
-         <v-list-tile-title  v-for="(value, propname, index) in itemprops" v-bind:key="index"  v-if="item && typeof item === 'object' && item[propname] && item[propname].name" v-text="item[propname].name"></v-list-tile-title>
-         <v-list-tile-title  v-for="(value, propname, index) in itemprops"   v-if="item && typeof item === 'object' && propname !== '_id' && typeof item[propname] === 'string' || typeof item[propname] === 'number'" v-text="item[propname]"></v-list-tile-title>
-         <!-- <formlistitem v-if="itemprops && item[propname] && propname !== '_id'" :styletype="listitemstyletypes[index - 1]" :index="index" v-for="(value, propname, index) in itemprops" :refsto="item[propname]" :itemprop="value" v-bind:key="index" />-->
           <v-list-tile-title v-if="typeof item === 'string'" v-text="item"></v-list-tile-title>
-        </v-list-tile-content>
+          </v-list-tile-content>
         <v-btn fab dark small color="error" @click="removeItem(index,items);">
           <v-icon dark>delete</v-icon>
         </v-btn>
       </v-list-tile>
     </v-list>
-    <v-layout justify-end row fill-height> 
+    <v-layout justify-end row fill-height>
       <v-flex xs10>
         <slot name="form" :newitem="newitem"></slot>
       </v-flex>
       <v-flex xs2>
-        <v-btn center fab dark small color="warning" @click.native="addItem(newitem,items);">
+        <v-btn ref="addbutton" v-if="editingMode === false" center fab dark small color="warning" @click.native="addItem(newitem,items);clearItem()">
           <v-icon dark>add</v-icon>
+        </v-btn>
+        <v-btn v-if="editingMode === true" center fab dark small color="warning" @click.native="saveItem(newitem,items)">
+          <v-icon dark>save</v-icon>
+        </v-btn>
+        <v-btn v-if="editingMode === true" center fab dark small color="warning" @click.native="cancelEditing();">
+          <v-icon dark>cancel</v-icon>
         </v-btn> 
       </v-flex>
     </v-layout>
@@ -50,13 +91,67 @@ export default {
   ],
   data() {
     return {
+      dialog:false,
+      editedItem: null,
+      editingMode:false,
+      editingItemIndex:0
     };
   },
-  watch: {},
+  watch: {
+  },
   methods: {
-    ...mapActions("api", ["get"])
+    ...mapActions("api", ["get"]),  
+    editItem (index) {
+      this.editingMode = true;
+      this.editingItemIndex = index;
+      this.editedItem = this.items[index];
+      Object.keys(this.editedItem).forEach(key => {
+        this.$set(this.newitem,key,this.editedItem[key]);
+      });
+    },
+    cancelEditing() {
+      this.editingMode = false;
+      this.clearItem();
+    },
+    saveItem() {
+      Object.keys(this.editedItem).forEach(key => {
+        this.$set(this.items[this.editingItemIndex],key,this.newitem[key]);
+      });
+    },
+    clearItem() {
+      
+      Object.keys(this.newitem).forEach(key => {
+        if (key === 'textval') {
+          this.$set(this.newitem,key,'');
+        } else if (typeof this.newitem[key] === 'object') {
+          this.$set(this.newitem,key,{});
+        } else {
+          this.$set(this.newitem,key,'');
+        }
+      });
+     this.$children.forEach(child =>{
+        if (child.hasOwnProperty('form')) {
+          child.reset();
+        }
+        if (child.hasOwnProperty('select')) {
+          child.clear();
+          this.$set(child.$children[0],'cachedItems',[]);
+        }
+      });
+      
+    }
   },
   computed: {
+    headers() {
+      var hdrs= []; 
+      Object.keys(this.itemprops).forEach((key)=>{
+        if (key !== '_id') {
+          var hdr = {"name":key,"value":key}
+          hdrs.push(hdr);
+        }
+      });
+      return hdrs;
+    },
     newitem() {
       if (!this.itemprops) {
         return {textval:''};

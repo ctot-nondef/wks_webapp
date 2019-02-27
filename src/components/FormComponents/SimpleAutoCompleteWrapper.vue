@@ -1,26 +1,22 @@
 <template>
   <div>
     <v-text-field  append-outer-icon="edit" @click:append-outer="isEditing = true" v-if="model  && isEditing===false"  v-model="model.name" clearable readonly :label="label"></v-text-field>
-    <autocompcollection v-if="autocompletetype==='collection' && isEditing===true" icon="check" v-model="model" :clickevent="setEditingToRead" @input="updateval"  :label="label" :multiple="false">
-    </autocompcollection>
-    <autocompdescriptor :filter="filter" v-if="autocompletetype==='descriptor' && isEditing===true" icon="check" :clickevent="setEditingToRead"  v-model="model" :label="label" :multiple="false">
-    </autocompdescriptor>
+    <autocomp :entity="entity" :filter="filter" v-if="isEditing===true" icon="check" v-model="model" :clickevent="setEditingToRead" @input="updateval"  :label="label" :multiple="false">
+    </autocomp>
   </div>
 </template>
 <script>
 import axios from 'axios';
-import autocompdescriptor from '../AutoCompleteComponents/AutocompDescriptor';
-import autocompcollection from '../AutoCompleteComponents/AutocompCollection';
+import autocomp from '../AutoCompleteComponents/Autocomp';
 import { mapActions } from 'vuex';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 export default {
   components: {
-    autocompdescriptor,
-    autocompcollection,
+    autocomp
   },
   props: [
-    'autocompletetype',
+    'entity',
     'filter',
     'label',
     'value',

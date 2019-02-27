@@ -1,6 +1,4 @@
 <template>
-  <v-layout row wrap>
-    <v-flex xs12 sm6 md4>
       <v-menu 
     ref="datepickermenu"
     v-model="datepickermenu"
@@ -28,9 +26,6 @@
       @change="save"
     ></v-date-picker>
   </v-menu>
-    </v-flex>
-    
-  </v-layout>
 </template>
 <script>
 import { mapActions } from "vuex";
@@ -52,7 +47,6 @@ export default {
   },
   computed: {
     computedDateFormatted() {
-      console.log(this.date);
       return this.formatDate(this.date);
     }
   },
@@ -70,7 +64,6 @@ export default {
       this.$emit("update:date", dateval + "T00:00:00.000Z");
     },
     formatDate(dateval) {
-      console.log(dateval);
       if (!dateval) return null;
       var dwot = dateval.replace("T00:00:00.000Z", "");
       const [year, month, day] = dwot.split("-");

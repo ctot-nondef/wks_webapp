@@ -4,7 +4,7 @@
         <!-- collection identifiers -->
         <chips :items="collection.identifier"/>
     </v-layout>
-    <v-layout justify-end row fill-height>
+    <v-layout justify-start row fill-height>
       <v-flex xs6>
         <!-- collection name -->
         <v-text-field v-model="collection.name" label="Name" @input="returnObject()"></v-text-field>
@@ -16,10 +16,10 @@
         <formlistcomponent :items="collection.creator" :itemprops="$store.state.api.schemas.collect.properties.creator.items.properties" :listitemstyletypes="creatoritemstyletypes" label="Creator" nodatamessage="No creators added">
           <template slot="form" slot-scope="props">
           <v-flex xs5>
-              <autocompdescriptor filter="ROLE" v-model="selecteddescriptor" label="Role" :multiple="false" @input="props.newitem.role=selecteddescriptor;returnObject();"></autocompdescriptor>
+              <autocomp entity="descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"></autocomp>
           </v-flex>
             <v-flex xs5>
-          <autocompactor v-model="selectedactor" label="Collector" :multiple="false" @input="props.newitem.id=selectedactor;returnObject();"></autocompactor>
+          <autocomp entity="actor" v-model="props.newitem.id" label="Collector" :multiple="false"></autocomp>
           </v-flex>
           <v-flex xs12>
           <v-textarea v-model="props.newitem.note" label="Note" /> 
@@ -31,13 +31,13 @@
     <v-layout justify-end row fill-height>
       <v-flex xs12>
       <!-- collection places -->
-        <autocompdescriptor filter="PLACE" v-model="collection.place" label="Place" :multiple="true" @input="returnObject();"></autocompdescriptor>
+        <autocomp entity="descriptor" filter="PLACE" v-model="collection.place" label="Place" :multiple="true" @input="returnObject();"></autocomp>
       </v-flex>
     </v-layout>
     <v-layout justify-end row fill-height>
       <v-flex xs12>
         <!-- collection times -->
-        <autocompdescriptor filter="PERIOD" v-model="collection.time" label="Time" :multiple="true" @input="returnObject();"></autocompdescriptor>
+        <autocomp entity="descriptor" filter="PERIOD" v-model="collection.time" label="Time" :multiple="true" @input="returnObject();"></autocomp>
       </v-flex>
     </v-layout>
     <v-layout justify-end row fill-height>
@@ -75,10 +75,10 @@
         <formlistcomponent v-if="collection.classification" :items="collection.classification" :itemprops="$store.state.api.schemas.collect.properties.classification.items.properties" :listitemstyletypes="classificationitemstyletypes" label="Classification" nodatamessage="No classifications added">
           <template slot="form" slot-scope="props">
           <v-flex xs5>
-              <autocompdescriptor filter="KEYWORD" v-model="selectedclassificationaspect" label="Aspect" @input="props.newitem.aspect = selectedclassificationaspect;returnObject();" :multiple="false"></autocompdescriptor>
+              <autocomp entity="descriptor" filter="KEYWORD" v-model="props.newitem.aspect" label="Aspect" :multiple="false"></autocomp>
           </v-flex>
           <v-flex xs5>
-          <autocompdescriptor v-model="selectedclassificationdescriptor" label="Descriptor" @input="props.newitem.descriptor = selectedclassificationdescriptor;returnObject();" :multiple="false"></autocompdescriptor>
+          <autocomp entity="descriptor" v-model="props.newitem.descriptor" label="Descriptor" :multiple="false"></autocomp>
           </v-flex>
           </template>
         </formlistcomponent>
@@ -119,8 +119,7 @@
 </template>
 <script>
 import axios from 'axios';
-import autocompactor from '../AutoCompleteComponents/AutocompActor';
-import autocompdescriptor from '../AutoCompleteComponents/AutocompDescriptor';
+import autocomp from '../AutoCompleteComponents/Autocomp';
 import formlistcomponent from '../FormComponents/FormListComponent';
 import chips from '../FormComponents/Chips';
 import datecomponent from '../FormComponents/DateComponent';
@@ -130,8 +129,7 @@ import HELPERS from "../../helpers";
 export default {
   mixins: [HELPERS],
   components: {
-    autocompactor,
-    autocompdescriptor,
+    autocomp,
     formlistcomponent,
     datecomponent,
     chips,
@@ -150,11 +148,6 @@ export default {
       imageName: '',
       imageUrl: '',
       imageFile: '',
-      selecteddescriptor:null,
-      selectedactor:null,
-      selectedplace:null,
-      selectedclassificationaspect: null,
-      selectedclassificationdescriptor: null,
       creatoritemstyletypes: [
         'title',
         'subtitle',

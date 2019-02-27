@@ -13,7 +13,7 @@
     <v-layout justify-start row fill-height>
       <v-flex xs6>
           <!-- object currenOwner -->
-        <autocompactor v-model="object.currentOwner" :parententity="object._id" label="Current Owners" :multiple="true"></autocompactor>
+        <autocomp entity="actor" v-model="object.currentOwner" :parententity="object._id" label="Current Owners" :multiple="true"></autocomp>
       </v-flex>
     </v-layout>
     <v-layout justify-start row fill-height>
@@ -22,10 +22,10 @@
         <formlistcomponent :items="object.creator" :itemprops="$store.state.api.schemas.object.properties.creator.items.properties" :listitemstyletypes="creatoritemstyletypes" label="Creator" nodatamessage="No creators added">
           <template slot="form" slot-scope="props">
           <v-flex xs5>
-              <autocompdescriptor filter="ROLE" v-model="selecteddescriptor" label="Role" :multiple="false" @input="props.newitem.role=$event;returnObject();"></autocompdescriptor>
+              <autocomp entity="descriptor" filter="ROLE" v-model="selecteddescriptor" label="Role" :multiple="false" @input="props.newitem.role=$event;returnObject();"></autocomp>
           </v-flex>
             <v-flex xs5>
-          <autocompactor v-model="selectedactor" label="Collector" :multiple="false" @input="props.newitem.id=$event;returnObject();"></autocompactor>
+              <autocomp entity="actor" v-model="selectedactor" label="Collector" :multiple="false" @input="props.newitem.id=$event;returnObject();"></autocomp>
           </v-flex>
           <v-flex xs12>
           <v-textarea  v-model="props.newitem.note" label="Note" /> 
@@ -35,13 +35,13 @@
       </v-flex>
     </v-layout>
     <v-layout justify-start row fill-height>
-      <v-flex xs6>
+      <v-flex xs5>
         <!-- object created start -->
         <datecomponent v-bind:date.sync="object.created_start" label="Created Start"/>
       </v-flex>
     </v-layout>
     <v-layout justify-start row fill-height>
-      <v-flex xs6>
+      <v-flex xs5>
         <!-- object created end -->
         <datecomponent v-bind:date.sync="object.created_end" label="Created End"/>
       </v-flex>
@@ -55,13 +55,13 @@
     <v-layout justify-start row fill-height>
       <v-flex xs6>
         <!-- object material -->
-        <autocompdescriptor filter="MATER" v-model="object.material" label="Material" :multiple="true" @input="returnObject();"></autocompdescriptor>
+        <autocomp entity="descriptor" filter="MATER" v-model="object.material" label="Material" :multiple="true" @input="returnObject();"></autocomp>
       </v-flex>
     </v-layout>
     <v-layout justify-start row fill-height>
       <v-flex xs6>
       <!-- object technique -->
-        <autocompdescriptor filter="TECHN" v-model="object.technique" label="Technique" :multiple="true" @input="returnObject();"></autocompdescriptor>
+        <autocomp entity="descriptor" filter="TECHN" v-model="object.technique" label="Technique" :multiple="true" @input="returnObject();"></autocomp>
       </v-flex>
     </v-layout>
     <v-layout justify-start row fill-height>
@@ -73,10 +73,10 @@
               <v-text-field  v-model.number="props.newitem.amount" label="Amount"></v-text-field>
           </v-flex>
           <v-flex xs5>
-              <autocompdescriptor filter="DIM" v-model="selecteddimensionsaspect" label="Aspect" :multiple="false" @input="props.newitem.aspect=$event;returnObject();"></autocompdescriptor>
+              <autocomp entity="descriptor" filter="DIM" v-model="selecteddimensionsaspect" label="Aspect" :multiple="false" @input="props.newitem.aspect=$event;returnObject();"></autocomp>
           </v-flex>
             <v-flex xs5>
-              <autocompdescriptor filter="UNIT" v-model="selecteddimensionsdescriptor" label="Descriptor" :multiple="false" @input="props.newitem.unit=$event;returnObject();"></autocompdescriptor>
+              <autocomp entity="descriptor" filter="UNIT" v-model="selecteddimensionsdescriptor" label="Descriptor" :multiple="false" @input="props.newitem.unit=$event;returnObject();"></autocomp>
           </v-flex>
           </template>
         </formlistcomponent>
@@ -88,10 +88,10 @@
         <formlistcomponent v-if="object.classification" :items="object.classification" :itemprops="$store.state.api.schemas.collect.properties.classification.items.properties" :listitemstyletypes="classificationitemstyletypes" label="Classification" nodatamessage="No classifications added">
           <template slot="form" slot-scope="props">
           <v-flex xs5>
-              <autocompdescriptor filter="KEYWORD" v-model="selectedclassificationaspect" label="Aspect" @input="props.newitem.aspect = selectedclassificationaspect;returnObject();" :multiple="false"></autocompdescriptor>
+            <autocomp entity="descriptor" filter="KEYWORD" v-model="selectedclassificationaspect" label="Aspect" @input="props.newitem.aspect = selectedclassificationaspect;returnObject();" :multiple="false"></autocomp>
           </v-flex>
           <v-flex xs5>
-          <autocompdescriptor v-model="selectedclassificationdescriptor" label="Descriptor" @input="props.newitem.descriptor = selectedclassificationdescriptor;returnObject();" :multiple="false"></autocompdescriptor>
+            <autocomp entity="descriptor" v-model="selectedclassificationdescriptor" label="Descriptor" @input="props.newitem.descriptor = selectedclassificationdescriptor;returnObject();" :multiple="false"></autocomp>
           </v-flex>
           </template>
         </formlistcomponent>
@@ -120,8 +120,7 @@
   </div>
 </template>
 <script>
-import autocompactor from '../AutoCompleteComponents/AutocompActor';
-import autocompdescriptor from '../AutoCompleteComponents/AutocompDescriptor';
+import autocomp from '../AutoCompleteComponents/Autocomp';
 import formlistcomponent from '../FormComponents/FormListComponent';
 import chips from '../FormComponents/Chips';
 import datecomponent from '../FormComponents/DateComponent';
@@ -129,8 +128,7 @@ import HELPERS from "../../helpers";
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 export default {
   components: {
-    autocompactor,
-    autocompdescriptor,
+    autocomp,
     formlistcomponent,
     datecomponent,
     chips,

@@ -22,13 +22,13 @@
       </v-flex>
     </v-layout>
     <v-layout justify-start row fill-height>
-      <v-flex xs6>
+      <v-flex xs5>
         <!-- actor begin of existence -->
         <datecomponent v-bind:date.sync="actor.beginOfExistence" label="Begin of Existence"/>
       </v-flex>
     </v-layout>
     <v-layout justify-start row fill-height>
-      <v-flex xs6>
+      <v-flex xs5>
         <!-- actor end of existence -->
         <datecomponent v-bind:date.sync="actor.endOfExistence" label="End of Existence"/>
       </v-flex>
@@ -42,13 +42,13 @@
     <v-layout justify-start row fill-height>
       <v-flex xs12>
         <!-- actor related actors -->
-        <formlistcomponent :items="actor.relations" :itemprops="$store.state.api.schemas.actor.properties.relations.items.properties" :listitemstyletypes="relationitemstyletypes" label="Related Actors" nodatamessage="No relations added">
+        <formlistcomponent  :items="actor.relations" :itemprops="$store.state.api.schemas.actor.properties.relations.items.properties" :listitemstyletypes="relationitemstyletypes" label="Related Actors" nodatamessage="No relations added">
             <template slot="form" slot-scope="props">
             <v-flex xs2>
               <v-select :items="$store.state.api.schemas.actor.properties.relations.items.properties.kind.enum" label="Relation Type" v-model='props.newitem.kind'></v-select>
             </v-flex>
               <v-flex x12>
-            <autocompactor v-model="selectedactor"  label="Actor" :multiple="false" @input="props.newitem.target = selectedactor;returnObject();"></autocompactor>
+            <autocomp entity="actor" v-model="props.newitem.target"  label="Actor" :multiple="false"></autocomp>
             </v-flex>
             <v-flex xs10>
               <v-textarea v-model="props.newitem.annotation" label="Annotation" /> 
@@ -60,7 +60,7 @@
   </div>
 </template>
 <script>
-import autocompactor from '../AutoCompleteComponents/AutocompActor';
+import autocomp from '../AutoCompleteComponents/Autocomp';
 import formlistcomponent from '../FormComponents/FormListComponent';
 import chips from '../FormComponents/Chips';
 import datecomponent from '../FormComponents/DateComponent';
@@ -68,7 +68,7 @@ import datecomponent from '../FormComponents/DateComponent';
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 export default {
   components: {
-    autocompactor,
+    autocomp,
     formlistcomponent,
     datecomponent,
     chips,
@@ -86,7 +86,6 @@ export default {
       url: '',
       beginofexistencemenu: false,
       endofexistencemenu: false,
-      selectedactor: {},
       relationitemstyletypes: [
         'title',
         'subtitle',

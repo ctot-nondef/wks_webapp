@@ -16,13 +16,13 @@
         <formlistcomponent :items="inventory.creator" :itemprops="$store.state.api.schemas.inventory.properties.creator.items.properties" :listitemstyletypes="creatoritemstyletypes" label="Creator" nodatamessage="No creators added">
           <template slot="form" slot-scope="props">
           <v-flex xs5>
-              <autocompdescriptor filter="ROLE" v-model="selecteddescriptor" label="Role" :multiple="false" @input="props.newitem.role=$event;returnObject();"></autocompdescriptor>
+              <autocomp entity="descriptor" filter="ROLE" v-model="selecteddescriptor" label="Role" :multiple="false" @input="props.newitem.role=$event;returnObject();"></autocomp>
           </v-flex>
-            <v-flex xs5>
-          <autocompactor v-model="selectedactor" label="Creator" :multiple="false" @input="props.newitem.id=$event;returnObject();"></autocompactor>
+          <v-flex xs5>
+            <autocomp entity="actor" v-model="selectedactor" label="Creator" :multiple="false" @input="props.newitem.id=$event;returnObject();"></autocomp>
           </v-flex>
           <v-flex xs12>
-          <v-textarea  v-model="props.newitem.note" label="Note" /> 
+            <v-textarea  v-model="props.newitem.note" label="Note" /> 
           </v-flex> 
           </template>
         </formlistcomponent>
@@ -31,17 +31,17 @@
     <v-layout justify-start row fill-height>
       <v-flex xs5>
         <!-- inventory place -->
-        <simpleautocompwrapper autocompletetype="descriptor" filter="PLACE" v-model="inventory.place" v-bind:prop.sync="inventory.place" label="Place"/>
+        <simpleautocompwrapper entity="descriptor" filter="PLACE" v-model="inventory.place" v-bind:prop.sync="inventory.place" label="Place"/>
       </v-flex>
     </v-layout>
     <v-layout justify-start row fill-height>
-      <v-flex xs6>
+      <v-flex xs5>
         <!-- inventory begin of existence -->
         <datecomponent v-bind:date.sync="inventory.beginOfExistence" label="Begin of Existence"/>
       </v-flex>
     </v-layout>
     <v-layout justify-start row fill-height>
-      <v-flex xs6>
+      <v-flex xs5>
         <!-- inventory end of existence -->
         <datecomponent v-bind:date.sync="inventory.endOfExistence" label="End of Existence"/>
       </v-flex>
@@ -75,12 +75,12 @@
         <!-- inventory classifications -->
         <formlistcomponent v-if="inventory.classification" :items="inventory.classification" :itemprops="$store.state.api.schemas.inventory.properties.classification.items.properties" :listitemstyletypes="classificationitemstyletypes" label="Classification" nodatamessage="No classifications added">
           <template slot="form" slot-scope="props">
-          <v-flex xs5>
-              <autocompdescriptor filter="KEYWORD"  v-model="selectedclassificationaspect" label="Aspect"  @input="props.newitem.aspect = selectedclassificationaspect;returnObject();" :multiple="false"></autocompdescriptor>
-          </v-flex>
-          <v-flex xs5>
-          <autocompdescriptor v-model="selectedclassificationdescriptor" label="Descriptor" @input="props.newitem.descriptor = selectedclassificationdescriptor;returnObject();" :multiple="false"></autocompdescriptor>
-          </v-flex>
+            <v-flex xs5>
+              <autocomp entity="descriptor" filter="KEYWORD"  v-model="selectedclassificationaspect" label="Aspect"  @input="props.newitem.aspect = selectedclassificationaspect;returnObject();" :multiple="false"></autocomp>
+            </v-flex>
+            <v-flex xs5>
+              <autocomp entity="descriptor" v-model="selectedclassificationdescriptor" label="Descriptor" @input="props.newitem.descriptor = selectedclassificationdescriptor;returnObject();" :multiple="false"></autocomp>
+            </v-flex>
           </template>
         </formlistcomponent>
       </v-flex>
@@ -88,7 +88,7 @@
     <!-- inventory partOf -->
     <v-layout justify-start row fill-height>
       <v-flex xs5>
-        <simpleautocompwrapper autocompletetype="collection" v-model="inventory.partOf" v-bind:prop.sync="inventory.partOf" label="Part Of Collection"/>
+        <simpleautocompwrapper entity="collect" v-model="inventory.partOf" v-bind:prop.sync="inventory.partOf" label="Part Of Collection"/>
       </v-flex>
      </v-layout>
      <!-- inventory comments -->
@@ -107,10 +107,8 @@
 </template>
 <script>
 import axios from 'axios';
-import autocompactor from '../AutoCompleteComponents/AutocompActor';
+import autocomp from '../AutoCompleteComponents/Autocomp';
 import datecomponent from '../FormComponents/DateComponent';
-import autocompdescriptor from '../AutoCompleteComponents/AutocompDescriptor';
-import autocompcollection from '../AutoCompleteComponents/AutocompCollection';
 import formlistcomponent from '../FormComponents/FormListComponent';
 import formtfreadview from '../FormComponents/FormTextFieldReadView';
 import simpleautocompwrapper from '../FormComponents/SimpleAutoCompleteWrapper';
@@ -120,9 +118,7 @@ import { mapActions } from 'vuex';
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 export default {
   components: {
-    autocompactor,
-    autocompdescriptor,
-    autocompcollection,
+    autocomp,
     formlistcomponent,
     datecomponent,
     formtfreadview,

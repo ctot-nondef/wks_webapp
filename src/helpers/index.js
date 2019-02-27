@@ -189,7 +189,6 @@ export default {
     },
     /* (js) collection helpers */
     addItem(item, items) {
-      console.log(item);
       if (!item.textval) {
         const newitem = Object.assign({}, item);
         items.push(newitem);
