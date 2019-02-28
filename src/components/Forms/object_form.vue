@@ -22,10 +22,10 @@
         <formlistcomponent :items="object.creator" :itemprops="$store.state.api.schemas.object.properties.creator.items.properties" :listitemstyletypes="creatoritemstyletypes" label="Creator" nodatamessage="No creators added">
           <template slot="form" slot-scope="props">
           <v-flex xs5>
-              <autocomp entity="descriptor" filter="ROLE" v-model="selecteddescriptor" label="Role" :multiple="false" @input="props.newitem.role=$event;returnObject();"></autocomp>
+              <autocomp entity="descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"></autocomp>
           </v-flex>
             <v-flex xs5>
-              <autocomp entity="actor" v-model="selectedactor" label="Collector" :multiple="false" @input="props.newitem.id=$event;returnObject();"></autocomp>
+              <autocomp entity="actor" v-model="props.newitem.id" label="Collector" :multiple="false"></autocomp>
           </v-flex>
           <v-flex xs12>
           <v-textarea  v-model="props.newitem.note" label="Note" /> 
@@ -73,10 +73,10 @@
               <v-text-field  v-model.number="props.newitem.amount" label="Amount"></v-text-field>
           </v-flex>
           <v-flex xs5>
-              <autocomp entity="descriptor" filter="DIM" v-model="selecteddimensionsaspect" label="Aspect" :multiple="false" @input="props.newitem.aspect=$event;returnObject();"></autocomp>
+              <autocomp entity="descriptor" filter="DIM" v-model="props.newitem.aspect" label="Aspect" :multiple="false"></autocomp>
           </v-flex>
             <v-flex xs5>
-              <autocomp entity="descriptor" filter="UNIT" v-model="selecteddimensionsdescriptor" label="Descriptor" :multiple="false" @input="props.newitem.unit=$event;returnObject();"></autocomp>
+              <autocomp entity="descriptor" filter="UNIT" v-model="props.newitem.unit" label="Descriptor" :multiple="false"></autocomp>
           </v-flex>
           </template>
         </formlistcomponent>
@@ -88,10 +88,10 @@
         <formlistcomponent v-if="object.classification" :items="object.classification" :itemprops="$store.state.api.schemas.collect.properties.classification.items.properties" :listitemstyletypes="classificationitemstyletypes" label="Classification" nodatamessage="No classifications added">
           <template slot="form" slot-scope="props">
           <v-flex xs5>
-            <autocomp entity="descriptor" filter="KEYWORD" v-model="selectedclassificationaspect" label="Aspect" @input="props.newitem.aspect = selectedclassificationaspect;returnObject();" :multiple="false"></autocomp>
+            <autocomp entity="descriptor" filter="KEYWORD" v-model="props.newitem.aspect" label="Aspect" :multiple="false"></autocomp>
           </v-flex>
           <v-flex xs5>
-            <autocomp entity="descriptor" v-model="selectedclassificationdescriptor" label="Descriptor" @input="props.newitem.descriptor = selectedclassificationdescriptor;returnObject();" :multiple="false"></autocomp>
+            <autocomp entity="descriptor" v-model="props.newitem.descriptor" label="Descriptor" :multiple="false"></autocomp>
           </v-flex>
           </template>
         </formlistcomponent>
@@ -144,12 +144,6 @@ export default {
       comment: '',
       public: false,
       url: '',
-      selecteddescriptor:null,
-      selectedactor:null,
-      selectedclassificationaspect: null,
-      selectedclassificationdescriptor: null,
-      selecteddimensionsaspect: null,
-      selecteddimensionsdescriptor: null,
       creatoritemstyletypes: [
         'title',
         'subtitle',

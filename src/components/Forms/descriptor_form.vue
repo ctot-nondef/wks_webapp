@@ -36,7 +36,7 @@
             <v-select :items="$store.state.api.schemas.actor.properties.relations.items.properties.kind.enum" label="Relation Type" v-model='props.newitem.kind'></v-select>
           </v-flex>
             <v-flex x12>
-          <autocomp entity="descriptor" v-model="selecteddescriptor"  label="Descriptor" :multiple="false" @input="props.newitem.target = selecteddescriptor;returnObject();"></autocomp>
+          <autocomp entity="descriptor" v-model="props.newitem.target"  label="Descriptor" :multiple="false"></autocomp>
           </v-flex>
           <v-flex xs10>
             <v-textarea v-model="props.newitem.annotation" label="Annotation" /> 
@@ -72,7 +72,6 @@ export default {
       comment: '',
       public: false,
       url: '',
-      selecteddescriptor: {},
       relationitemstyletypes: [
         'title',
         'subtitle',
