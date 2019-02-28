@@ -88,12 +88,26 @@ export default {
       'delete',
     ]),
     addInventory() {
-      if(this.newinventory.place) this.newinventory.place.forEach((el, idx, c) => {
-        c[idx] = el._id;
-      });
-      if(this.newinventory.collector) this.newinventory.collector.forEach((el, idx, c) => {
-        c[idx] = el._id;
-      });
+      if(this.newinventory.creator) this.newinventory.creator.forEach((el, idx, c) => {
+          var rel = {};
+          Object.keys(el).forEach((key) => {
+            rel[key] = el[key]._id || el[key];
+          });
+          c[idx] = rel;
+        });
+         if(this.newinventory.classification) this.newinventory.classification.forEach((el, idx, c) => {
+          var rel = {};
+          Object.keys(el).forEach((key) => {
+            rel[key] = el[key]._id || el[key];
+          });
+          c[idx] = rel;
+        });
+       if(this.newinventory.place) { 
+          this.newinventory.place = this.newinventory.place._id
+        }
+         if(this.newinventory.partOf) { 
+          this.newinventory.partOf = this.newinventory.partOf._id
+        }
       this.post({ type: 'inventory', body: this.newinventory }).then((res) => {
         this.newinventory = {};
         this.iventorydialog = false;

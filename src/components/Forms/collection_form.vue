@@ -168,6 +168,12 @@ export default {
       if (!this.collection.classification) {
         this.$set(this.collection,'classification',[]);
       }
+      if (!this.collection.creator) {
+        this.$set(this.collection,'creator',[]);
+      }
+      if (!this.collection.comments) {
+        this.$set(this.collection,'comments',[]);
+      }
     },
   },
   methods: {

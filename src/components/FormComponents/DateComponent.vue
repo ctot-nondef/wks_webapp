@@ -65,7 +65,12 @@ export default {
     },
     formatDate(dateval) {
       if (!dateval) return null;
-      var dwot = dateval.replace("T00:00:00.000Z", "");
+      var dwot = null;
+      if (dateval instanceof Array) {
+        dwot = dateval[0].replace("T00:00:00.000Z", "");
+      } else {
+        dwot = dateval.replace("T00:00:00.000Z", "");
+      }
       const [year, month, day] = dwot.split("-");
       return `${month}/${day}/${year}`;
     },

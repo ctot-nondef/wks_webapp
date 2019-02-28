@@ -104,12 +104,13 @@ export default {
       'delete',
     ]),
     adddescriptor() {
-      if(this.newdescriptor.place) this.newdescriptor.place.forEach((el, idx, c) => {
-        c[idx] = el._id;
-      });
-      if(this.newdescriptor.collector) this.newdescriptor.collector.forEach((el, idx, c) => {
-        c[idx] = el._id;
-      });
+       if(this.newdescriptor.relations) this.newdescriptor.relations.forEach((el, idx, c) => {
+          var rel = {};
+          Object.keys(el).forEach((key) => {
+            rel[key] = el[key]._id || el[key];
+          });
+          c[idx] = rel;
+        });
       this.post({ type: 'descriptor', body: this.newdescriptor }).then((res) => {
         this.newdescriptor = {};
         this.descriptordialog = false;

@@ -96,6 +96,9 @@ export default {
   watch: {
     value(val) {
       this.actor = val;
+      if (!this.actor.relations) {
+        this.$set(this.actor,'relations',[]);
+      }
     },
   },
   methods: {

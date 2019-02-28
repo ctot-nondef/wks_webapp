@@ -165,6 +165,18 @@ export default {
   watch: {
     value(val) {
       this.object = val;
+      if (!this.object.creator) {
+        this.$set(this.object,'creator',[]);
+      }
+      if (!this.object.classification) {
+        this.$set(this.object,'classification',[]);
+      }
+      if (!this.object.comments) {
+        this.$set(this.object,'comments',[]);
+      }
+      if (!this.object.dimensions) {
+        this.$set(this.object,'dimensions',[]);
+      }
     },
   },
   methods: {

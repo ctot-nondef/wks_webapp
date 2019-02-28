@@ -82,6 +82,9 @@ export default {
   watch: {
     value(val) {
       this.descriptor = val;
+      if (!this.descriptor.relations) {
+        this.$set(this.descriptor,'relations',[]);
+      }
     },
   },
   methods: {

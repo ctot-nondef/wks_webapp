@@ -4,7 +4,7 @@
       <!-- inventory identifiers -->
       <chips :items="inventory.identifier"/>
     </v-layout>
-    <v-layout justify-end row fill-height>
+    <v-layout justify-start row fill-height>
       <v-flex xs6>
         <!-- inventory name -->
         <v-text-field v-model="inventory.name" label="Name" @input="returnObject()"></v-text-field>
@@ -139,11 +139,7 @@ export default {
       imageName: '',
   		imageUrl: '',
       imageFile: '',
-      selecteddescriptor:{},
-      selectedactor:{},
       selectedcollection:{},
-      selectedclassificationaspect: null,
-      selectedclassificationdescriptor: null,
       creatoritemstyletypes: [
         'title',
         'subtitle',
@@ -161,6 +157,15 @@ export default {
     value(val) {
       this.inventory = val;
       this.selectedcollection = val.partOf || {};
+      if (!this.inventory.classification) {
+        this.$set(this.inventory,'classification',[]);
+      }
+      if (!this.inventory.creator) {
+        this.$set(this.inventory,'creator',[]);
+      }
+      if (!this.inventory.comments) {
+        this.$set(this.inventory,'comments',[]);
+      }
     },
   },
   methods: {

@@ -187,15 +187,7 @@ export default {
       });
     },
     saveactor() {
-      console.log(this.cedit);
       if (this.cedit._id) {
-        console.log(this.cedit);
-        if(this.cedit.place) this.cedit.place.forEach((el, idx, c) => {
-          c[idx] = el._id;
-        });
-        if(this.cedit.collector) this.cedit.collector.forEach((el, idx, c) => {
-          c[idx] = el._id;
-        });
         if(this.cedit.relations) this.cedit.relations.forEach((el, idx, c) => {
           var rel = {};
           Object.keys(el).forEach((key) => {
@@ -203,6 +195,7 @@ export default {
           });
           c[idx] = rel;
         });
+        console.log('saved');
       this.post({ type: 'actor', id: this.cedit._id, body: this.cedit }).then((res) => {
           this.getRecords();
         });

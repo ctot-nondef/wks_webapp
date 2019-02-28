@@ -13,9 +13,14 @@
       :multiple="multiple"
       >
       <template slot="selection" slot-scope="data">
+        <template v-if="multiple">
           <v-chip :selected="data.selected" close class="chip--select-multi" color="white">
             {{ data.item.label }}
           </v-chip>
+        </template>
+        <template v-else>
+          {{ data.item.label }}
+        </template>
       </template>
       <template slot="item" slot-scope="data">
         <template>

@@ -104,12 +104,13 @@ export default {
       'delete',
     ]),
     addactor() {
-      if(this.newactor.place) this.newactor.place.forEach((el, idx, c) => {
-        c[idx] = el._id;
-      });
-      if(this.newactor.collector) this.newactor.collector.forEach((el, idx, c) => {
-        c[idx] = el._id;
-      });
+      if(this.newactor.relations) this.newactor.relations.forEach((el, idx, c) => {
+          var rel = {};
+          Object.keys(el).forEach((key) => {
+            rel[key] = el[key]._id || el[key];
+          });
+          c[idx] = rel;
+        });
       this.post({ type: 'actor', body: this.newactor }).then((res) => {
         this.newactor = {};
         this.actordialog = false;
