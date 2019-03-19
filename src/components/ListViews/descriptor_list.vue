@@ -6,7 +6,7 @@
         <v-select
           v-model="classfilter"
           :items="$store.state.api.classes.Descriptor"
-          item-text="labels[4].label"
+          item-text="_labels[4].label"
           item-value="_id"
           label="Filter by Type"
           @input="getRecords()"
@@ -39,7 +39,7 @@
           <td>{{ props.item.name }}</td>
           <td>
             <div v-if="props.item.instanceOf">
-              {{ props.item.instanceOf.labels[4].label }}
+              {{ props.item.instanceOf._labels[4].label }}
             </div>
           </td>
           <td>{{ props.item.description }}</td>
