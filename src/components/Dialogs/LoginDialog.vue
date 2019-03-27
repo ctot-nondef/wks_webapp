@@ -63,6 +63,9 @@ export default {
           username: this.username,
           password: this.password,
         },
+        $config: {
+          withCredentials: true
+        },
       }).then((res) => {
         this.setToken({token: res.data.session, user: res.data.user});
         const pstate = this.getLatestSession();
