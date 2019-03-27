@@ -22,8 +22,8 @@
           <autocomp entity="actor" v-model="props.newitem.id" label="Collector" :multiple="false"></autocomp>
           </v-flex>
           <v-flex xs12>
-          <v-textarea v-model="props.newitem.note" label="Note" /> 
-          </v-flex> 
+          <v-textarea v-model="props.newitem.note" label="Note" />
+          </v-flex>
           </template>
         </formlistcomponent>
       </v-flex>
@@ -53,11 +53,11 @@
           <template v-for="(item, index) in collection.documents">
             <v-list-tile :key="item._id" avatar @click="">
               <v-list-tile-avatar>
-                <img :src="`https://wksgoose.acdh-dev.oeaw.ac.at/${item.path.split('.')[0]}_thumb.jpg`">
+                <img :src="`https://wksdev.hephaistos.arz.oeaw.ac.at/${item.ref.path.split('.')[0]}_thumb.jpg`">
               </v-list-tile-avatar>
               <v-list-tile-content>
-                <v-list-tile-title v-html="item.name"></v-list-tile-title>
-                <v-list-tile-sub-title v-html="item.path"></v-list-tile-sub-title>
+                <v-list-tile-title v-html="item.ref.name"></v-list-tile-title>
+                <v-list-tile-sub-title v-html="item.ref.path"></v-list-tile-sub-title>
               </v-list-tile-content>
               <v-btn fab dark small color="error" @click="removeimage(index)">
                 <v-icon dark>delete</v-icon>
@@ -65,7 +65,7 @@
             </v-list-tile>
           </template>
         </v-list>
-        <v-text-field label="Select Image" @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
+        <v-text-field label="Select PDF Document" @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
         <input type="file" style="display: none" ref="image" accept="image/*" @change="onFilePicked">
       </v-flex>
     </v-layout>
@@ -198,13 +198,15 @@ export default {
           console.log(this.imageFile);
           var formData = new FormData();
           formData.append('image', this.imageFile);
-          axios.post('https://wksgoose.acdh-dev.oeaw.ac.at/api/v1/upload/', formData, {
+          axios.post('https://wksdev.hephaistos.arz.oeaw.ac.at/api/v1/upload/', formData, {
               headers: {
                 'Content-Type': 'multipart/form-data'
               }
           }).then((res) => {
+            console.log(this.collection);
             if(!this.collection.documents) this.collection.documents = [];
-            this.collection.documents.push(res.data);
+            this.collection.documents.push({ref: res.data, note: 'test'});
+            console.log(this.collection);
             this.returnObject();
             this.imageName = '';
             this.imageFile = '';
@@ -220,6 +222,7 @@ export default {
     removeimage(index) {
       this.collection.documents.splice(index, 1);
       this.returnObject();
+      console.log(this.collection);
     },
   },
 };

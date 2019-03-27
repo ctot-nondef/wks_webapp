@@ -159,7 +159,8 @@ export default {
           {"path":"place","select":"name"},
           {"path":"time","select":"name"},
           {"path":"classification.aspect","select":"name"},
-          {"path":"classification.descriptor","select":"name"}
+          {"path":"classification.descriptor","select":"name"},
+          {"path":"documents.ref"},
         ]),
       }).then((res) => {
         this.cedit = res.data[0];
