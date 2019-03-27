@@ -154,7 +154,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       if (type && id) {
         commit('setLoading', `Deleting ${type} ${id} in Database`);
-        p = state.apilib[`delete${t}ById`]({ id });
+        p = state.apilib[`delete${t}ById`]({ id, $config });
       } else reject('Invalid or Insufficient Parameters');
       p.then((res) => {
         commit('setLoadingFinished');
