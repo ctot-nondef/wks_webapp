@@ -2,11 +2,18 @@
 import axios from 'axios'
 import qs from 'qs'
 let domain = ''
+let axiosInstance = axios.create()
 export const getDomain = () => {
   return domain
 }
 export const setDomain = ($domain) => {
   domain = $domain
+}
+export const getAxiosInstance = () => {
+  return axiosInstance
+}
+export const setAxiosInstance = ($axiosInstance) => {
+  axiosInstance = $axiosInstance
 }
 export const request = (method, url, body, queryParameters, form, config) => {
   method = method.toLowerCase()
@@ -17,17 +24,15 @@ export const request = (method, url, body, queryParameters, form, config) => {
   }
   // let queryUrl = url+(keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '')
   if (body) {
-    return axios[method](queryUrl, body, config)
-  } else if (method === 'get') {
-    return axios[method](queryUrl, {
-      params: form
-    }, config)
+    return axiosInstance[method](queryUrl, body, config)
+  } else if (method === 'get' || method === 'delete' || method === 'head' || method === 'option') {
+    return axiosInstance[method](queryUrl, config)
   } else {
-    return axios[method](queryUrl, qs.stringify(form), config)
+    return axiosInstance[method](queryUrl, qs.stringify(form), config)
   }
 }
 /*==========================================================
- *
+ *                    
  ==========================================================*/
 /**
  * API root. Returns JSON Object of Metadata and available Entities
@@ -448,7 +453,7 @@ export const getActorURL = function(parameters = {}) {
  * url: postActorURL
  * method: postActor_TYPE
  * raw_url: postActor_RAW_URL
- * @param actor -
+ * @param actor - 
  */
 export const postActor = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -579,7 +584,7 @@ export const getActorByIdURL = function(parameters = {}) {
  * method: postActorById_TYPE
  * raw_url: postActorById_RAW_URL
  * @param id - MongoDB document _id
- * @param actor -
+ * @param actor - 
  */
 export const postActorById = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -788,7 +793,7 @@ export const getAssetrefURL = function(parameters = {}) {
  * url: postAssetrefURL
  * method: postAssetref_TYPE
  * raw_url: postAssetref_RAW_URL
- * @param assetref -
+ * @param assetref - 
  */
 export const postAssetref = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -919,7 +924,7 @@ export const getAssetrefByIdURL = function(parameters = {}) {
  * method: postAssetrefById_TYPE
  * raw_url: postAssetrefById_RAW_URL
  * @param id - MongoDB document _id
- * @param assetref -
+ * @param assetref - 
  */
 export const postAssetrefById = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -1128,7 +1133,7 @@ export const getAuthrecURL = function(parameters = {}) {
  * url: postAuthrecURL
  * method: postAuthrec_TYPE
  * raw_url: postAuthrec_RAW_URL
- * @param authrec -
+ * @param authrec - 
  */
 export const postAuthrec = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -1259,7 +1264,7 @@ export const getAuthrecByIdURL = function(parameters = {}) {
  * method: postAuthrecById_TYPE
  * raw_url: postAuthrecById_RAW_URL
  * @param id - MongoDB document _id
- * @param authrec -
+ * @param authrec - 
  */
 export const postAuthrecById = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -1468,7 +1473,7 @@ export const getBibrefURL = function(parameters = {}) {
  * url: postBibrefURL
  * method: postBibref_TYPE
  * raw_url: postBibref_RAW_URL
- * @param bibref -
+ * @param bibref - 
  */
 export const postBibref = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -1599,7 +1604,7 @@ export const getBibrefByIdURL = function(parameters = {}) {
  * method: postBibrefById_TYPE
  * raw_url: postBibrefById_RAW_URL
  * @param id - MongoDB document _id
- * @param bibref -
+ * @param bibref - 
  */
 export const postBibrefById = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -1808,7 +1813,7 @@ export const getCollectURL = function(parameters = {}) {
  * url: postCollectURL
  * method: postCollect_TYPE
  * raw_url: postCollect_RAW_URL
- * @param collect -
+ * @param collect - 
  */
 export const postCollect = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -1939,7 +1944,7 @@ export const getCollectByIdURL = function(parameters = {}) {
  * method: postCollectById_TYPE
  * raw_url: postCollectById_RAW_URL
  * @param id - MongoDB document _id
- * @param collect -
+ * @param collect - 
  */
 export const postCollectById = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -2148,7 +2153,7 @@ export const getCurrencyURL = function(parameters = {}) {
  * url: postCurrencyURL
  * method: postCurrency_TYPE
  * raw_url: postCurrency_RAW_URL
- * @param currency -
+ * @param currency - 
  */
 export const postCurrency = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -2279,7 +2284,7 @@ export const getCurrencyByIdURL = function(parameters = {}) {
  * method: postCurrencyById_TYPE
  * raw_url: postCurrencyById_RAW_URL
  * @param id - MongoDB document _id
- * @param currency -
+ * @param currency - 
  */
 export const postCurrencyById = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -2488,7 +2493,7 @@ export const getDescriptorURL = function(parameters = {}) {
  * url: postDescriptorURL
  * method: postDescriptor_TYPE
  * raw_url: postDescriptor_RAW_URL
- * @param descriptor -
+ * @param descriptor - 
  */
 export const postDescriptor = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -2619,7 +2624,7 @@ export const getDescriptorByIdURL = function(parameters = {}) {
  * method: postDescriptorById_TYPE
  * raw_url: postDescriptorById_RAW_URL
  * @param id - MongoDB document _id
- * @param descriptor -
+ * @param descriptor - 
  */
 export const postDescriptorById = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -2828,7 +2833,7 @@ export const getEntryURL = function(parameters = {}) {
  * url: postEntryURL
  * method: postEntry_TYPE
  * raw_url: postEntry_RAW_URL
- * @param entry -
+ * @param entry - 
  */
 export const postEntry = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -2959,7 +2964,7 @@ export const getEntryByIdURL = function(parameters = {}) {
  * method: postEntryById_TYPE
  * raw_url: postEntryById_RAW_URL
  * @param id - MongoDB document _id
- * @param entry -
+ * @param entry - 
  */
 export const postEntryById = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -3168,7 +3173,7 @@ export const getInventoryURL = function(parameters = {}) {
  * url: postInventoryURL
  * method: postInventory_TYPE
  * raw_url: postInventory_RAW_URL
- * @param inventory -
+ * @param inventory - 
  */
 export const postInventory = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -3299,7 +3304,7 @@ export const getInventoryByIdURL = function(parameters = {}) {
  * method: postInventoryById_TYPE
  * raw_url: postInventoryById_RAW_URL
  * @param id - MongoDB document _id
- * @param inventory -
+ * @param inventory - 
  */
 export const postInventoryById = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -3508,7 +3513,7 @@ export const getObjectURL = function(parameters = {}) {
  * url: postObjectURL
  * method: postObject_TYPE
  * raw_url: postObject_RAW_URL
- * @param object -
+ * @param object - 
  */
 export const postObject = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -3639,7 +3644,7 @@ export const getObjectByIdURL = function(parameters = {}) {
  * method: postObjectById_TYPE
  * raw_url: postObjectById_RAW_URL
  * @param id - MongoDB document _id
- * @param object -
+ * @param object - 
  */
 export const postObjectById = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -3848,7 +3853,7 @@ export const getTransactionURL = function(parameters = {}) {
  * url: postTransactionURL
  * method: postTransaction_TYPE
  * raw_url: postTransaction_RAW_URL
- * @param transaction -
+ * @param transaction - 
  */
 export const postTransaction = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -3979,7 +3984,7 @@ export const getTransactionByIdURL = function(parameters = {}) {
  * method: postTransactionById_TYPE
  * raw_url: postTransactionById_RAW_URL
  * @param id - MongoDB document _id
- * @param transaction -
+ * @param transaction - 
  */
 export const postTransactionById = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
