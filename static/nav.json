@@ -58,6 +58,18 @@
 				"items":""
 			},
 			{
+				"caption":"Einträge",
+				"arialabel":"",
+				"icon":"description",
+				"abstract":"",
+				"startpage":{
+					"name": "entries",
+					"params": {
+						"lang": "en" }
+					},
+				"items":""
+			},
+			{
 				"caption":"Inventare",
 				"arialabel":"",
 				"icon":"assignment",

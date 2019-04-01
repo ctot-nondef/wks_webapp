@@ -35,6 +35,9 @@
         <template v-else>
           <v-list-tile-content>
             <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
+            <v-list-tile-sub-title v-for="(prop,propname) in displayitemprops" v-if="displayitemprops">
+             <span class="subprop" v-for="(subprop,index) in prop">{{getItemPropFromPath(data.item,index,subprop['path']) | renderProps}}</span>
+              </v-list-tile-sub-title>
           </v-list-tile-content>
         </template>
       </template>
@@ -55,7 +58,8 @@ export default {
     'entity',
     'filter',
     'icon',
-    'clickevent'
+    'clickevent',
+    'displayitemprops'
   ],
   data() {
     return {
@@ -82,6 +86,24 @@ export default {
     },
   },
   methods: {
+    getItemPropFromPath(obj,index,path) {
+      var res = obj;
+      if (path.includes(".")) {
+      path.split(".").forEach(function(key){
+        
+        if (res.length) {
+        res = res[index];
+        } 
+        else {
+          res = res[key];
+        }
+      });
+    } else {
+      res = obj[path];
+      }
+   
+      return res;
+    },
     clear() {
       this.select = null;
       this.items.length = 0;
@@ -96,16 +118,33 @@ export default {
       // this.$info(vm);
      let filterval = '';
      const queryparams = {name: { "$regex": this.search || '' }};
+       const requestparams = {
+        type:this.entity,
+        query: JSON.stringify(
+          queryparams
+        )
+    }
      if (this.filter) {
          filterval = this.filterDescriptors(this.filter);
          queryparams.instanceOf = filterval;
      }
-      this.get({
-        type: this.entity,
-        query: JSON.stringify(
-          queryparams
-        )
-      })
+     if (this.displayitemprops) {
+        var populateprops = [];
+        Object.keys(this.displayitemprops).forEach(key => {
+
+        this.displayitemprops[key].forEach(function(obj){
+          if (obj.populate === true) {
+            populateprops.push({"path":obj.path,"select":obj.select});
+          }
+        });
+        });
+        
+        requestparams.populate = JSON.stringify(populateprops);
+       
+     }
+
+
+      this.get(requestparams)
       .then(res => {
         if (Array.isArray(res.data)) this.items = res.data;
         this.loading = false;
@@ -230,7 +269,29 @@ export default {
       this.$emit("input", this.select);
     }
   },
+  filters: {
+  renderProps: function (value) {
+    var newvalue = ' ';
+    if (value) {
+    Object.keys(value).forEach(key=>{
+      if (typeof value[key] === 'string' || typeof value[key] === 'number') {
+        newvalue += value[key];
+      }
+      else {newvalue += value[key].name + " "}
+    });
+    }
+    return newvalue;
+    }
+  },
   created() {
   }
 };
 </script>
+<style scopped="css">
+.v-list__tile {
+  display:block;
+  height:auto;
+}
+
+
+</style>
