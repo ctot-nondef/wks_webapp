@@ -197,7 +197,7 @@ export default {
 					this.imageFile = files[0] // this is an image file that can be sent to server...
           console.log(this.imageFile);
           var formData = new FormData();
-          formData.append('image', this.imageFile);
+          formData.append('file', this.imageFile);
           axios.post('https://wksdev.hephaistos.arz.oeaw.ac.at/api/v1/upload/', formData, {
               headers: {
                 'Content-Type': 'multipart/form-data'
