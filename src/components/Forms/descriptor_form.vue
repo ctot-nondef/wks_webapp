@@ -14,7 +14,7 @@
         <v-select
           v-model="descriptor.instanceOf"
           :items="$store.state.api.classes.Descriptor"
-          item-text="labels[4].label"
+          item-text="_labels[4].label"
           item-value="_id"
           label="Type"
           @input="returnObject()"
@@ -39,7 +39,7 @@
           <autocomp entity="descriptor" v-model="props.newitem.target"  label="Descriptor" :multiple="false"></autocomp>
           </v-flex>
           <v-flex xs10>
-            <v-textarea v-model="props.newitem.annotation" label="Annotation" /> 
+            <v-textarea v-model="props.newitem.annotation" label="Annotation" />
           </v-flex>
           </template>
         </formlistcomponent>
