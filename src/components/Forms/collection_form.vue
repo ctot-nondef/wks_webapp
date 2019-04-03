@@ -51,9 +51,9 @@
         <!-- collection documents -->
         <v-list two-line>
           <template v-for="(item, index) in collection.documents">
-            <v-list-tile :key="item._id" avatar :href="`${$store.state.api.url}/${item.ref.path}`">
+            <v-list-tile :key="item._id" avatar :href="`${$store.state.api.url}/${item.ref.path}`" target="_blank">
               <v-list-tile-avatar>
-                <img :src="`${$store.state.api.url}/uploads/thumbs/${item.ref.name.split('.')[0]}_thumb.jpg`">
+                <img :src="`${$store.state.api.url}/asset/uploads/thumbs/${item.ref.name.split('.')[0]}_thumb.jpg`">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-title v-html="item.ref.name"></v-list-tile-title>
