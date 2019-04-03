@@ -155,6 +155,32 @@ const actions = {
       });
     });
   },
+  patch({ state, commit }, { type, id, body }) {
+    let p = {};
+    let params = {
+      $config
+    }
+    params[type] = body;
+    params.id = id;
+    let t = type.charAt(0).toUpperCase() + type.slice(1);
+    return new Promise((resolve, reject) => {
+      if (type && id) {
+        commit('setLoading', `Updating ${type} ${id} to Database`);
+        p = state.apilib[`post${t}ById`](params);
+      } else if (type && !id) {
+        commit('setLoading', `Creating a ${type} in Database`);
+        p = state.apilib[`post${t}`](params);
+      } else reject('Invalid or Insufficient Parameters');
+      p.then((res) => {
+        commit('setLoadingFinished');
+        resolve(res);
+      })
+      .catch((error) => {
+        commit('setLoadingFinished');
+        reject(error);
+      });
+    });
+  },
   delete({ state, commit }, { type, id }) {
     let p = {};
     let t = type.charAt(0).toUpperCase() + type.slice(1);

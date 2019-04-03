@@ -10,6 +10,7 @@ import actors from '../components/actors';
 import descriptors from '../components/descriptors';
 import inventories from '../components/inventories';
 import objects from '../components/objects';
+import users from '../components/users';
 
 Vue.use(Router);
 
@@ -66,6 +67,13 @@ export default new Router({
           name: 'actors',
           components: {
             Content: actors,
+          },
+        },
+        {
+          path: 'users',
+          name: 'users',
+          components: {
+            Content: users,
           },
         },
         {
