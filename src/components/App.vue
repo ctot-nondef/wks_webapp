@@ -46,7 +46,6 @@ export default {
   beforeCreate() {
     const pstate = HELPERS.methods.getLatestSession();
     HELPERS.methods.deleteOldSessions();
-    console.log("beforecreate", pstate);
     axios.get('/static/nav.json')
       .then((res) => {
         this.$store.commit('app/setConfig', res.data);
@@ -54,8 +53,6 @@ export default {
         this.$store.dispatch('api/init', {pstate, config: res.data});
       })
       .catch(error => this.$log(error));
-  },
-  created() {
   },
 };
 </script>
