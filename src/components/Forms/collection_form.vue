@@ -66,7 +66,7 @@
           </template>
         </v-list>
         <v-text-field label="Select PDF Document" @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
-        <input type="file" style="display: none" ref="image" accept="image/*" @change="onFilePicked">
+        <input type="file" style="display: none" ref="image" accept="application/pdf" @change="onFilePicked">
       </v-flex>
     </v-layout>
     <v-layout justify-end row fill-height>

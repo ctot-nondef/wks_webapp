@@ -82,5 +82,6 @@
 				"items":""
 			}
 		],
-	"repo":""
+	"repo":"",
+	"api":"https://wksdev.hephaistos.arz.oeaw.ac.at"
 }

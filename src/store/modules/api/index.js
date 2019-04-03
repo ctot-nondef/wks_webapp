@@ -1,8 +1,5 @@
 import * as api from './api';
 
-api.setDomain('https://wksdev.hephaistos.arz.oeaw.ac.at/api/v1');
-
-
 const state = {
   apilib: api,
   user: '',
@@ -70,8 +67,9 @@ const mutations = {
 };
 
 const actions = {
-  init({ state, commit }, pstate) {
-    if (pstate!= null && pstate.pState.api) commit('setState', pstate.pState.api);
+  init({ state, commit }, config) {
+    if (config.pstate!= null && config.pstate.pState.api) commit('setState', config.pstate.pState.api);
+    state.apilib.setDomain(`${config.config.api}/api/v1`);
     commit('setLoading', 'Loading Database Configuration.');
     state.apilib.get( { $config } ).then((res) => {
       if (res.data.data && res.data.data.length > 0) {

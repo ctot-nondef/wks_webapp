@@ -53,8 +53,8 @@ const mutations = {
 
 const actions = {
   init({ commit }, pstate) {
-    if (pstate.pState.app) commit('setState', pstate.pState.app);
-  },  
+    if (pstate!= null && pstate.pState.app) commit('setState', pstate.pState.app);
+  },
   toggleAppMode({ commit }) {
     commit('toggleDrawer');
     commit('toggleRightDrawer');
