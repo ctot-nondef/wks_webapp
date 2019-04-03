@@ -1,8 +1,9 @@
 import * as api from './api';
 
 const state = {
-  apilib: api,
-  user: '',
+  apilib: {},
+  url: '',
+  user: {},
   token: null,
   loadmsg: '',
   schemas: {},
@@ -20,16 +21,23 @@ const $config = {
 /* eslint no-console: ["error", { allow: ["log"] }] */
 /* eslint-disable no-underscore-dangle */
 const getters = {
-  availableEndpoints: s => s.apilib.keys,
   f: s => name => s.apilib[name],
   schema: s => name => s.schemas[name],
-  types: s => s.schemas.keys,
-  apiloaded: s => s.apiloaded,
+  types: s => Object.keys(s.schemas),
 };
 
 const mutations = {
   setConfig(s, config) {
     s.config = config;
+  },
+  setApiLib(s, lib) {
+    s.apilib = lib;
+  },
+  setApiURL(s, url) {
+    if(s.apilib.setDomain) {
+      s.apilib.setDomain(`${url}/api/v1`);
+      s.url = url;
+    }
   },
   setState(s, pstate) {
     for (const key in pstate) {
@@ -68,8 +76,9 @@ const mutations = {
 
 const actions = {
   init({ state, commit }, config) {
+    commit('setApiLib', api);
+    commit('setApiURL', `${config.config.api}`)
     if (config.pstate!= null && config.pstate.pState.api) commit('setState', config.pstate.pState.api);
-    state.apilib.setDomain(`${config.config.api}/api/v1`);
     commit('setLoading', 'Loading Database Configuration.');
     state.apilib.get( { $config } ).then((res) => {
       if (res.data.data && res.data.data.length > 0) {
