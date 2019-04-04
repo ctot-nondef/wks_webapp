@@ -102,10 +102,10 @@ export default {
           });
           c[idx] = rel;
         });
-       if(this.newinventory.place) { 
+       if(this.newinventory.place) {
           this.newinventory.place = this.newinventory.place._id
         }
-         if(this.newinventory.partOf) { 
+         if(this.newinventory.partOf) {
           this.newinventory.partOf = this.newinventory.partOf._id
         }
       this.post({ type: 'inventory', body: this.newinventory }).then((res) => {
