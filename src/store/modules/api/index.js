@@ -24,6 +24,12 @@ const getters = {
   f: s => name => s.apilib[name],
   schema: s => name => s.schemas[name],
   types: s => Object.keys(s.schemas),
+  getClassByName: s => ({ type, name }) => {
+      console.log(type, name);
+      let res = s.classes[type].find(item => item.name === name);
+      console.log(res);
+      return res;
+  },
 };
 
 const mutations = {
