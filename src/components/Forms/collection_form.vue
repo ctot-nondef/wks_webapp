@@ -36,13 +36,13 @@
     <v-layout justify-end row fill-height>
       <v-flex xs12>
       <!-- collection places -->
-        <autocomp entity="descriptor" filter="PLACE" v-model="collection.place" label="Place" :multiple="true" @input="returnObject();"></autocomp>
+        <autocomp entity="Descriptor" filter="PLACE" v-model="collection.place" label="Place" :multiple="true" @input="returnObject();"></autocomp>
       </v-flex>
     </v-layout>
     <v-layout justify-end row fill-height>
       <v-flex xs12>
         <!-- collection times -->
-        <autocomp entity="descriptor" filter="PERIOD" v-model="collection.time" label="Time" :multiple="true" @input="returnObject();"></autocomp>
+        <autocomp entity="Descriptor" filter="PERIOD" v-model="collection.time" label="Time" :multiple="true" @input="returnObject();"></autocomp>
       </v-flex>
     </v-layout>
     <v-layout justify-end row fill-height>
@@ -85,10 +85,10 @@
           nodatamessage="No classifications added">
           <template slot="form" slot-scope="props">
           <v-flex xs5>
-              <autocomp entity="descriptor" filter="KEYWORD" v-model="props.newitem.aspect" label="Aspect" :multiple="false"></autocomp>
+              <autocomp entity="Descriptor" filter="KEYWORD" v-model="props.newitem.aspect" label="Aspect" :multiple="false"></autocomp>
           </v-flex>
           <v-flex xs5>
-          <autocomp entity="descriptor" v-model="props.newitem.descriptor" label="Descriptor" :multiple="false"></autocomp>
+          <autocomp entity="Descriptor" v-model="props.newitem.descriptor" label="Descriptor" :multiple="false"></autocomp>
           </v-flex>
           </template>
         </formlistcomponent>
