@@ -13,7 +13,12 @@
     <v-layout justify-end row fill-height>
       <v-flex xs12>
         <!-- collection creators -->
-        <formlistcomponent :items="collection.creator" :itemprops="$store.state.api.schemas.collect.properties.creator.items.properties" :listitemstyletypes="creatoritemstyletypes" label="Creator" nodatamessage="No creators added">
+        <formlistcomponent
+          :items="collection.creator"
+          :itemprops="$store.state.api.schemas.collect.properties.creator.items.properties"
+          label="Creator"
+          nodatamessage="No creators added"
+        >
           <template slot="form" slot-scope="props">
           <v-flex xs5>
               <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"></autocomp>
@@ -72,7 +77,12 @@
     <v-layout justify-end row fill-height>
       <v-flex xs12>
         <!-- collection classifications -->
-        <formlistcomponent v-if="collection.classification" :items="collection.classification" :itemprops="$store.state.api.schemas.collect.properties.classification.items.properties" :listitemstyletypes="classificationitemstyletypes" label="Classification" nodatamessage="No classifications added">
+        <formlistcomponent
+          v-if="collection.classification"
+          :items="collection.classification"
+          :itemprops="$store.state.api.schemas.collect.properties.classification.items.properties"
+          label="Classification"
+          nodatamessage="No classifications added">
           <template slot="form" slot-scope="props">
           <v-flex xs5>
               <autocomp entity="descriptor" filter="KEYWORD" v-model="props.newitem.aspect" label="Aspect" :multiple="false"></autocomp>
@@ -106,7 +116,11 @@
     <v-layout justify-start row fill-height>
       <v-flex xs12>
       <!-- collection comments -->
-        <formlistcomponent v-if="collection.comments" :items="collection.comments" :listitemstyletypes="['title']" label="Comments" nodatamessage="No comments added">
+        <formlistcomponent
+          v-if="collection.comments"
+          :items="collection.comments"
+          label="Comments"
+          nodatamessage="No comments added">
           <template slot="form" slot-scope="props">
           <v-flex xs12>
               <v-textarea v-model="props.newitem.textval" label="New Comment"></v-textarea>
@@ -148,15 +162,6 @@ export default {
       imageName: '',
       imageUrl: '',
       imageFile: '',
-      creatoritemstyletypes: [
-        'title',
-        'subtitle',
-        'subtitle'
-      ],
-      classificationitemstyletypes: [
-        'title',
-        'subtitle'
-      ],
       beginofexistencemenu: false,
       endofexistencemenu: false,
       newcomment: '',
