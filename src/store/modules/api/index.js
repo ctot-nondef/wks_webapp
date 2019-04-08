@@ -1,11 +1,9 @@
 import * as api from './api';
 
-api.setDomain('https://wksdev.hephaistos.arz.oeaw.ac.at/api/v1');
-
-
 const state = {
-  apilib: api,
-  user: '',
+  apilib: {},
+  url: '',
+  user: {},
   token: null,
   loadmsg: '',
   schemas: {},
@@ -23,16 +21,29 @@ const $config = {
 /* eslint no-console: ["error", { allow: ["log"] }] */
 /* eslint-disable no-underscore-dangle */
 const getters = {
-  availableEndpoints: s => s.apilib.keys,
   f: s => name => s.apilib[name],
   schema: s => name => s.schemas[name],
-  types: s => s.schemas.keys,
-  apiloaded: s => s.apiloaded,
+  types: s => Object.keys(s.schemas),
+  getClassByName: s => ({ type, name }) => {
+      console.log(type, name);
+      let res = s.classes[type].find(item => item.name === name);
+      console.log(res);
+      return res;
+  },
 };
 
 const mutations = {
   setConfig(s, config) {
     s.config = config;
+  },
+  setApiLib(s, lib) {
+    s.apilib = lib;
+  },
+  setApiURL(s, url) {
+    if(s.apilib.setDomain) {
+      s.apilib.setDomain(`${url}/api/v1`);
+      s.url = url;
+    }
   },
   setState(s, pstate) {
     for (const key in pstate) {
@@ -70,8 +81,10 @@ const mutations = {
 };
 
 const actions = {
-  init({ state, commit }, pstate) {
-    if (pstate!= null && pstate.pState.api) commit('setState', pstate.pState.api);
+  init({ state, commit }, config) {
+    commit('setApiLib', api);
+    commit('setApiURL', `${config.config.api}`)
+    if (config.pstate!= null && config.pstate.pState.api) commit('setState', config.pstate.pState.api);
     commit('setLoading', 'Loading Database Configuration.');
     state.apilib.get( { $config } ).then((res) => {
       if (res.data.data && res.data.data.length > 0) {
@@ -123,6 +136,32 @@ const actions = {
     });
   },
   post({ state, commit }, { type, id, body }) {
+    let p = {};
+    let params = {
+      $config
+    }
+    params[type] = body;
+    params.id = id;
+    let t = type.charAt(0).toUpperCase() + type.slice(1);
+    return new Promise((resolve, reject) => {
+      if (type && id) {
+        commit('setLoading', `Updating ${type} ${id} to Database`);
+        p = state.apilib[`post${t}ById`](params);
+      } else if (type && !id) {
+        commit('setLoading', `Creating a ${type} in Database`);
+        p = state.apilib[`post${t}`](params);
+      } else reject('Invalid or Insufficient Parameters');
+      p.then((res) => {
+        commit('setLoadingFinished');
+        resolve(res);
+      })
+      .catch((error) => {
+        commit('setLoadingFinished');
+        reject(error);
+      });
+    });
+  },
+  patch({ state, commit }, { type, id, body }) {
     let p = {};
     let params = {
       $config

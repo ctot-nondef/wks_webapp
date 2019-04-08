@@ -43,14 +43,16 @@ export default {
       'setConfig',
     ]),
   },
-  created() {
+  beforeCreate() {
+    const pstate = HELPERS.methods.getLatestSession();
+    HELPERS.methods.deleteOldSessions();
     axios.get('/static/nav.json')
-      .then(res => this.setConfig(res.data))
+      .then((res) => {
+        this.$store.commit('app/setConfig', res.data);
+        this.$store.dispatch('app/init', pstate);
+        this.$store.dispatch('api/init', {pstate, config: res.data});
+      })
       .catch(error => this.$log(error));
-    const pstate = this.getLatestSession();    
-    this.deleteOldSessions();
-    this.dbInit(pstate);
-    this.appInit(pstate);
   },
 };
 </script>

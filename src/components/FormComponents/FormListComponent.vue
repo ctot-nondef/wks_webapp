@@ -11,7 +11,7 @@
   >
   <template slot="headers" slot-scope="props">
     <th  v-for="header in props.headers">
-      {{ header.name}}
+      {{ header.name }}
     </th>
   </template>
   <template slot="items" slot-scope="props">
@@ -65,7 +65,7 @@
         </v-btn>
         <v-btn v-if="editingMode === true" center fab dark small color="warning" @click.native="cancelEditing();">
           <v-icon dark>cancel</v-icon>
-        </v-btn> 
+        </v-btn>
       </v-flex>
     </v-layout>
   </div>
@@ -87,7 +87,6 @@ export default {
     "type",
     "items",
     "itemprops",
-    "listitemstyletypes"
   ],
   data() {
     return {
@@ -100,7 +99,7 @@ export default {
   watch: {
   },
   methods: {
-    ...mapActions("api", ["get"]),  
+    ...mapActions("api", ["get"]),
     editItem (index) {
       this.editingMode = true;
       this.editingItemIndex = index;
@@ -119,7 +118,7 @@ export default {
       });
     },
     clearItem() {
-      
+
       Object.keys(this.newitem).forEach(key => {
         if (key === 'textval') {
           this.$set(this.newitem,key,'');
@@ -138,12 +137,12 @@ export default {
           this.$set(child.$children[0],'cachedItems',[]);
         }
       });
-      
+
     }
   },
   computed: {
     headers() {
-      var hdrs= []; 
+      var hdrs= [];
       Object.keys(this.itemprops).forEach((key)=>{
         if (key !== '_id') {
           var hdr = {"name":key,"value":key}
@@ -160,6 +159,9 @@ export default {
       }
     }
   },
+  created() {
+    if(!Array.isArray(this.items)) this.items = [];
+  }
 };
 </script>
 

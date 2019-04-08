@@ -4,13 +4,15 @@ import App from '../components/App';
 import Start from '../components/Start';
 import Import from '../components/Import';
 import collections from '../components/collections';
-import collectionsingle from '../components/collectionsingle';
-import inventorysingle from '../components/inventorysingle';
+import collectionsingle from '../components/SingleViews/collection_single';
+import inventorysingle from '../components/SingleViews/inventory_single';
+import zoterosingle from '../components/SingleViews/zotero_single';
 import actors from '../components/actors';
 import descriptors from '../components/descriptors';
 import inventories from '../components/inventories';
 import objects from '../components/objects';
 import entries from '../components/entries';
+import users from '../components/users';
 
 Vue.use(Router);
 
@@ -67,6 +69,13 @@ export default new Router({
           name: 'actors',
           components: {
             Content: actors,
+          },
+        },
+        {
+          path: 'users',
+          name: 'users',
+          components: {
+            Content: users,
           },
         },
         {

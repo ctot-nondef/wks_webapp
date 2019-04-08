@@ -1,36 +1,37 @@
 <template>
   <div class="">
     <v-container grid-list-md v-if="$store.state.app.loggedin">
-      <fundamentcard caption="Inventories">
+      <fundamentcard caption="users">
         <div slot="content">
           <v-layout justify-center column fill-height>
             <v-flex xs12>
               <v-layout justify-end row fill-height>
-                <v-btn fab dark small color="warning" @click="inventorydialog=true">
+                <v-btn fab dark small color="warning" @click="userdialog=true">
                   <v-icon dark>add</v-icon>
                 </v-btn>
               </v-layout>
             </v-flex>
             <v-flex xs12>
-              <inventorylist ref="inventorylist"></inventorylist>
+              <userlist ref="userlist"></userlist>
             </v-flex>
           </v-layout>
         </div>
       </fundamentcard>
       <v-layout column justify-space-between>
         <v-dialog
-          v-model="inventorydialog"
-          @keydown.esc="inventorydialog=false"
+          v-model="userdialog"
+          @keydown.esc="userdialog=false"
           fullscreen
           hide-overlay
           transition="dialog-bottom-transition"
+          scrollable
           >
           <v-card>
             <v-toolbar dark color="primary">
-              <v-btn icon dark @click.native="inventorydialog=false">
+              <v-btn icon dark @click.native="userdialog=false">
                 <v-icon>close</v-icon>
               </v-btn>
-              <v-toolbar-title>Create Inventory</v-toolbar-title>
+              <v-toolbar-title>Create user</v-toolbar-title>
               <v-spacer></v-spacer>
               <v-toolbar-items>
               </v-toolbar-items>
@@ -42,10 +43,10 @@
             </v-toolbar>
             <v-container grid-list-md text-xs-center>
               <v-card color="grey lighten-2" class="pa-4">
-                <inventoryform v-if="$store.state.api.schemas.inventory" :value="newinventory" @input="newinventory=$event"></inventoryform>
+                <userform :value="newuser" @input="newuser=$event"></userform>
                 <v-layout justify-end row fill-height>
-                  <v-btn color="warning" @click="addInventory()">Save</v-btn>
-                  <v-btn color="primary" flat @click.native="inventorydialog=false">Discard</v-btn>
+                  <v-btn color="warning" @click="adduser()">Save</v-btn>
+                  <v-btn color="primary" flat @click.native="userdialog=false">Discard</v-btn>
                 </v-layout>
               </v-card>
             </v-container>
@@ -60,25 +61,32 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
+
+import HELPERS from '../helpers';
 
 import fundamentcard from './Fundament/FundamentCard';
-import inventorylist from './ListViews/inventory_list';
-import inventoryform from './Forms/inventory_form';
+import userlist from './ListViews/user_list';
+import userform from './Forms/user_form';
+import autocompgnd from './AutoCompleteComponents/AutocompGND';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 /* eslint no-console: ["error", { allow: ["log"] }] */
 
 export default {
+  mixins: [HELPERS],
   components: {
     fundamentcard,
-    inventorylist,
-    inventoryform,
+    userlist,
+    userform,
+    autocompgnd,
   },
   data() {
     return {
-      inventorydialog: false,
-      newinventory: {},
+      userdialog: false,
+      newuser: {},
+      iuser: {},
+      itype: 'Person',
     };
   },
   methods: {
@@ -87,31 +95,19 @@ export default {
       'post',
       'delete',
     ]),
-    addInventory() {
-      if(this.newinventory.creator) this.newinventory.creator.forEach((el, idx, c) => {
+    adduser() {
+      if(this.newuser.relations) this.newuser.relations.forEach((el, idx, c) => {
           var rel = {};
           Object.keys(el).forEach((key) => {
             rel[key] = el[key]._id || el[key];
           });
           c[idx] = rel;
         });
-         if(this.newinventory.classification) this.newinventory.classification.forEach((el, idx, c) => {
-          var rel = {};
-          Object.keys(el).forEach((key) => {
-            rel[key] = el[key]._id || el[key];
-          });
-          c[idx] = rel;
-        });
-       if(this.newinventory.place) {
-          this.newinventory.place = this.newinventory.place._id
-        }
-         if(this.newinventory.partOf) {
-          this.newinventory.partOf = this.newinventory.partOf._id
-        }
-      this.post({ type: 'inventory', body: this.newinventory }).then((res) => {
-        this.newinventory = {};
-        this.iventorydialog = false;
-        this.$refs.inventorylist.getRecords();
+      this.newuser.username = `${this.newuser.firstName[0].toLowerCase()}${this.newuser.lastName.toLowerCase()}`;
+      this.post({ type: 'user', body: this.newuser }).then((res) => {
+        this.newuser = {};
+        this.userdialog = false;
+        this.$refs.userlist.getRecords();
       });
     },
   },

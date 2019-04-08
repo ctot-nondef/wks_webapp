@@ -21,10 +21,10 @@
     <template slot="selection" slot-scope="data">
         <template v-if="multiple">
           <v-chip :selected="data.selected" close class="chip--select-multi" @input="remove(data.item)" color="white">
-            {{ data.item.name }} 
+            {{ data.item.name }}
           </v-chip>
         </template>
-        <template v-else>   
+        <template v-else>
          {{ data.item.name }}
         </template>
       </template>
@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import HELPERS from '../../helpers';
 
 export default {
@@ -155,113 +155,13 @@ export default {
       });
     },
     ...mapActions('api', [
-      'get'
+      'get',
+    ]),
+    ...mapGetters('api', [
+      'getClassByName'
     ]),
     filterDescriptors(descriptortype) {
-      switch (descriptortype) {
-        case 'ACQMETH':
-        return '5be884e8add30d031e41bc27'
-        break;
-        case 'ACTIV':
-        return '5be884e8add30d031e41bc15'
-        break;
-        case 'ASSOC':
-        return '5be884e8add30d031e41bc0c'
-        break;
-        case 'COLL':
-        return '5be884e8add30d031e41bc24'
-        break;
-        case 'COND':
-        return '5be884e8add30d031e41bc23'
-        break;
-        case 'COUNTRY':
-        return '5be884e8add30d031e41bc13'
-        break;
-        case 'DIM':
-        return '5be884e8add30d031e41bc0a'
-        break;
-        case 'DOCTYPE':
-        return '5be884e8add30d031e41bc0d'
-        break;
-        case 'EVENT':
-        return '5be884e8add30d031e41bc12'
-        break;
-        case 'GEOKEYW':
-        return '5be884e8add30d031e41bc10'
-        break;
-        case 'Geographie':
-        return '5be884e8add30d031e41bc20'
-        break;
-        case 'INSCTYPE':
-        return '5be884e8add30d031e41bc0b'
-        break;
-        case 'KEYWORD':
-        return '5be884e8add30d031e41bc17'
-        break;
-        case 'LANGUAGE':
-        return '5be884e8add30d031e41bc0f'
-        break;
-        case 'LOANCAT':
-        return '5be884e8add30d031e41bc28'
-        break;
-        case 'LOCATION':
-        return '5be884e8add30d031e41bc29'
-        break;
-        case 'MATER':
-        return '5be884e8add30d031e41bc1e'
-        break;
-        case 'MOTIF':
-        return '5be884e8add30d031e41bc26'
-        break;
-        case 'NATIONALITY':
-        return '5be884e8add30d031e41bc0e'
-        break;
-        case 'OBJCAT':
-        return '5be884e8add30d031e41bc25'
-        break;
-        case 'OBJECT':
-        return '5be884e8add30d031e41bc16'
-        break;
-        case 'OCCUPATION':
-        return '5be884e8add30d031e41bc1b'
-        break;
-        case 'PERIOD':
-        return '5be884e8add30d031e41bc19'
-        break;
-        case 'PLACE':
-        return '5be884e8add30d031e41bc1a'
-        break;
-        case 'POSITION':
-        return '5be884e8add30d031e41bc1f'
-        break;
-        case 'PROPNAME':
-        return '5be884e8add30d031e41bc2a'
-        break;
-        case 'REPRO_TYPE':
-        return '5be884e8add30d031e41bc0e'
-        break;
-        case 'RIGHTS':
-        return '5be884e8add30d031e41bc21'
-        break;
-        case 'ROLE':
-        return '5be884e8add30d031e41bc09'
-        break;
-        case 'SCHOOL':
-        return '5be884e8add30d031e41bc22'
-        break;
-        case 'SCRIPT':
-        return '5be884e8add30d031e41bc11'
-        break;
-        case 'SUBJECT':
-        return '5be884e8add30d031e41bc14'
-        break;
-        case 'TECHN':
-        return '5be884e8add30d031e41bc1c'
-        break;
-        case 'UNIT':
-        return '5be884e8add30d031e41bc18'
-        break;
-      }
+      return this.$store.state.api.classes[this.entity].find(item => item.name === descriptortype)._id;
     },
      remove(item) {
       const index = this.select.indexOf(item._id);

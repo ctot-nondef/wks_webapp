@@ -34,12 +34,12 @@
 				"items":""
 			},
 			{
-				"caption":"Personen",
+				"caption":"Inventare",
 				"arialabel":"",
-				"icon":"person",
+				"icon":"assignment",
 				"abstract":"",
 				"startpage":{
-					"name": "actors",
+					"name": "inventories",
 					"params": {
 						"lang": "en" }
 					},
@@ -48,7 +48,7 @@
 			{
 				"caption":"Objekte",
 				"arialabel":"",
-				"icon":"description",
+				"icon":"category",
 				"abstract":"",
 				"startpage":{
 					"name": "objects",
@@ -58,24 +58,12 @@
 				"items":""
 			},
 			{
-				"caption":"Einträge",
+				"caption":"Personen",
 				"arialabel":"",
-				"icon":"description",
+				"icon":"person",
 				"abstract":"",
 				"startpage":{
-					"name": "entries",
-					"params": {
-						"lang": "en" }
-					},
-				"items":""
-			},
-			{
-				"caption":"Inventare",
-				"arialabel":"",
-				"icon":"assignment",
-				"abstract":"",
-				"startpage":{
-					"name": "inventories",
+					"name": "actors",
 					"params": {
 						"lang": "en" }
 					},
@@ -92,7 +80,20 @@
 						"lang": "en" }
 					},
 				"items":""
+			},
+			{
+				"caption":"User Settings",
+				"arialabel":"",
+				"icon":"people_outline",
+				"abstract":"",
+				"startpage":{
+					"name": "users",
+					"params": {
+						"lang": "en" }
+					},
+				"items":""
 			}
 		],
-	"repo":""
+	"repo":"",
+	"api":"https://wksdev.hephaistos.arz.oeaw.ac.at"
 }

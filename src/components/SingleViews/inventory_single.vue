@@ -24,7 +24,7 @@
 <script>
 import { mapActions } from 'vuex';
 
-import HELPERS from '../helpers';
+import HELPERS from '../../helpers';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 /* eslint no-console: ["error", { allow: ["log"] }] */

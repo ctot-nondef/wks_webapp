@@ -14,7 +14,7 @@
         <v-select
           v-model="actor.instanceOf"
           :items="$store.state.api.classes.Actor"
-          item-text="labels[4].label"
+          item-text="_labels[4].label"
           item-value="_id"
           label="Type"
           @input="returnObject()"
@@ -51,7 +51,7 @@
             <autocomp entity="actor" v-model="props.newitem.target"  label="Actor" :multiple="false"></autocomp>
             </v-flex>
             <v-flex xs10>
-              <v-textarea v-model="props.newitem.annotation" label="Annotation" /> 
+              <v-textarea v-model="props.newitem.annotation" label="Annotation" />
             </v-flex>
             </template>
           </formlistcomponent>

@@ -24,14 +24,18 @@
 <script>
 import { mapActions } from 'vuex';
 
-import HELPERS from '../helpers';
+import fundamentcard from '../Fundament/FundamentCard';
+import inventorylist from '../ListViews/inventory_list';
+import inventoryform from '../Forms/inventory_form';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 /* eslint no-console: ["error", { allow: ["log"] }] */
 
 export default {
-  mixins: [HELPERS],
   components: {
+    fundamentcard,
+    inventorylist,
+    inventoryform,
   },
   data() {
     return {
@@ -42,6 +46,8 @@ export default {
         { text: 'Range', value: 'type' },
         { text: 'Type', value: 'range' },
       ],
+      inventorydialog: false,
+      newinventory: {},
     };
   },
   methods: {
@@ -50,6 +56,33 @@ export default {
       'post',
       'delete',
     ]),
+    addInventory() {
+      if(this.newinventory.creator) this.newinventory.creator.forEach((el, idx, c) => {
+          var rel = {};
+          Object.keys(el).forEach((key) => {
+            rel[key] = el[key]._id || el[key];
+          });
+          c[idx] = rel;
+        });
+         if(this.newinventory.classification) this.newinventory.classification.forEach((el, idx, c) => {
+          var rel = {};
+          Object.keys(el).forEach((key) => {
+            rel[key] = el[key]._id || el[key];
+          });
+          c[idx] = rel;
+        });
+       if(this.newinventory.place) {
+          this.newinventory.place = this.newinventory.place._id
+        }
+         if(this.newinventory.partOf) {
+          this.newinventory.partOf = this.newinventory.partOf._id
+        }
+      this.post({ type: 'inventory', body: this.newinventory }).then((res) => {
+        this.newinventory = {};
+        this.iventorydialog = false;
+        this.$refs.inventorylist.getRecords();
+      });
+    },
   },
   computed: {
   },

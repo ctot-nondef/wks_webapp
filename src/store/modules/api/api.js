@@ -32,7 +32,7 @@ export const request = (method, url, body, queryParameters, form, config) => {
   }
 }
 /*==========================================================
- *                    
+ *
  ==========================================================*/
 /**
  * API root. Returns JSON Object of Metadata and available Entities
@@ -296,45 +296,6 @@ export const postUploadURL = function(parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '')
 }
 /**
- * Outputs all currently available import Jobs
- * request: getImport
- * url: getImportURL
- * method: getImport_TYPE
- * raw_url: getImport_RAW_URL
- */
-export const getImport = function(parameters = {}) {
-  const domain = parameters.$domain ? parameters.$domain : getDomain()
-  const config = parameters.$config
-  let path = '/import/'
-  let body
-  let queryParameters = {}
-  let form = {}
-  if (parameters.$queryParameters) {
-    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
-      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
-    });
-  }
-  return request('get', domain + path, body, queryParameters, form, config)
-}
-export const getImport_RAW_URL = function() {
-  return '/import/'
-}
-export const getImport_TYPE = function() {
-  return 'get'
-}
-export const getImportURL = function(parameters = {}) {
-  let queryParameters = {}
-  const domain = parameters.$domain ? parameters.$domain : getDomain()
-  let path = '/import/'
-  if (parameters.$queryParameters) {
-    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
-      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
-    })
-  }
-  let keys = Object.keys(queryParameters)
-  return domain + path + (keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '')
-}
-/**
  * Returns the number of documents of type actor
  * request: getActorCount
  * url: getActorCountURL
@@ -453,7 +414,7 @@ export const getActorURL = function(parameters = {}) {
  * url: postActorURL
  * method: postActor_TYPE
  * raw_url: postActor_RAW_URL
- * @param actor - 
+ * @param actor -
  */
 export const postActor = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -584,7 +545,7 @@ export const getActorByIdURL = function(parameters = {}) {
  * method: postActorById_TYPE
  * raw_url: postActorById_RAW_URL
  * @param id - MongoDB document _id
- * @param actor - 
+ * @param actor -
  */
 export const postActorById = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -617,6 +578,58 @@ export const postActorById_TYPE = function() {
   return 'post'
 }
 export const postActorByIdURL = function(parameters = {}) {
+  let queryParameters = {}
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  let path = '/actor/{id}'
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    })
+  }
+  let keys = Object.keys(queryParameters)
+  return domain + path + (keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '')
+}
+/**
+ * Partially updates the document with the given ID
+ * request: patchActorById
+ * url: patchActorByIdURL
+ * method: patchActorById_TYPE
+ * raw_url: patchActorById_RAW_URL
+ * @param id - MongoDB document _id
+ * @param actor -
+ */
+export const patchActorById = function(parameters = {}) {
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  const config = parameters.$config
+  let path = '/actor/{id}'
+  let body
+  let queryParameters = {}
+  let form = {}
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters['id'] === undefined) {
+    return Promise.reject(new Error('Missing required  parameter: id'))
+  }
+  if (parameters['actor'] !== undefined) {
+    body = parameters['actor']
+  }
+  if (parameters['actor'] === undefined) {
+    return Promise.reject(new Error('Missing required  parameter: actor'))
+  }
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    });
+  }
+  return request('patch', domain + path, body, queryParameters, form, config)
+}
+export const patchActorById_RAW_URL = function() {
+  return '/actor/{id}'
+}
+export const patchActorById_TYPE = function() {
+  return 'patch'
+}
+export const patchActorByIdURL = function(parameters = {}) {
   let queryParameters = {}
   const domain = parameters.$domain ? parameters.$domain : getDomain()
   let path = '/actor/{id}'
@@ -793,7 +806,7 @@ export const getAssetrefURL = function(parameters = {}) {
  * url: postAssetrefURL
  * method: postAssetref_TYPE
  * raw_url: postAssetref_RAW_URL
- * @param assetref - 
+ * @param assetref -
  */
 export const postAssetref = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -924,7 +937,7 @@ export const getAssetrefByIdURL = function(parameters = {}) {
  * method: postAssetrefById_TYPE
  * raw_url: postAssetrefById_RAW_URL
  * @param id - MongoDB document _id
- * @param assetref - 
+ * @param assetref -
  */
 export const postAssetrefById = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -957,6 +970,58 @@ export const postAssetrefById_TYPE = function() {
   return 'post'
 }
 export const postAssetrefByIdURL = function(parameters = {}) {
+  let queryParameters = {}
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  let path = '/assetref/{id}'
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    })
+  }
+  let keys = Object.keys(queryParameters)
+  return domain + path + (keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '')
+}
+/**
+ * Partially updates the document with the given ID
+ * request: patchAssetrefById
+ * url: patchAssetrefByIdURL
+ * method: patchAssetrefById_TYPE
+ * raw_url: patchAssetrefById_RAW_URL
+ * @param id - MongoDB document _id
+ * @param assetref -
+ */
+export const patchAssetrefById = function(parameters = {}) {
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  const config = parameters.$config
+  let path = '/assetref/{id}'
+  let body
+  let queryParameters = {}
+  let form = {}
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters['id'] === undefined) {
+    return Promise.reject(new Error('Missing required  parameter: id'))
+  }
+  if (parameters['assetref'] !== undefined) {
+    body = parameters['assetref']
+  }
+  if (parameters['assetref'] === undefined) {
+    return Promise.reject(new Error('Missing required  parameter: assetref'))
+  }
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    });
+  }
+  return request('patch', domain + path, body, queryParameters, form, config)
+}
+export const patchAssetrefById_RAW_URL = function() {
+  return '/assetref/{id}'
+}
+export const patchAssetrefById_TYPE = function() {
+  return 'patch'
+}
+export const patchAssetrefByIdURL = function(parameters = {}) {
   let queryParameters = {}
   const domain = parameters.$domain ? parameters.$domain : getDomain()
   let path = '/assetref/{id}'
@@ -1133,7 +1198,7 @@ export const getAuthrecURL = function(parameters = {}) {
  * url: postAuthrecURL
  * method: postAuthrec_TYPE
  * raw_url: postAuthrec_RAW_URL
- * @param authrec - 
+ * @param authrec -
  */
 export const postAuthrec = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -1264,7 +1329,7 @@ export const getAuthrecByIdURL = function(parameters = {}) {
  * method: postAuthrecById_TYPE
  * raw_url: postAuthrecById_RAW_URL
  * @param id - MongoDB document _id
- * @param authrec - 
+ * @param authrec -
  */
 export const postAuthrecById = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -1297,6 +1362,58 @@ export const postAuthrecById_TYPE = function() {
   return 'post'
 }
 export const postAuthrecByIdURL = function(parameters = {}) {
+  let queryParameters = {}
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  let path = '/authrec/{id}'
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    })
+  }
+  let keys = Object.keys(queryParameters)
+  return domain + path + (keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '')
+}
+/**
+ * Partially updates the document with the given ID
+ * request: patchAuthrecById
+ * url: patchAuthrecByIdURL
+ * method: patchAuthrecById_TYPE
+ * raw_url: patchAuthrecById_RAW_URL
+ * @param id - MongoDB document _id
+ * @param authrec -
+ */
+export const patchAuthrecById = function(parameters = {}) {
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  const config = parameters.$config
+  let path = '/authrec/{id}'
+  let body
+  let queryParameters = {}
+  let form = {}
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters['id'] === undefined) {
+    return Promise.reject(new Error('Missing required  parameter: id'))
+  }
+  if (parameters['authrec'] !== undefined) {
+    body = parameters['authrec']
+  }
+  if (parameters['authrec'] === undefined) {
+    return Promise.reject(new Error('Missing required  parameter: authrec'))
+  }
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    });
+  }
+  return request('patch', domain + path, body, queryParameters, form, config)
+}
+export const patchAuthrecById_RAW_URL = function() {
+  return '/authrec/{id}'
+}
+export const patchAuthrecById_TYPE = function() {
+  return 'patch'
+}
+export const patchAuthrecByIdURL = function(parameters = {}) {
   let queryParameters = {}
   const domain = parameters.$domain ? parameters.$domain : getDomain()
   let path = '/authrec/{id}'
@@ -1473,7 +1590,7 @@ export const getBibrefURL = function(parameters = {}) {
  * url: postBibrefURL
  * method: postBibref_TYPE
  * raw_url: postBibref_RAW_URL
- * @param bibref - 
+ * @param bibref -
  */
 export const postBibref = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -1604,7 +1721,7 @@ export const getBibrefByIdURL = function(parameters = {}) {
  * method: postBibrefById_TYPE
  * raw_url: postBibrefById_RAW_URL
  * @param id - MongoDB document _id
- * @param bibref - 
+ * @param bibref -
  */
 export const postBibrefById = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -1637,6 +1754,58 @@ export const postBibrefById_TYPE = function() {
   return 'post'
 }
 export const postBibrefByIdURL = function(parameters = {}) {
+  let queryParameters = {}
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  let path = '/bibref/{id}'
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    })
+  }
+  let keys = Object.keys(queryParameters)
+  return domain + path + (keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '')
+}
+/**
+ * Partially updates the document with the given ID
+ * request: patchBibrefById
+ * url: patchBibrefByIdURL
+ * method: patchBibrefById_TYPE
+ * raw_url: patchBibrefById_RAW_URL
+ * @param id - MongoDB document _id
+ * @param bibref -
+ */
+export const patchBibrefById = function(parameters = {}) {
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  const config = parameters.$config
+  let path = '/bibref/{id}'
+  let body
+  let queryParameters = {}
+  let form = {}
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters['id'] === undefined) {
+    return Promise.reject(new Error('Missing required  parameter: id'))
+  }
+  if (parameters['bibref'] !== undefined) {
+    body = parameters['bibref']
+  }
+  if (parameters['bibref'] === undefined) {
+    return Promise.reject(new Error('Missing required  parameter: bibref'))
+  }
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    });
+  }
+  return request('patch', domain + path, body, queryParameters, form, config)
+}
+export const patchBibrefById_RAW_URL = function() {
+  return '/bibref/{id}'
+}
+export const patchBibrefById_TYPE = function() {
+  return 'patch'
+}
+export const patchBibrefByIdURL = function(parameters = {}) {
   let queryParameters = {}
   const domain = parameters.$domain ? parameters.$domain : getDomain()
   let path = '/bibref/{id}'
@@ -1813,7 +1982,7 @@ export const getCollectURL = function(parameters = {}) {
  * url: postCollectURL
  * method: postCollect_TYPE
  * raw_url: postCollect_RAW_URL
- * @param collect - 
+ * @param collect -
  */
 export const postCollect = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -1944,7 +2113,7 @@ export const getCollectByIdURL = function(parameters = {}) {
  * method: postCollectById_TYPE
  * raw_url: postCollectById_RAW_URL
  * @param id - MongoDB document _id
- * @param collect - 
+ * @param collect -
  */
 export const postCollectById = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -1977,6 +2146,58 @@ export const postCollectById_TYPE = function() {
   return 'post'
 }
 export const postCollectByIdURL = function(parameters = {}) {
+  let queryParameters = {}
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  let path = '/collect/{id}'
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    })
+  }
+  let keys = Object.keys(queryParameters)
+  return domain + path + (keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '')
+}
+/**
+ * Partially updates the document with the given ID
+ * request: patchCollectById
+ * url: patchCollectByIdURL
+ * method: patchCollectById_TYPE
+ * raw_url: patchCollectById_RAW_URL
+ * @param id - MongoDB document _id
+ * @param collect -
+ */
+export const patchCollectById = function(parameters = {}) {
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  const config = parameters.$config
+  let path = '/collect/{id}'
+  let body
+  let queryParameters = {}
+  let form = {}
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters['id'] === undefined) {
+    return Promise.reject(new Error('Missing required  parameter: id'))
+  }
+  if (parameters['collect'] !== undefined) {
+    body = parameters['collect']
+  }
+  if (parameters['collect'] === undefined) {
+    return Promise.reject(new Error('Missing required  parameter: collect'))
+  }
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    });
+  }
+  return request('patch', domain + path, body, queryParameters, form, config)
+}
+export const patchCollectById_RAW_URL = function() {
+  return '/collect/{id}'
+}
+export const patchCollectById_TYPE = function() {
+  return 'patch'
+}
+export const patchCollectByIdURL = function(parameters = {}) {
   let queryParameters = {}
   const domain = parameters.$domain ? parameters.$domain : getDomain()
   let path = '/collect/{id}'
@@ -2153,7 +2374,7 @@ export const getCurrencyURL = function(parameters = {}) {
  * url: postCurrencyURL
  * method: postCurrency_TYPE
  * raw_url: postCurrency_RAW_URL
- * @param currency - 
+ * @param currency -
  */
 export const postCurrency = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -2284,7 +2505,7 @@ export const getCurrencyByIdURL = function(parameters = {}) {
  * method: postCurrencyById_TYPE
  * raw_url: postCurrencyById_RAW_URL
  * @param id - MongoDB document _id
- * @param currency - 
+ * @param currency -
  */
 export const postCurrencyById = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -2317,6 +2538,58 @@ export const postCurrencyById_TYPE = function() {
   return 'post'
 }
 export const postCurrencyByIdURL = function(parameters = {}) {
+  let queryParameters = {}
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  let path = '/currency/{id}'
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    })
+  }
+  let keys = Object.keys(queryParameters)
+  return domain + path + (keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '')
+}
+/**
+ * Partially updates the document with the given ID
+ * request: patchCurrencyById
+ * url: patchCurrencyByIdURL
+ * method: patchCurrencyById_TYPE
+ * raw_url: patchCurrencyById_RAW_URL
+ * @param id - MongoDB document _id
+ * @param currency -
+ */
+export const patchCurrencyById = function(parameters = {}) {
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  const config = parameters.$config
+  let path = '/currency/{id}'
+  let body
+  let queryParameters = {}
+  let form = {}
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters['id'] === undefined) {
+    return Promise.reject(new Error('Missing required  parameter: id'))
+  }
+  if (parameters['currency'] !== undefined) {
+    body = parameters['currency']
+  }
+  if (parameters['currency'] === undefined) {
+    return Promise.reject(new Error('Missing required  parameter: currency'))
+  }
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    });
+  }
+  return request('patch', domain + path, body, queryParameters, form, config)
+}
+export const patchCurrencyById_RAW_URL = function() {
+  return '/currency/{id}'
+}
+export const patchCurrencyById_TYPE = function() {
+  return 'patch'
+}
+export const patchCurrencyByIdURL = function(parameters = {}) {
   let queryParameters = {}
   const domain = parameters.$domain ? parameters.$domain : getDomain()
   let path = '/currency/{id}'
@@ -2493,7 +2766,7 @@ export const getDescriptorURL = function(parameters = {}) {
  * url: postDescriptorURL
  * method: postDescriptor_TYPE
  * raw_url: postDescriptor_RAW_URL
- * @param descriptor - 
+ * @param descriptor -
  */
 export const postDescriptor = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -2624,7 +2897,7 @@ export const getDescriptorByIdURL = function(parameters = {}) {
  * method: postDescriptorById_TYPE
  * raw_url: postDescriptorById_RAW_URL
  * @param id - MongoDB document _id
- * @param descriptor - 
+ * @param descriptor -
  */
 export const postDescriptorById = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -2657,6 +2930,58 @@ export const postDescriptorById_TYPE = function() {
   return 'post'
 }
 export const postDescriptorByIdURL = function(parameters = {}) {
+  let queryParameters = {}
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  let path = '/descriptor/{id}'
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    })
+  }
+  let keys = Object.keys(queryParameters)
+  return domain + path + (keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '')
+}
+/**
+ * Partially updates the document with the given ID
+ * request: patchDescriptorById
+ * url: patchDescriptorByIdURL
+ * method: patchDescriptorById_TYPE
+ * raw_url: patchDescriptorById_RAW_URL
+ * @param id - MongoDB document _id
+ * @param descriptor -
+ */
+export const patchDescriptorById = function(parameters = {}) {
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  const config = parameters.$config
+  let path = '/descriptor/{id}'
+  let body
+  let queryParameters = {}
+  let form = {}
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters['id'] === undefined) {
+    return Promise.reject(new Error('Missing required  parameter: id'))
+  }
+  if (parameters['descriptor'] !== undefined) {
+    body = parameters['descriptor']
+  }
+  if (parameters['descriptor'] === undefined) {
+    return Promise.reject(new Error('Missing required  parameter: descriptor'))
+  }
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    });
+  }
+  return request('patch', domain + path, body, queryParameters, form, config)
+}
+export const patchDescriptorById_RAW_URL = function() {
+  return '/descriptor/{id}'
+}
+export const patchDescriptorById_TYPE = function() {
+  return 'patch'
+}
+export const patchDescriptorByIdURL = function(parameters = {}) {
   let queryParameters = {}
   const domain = parameters.$domain ? parameters.$domain : getDomain()
   let path = '/descriptor/{id}'
@@ -2833,7 +3158,7 @@ export const getEntryURL = function(parameters = {}) {
  * url: postEntryURL
  * method: postEntry_TYPE
  * raw_url: postEntry_RAW_URL
- * @param entry - 
+ * @param entry -
  */
 export const postEntry = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -2964,7 +3289,7 @@ export const getEntryByIdURL = function(parameters = {}) {
  * method: postEntryById_TYPE
  * raw_url: postEntryById_RAW_URL
  * @param id - MongoDB document _id
- * @param entry - 
+ * @param entry -
  */
 export const postEntryById = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -2997,6 +3322,58 @@ export const postEntryById_TYPE = function() {
   return 'post'
 }
 export const postEntryByIdURL = function(parameters = {}) {
+  let queryParameters = {}
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  let path = '/entry/{id}'
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    })
+  }
+  let keys = Object.keys(queryParameters)
+  return domain + path + (keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '')
+}
+/**
+ * Partially updates the document with the given ID
+ * request: patchEntryById
+ * url: patchEntryByIdURL
+ * method: patchEntryById_TYPE
+ * raw_url: patchEntryById_RAW_URL
+ * @param id - MongoDB document _id
+ * @param entry -
+ */
+export const patchEntryById = function(parameters = {}) {
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  const config = parameters.$config
+  let path = '/entry/{id}'
+  let body
+  let queryParameters = {}
+  let form = {}
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters['id'] === undefined) {
+    return Promise.reject(new Error('Missing required  parameter: id'))
+  }
+  if (parameters['entry'] !== undefined) {
+    body = parameters['entry']
+  }
+  if (parameters['entry'] === undefined) {
+    return Promise.reject(new Error('Missing required  parameter: entry'))
+  }
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    });
+  }
+  return request('patch', domain + path, body, queryParameters, form, config)
+}
+export const patchEntryById_RAW_URL = function() {
+  return '/entry/{id}'
+}
+export const patchEntryById_TYPE = function() {
+  return 'patch'
+}
+export const patchEntryByIdURL = function(parameters = {}) {
   let queryParameters = {}
   const domain = parameters.$domain ? parameters.$domain : getDomain()
   let path = '/entry/{id}'
@@ -3173,7 +3550,7 @@ export const getInventoryURL = function(parameters = {}) {
  * url: postInventoryURL
  * method: postInventory_TYPE
  * raw_url: postInventory_RAW_URL
- * @param inventory - 
+ * @param inventory -
  */
 export const postInventory = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -3304,7 +3681,7 @@ export const getInventoryByIdURL = function(parameters = {}) {
  * method: postInventoryById_TYPE
  * raw_url: postInventoryById_RAW_URL
  * @param id - MongoDB document _id
- * @param inventory - 
+ * @param inventory -
  */
 export const postInventoryById = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -3337,6 +3714,58 @@ export const postInventoryById_TYPE = function() {
   return 'post'
 }
 export const postInventoryByIdURL = function(parameters = {}) {
+  let queryParameters = {}
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  let path = '/inventory/{id}'
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    })
+  }
+  let keys = Object.keys(queryParameters)
+  return domain + path + (keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '')
+}
+/**
+ * Partially updates the document with the given ID
+ * request: patchInventoryById
+ * url: patchInventoryByIdURL
+ * method: patchInventoryById_TYPE
+ * raw_url: patchInventoryById_RAW_URL
+ * @param id - MongoDB document _id
+ * @param inventory -
+ */
+export const patchInventoryById = function(parameters = {}) {
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  const config = parameters.$config
+  let path = '/inventory/{id}'
+  let body
+  let queryParameters = {}
+  let form = {}
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters['id'] === undefined) {
+    return Promise.reject(new Error('Missing required  parameter: id'))
+  }
+  if (parameters['inventory'] !== undefined) {
+    body = parameters['inventory']
+  }
+  if (parameters['inventory'] === undefined) {
+    return Promise.reject(new Error('Missing required  parameter: inventory'))
+  }
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    });
+  }
+  return request('patch', domain + path, body, queryParameters, form, config)
+}
+export const patchInventoryById_RAW_URL = function() {
+  return '/inventory/{id}'
+}
+export const patchInventoryById_TYPE = function() {
+  return 'patch'
+}
+export const patchInventoryByIdURL = function(parameters = {}) {
   let queryParameters = {}
   const domain = parameters.$domain ? parameters.$domain : getDomain()
   let path = '/inventory/{id}'
@@ -3513,7 +3942,7 @@ export const getObjectURL = function(parameters = {}) {
  * url: postObjectURL
  * method: postObject_TYPE
  * raw_url: postObject_RAW_URL
- * @param object - 
+ * @param object -
  */
 export const postObject = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -3644,7 +4073,7 @@ export const getObjectByIdURL = function(parameters = {}) {
  * method: postObjectById_TYPE
  * raw_url: postObjectById_RAW_URL
  * @param id - MongoDB document _id
- * @param object - 
+ * @param object -
  */
 export const postObjectById = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -3677,6 +4106,58 @@ export const postObjectById_TYPE = function() {
   return 'post'
 }
 export const postObjectByIdURL = function(parameters = {}) {
+  let queryParameters = {}
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  let path = '/object/{id}'
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    })
+  }
+  let keys = Object.keys(queryParameters)
+  return domain + path + (keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '')
+}
+/**
+ * Partially updates the document with the given ID
+ * request: patchObjectById
+ * url: patchObjectByIdURL
+ * method: patchObjectById_TYPE
+ * raw_url: patchObjectById_RAW_URL
+ * @param id - MongoDB document _id
+ * @param object -
+ */
+export const patchObjectById = function(parameters = {}) {
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  const config = parameters.$config
+  let path = '/object/{id}'
+  let body
+  let queryParameters = {}
+  let form = {}
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters['id'] === undefined) {
+    return Promise.reject(new Error('Missing required  parameter: id'))
+  }
+  if (parameters['object'] !== undefined) {
+    body = parameters['object']
+  }
+  if (parameters['object'] === undefined) {
+    return Promise.reject(new Error('Missing required  parameter: object'))
+  }
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    });
+  }
+  return request('patch', domain + path, body, queryParameters, form, config)
+}
+export const patchObjectById_RAW_URL = function() {
+  return '/object/{id}'
+}
+export const patchObjectById_TYPE = function() {
+  return 'patch'
+}
+export const patchObjectByIdURL = function(parameters = {}) {
   let queryParameters = {}
   const domain = parameters.$domain ? parameters.$domain : getDomain()
   let path = '/object/{id}'
@@ -3853,7 +4334,7 @@ export const getTransactionURL = function(parameters = {}) {
  * url: postTransactionURL
  * method: postTransaction_TYPE
  * raw_url: postTransaction_RAW_URL
- * @param transaction - 
+ * @param transaction -
  */
 export const postTransaction = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -3984,7 +4465,7 @@ export const getTransactionByIdURL = function(parameters = {}) {
  * method: postTransactionById_TYPE
  * raw_url: postTransactionById_RAW_URL
  * @param id - MongoDB document _id
- * @param transaction - 
+ * @param transaction -
  */
 export const postTransactionById = function(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain()
@@ -4017,6 +4498,58 @@ export const postTransactionById_TYPE = function() {
   return 'post'
 }
 export const postTransactionByIdURL = function(parameters = {}) {
+  let queryParameters = {}
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  let path = '/transaction/{id}'
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    })
+  }
+  let keys = Object.keys(queryParameters)
+  return domain + path + (keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '')
+}
+/**
+ * Partially updates the document with the given ID
+ * request: patchTransactionById
+ * url: patchTransactionByIdURL
+ * method: patchTransactionById_TYPE
+ * raw_url: patchTransactionById_RAW_URL
+ * @param id - MongoDB document _id
+ * @param transaction -
+ */
+export const patchTransactionById = function(parameters = {}) {
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  const config = parameters.$config
+  let path = '/transaction/{id}'
+  let body
+  let queryParameters = {}
+  let form = {}
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters['id'] === undefined) {
+    return Promise.reject(new Error('Missing required  parameter: id'))
+  }
+  if (parameters['transaction'] !== undefined) {
+    body = parameters['transaction']
+  }
+  if (parameters['transaction'] === undefined) {
+    return Promise.reject(new Error('Missing required  parameter: transaction'))
+  }
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    });
+  }
+  return request('patch', domain + path, body, queryParameters, form, config)
+}
+export const patchTransactionById_RAW_URL = function() {
+  return '/transaction/{id}'
+}
+export const patchTransactionById_TYPE = function() {
+  return 'patch'
+}
+export const patchTransactionByIdURL = function(parameters = {}) {
   let queryParameters = {}
   const domain = parameters.$domain ? parameters.$domain : getDomain()
   let path = '/transaction/{id}'
@@ -4065,6 +4598,398 @@ export const deleteTransactionByIdURL = function(parameters = {}) {
   let queryParameters = {}
   const domain = parameters.$domain ? parameters.$domain : getDomain()
   let path = '/transaction/{id}'
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    })
+  }
+  let keys = Object.keys(queryParameters)
+  return domain + path + (keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '')
+}
+/**
+ * Returns the number of documents of type _user
+ * request: getUserCount
+ * url: getUserCountURL
+ * method: getUserCount_TYPE
+ * raw_url: getUserCount_RAW_URL
+ */
+export const getUserCount = function(parameters = {}) {
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  const config = parameters.$config
+  let path = '/_user/count'
+  let body
+  let queryParameters = {}
+  let form = {}
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    });
+  }
+  return request('get', domain + path, body, queryParameters, form, config)
+}
+export const getUserCount_RAW_URL = function() {
+  return '/_user/count'
+}
+export const getUserCount_TYPE = function() {
+  return 'get'
+}
+export const getUserCountURL = function(parameters = {}) {
+  let queryParameters = {}
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  let path = '/_user/count'
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    })
+  }
+  let keys = Object.keys(queryParameters)
+  return domain + path + (keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '')
+}
+/**
+ * Returns a List of _users
+ * request: getUser
+ * url: getUserURL
+ * method: getUser_TYPE
+ * raw_url: getUser_RAW_URL
+ * @param sort - Key Name to Sort by, preceded by '-' for descending, default: _id
+ * @param skip - Number of records to skip from start, default: 0
+ * @param limit - Number of records to return, default: 10
+ * @param query - MongoDB Query as a well formed JSON String, ie {"name":"Bob"}
+ * @param populate - Path to a MongoDB reference to populate, ie [{"path":"customer"},{"path":"products"}]
+ */
+export const getUser = function(parameters = {}) {
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  const config = parameters.$config
+  let path = '/_user'
+  let body
+  let queryParameters = {}
+  let form = {}
+  if (parameters['sort'] !== undefined) {
+    queryParameters['sort'] = parameters['sort']
+  }
+  if (parameters['skip'] !== undefined) {
+    queryParameters['skip'] = parameters['skip']
+  }
+  if (parameters['limit'] !== undefined) {
+    queryParameters['limit'] = parameters['limit']
+  }
+  if (parameters['query'] !== undefined) {
+    queryParameters['query'] = parameters['query']
+  }
+  if (parameters['populate'] !== undefined) {
+    queryParameters['populate'] = parameters['populate']
+  }
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    });
+  }
+  return request('get', domain + path, body, queryParameters, form, config)
+}
+export const getUser_RAW_URL = function() {
+  return '/_user'
+}
+export const getUser_TYPE = function() {
+  return 'get'
+}
+export const getUserURL = function(parameters = {}) {
+  let queryParameters = {}
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  let path = '/_user'
+  if (parameters['sort'] !== undefined) {
+    queryParameters['sort'] = parameters['sort']
+  }
+  if (parameters['skip'] !== undefined) {
+    queryParameters['skip'] = parameters['skip']
+  }
+  if (parameters['limit'] !== undefined) {
+    queryParameters['limit'] = parameters['limit']
+  }
+  if (parameters['query'] !== undefined) {
+    queryParameters['query'] = parameters['query']
+  }
+  if (parameters['populate'] !== undefined) {
+    queryParameters['populate'] = parameters['populate']
+  }
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    })
+  }
+  let keys = Object.keys(queryParameters)
+  return domain + path + (keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '')
+}
+/**
+ * Creates a new instance of _user
+ * request: postUser
+ * url: postUserURL
+ * method: postUser_TYPE
+ * raw_url: postUser_RAW_URL
+ * @param user -
+ */
+export const postUser = function(parameters = {}) {
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  const config = parameters.$config
+  let path = '/_user'
+  let body
+  let queryParameters = {}
+  let form = {}
+  if (parameters['user'] !== undefined) {
+    body = parameters['user']
+  }
+  if (parameters['user'] === undefined) {
+    return Promise.reject(new Error('Missing required  parameter: user'))
+  }
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    });
+  }
+  return request('post', domain + path, body, queryParameters, form, config)
+}
+export const postUser_RAW_URL = function() {
+  return '/_user'
+}
+export const postUser_TYPE = function() {
+  return 'post'
+}
+export const postUserURL = function(parameters = {}) {
+  let queryParameters = {}
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  let path = '/_user'
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    })
+  }
+  let keys = Object.keys(queryParameters)
+  return domain + path + (keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '')
+}
+/**
+ * Deletes the entire contents of collection _user
+ * request: deleteUser
+ * url: deleteUserURL
+ * method: deleteUser_TYPE
+ * raw_url: deleteUser_RAW_URL
+ */
+export const deleteUser = function(parameters = {}) {
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  const config = parameters.$config
+  let path = '/_user'
+  let body
+  let queryParameters = {}
+  let form = {}
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    });
+  }
+  return request('delete', domain + path, body, queryParameters, form, config)
+}
+export const deleteUser_RAW_URL = function() {
+  return '/_user'
+}
+export const deleteUser_TYPE = function() {
+  return 'delete'
+}
+export const deleteUserURL = function(parameters = {}) {
+  let queryParameters = {}
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  let path = '/_user'
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    })
+  }
+  let keys = Object.keys(queryParameters)
+  return domain + path + (keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '')
+}
+/**
+ * Returns a List of _users
+ * request: getUserById
+ * url: getUserByIdURL
+ * method: getUserById_TYPE
+ * raw_url: getUserById_RAW_URL
+ * @param id - MongoDB document _id
+ */
+export const getUserById = function(parameters = {}) {
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  const config = parameters.$config
+  let path = '/_user/{id}'
+  let body
+  let queryParameters = {}
+  let form = {}
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters['id'] === undefined) {
+    return Promise.reject(new Error('Missing required  parameter: id'))
+  }
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    });
+  }
+  return request('get', domain + path, body, queryParameters, form, config)
+}
+export const getUserById_RAW_URL = function() {
+  return '/_user/{id}'
+}
+export const getUserById_TYPE = function() {
+  return 'get'
+}
+export const getUserByIdURL = function(parameters = {}) {
+  let queryParameters = {}
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  let path = '/_user/{id}'
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    })
+  }
+  let keys = Object.keys(queryParameters)
+  return domain + path + (keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '')
+}
+/**
+ * Updates the document with the given ID
+ * request: postUserById
+ * url: postUserByIdURL
+ * method: postUserById_TYPE
+ * raw_url: postUserById_RAW_URL
+ * @param id - MongoDB document _id
+ * @param user -
+ */
+export const postUserById = function(parameters = {}) {
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  const config = parameters.$config
+  let path = '/_user/{id}'
+  let body
+  let queryParameters = {}
+  let form = {}
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters['id'] === undefined) {
+    return Promise.reject(new Error('Missing required  parameter: id'))
+  }
+  if (parameters['user'] !== undefined) {
+    body = parameters['user']
+  }
+  if (parameters['user'] === undefined) {
+    return Promise.reject(new Error('Missing required  parameter: user'))
+  }
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    });
+  }
+  return request('post', domain + path, body, queryParameters, form, config)
+}
+export const postUserById_RAW_URL = function() {
+  return '/_user/{id}'
+}
+export const postUserById_TYPE = function() {
+  return 'post'
+}
+export const postUserByIdURL = function(parameters = {}) {
+  let queryParameters = {}
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  let path = '/_user/{id}'
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    })
+  }
+  let keys = Object.keys(queryParameters)
+  return domain + path + (keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '')
+}
+/**
+ * Partially updates the document with the given ID
+ * request: patchUserById
+ * url: patchUserByIdURL
+ * method: patchUserById_TYPE
+ * raw_url: patchUserById_RAW_URL
+ * @param id - MongoDB document _id
+ * @param user -
+ */
+export const patchUserById = function(parameters = {}) {
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  const config = parameters.$config
+  let path = '/_user/{id}'
+  let body
+  let queryParameters = {}
+  let form = {}
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters['id'] === undefined) {
+    return Promise.reject(new Error('Missing required  parameter: id'))
+  }
+  if (parameters['user'] !== undefined) {
+    body = parameters['user']
+  }
+  if (parameters['user'] === undefined) {
+    return Promise.reject(new Error('Missing required  parameter: user'))
+  }
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    });
+  }
+  return request('patch', domain + path, body, queryParameters, form, config)
+}
+export const patchUserById_RAW_URL = function() {
+  return '/_user/{id}'
+}
+export const patchUserById_TYPE = function() {
+  return 'patch'
+}
+export const patchUserByIdURL = function(parameters = {}) {
+  let queryParameters = {}
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  let path = '/_user/{id}'
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    })
+  }
+  let keys = Object.keys(queryParameters)
+  return domain + path + (keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '')
+}
+/**
+ * Deletes the document with the given ID
+ * request: deleteUserById
+ * url: deleteUserByIdURL
+ * method: deleteUserById_TYPE
+ * raw_url: deleteUserById_RAW_URL
+ * @param id - MongoDB document _id
+ */
+export const deleteUserById = function(parameters = {}) {
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  const config = parameters.$config
+  let path = '/_user/{id}'
+  let body
+  let queryParameters = {}
+  let form = {}
+  path = path.replace('{id}', `${parameters['id']}`)
+  if (parameters['id'] === undefined) {
+    return Promise.reject(new Error('Missing required  parameter: id'))
+  }
+  if (parameters.$queryParameters) {
+    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+      queryParameters[parameterName] = parameters.$queryParameters[parameterName]
+    });
+  }
+  return request('delete', domain + path, body, queryParameters, form, config)
+}
+export const deleteUserById_RAW_URL = function() {
+  return '/_user/{id}'
+}
+export const deleteUserById_TYPE = function() {
+  return 'delete'
+}
+export const deleteUserByIdURL = function(parameters = {}) {
+  let queryParameters = {}
+  const domain = parameters.$domain ? parameters.$domain : getDomain()
+  let path = '/_user/{id}'
   path = path.replace('{id}', `${parameters['id']}`)
   if (parameters.$queryParameters) {
     Object.keys(parameters.$queryParameters).forEach(function(parameterName) {

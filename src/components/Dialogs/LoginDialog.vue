@@ -68,9 +68,6 @@ export default {
         },
       }).then((res) => {
         this.setToken({token: res.data.session, user: res.data.user});
-        const pstate = this.getLatestSession();
-        this.deleteOldSessions();
-        this.dbInit(pstate);
         this.loginMut();
         this.closeDialog('loginDialog');
       });

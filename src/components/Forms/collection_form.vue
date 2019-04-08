@@ -1,25 +1,30 @@
 <template>
   <div class="">
+    <!-- collection identifiers -->
     <v-layout justify-end row fill-height>
-        <!-- collection identifiers -->
         <chips :items="collection.identifier"/>
     </v-layout>
+    <!-- collection name -->
     <v-layout justify-start row fill-height>
       <v-flex xs6>
-        <!-- collection name -->
         <v-text-field v-model="collection.name" label="Name" @input="returnObject()"></v-text-field>
       </v-flex>
     </v-layout>
+    <!-- collection creators -->
     <v-layout justify-end row fill-height>
       <v-flex xs12>
-        <!-- collection creators -->
-        <formlistcomponent :items="collection.creator" :itemprops="$store.state.api.schemas.collect.properties.creator.items.properties" :listitemstyletypes="creatoritemstyletypes" label="Creator" nodatamessage="No creators added">
+        <formlistcomponent
+          :items="collection.creator"
+          :itemprops="$store.state.api.schemas.collect.properties.creator.items.properties"
+          label="Creator"
+          nodatamessage="No creators added"
+        >
           <template slot="form" slot-scope="props">
           <v-flex xs5>
-              <autocomp entity="descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"></autocomp>
+              <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"></autocomp>
           </v-flex>
             <v-flex xs5>
-          <autocomp entity="actor" v-model="props.newitem.id" label="Collector" :multiple="false"></autocomp>
+          <autocomp entity="Actor" v-model="props.newitem.id" label="Collector" :multiple="false"></autocomp>
           </v-flex>
           <v-flex xs12>
           <v-textarea v-model="props.newitem.note" label="Note" />
@@ -28,32 +33,32 @@
         </formlistcomponent>
       </v-flex>
     </v-layout>
+    <!-- collection places -->
     <v-layout justify-end row fill-height>
       <v-flex xs12>
-      <!-- collection places -->
-        <autocomp entity="descriptor" filter="PLACE" v-model="collection.place" label="Place" :multiple="true" @input="returnObject();"></autocomp>
+        <autocomp entity="Descriptor" filter="PLACE" v-model="collection.place" label="Place" :multiple="true" @input="returnObject();"></autocomp>
       </v-flex>
     </v-layout>
+    <!-- collection times -->
     <v-layout justify-end row fill-height>
       <v-flex xs12>
-        <!-- collection times -->
-        <autocomp entity="descriptor" filter="PERIOD" v-model="collection.time" label="Time" :multiple="true" @input="returnObject();"></autocomp>
+        <autocomp entity="Descriptor" filter="PERIOD" v-model="collection.time" label="Time" :multiple="true" @input="returnObject();"></autocomp>
       </v-flex>
     </v-layout>
+    <!-- collection description -->
     <v-layout justify-end row fill-height>
       <v-flex xs12>
-        <!-- collection description -->
         <v-textarea v-model="collection.description" label="Description" @input="returnObject()"></v-textarea>
       </v-flex>
     </v-layout>
+    <!-- collection documents -->
     <v-layout justify-end row fill-height>
       <v-flex xs12>
-        <!-- collection documents -->
         <v-list two-line>
           <template v-for="(item, index) in collection.documents">
-            <v-list-tile :key="item._id" avatar @click="">
+            <v-list-tile :key="item._id" avatar :href="`${$store.state.api.url}/${item.ref.path}`" target="_blank">
               <v-list-tile-avatar>
-                <img :src="`https://wksdev.hephaistos.arz.oeaw.ac.at/${item.ref.path.split('.')[0]}_thumb.jpg`">
+                <img :src="`${$store.state.api.url}/asset/uploads/thumbs/${item.ref.name.split('.')[0]}_thumb.jpg`">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-title v-html="item.ref.name"></v-list-tile-title>
@@ -66,47 +71,76 @@
           </template>
         </v-list>
         <v-text-field label="Select PDF Document" @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
-        <input type="file" style="display: none" ref="image" accept="image/*" @change="onFilePicked">
+        <input type="file" style="display: none" ref="image" accept="application/pdf" @change="onFilePicked">
       </v-flex>
     </v-layout>
+    <!-- collection classifications -->
     <v-layout justify-end row fill-height>
       <v-flex xs12>
-        <!-- collection classifications -->
-        <formlistcomponent v-if="collection.classification" :items="collection.classification" :itemprops="$store.state.api.schemas.collect.properties.classification.items.properties" :listitemstyletypes="classificationitemstyletypes" label="Classification" nodatamessage="No classifications added">
+        <formlistcomponent
+          :items="collection.classification"
+          :itemprops="$store.state.api.schemas.collect.properties.classification.items.properties"
+          label="Classification"
+          nodatamessage="No classifications added">
           <template slot="form" slot-scope="props">
           <v-flex xs5>
-              <autocomp entity="descriptor" filter="KEYWORD" v-model="props.newitem.aspect" label="Aspect" :multiple="false"></autocomp>
+              <autocomp entity="Descriptor" filter="KEYWORD" v-model="props.newitem.aspect" label="Aspect" :multiple="false"></autocomp>
           </v-flex>
           <v-flex xs5>
-          <autocomp entity="descriptor" v-model="props.newitem.descriptor" label="Descriptor" :multiple="false"></autocomp>
+          <autocomp entity="Descriptor" v-model="props.newitem.descriptor" label="Descriptor" :multiple="false"></autocomp>
           </v-flex>
           </template>
         </formlistcomponent>
       </v-flex>
     </v-layout>
+    <!-- collection begin of existence -->
     <v-layout justify-start row fill-height>
       <v-flex xs6>
-        <!-- collection begin of existence -->
         <datecomponent v-bind:date.sync="collection.beginOfExistence" label="Begin of Existence"/>
       </v-flex>
     </v-layout>
+    <!-- collection end of existence -->
     <v-layout justify-start row fill-height>
       <v-flex xs6>
-        <!-- collection end of existence -->
         <datecomponent v-bind:date.sync="collection.endOfExistence" label="End of Existence"/>
       </v-flex>
     </v-layout>
+    <!-- collection destitution -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
-        <!-- collection destitution -->
         <v-textarea v-model="collection.destitution" label="Destitution" @input="returnObject()"></v-textarea>
       </v-flex>
     </v-layout>
     <!-- collection references zotero? -->
+    <v-layout justify-end row fill-height>
+      <v-flex xs12>
+        <formlistcomponent
+          :items="collection.references"
+          :itemprops="$store.state.api.schemas.collect.properties.references.items.properties"
+          label="Bibliograpic References"
+          nodatamessage="No Bibliograpic References added"
+        >
+          <template slot="form" slot-scope="props">
+          <v-flex xs6>
+              <v-text-field v-model="props.newitem.ref" label="Zotero Reference URI"></v-text-field>
+          </v-flex>
+          <v-flex xs6>
+              <v-text-field v-model="props.newitem.pageno" label="Page Number/Range"></v-text-field>
+          </v-flex>
+          <v-flex xs12>
+            <v-textarea v-model="props.newitem.note" label="Note" />
+          </v-flex>
+          </template>
+        </formlistcomponent>
+      </v-flex>
+    </v-layout>
+    <!-- collection comments -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
-      <!-- collection comments -->
-        <formlistcomponent v-if="collection.comments" :items="collection.comments" :listitemstyletypes="['title']" label="Comments" nodatamessage="No comments added">
+        <formlistcomponent
+          :items="collection.comments"
+          label="Comments"
+          nodatamessage="No comments added">
           <template slot="form" slot-scope="props">
           <v-flex xs12>
               <v-textarea v-model="props.newitem.textval" label="New Comment"></v-textarea>
@@ -148,15 +182,6 @@ export default {
       imageName: '',
       imageUrl: '',
       imageFile: '',
-      creatoritemstyletypes: [
-        'title',
-        'subtitle',
-        'subtitle'
-      ],
-      classificationitemstyletypes: [
-        'title',
-        'subtitle'
-      ],
       beginofexistencemenu: false,
       endofexistencemenu: false,
       newcomment: '',
@@ -197,7 +222,7 @@ export default {
 					this.imageFile = files[0] // this is an image file that can be sent to server...
           console.log(this.imageFile);
           var formData = new FormData();
-          formData.append('image', this.imageFile);
+          formData.append('file', this.imageFile);
           axios.post('https://wksdev.hephaistos.arz.oeaw.ac.at/api/v1/upload/', formData, {
               headers: {
                 'Content-Type': 'multipart/form-data'
