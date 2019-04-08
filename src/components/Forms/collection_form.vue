@@ -1,18 +1,18 @@
 <template>
   <div class="">
+    <!-- collection identifiers -->
     <v-layout justify-end row fill-height>
-        <!-- collection identifiers -->
         <chips :items="collection.identifier"/>
     </v-layout>
+    <!-- collection name -->
     <v-layout justify-start row fill-height>
       <v-flex xs6>
-        <!-- collection name -->
         <v-text-field v-model="collection.name" label="Name" @input="returnObject()"></v-text-field>
       </v-flex>
     </v-layout>
+    <!-- collection creators -->
     <v-layout justify-end row fill-height>
       <v-flex xs12>
-        <!-- collection creators -->
         <formlistcomponent
           :items="collection.creator"
           :itemprops="$store.state.api.schemas.collect.properties.creator.items.properties"
@@ -33,27 +33,27 @@
         </formlistcomponent>
       </v-flex>
     </v-layout>
+    <!-- collection places -->
     <v-layout justify-end row fill-height>
       <v-flex xs12>
-      <!-- collection places -->
         <autocomp entity="Descriptor" filter="PLACE" v-model="collection.place" label="Place" :multiple="true" @input="returnObject();"></autocomp>
       </v-flex>
     </v-layout>
+    <!-- collection times -->
     <v-layout justify-end row fill-height>
       <v-flex xs12>
-        <!-- collection times -->
         <autocomp entity="Descriptor" filter="PERIOD" v-model="collection.time" label="Time" :multiple="true" @input="returnObject();"></autocomp>
       </v-flex>
     </v-layout>
+    <!-- collection description -->
     <v-layout justify-end row fill-height>
       <v-flex xs12>
-        <!-- collection description -->
         <v-textarea v-model="collection.description" label="Description" @input="returnObject()"></v-textarea>
       </v-flex>
     </v-layout>
+    <!-- collection documents -->
     <v-layout justify-end row fill-height>
       <v-flex xs12>
-        <!-- collection documents -->
         <v-list two-line>
           <template v-for="(item, index) in collection.documents">
             <v-list-tile :key="item._id" avatar :href="`${$store.state.api.url}/${item.ref.path}`" target="_blank">
@@ -74,11 +74,10 @@
         <input type="file" style="display: none" ref="image" accept="application/pdf" @change="onFilePicked">
       </v-flex>
     </v-layout>
+    <!-- collection classifications -->
     <v-layout justify-end row fill-height>
       <v-flex xs12>
-        <!-- collection classifications -->
         <formlistcomponent
-          v-if="collection.classification"
           :items="collection.classification"
           :itemprops="$store.state.api.schemas.collect.properties.classification.items.properties"
           label="Classification"
@@ -94,30 +93,51 @@
         </formlistcomponent>
       </v-flex>
     </v-layout>
+    <!-- collection begin of existence -->
     <v-layout justify-start row fill-height>
       <v-flex xs6>
-        <!-- collection begin of existence -->
         <datecomponent v-bind:date.sync="collection.beginOfExistence" label="Begin of Existence"/>
       </v-flex>
     </v-layout>
+    <!-- collection end of existence -->
     <v-layout justify-start row fill-height>
       <v-flex xs6>
-        <!-- collection end of existence -->
         <datecomponent v-bind:date.sync="collection.endOfExistence" label="End of Existence"/>
       </v-flex>
     </v-layout>
+    <!-- collection destitution -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
-        <!-- collection destitution -->
         <v-textarea v-model="collection.destitution" label="Destitution" @input="returnObject()"></v-textarea>
       </v-flex>
     </v-layout>
     <!-- collection references zotero? -->
+    <v-layout justify-end row fill-height>
+      <v-flex xs12>
+        <formlistcomponent
+          :items="collection.references"
+          :itemprops="$store.state.api.schemas.collect.properties.references.items.properties"
+          label="Bibliograpic References"
+          nodatamessage="No Bibliograpic References added"
+        >
+          <template slot="form" slot-scope="props">
+          <v-flex xs6>
+              <v-text-field v-model="props.newitem.ref" label="Zotero Reference URI"></v-text-field>
+          </v-flex>
+          <v-flex xs6>
+              <v-text-field v-model="props.newitem.pageno" label="Page Number/Range"></v-text-field>
+          </v-flex>
+          <v-flex xs12>
+            <v-textarea v-model="props.newitem.note" label="Note" />
+          </v-flex>
+          </template>
+        </formlistcomponent>
+      </v-flex>
+    </v-layout>
+    <!-- collection comments -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
-      <!-- collection comments -->
         <formlistcomponent
-          v-if="collection.comments"
           :items="collection.comments"
           label="Comments"
           nodatamessage="No comments added">

@@ -159,6 +159,9 @@ export default {
       }
     }
   },
+  created() {
+    if(!Array.isArray(this.items)) this.items = [];
+  }
 };
 </script>
 
