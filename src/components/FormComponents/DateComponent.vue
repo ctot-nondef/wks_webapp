@@ -1,5 +1,5 @@
 <template>
-      <v-menu 
+      <v-menu
     ref="datepickermenu"
     v-model="datepickermenu"
     :close-on-content-click="false"

@@ -182,10 +182,10 @@ export default {
           });
           c[idx] = rel;
         });
-       if(this.cedit.place) { 
+       if(this.cedit.place) {
           this.cedit.place = this.cedit.place._id
         }
-         if(this.cedit.partOf) { 
+         if(this.cedit.partOf) {
           this.cedit.partOf = this.cedit.partOf._id
         }
         console.log(this.cedit);

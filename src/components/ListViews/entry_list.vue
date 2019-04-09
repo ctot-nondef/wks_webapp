@@ -45,7 +45,7 @@
     </v-data-table>
     <v-layout column justify-space-between>
       <v-dialog
-     
+
         v-model="entrydialog"
         @keydown.esc="entrydialog=false"
         fullscreen
@@ -186,7 +186,7 @@ export default {
     },
     saveentry() {
       if (this.cedit._id) {
-        if(this.cedit.partOf) { 
+        if(this.cedit.partOf) {
           this.cedit.partOf = this.cedit.partOf._id
         }
         if(this.cedit.material) this.cedit.material.forEach((el, idx, c) => {

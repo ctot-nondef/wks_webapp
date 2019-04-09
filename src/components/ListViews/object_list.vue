@@ -45,7 +45,7 @@
     </v-data-table>
     <v-layout column justify-space-between>
       <v-dialog
-     
+
         v-model="objectdialog"
         @keydown.esc="objectdialog=false"
         fullscreen

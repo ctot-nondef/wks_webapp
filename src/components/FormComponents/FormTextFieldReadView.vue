@@ -36,7 +36,7 @@ export default {
               _id: refid
             })
     }).then(res => {
-        
+
         this.name = res.data[0].name;
     });
     }
