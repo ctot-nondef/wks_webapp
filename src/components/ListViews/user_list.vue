@@ -187,7 +187,6 @@ export default {
       this.getRecords()
     },
     usercheck(username) {
-      console.log(username, this.$store.state.api.user.admin);
       if(username == this.$store.state.api.user.username) return false;
       else if (this.$store.state.api.user.admin) return false;
       else return true;

@@ -35,9 +35,9 @@
         <template v-else>
           <v-list-tile-content>
             <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
-            <v-list-tile-sub-title v-for="(prop,propname) in displayitemprops" v-if="displayitemprops">
-             <span class="subprop" v-for="(subprop,index) in prop">{{getItemPropFromPath(data.item,index,subprop['path']) | renderProps}}</span>
-              </v-list-tile-sub-title>
+            <v-list-tile-sub-title v-for="(prop,propname) in displayitemprops" :key="propname" v-if="displayitemprops" >
+              <span class="subprop" v-for="(subprop,index) in prop" :key="index">{{getItemPropFromPath(data.item,index,subprop['path']) | renderProps}}</span>
+            </v-list-tile-sub-title>
           </v-list-tile-content>
         </template>
       </template>
@@ -90,10 +90,10 @@ export default {
       var res = obj;
       if (path.includes(".")) {
       path.split(".").forEach(function(key){
-        
+
         if (res.length) {
         res = res[index];
-        } 
+        }
         else {
           res = res[key];
         }
@@ -101,7 +101,7 @@ export default {
     } else {
       res = obj[path];
       }
-   
+
       return res;
     },
     clear() {
@@ -138,9 +138,9 @@ export default {
           }
         });
         });
-        
+
         requestparams.populate = JSON.stringify(populateprops);
-       
+
      }
 
 
@@ -187,7 +187,7 @@ export default {
   }
 };
 </script>
-<style scopped="css">
+<style scoped="css">
 .v-list__tile {
   display:block;
   height:auto;

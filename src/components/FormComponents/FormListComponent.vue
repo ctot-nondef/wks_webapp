@@ -3,46 +3,46 @@
     <v-layout justify-start row fill-height>
       <v-label>{{label}}</v-label>
     </v-layout>
-    <p v-if="items && items.length === 0"><i>{{nodatamessage}}</i></p>
-<v-data-table v-if="items && items.length >= 1 && itemprops"
-    :headers="headers"
-    :items="items"
-    class="elevation-1"
-  >
-  <template slot="headers" slot-scope="props">
-    <th  v-for="header in props.headers">
-      {{ header.name }}
-    </th>
-  </template>
-  <template slot="items" slot-scope="props">
-       <tr @click="props.expanded = !props.expanded">
-          <td v-for="header in headers">
-           <template  v-if="typeof props.item === 'object' && props.item[header.name] && props.item[header.name].name && header.name !== '_id'"> {{props.item[header.name].name}}</template>
-            <template v-if="typeof props.item === 'object' && props.item[header.name] && typeof props.item[header.name] === 'string' || typeof props.item[header.name] === 'number'  && header.name !== '_id'">
-           {{props.item[header.name]}}
-           </template>
-         </td>
-         <td class="justify-center layout px-0">
-          <v-icon
-            small
-            class="mr-2"
-            @click="editItem(props.index)"
-            :disabled="editingMode"
-          >
-            edit
-          </v-icon>
-          <v-icon
-            small
-            :disabled="editingMode"
-            @click="removeItem(props.index,items)"
-          >
-            delete
-          </v-icon>
-        </td>
-        </tr>
+    <p v-if="citems.length === 0"><i>{{nodatamessage}}</i></p>
+    <v-data-table v-if="citems.length >= 1 && itemprops"
+        :headers="headers"
+        :items="items"
+        class="elevation-1"
+      >
+      <template slot="headers" slot-scope="props">
+        <th  v-for="header in props.headers">
+          {{ header.name }}
+        </th>
       </template>
-</v-data-table>
-   <v-list two-line v-if="items && !itemprops && items.length >= 1">
+      <template slot="items" slot-scope="props">
+           <tr @click="props.expanded = !props.expanded">
+              <td v-for="header in headers">
+               <template  v-if="typeof props.item === 'object' && props.item[header.name] && props.item[header.name].name && header.name !== '_id'"> {{props.item[header.name].name}}</template>
+                <template v-if="typeof props.item === 'object' && props.item[header.name] && typeof props.item[header.name] === 'string' || typeof props.item[header.name] === 'number'  && header.name !== '_id'">
+               {{props.item[header.name]}}
+               </template>
+             </td>
+             <td class="justify-center layout px-0">
+              <v-icon
+                small
+                class="mr-2"
+                @click="editItem(props.index)"
+                :disabled="editingMode"
+              >
+                edit
+              </v-icon>
+              <v-icon
+                small
+                :disabled="editingMode"
+                @click="removeItem(props.index,items)"
+              >
+                delete
+              </v-icon>
+            </td>
+            </tr>
+          </template>
+    </v-data-table>
+   <v-list two-line v-if="!itemprops && citems.length >= 1">
       <v-list-tile v-for="(item, index) in items" v-bind:key="index">
         <v-list-tile-content>
           <v-list-tile-title v-if="typeof item === 'string'" v-text="item"></v-list-tile-title>
@@ -163,11 +163,12 @@ export default {
         });
         return ni;
       }
+    },
+    citems() {
+      if(!Array.isArray(this.items)) return []
+      return this.items
     }
   },
-  created() {
-    if(!Array.isArray(this.items)) this.items = [];
-  }
 };
 </script>
 
