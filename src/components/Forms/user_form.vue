@@ -39,7 +39,10 @@ export default {
   ],
   data() {
     return {
-      user: {},
+      user: {
+        username: '',
+        password: ''
+      },
       rules: {
         required: value => !!value || 'Required.',
         min: v => v.length >= 8 || 'Min 8 characters',
@@ -49,6 +52,7 @@ export default {
   },
   watch: {
     value(val) {
+      if(!val.password) val.password = '';
       this.user = val;
     },
   },
