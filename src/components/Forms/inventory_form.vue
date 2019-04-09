@@ -22,8 +22,8 @@
             <autocomp entity="actor" v-model="props.newitem.id" label="Creator" :multiple="false"></autocomp>
           </v-flex>
           <v-flex xs12>
-            <v-textarea  v-model="props.newitem.note" label="Note" /> 
-          </v-flex> 
+            <v-textarea  v-model="props.newitem.note" label="Note" />
+          </v-flex>
           </template>
         </formlistcomponent>
       </v-flex>
@@ -171,7 +171,6 @@ export default {
   methods: {
     setEditingToRead(prop) {
       this.$set(this,prop,true);
-      console.log(this.isEditingPlace);
     },
     returnObject() {
       this.$emit('input', this.inventory);
@@ -179,40 +178,39 @@ export default {
     pickFile () {
       this.$refs.image.click ()
     },
-		onFilePicked (e) {
-			const files = e.target.files
-			if(files[0] !== undefined) {
-				this.imageName = files[0].name
-				if(this.imageName.lastIndexOf('.') <= 0) {
-					return
-				}
-				const fr = new FileReader ()
-				fr.readAsDataURL(files[0])
-				fr.addEventListener('load', () => {
-					this.imageUrl = fr.result
-					this.imageFile = files[0] // this is an image file that can be sent to server...
-          console.log(this.imageFile);
+    onFilePicked (e) {
+      const files = e.target.files
+      if (files[0] !== undefined) {
+      	this.imageName = files[0].name
+      	if(this.imageName.lastIndexOf('.') <= 0) {
+      		return
+      	}
+      	const fr = new FileReader ()
+      	fr.readAsDataURL(files[0])
+      	fr.addEventListener('load', () => {
+          this.imageUrl = fr.result;
+          this.imageFile = files[0];
           var formData = new FormData();
           formData.append('image', this.imageFile);
           axios.post('https://wksgoose.acdh-dev.oeaw.ac.at/api/v1/upload/', formData, {
-              headers: {
-                'Content-Type': 'multipart/form-data'
-              }
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
           }).then((res) => {
-            if(!this.inventory.documents) this.inventory.documents = [];
+            if (!this.inventory.documents) this.inventory.documents = [];
             this.inventory.documents.push(res.data);
             this.returnObject();
             this.imageName = '';
             this.imageFile = '';
             this.imageUrl = '';
           });
-				})
-			} else {
-				this.imageName = ''
-				this.imageFile = ''
-				this.imageUrl = ''
-			}
-		},
+        });
+      } else {
+        this.imageName = '';
+        this.imageFile = '';
+        this.imageUrl = '';
+      }
+    },
     removeimage(index) {
       this.inventory.documents.splice(index, 1);
       this.returnObject();

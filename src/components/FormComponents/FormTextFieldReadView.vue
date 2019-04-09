@@ -43,9 +43,7 @@ export default {
     },
   },
   watch: {
-    'refsto': function() {
-      this.getText(this.refsto);
-    }
+    refsto: () => this.getText(this.refsto),
   },
 };
 </script>

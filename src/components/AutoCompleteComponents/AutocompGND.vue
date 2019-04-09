@@ -58,13 +58,10 @@ export default {
     };
   },
   watch: {
-    search(newval, oldval) {
-      if(newval) {
-        this.querySelections(newval);
-      }
+    search(newval) {
+      if (newval) this.querySelections(newval);
     },
     value(val) {
-      console.log(val);
       this.select = val;
       this.items = val;
     },
@@ -72,15 +69,14 @@ export default {
   methods: {
     querySelections() {
       this.loading = true;
-      this.APIS.GND.SEARCH.get('',{ params:
-        {
-          q: this.search,
-          format: "json:suggest",
-          filter: this.type ? `type:${this.type}` : '',
-        },
+      this.APIS.GND.SEARCH.get('', { params:
+      {
+        q: this.search,
+        format: 'json:suggest',
+        filter: this.type ? `type:${this.type}` : '',
+      },
       })
       .then((res) => {
-        console.log(res.data);
         this.items = res.data;
         this.loading = false;
       })
@@ -92,11 +88,11 @@ export default {
     ...mapActions('api', [
       'get',
     ]),
-    remove (item) {
-       const index = this.select.findIndex(r => r._id === item._id);
-       if (index >= 0) this.select.splice(index, 1);
-       this.$emit('input', this.select);
-     }
+    remove(item) {
+      const index = this.select.findIndex(r => r._id === item._id);
+      if (index >= 0) this.select.splice(index, 1);
+      this.$emit('input', this.select);
+    },
   },
   created() {
 

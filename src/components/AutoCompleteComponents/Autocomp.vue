@@ -89,67 +89,51 @@ export default {
     getItemPropFromPath(obj,index,path) {
       var res = obj;
       if (path.includes(".")) {
-      path.split(".").forEach(function(key){
-
-        if (res.length) {
-        res = res[index];
-        }
-        else {
-          res = res[key];
-        }
-      });
-    } else {
-      res = obj[path];
-      }
-
+        path.split(".").forEach((key) => {
+          if (res.length) res = res[index];
+          else res = res[key];
+        });
+      } else res = obj[path];
       return res;
     },
     clear() {
       this.select = null;
       this.items.length = 0;
     },
-    runfunc(func) {
+    runfunc() {
       if (this.clickevent) {
         this.clickevent();
       }
     },
     querySelections() {
       this.loading = true;
-      // this.$info(vm);
-     let filterval = '';
-     const queryparams = {name: { "$regex": this.search || '' }};
-       const requestparams = {
-        type:this.entity,
-        query: JSON.stringify(
-          queryparams
-        )
-    }
-     if (this.filter) {
-         filterval = this.filterDescriptors(this.filter);
-         queryparams.instanceOf = filterval;
-     }
-     if (this.displayitemprops) {
-        var populateprops = [];
-        Object.keys(this.displayitemprops).forEach(key => {
-
-        this.displayitemprops[key].forEach(function(obj){
-          if (obj.populate === true) {
-            populateprops.push({"path":obj.path,"select":obj.select});
-          }
+      let filterval = '';
+      const queryparams = { name: { $regex: this.search || '' } };
+      const requestparams = {
+        type: this.entity,
+        query: JSON.stringify(queryparams),
+      };
+      if (this.filter) {
+        filterval = this.filterDescriptors(this.filter);
+        queryparams.instanceOf = filterval;
+      }
+      if (this.displayitemprops) {
+        const populateprops = [];
+        Object.keys(this.displayitemprops).forEach((key) => {
+          this.displayitemprops[key].forEach((obj) => {
+            if (obj.populate === true) {
+              populateprops.push({ path: obj.path, select: obj.select });
+            }
+          });
         });
-        });
-
         requestparams.populate = JSON.stringify(populateprops);
-
-     }
-
-
+      }
       this.get(requestparams)
-      .then(res => {
+      .then((res) => {
         if (Array.isArray(res.data)) this.items = res.data;
         this.loading = false;
       })
-      .catch(res => {
+      .catch((res) => {
         this.$debug(res);
         this.loading = false;
       });
@@ -158,33 +142,31 @@ export default {
       'get',
     ]),
     ...mapGetters('api', [
-      'getClassByName'
+      'getClassByName',
     ]),
     filterDescriptors(descriptortype) {
-      return this.$store.state.api.classes[this.entity].find(item => item.name === descriptortype)._id;
+      return this.$store.state.api.classes[this.entity]
+        .find(item => item.name === descriptortype)._id;
     },
-     remove(item) {
+    remove(item) {
       const index = this.select.indexOf(item._id);
       if (index >= 0) this.select.splice(index, 1);
-      this.$emit("input", this.select);
-    }
+      this.$emit('input', this.select);
+    },
   },
   filters: {
-  renderProps: function (value) {
-    var newvalue = ' ';
-    if (value) {
-    Object.keys(value).forEach(key=>{
-      if (typeof value[key] === 'string' || typeof value[key] === 'number') {
-        newvalue += value[key];
+    renderProps: (value) => {
+      let newvalue = ' ';
+      if (value) {
+        Object.keys(value).forEach((key) => {
+          if (typeof value[key] === 'string' || typeof value[key] === 'number') {
+            newvalue += value[key];
+          } else { newvalue += `${value[key].name} `; }
+        });
       }
-      else {newvalue += value[key].name + " "}
-    });
-    }
-    return newvalue;
-    }
+      return newvalue;
+    },
   },
-  created() {
-  }
 };
 </script>
 <style scoped="css">

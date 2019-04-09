@@ -250,20 +250,17 @@ export default {
 				const fr = new FileReader ()
 				fr.readAsDataURL(files[0])
 				fr.addEventListener('load', () => {
-					this.imageUrl = fr.result
-					this.imageFile = files[0] // this is an image file that can be sent to server...
-          console.log(this.imageFile);
+					this.imageUrl = fr.result;
+					this.imageFile = files[0];
           var formData = new FormData();
           formData.append('file', this.imageFile);
           axios.post('https://wksdev.hephaistos.arz.oeaw.ac.at/api/v1/upload/', formData, {
-              headers: {
-                'Content-Type': 'multipart/form-data'
-              }
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
           }).then((res) => {
-            console.log(this.collection);
-            if(!this.collection.documents) this.collection.documents = [];
+            if (!this.collection.documents) this.collection.documents = [];
             this.collection.documents.push({ref: res.data, note: 'test'});
-            console.log(this.collection);
             this.returnObject();
             this.imageName = '';
             this.imageFile = '';
@@ -271,17 +268,17 @@ export default {
           });
 				})
 			} else {
-				this.imageName = ''
-				this.imageFile = ''
-				this.imageUrl = ''
+				this.imageName = '';
+				this.imageFile = '';
+				this.imageUrl = '';
 			}
 		},
     removeimage(index) {
       this.collection.documents.splice(index, 1);
       this.returnObject();
     },
-    pickZoteroRef (ref) {
-      if(!this.collection.references) this.collection.references = [];
+    pickZoteroRef(ref) {
+      if (!this.collection.references) this.collection.references = [];
       this.collection.references.push({ ref: ref.links.self.href });
       this.zoterodialog = false;
     },
