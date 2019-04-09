@@ -113,7 +113,9 @@ export default {
       this.clearItem();
     },
     saveItem() {
+      console.log(this.editedItem);
       Object.keys(this.editedItem).forEach(key => {
+        console.log(key);
         this.$set(this.items[this.editingItemIndex],key,this.newitem[key]);
       });
     },
@@ -155,7 +157,11 @@ export default {
       if (!this.itemprops) {
         return {textval:''};
       } else {
-        return {};
+        var ni = {};
+        Object.keys(this.itemprops).forEach((key)=>{
+        this.$set(ni,key,null);
+        });
+        return ni;
       }
     }
   },
