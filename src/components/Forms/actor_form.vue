@@ -89,15 +89,15 @@ export default {
       relationitemstyletypes: [
         'title',
         'subtitle',
-        'subtitle'
+        'subtitle',
       ],
-    }
+    };
   },
   watch: {
     value(val) {
       this.actor = val;
       if (!this.actor.relations) {
-        this.$set(this.actor,'relations',[]);
+        this.$set(this.actor, 'relations', []);
       }
     },
   },
@@ -108,8 +108,8 @@ export default {
   },
   created() {
     console.log(this.$refs);
-  }
-}
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

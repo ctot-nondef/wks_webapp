@@ -104,8 +104,8 @@ export default {
       this.editingMode = true;
       this.editingItemIndex = index;
       this.editedItem = this.items[index];
-      Object.keys(this.editedItem).forEach(key => {
-        this.$set(this.newitem,key,this.editedItem[key]);
+      Object.keys(this.editedItem).forEach((key) => {
+        this.$set(this.newitem, key, this.editedItem[key]);
       });
     },
     cancelEditing() {
@@ -113,61 +113,52 @@ export default {
       this.clearItem();
     },
     saveItem() {
-      console.log(this.editedItem);
-      Object.keys(this.editedItem).forEach(key => {
-        console.log(key);
-        this.$set(this.items[this.editingItemIndex],key,this.newitem[key]);
+      Object.keys(this.editedItem).forEach((key) => {
+        this.$set(this.items[this.editingItemIndex], key, this.newitem[key]);
       });
     },
     clearItem() {
-
-      Object.keys(this.newitem).forEach(key => {
+      Object.keys(this.newitem).forEach((key) => {
         if (key === 'textval') {
-          this.$set(this.newitem,key,'');
+          this.$set(this.newitem, key, '');
         } else if (typeof this.newitem[key] === 'object') {
-          this.$set(this.newitem,key,{});
+          this.$set(this.newitem, key, {});
         } else {
-          this.$set(this.newitem,key,'');
+          this.$set(this.newitem, key, '');
         }
       });
-     this.$children.forEach(child =>{
+      this.$children.forEach((child) => {
         if (child.hasOwnProperty('form')) {
           child.reset();
         }
         if (child.hasOwnProperty('select')) {
           child.clear();
-          this.$set(child.$children[0],'cachedItems',[]);
+          this.$set(child.$children[0], 'cachedItems', []);
         }
       });
-
-    }
+    },
   },
   computed: {
     headers() {
-      var hdrs= [];
-      Object.keys(this.itemprops).forEach((key)=>{
+      const hdrs = [];
+      Object.keys(this.itemprops).forEach((key) => {
         if (key !== '_id') {
-          var hdr = {"name":key,"value":key}
+          const hdr = { name: key, value: key };
           hdrs.push(hdr);
         }
       });
       return hdrs;
     },
     newitem() {
-      if (!this.itemprops) {
-        return {textval:''};
-      } else {
-        var ni = {};
-        Object.keys(this.itemprops).forEach((key)=>{
-        this.$set(ni,key,null);
-        });
-        return ni;
-      }
+      if (!this.itemprops) return { textval: '' };
+      const ni = {};
+      Object.keys(this.itemprops).forEach(key => this.$set(ni, key, null));
+      return ni;
     },
     citems() {
-      if(!Array.isArray(this.items)) return []
-      return this.items
-    }
+      if (!Array.isArray(this.items)) return [];
+      return this.items;
+    },
   },
 };
 </script>
