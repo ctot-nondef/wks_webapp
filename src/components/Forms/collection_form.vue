@@ -111,7 +111,7 @@
         <v-textarea v-model="collection.destitution" label="Destitution" @input="returnObject()"></v-textarea>
       </v-flex>
     </v-layout>
-    <!-- collection references zotero? -->
+    <!-- collection references zotero -->
     <v-layout justify-end row fill-height>
       <v-flex xs12>
         <formlistcomponent
@@ -122,7 +122,7 @@
         >
           <template slot="form" slot-scope="props">
           <v-flex xs6>
-              <v-text-field v-model="props.newitem.ref" label="Zotero Reference URI"></v-text-field>
+              <v-text-field label="Zotero Reference URI" @click='zoterodialog=true' v-model='props.newitem.ref' prepend-icon='attach_file'></v-text-field>
           </v-flex>
           <v-flex xs6>
               <v-text-field v-model="props.newitem.pageno" label="Page Number/Range"></v-text-field>
@@ -149,6 +149,35 @@
         </formlistcomponent>
       </v-flex>
     </v-layout>
+    <v-layout column justify-space-between>
+      <v-dialog
+        v-model="zoterodialog"
+        @keydown.esc="zoterodialog=false"
+        fullscreen
+        hide-overlay
+        transition="dialog-bottom-transition"
+        >
+        <v-card>
+          <v-toolbar dark color="primary">
+            <v-btn icon dark @click.native="zoterodialog=false">
+              <v-icon>close</v-icon>
+            </v-btn>
+            <v-toolbar-title>Select Zotero Reference</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-toolbar-items>
+            </v-toolbar-items>
+            <v-menu bottom right offset-y>
+              <v-btn slot="activator" dark icon>
+                <v-icon>more_vert</v-icon>
+              </v-btn>
+            </v-menu>
+          </v-toolbar>
+          <v-container grid-list-md text-xs-center>
+            <zoterolist @selectref="pickZoteroRef($event)"></zoterolist>
+          </v-container>
+        </v-card>
+      </v-dialog>
+    </v-layout>
   </div>
 </template>
 <script>
@@ -157,6 +186,7 @@ import autocomp from '../AutoCompleteComponents/Autocomp';
 import formlistcomponent from '../FormComponents/FormListComponent';
 import chips from '../FormComponents/Chips';
 import datecomponent from '../FormComponents/DateComponent';
+import zoterolist from '../ListViews/zotero_list'
 import HELPERS from "../../helpers";
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
@@ -167,12 +197,14 @@ export default {
     formlistcomponent,
     datecomponent,
     chips,
+    zoterolist,
   },
   props: [
     'value',
   ],
   data() {
     return {
+      zoterodialog: false,
       collection: {},
       title: '',
       description: '',
@@ -247,7 +279,11 @@ export default {
     removeimage(index) {
       this.collection.documents.splice(index, 1);
       this.returnObject();
-      console.log(this.collection);
+    },
+    pickZoteroRef (ref) {
+      if(!this.collection.references) this.collection.references = [];
+      this.collection.references.push({ ref: ref.links.self.href });
+      this.zoterodialog = false;
     },
   },
 };

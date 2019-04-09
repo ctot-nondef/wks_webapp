@@ -13,15 +13,15 @@
           <td  class="text-xs-right" v-if="props.item.data.creators[0].creatorType=='author'" > <span>{{ props.item.data.creators[0].firstName }} {{ props.item.data.creators[0].lastName }} [ {{ props.item.data.creators[0].creatorType }} ]/</span> </td>
           <td>{{ props.item.data.title }}</td>
           <td  class="text-xs-right">{{ props.item.data.date }}</td>
-          <td  class="text-xs-right"><v-btn dark class="accent" flat :to="{name: 'spub', params: { zkey: props.item.key } }">Details</v-btn></td>
+          <td  class="text-xs-right"><v-btn dark class="warn" @click="returnRef(props.item)">SELECT</v-btn></td>
         </template>
       </v-data-table>
   </v-content>
 </template>
 
 <script>
-import HELPERS from '../helpers';
-import ZOTERO from '../zotero';
+import HELPERS from '../../helpers';
+import ZOTERO from '../../zotero';
 
 export default {
   mixins: [HELPERS, ZOTERO],
@@ -62,6 +62,9 @@ export default {
         this.LibData = res.data;
         this.loading = false;
       });
+    },
+    returnRef(item) {
+      this.$emit('selectref', item);
     },
   },
 };
