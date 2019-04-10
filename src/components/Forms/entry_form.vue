@@ -22,10 +22,10 @@
         <formlistcomponent :items="entry.creator" :itemprops="$store.state.api.schemas.entry.properties.creator.items.properties" :listitemstyletypes="creatoritemstyletypes" label="Creator" nodatamessage="No creators added">
           <template slot="form" slot-scope="props">
           <v-flex xs5>
-              <autocomp entity="descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"></autocomp>
+              <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"></autocomp>
           </v-flex>
             <v-flex xs5>
-              <autocomp entity="actor" v-model="props.newitem.id" label="Collector" :multiple="false"></autocomp>
+              <autocomp entity="Actor" v-model="props.newitem.id" label="Collector" :multiple="false"></autocomp>
           </v-flex>
           <v-flex xs12>
           <v-textarea  v-model="props.newitem.note" label="Note" /> 
@@ -146,7 +146,6 @@ import simpleautocompwrapper from '../FormComponents/SimpleAutoCompleteWrapper';
 import formlistcomponent from '../FormComponents/FormListComponent';
 import chips from '../FormComponents/Chips';
 import datecomponent from '../FormComponents/DateComponent';
-import HELPERS from "../../helpers";
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 export default {
   components: {
@@ -170,55 +169,54 @@ export default {
       creatoritemstyletypes: [
         'title',
         'subtitle',
-        'subtitle'
+        'subtitle',
       ],
       dimensionsitemstyletypes: [
         'title',
         'subtitle',
-        'subtitle'
+        'subtitle',
       ],
       classificationitemstyletypes: [
         'title',
-        'subtitle'
+        'subtitle',
       ],
       relationitemstyletypes: [
         'title',
         'subtitle',
-        'subtitle'
+        'subtitle',
       ],
-      autcompdisplayprops: 
-       {
-        "dimensions":[
-          {"path":"dimensions.amount","populate":false},
-          {"path":"dimensions.unit","select":"name","populate":true},
-          {"path":"dimensions.aspect","select":"name","populate":true}
+      autcompdisplayprops: {
+        dimensions: [
+          { path: 'dimensions.amount', populate: false },
+          { path: 'dimensions.unit', select: 'name', populate: true },
+          { path: 'dimensions.aspect', select: 'name', populate: true },
         ],
-        "classification":[
-          {"path":"classification.descriptor","populate":true},
-          {"path":"classification.note","populate":false}
+        classification: [
+          { path: 'classification.descriptor', populate: true },
+          { path: 'classification.note', populate: false },
         ],
-        "transscription": [
-          {"path":"transscription"}
-        ]
+        transscription: [
+          { path: 'transscription' },
+        ],
       },
       beginofexistencemenu: false,
       endofexistencemenu: false,
-    }
+    };
   },
   watch: {
     value(val) {
       this.entry = val;
       if (!this.entry.creator) {
-        this.$set(this.entry,'creator',[]);
+        this.$set(this.entry, 'creator', []);
       }
       if (!this.entry.classification) {
-        this.$set(this.entry,'classification',[]);
+        this.$set(this.entry, 'classification', []);
       }
       if (!this.entry.comments) {
-        this.$set(this.entry,'comments',[]);
+        this.$set(this.entry, 'comments', []);
       }
       if (!this.entry.dimensions) {
-        this.$set(this.entry,'dimensions',[]);
+        this.$set(this.entry, 'dimensions', []);
       }
     },
   },
@@ -230,7 +228,7 @@ export default {
       return new Date(datestring);
     },
   },
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

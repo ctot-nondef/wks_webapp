@@ -124,7 +124,6 @@ import autocomp from '../AutoCompleteComponents/Autocomp';
 import formlistcomponent from '../FormComponents/FormListComponent';
 import chips from '../FormComponents/Chips';
 import datecomponent from '../FormComponents/DateComponent';
-import HELPERS from "../../helpers";
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 export default {
   components: {
@@ -147,35 +146,35 @@ export default {
       creatoritemstyletypes: [
         'title',
         'subtitle',
-        'subtitle'
+        'subtitle',
       ],
       dimensionsitemstyletypes: [
         'title',
         'subtitle',
-        'subtitle'
+        'subtitle',
       ],
       classificationitemstyletypes: [
         'title',
-        'subtitle'
+        'subtitle',
       ],
       beginofexistencemenu: false,
       endofexistencemenu: false,
-    }
+    };
   },
   watch: {
     value(val) {
       this.object = val;
       if (!this.object.creator) {
-        this.$set(this.object,'creator',[]);
+        this.$set(this.object, 'creator', []);
       }
       if (!this.object.classification) {
-        this.$set(this.object,'classification',[]);
+        this.$set(this.object, 'classification', []);
       }
       if (!this.object.comments) {
-        this.$set(this.object,'comments',[]);
+        this.$set(this.object, 'comments', []);
       }
       if (!this.object.dimensions) {
-        this.$set(this.object,'dimensions',[]);
+        this.$set(this.object, 'dimensions', []);
       }
     },
   },
@@ -187,7 +186,7 @@ export default {
       return new Date(datestring);
     },
   },
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

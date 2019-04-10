@@ -51,15 +51,13 @@
 import autocomp from '../AutoCompleteComponents/Autocomp';
 import formlistcomponent from '../FormComponents/FormListComponent';
 import chips from '../FormComponents/Chips';
-import { mapGetters} from 'vuex';
-import HELPERS from '../../helpers';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 export default {
   components: {
     autocomp,
     formlistcomponent,
-    chips
+    chips,
   },
   props: [
     'value',
@@ -75,7 +73,7 @@ export default {
       relationitemstyletypes: [
         'title',
         'subtitle',
-        'subtitle'
+        'subtitle',
       ],
     };
   },
@@ -83,7 +81,7 @@ export default {
     value(val) {
       this.descriptor = val;
       if (!this.descriptor.relations) {
-        this.$set(this.descriptor,'relations',[]);
+        this.$set(this.descriptor, 'relations', []);
       }
     },
   },

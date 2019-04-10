@@ -72,40 +72,42 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import HELPERS from "../../helpers";
-import formlistitem from "./FormListItem";
+import { mapActions } from 'vuex';
+import HELPERS from '../../helpers';
+import formlistitem from './FormListItem';
 
 export default {
   components: {
-    formlistitem
-},
+    formlistitem,
+  },
   mixins: [HELPERS],
   props: [
-    "label",
-    "nodatamessage",
-    "type",
-    "items",
-    "itemprops",
+    'label',
+    'nodatamessage',
+    'type',
+    'items',
+    'itemprops',
   ],
   data() {
     return {
-      dialog:false,
+      dialog: false,
       editedItem: null,
-      editingMode:false,
-      editingItemIndex:0
+      editingMode: false,
+      editingItemIndex: 0,
     };
   },
   watch: {
   },
   methods: {
-    ...mapActions("api", ["get"]),
-    editItem (index) {
+    ...mapActions('api', ['get']),
+    editItem(index) {
       this.editingMode = true;
       this.editingItemIndex = index;
       this.editedItem = this.items[index];
-      Object.keys(this.editedItem).forEach((key) => {
-        this.$set(this.newitem, key, this.editedItem[key]);
+      Object.keys(this.itemprops).forEach((key) => {
+        if (key !== '_id') {
+          this.$set(this.newitem, key, this.editedItem[key] || '');
+        }
       });
     },
     cancelEditing() {
@@ -113,8 +115,10 @@ export default {
       this.clearItem();
     },
     saveItem() {
-      Object.keys(this.editedItem).forEach((key) => {
-        this.$set(this.items[this.editingItemIndex], key, this.newitem[key]);
+      Object.keys(this.itemprops).forEach((key) => {
+        if (key !== '_id') {
+          this.$set(this.items[this.editingItemIndex], key, this.newitem[key]);
+        }
       });
     },
     clearItem() {
@@ -128,10 +132,10 @@ export default {
         }
       });
       this.$children.forEach((child) => {
-        if (child.hasOwnProperty('form')) {
+        if (Object.prototype.hasOwnProperty.call(child, 'form')) {
           child.reset();
         }
-        if (child.hasOwnProperty('select')) {
+        if (Object.prototype.hasOwnProperty.call(child, 'select')) {
           child.clear();
           this.$set(child.$children[0], 'cachedItems', []);
         }

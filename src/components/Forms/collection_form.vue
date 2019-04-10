@@ -223,13 +223,13 @@ export default {
     value(val) {
       this.collection = val;
       if (!this.collection.classification) {
-        this.$set(this.collection,'classification',[]);
+        this.$set(this.collection, 'classification', []);
       }
       if (!this.collection.creator) {
-        this.$set(this.collection,'creator',[]);
+        this.$set(this.collection, 'creator', []);
       }
       if (!this.collection.comments) {
-        this.$set(this.collection,'comments',[]);
+        this.$set(this.collection, 'comments', []);
       }
     },
   },
@@ -237,8 +237,8 @@ export default {
     returnObject() {
       this.$emit('input', this.collection);
     },
-    pickFile () {
-      this.$refs.image.click ()
+    pickFile() {
+      this.$refs.image.click();
     },
 		onFilePicked (e) {
 			const files = e.target.files

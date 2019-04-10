@@ -28,58 +28,58 @@
   </v-menu>
 </template>
 <script>
-import { mapActions } from "vuex";
-import HELPERS from "../../helpers";
+import { mapActions } from 'vuex';
+import HELPERS from '../../helpers';
 
 export default {
   mixins: [HELPERS],
 
   props: [
-    "label",
-    "date"
-   ],
+    'label',
+    'date',
+  ],
   data() {
     return {
       dateval: this.date,
       datepickermenu: false,
-      dateFormatted: this.formatDate(this.dateval)
+      dateFormatted: this.formatDate(this.dateval),
     };
   },
   computed: {
     computedDateFormatted() {
       return this.formatDate(this.date);
-    }
+    },
   },
   watch: {
     datepickermenu(val) {
-      val && this.$nextTick(() => (this.$refs.picker.activePicker = "YEAR"));
+      val && this.$nextTick(() => (this.$refs.picker.activePicker = 'YEAR'));
     },
     date(val) {
       this.dateFormatted = this.formatDate(this.dateval);
-    }
+    },
   },
   methods: {
     save(dateval) {
       this.$refs.datepickermenu.save(dateval);
-      this.$emit("update:date", dateval + "T00:00:00.000Z");
+      this.$emit('update:date', dateval + 'T00:00:00.000Z');
     },
     formatDate(dateval) {
       if (!dateval) return null;
       var dwot = null;
       if (dateval instanceof Array) {
-        dwot = dateval[0].replace("T00:00:00.000Z", "");
+        dwot = dateval[0].replace('T00:00:00.000Z', '');
       } else {
-        dwot = dateval.replace("T00:00:00.000Z", "");
+        dwot = dateval.replace('T00:00:00.000Z', '');
       }
-      const [year, month, day] = dwot.split("-");
+      const [year, month, day] = dwot.split('-');
       return `${month}/${day}/${year}`;
     },
     parseDate(dateval) {
       if (!dateval) return null;
 
-      const [month, day, year] = dateval.split("/");
-      return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
-    }
-  }
+      const [month, day, year] = dateval.split('/');
+      return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+    },
+  },
 };
 </script>

@@ -104,13 +104,13 @@ export default {
       'delete',
     ]),
     addactor() {
-      if(this.newactor.relations) this.newactor.relations.forEach((el, idx, c) => {
-          var rel = {};
-          Object.keys(el).forEach((key) => {
-            rel[key] = el[key]._id || el[key];
-          });
-          c[idx] = rel;
+      if (this.newactor.relations) this.newactor.relations.forEach((el, idx, c) => {
+        var rel = {};
+        Object.keys(el).forEach((key) => {
+          rel[key] = el[key]._id || el[key];
         });
+        c[idx] = rel;
+      });
       this.post({ type: 'actor', body: this.newactor }).then((res) => {
         this.newactor = {};
         this.actordialog = false;
@@ -118,7 +118,7 @@ export default {
       });
     },
     importactor() {
-      if(this.iactor.id) {
+      if (this.iactor.id) {
         let id = this.iactor.id.split('/').slice(-1)[0];
         this.APIS.GND.DIRECT.get(id).then((res) => {
           console.log(res.data);

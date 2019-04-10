@@ -113,7 +113,7 @@ import formlistcomponent from '../FormComponents/FormListComponent';
 import formtfreadview from '../FormComponents/FormTextFieldReadView';
 import simpleautocompwrapper from '../FormComponents/SimpleAutoCompleteWrapper';
 import chips from '../FormComponents/Chips';
-import { mapActions } from 'vuex';
+
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 export default {
@@ -123,7 +123,7 @@ export default {
     datecomponent,
     formtfreadview,
     chips,
-    simpleautocompwrapper
+    simpleautocompwrapper,
   },
   props: [
     'value',
@@ -137,57 +137,57 @@ export default {
       public: false,
       url: '',
       imageName: '',
-  		imageUrl: '',
+      imageUrl: '',
       imageFile: '',
-      selectedcollection:{},
+      selectedcollection: {},
       creatoritemstyletypes: [
         'title',
         'subtitle',
-        'subtitle'
+        'subtitle',
       ],
       classificationitemstyletypes: [
         'title',
-        'subtitle'
+        'subtitle',
       ],
       isEditingPlace: false,
       isEditingPartOf: false,
     };
   },
-   watch: {
+  watch: {
     value(val) {
       this.inventory = val;
       this.selectedcollection = val.partOf || {};
       if (!this.inventory.classification) {
-        this.$set(this.inventory,'classification',[]);
+        this.$set(this.inventory, 'classification', []);
       }
       if (!this.inventory.creator) {
-        this.$set(this.inventory,'creator',[]);
+        this.$set(this.inventory, 'creator', []);
       }
       if (!this.inventory.comments) {
-        this.$set(this.inventory,'comments',[]);
+        this.$set(this.inventory, 'comments', []);
       }
     },
   },
   methods: {
     setEditingToRead(prop) {
-      this.$set(this,prop,true);
+      this.$set(this, prop, true);
     },
     returnObject() {
       this.$emit('input', this.inventory);
     },
-    pickFile () {
-      this.$refs.image.click ()
+    pickFile() {
+      this.$refs.image.click();
     },
-    onFilePicked (e) {
-      const files = e.target.files
+    onFilePicked(e) {
+      const files = e.target.files;
       if (files[0] !== undefined) {
-      	this.imageName = files[0].name
-      	if(this.imageName.lastIndexOf('.') <= 0) {
-      		return
-      	}
-      	const fr = new FileReader ()
-      	fr.readAsDataURL(files[0])
-      	fr.addEventListener('load', () => {
+        this.imageName = files[0].name;
+        if (this.imageName.lastIndexOf('.') <= 0) {
+          return
+        }
+        const fr = new FileReader();
+        fr.readAsDataURL(files[0]);
+        fr.addEventListener('load', () => {
           this.imageUrl = fr.result;
           this.imageFile = files[0];
           var formData = new FormData();

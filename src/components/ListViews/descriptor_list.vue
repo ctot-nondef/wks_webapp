@@ -149,16 +149,16 @@ export default {
     ]),
     getRecords() {
       this.loading = true;
-      let q = {}
-      if (this.classfilter != '') q.instanceOf = this.classfilter;
-      if (this.namefilter != '') q.name = {"$regex": this.namefilter };
+      let q = {};
+      if (this.classfilter !== '') q.instanceOf = this.classfilter;
+      if (this.namefilter !== '') q.name = {"$regex": this.namefilter };
       this.get({
         type: 'Descriptor',
         sort: this.pagination.descending ? `-${this.pagination.sortBy}` : this.pagination.sortBy,
         limit: this.pagination.rowsPerPage,
         skip: (this.pagination.page - 1) * this.pagination.rowsPerPage,
         populate: JSON.stringify([
-          {"path":"instanceOf"}
+          { path: 'instanceOf' },
         ]),
         query: JSON.stringify(q),
       }).then((res) => {
@@ -180,8 +180,8 @@ export default {
           _id: _id,
         }),
         populate: JSON.stringify([
-          {"path":"instanceOf"},
-          {"path":"relations.target", "select":"name"},
+          { path: 'instanceOf' },
+          { path: 'relations.target', select: 'name' },
         ]),
       }).then((res) => {
         this.cedit = res.data[0];
@@ -214,17 +214,17 @@ export default {
     },
     clearClassFilter() {
       this.classfilter = '';
-      this.getRecords()
+      this.getRecords();
     },
     clearNameFilter() {
       this.namefilter = '';
-      this.getRecords()
+      this.getRecords();
     },
   },
   created() {
 
   },
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

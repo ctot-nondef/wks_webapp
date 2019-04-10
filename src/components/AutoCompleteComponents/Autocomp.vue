@@ -1,6 +1,7 @@
 <template>
 <div>
-    <v-autocomplete
+    <v-autocomplete 
+      
       :loading="loading"
       :items="items"
       :search-input.sync="search"
@@ -35,7 +36,7 @@
         <template v-else>
           <v-list-tile-content>
             <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
-            <v-list-tile-sub-title v-for="(prop,propname) in displayitemprops" :key="propname" v-if="displayitemprops" >
+            <v-list-tile-sub-title class="subpropwrapper" v-for="(prop,propname) in displayitemprops" :key="propname" v-if="displayitemprops" >
               <span class="subprop" v-for="(subprop,index) in prop" :key="index">{{getItemPropFromPath(data.item,index,subprop['path']) | renderProps}}</span>
             </v-list-tile-sub-title>
           </v-list-tile-content>
@@ -59,7 +60,7 @@ export default {
     'filter',
     'icon',
     'clickevent',
-    'displayitemprops'
+    'displayitemprops',
   ],
   data() {
     return {
@@ -80,16 +81,16 @@ export default {
         this.select = val;
         this.items = val;
       } else {
-          this.select = val;
-          this.items.push(val);
-        }
+        this.select = val;
+        this.items.push(val);
+      }
     },
   },
   methods: {
-    getItemPropFromPath(obj,index,path) {
+    getItemPropFromPath(obj, index, path) {
       var res = obj;
-      if (path.includes(".")) {
-        path.split(".").forEach((key) => {
+      if (path.includes('.')) {
+        path.split('.').forEach((key) => {
           if (res.length) res = res[index];
           else res = res[key];
         });
@@ -111,7 +112,6 @@ export default {
       const queryparams = { name: { $regex: this.search || '' } };
       const requestparams = {
         type: this.entity,
-        query: JSON.stringify(queryparams),
       };
       if (this.filter) {
         filterval = this.filterDescriptors(this.filter);
@@ -128,6 +128,8 @@ export default {
         });
         requestparams.populate = JSON.stringify(populateprops);
       }
+
+      requestparams.query = JSON.stringify(queryparams);
       this.get(requestparams)
       .then((res) => {
         if (Array.isArray(res.data)) this.items = res.data;
@@ -169,11 +171,8 @@ export default {
   },
 };
 </script>
-<style scoped="css">
-.v-list__tile {
-  display:block;
-  height:auto;
-}
+<style scoped>
 
+a.v-list__tile{height:auto;}
 
 </style>

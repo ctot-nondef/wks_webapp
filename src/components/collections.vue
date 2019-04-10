@@ -88,26 +88,26 @@ export default {
       'delete',
     ]),
     addCollection() {
-       if(this.newcollection.place) this.newcollection.place.forEach((el, idx, c) => {
-          c[idx] = el._id;
+      if (this.newcollection.place) this.newcollection.place.forEach((el, idx, c) => {
+        c[idx] = el._id;
+      });
+      if (this.newcollection.time) this.newcollection.time.forEach((el, idx, c) => {
+        c[idx] = el._id;
+      });
+      if (this.newcollection.creator) this.newcollection.creator.forEach((el, idx, c) => {
+        var rel = {};
+        Object.keys(el).forEach((key) => {
+          rel[key] = el[key]._id || el[key];
         });
-        if(this.newcollection.time) this.newcollection.time.forEach((el, idx, c) => {
-          c[idx] = el._id;
+        c[idx] = rel;
+      });
+      if(this.newcollection.classification) this.newcollection.classification.forEach((el, idx, c) => {
+        var rel = {};
+        Object.keys(el).forEach((key) => {
+          rel[key] = el[key]._id || el[key];
         });
-        if(this.newcollection.creator) this.newcollection.creator.forEach((el, idx, c) => {
-          var rel = {};
-          Object.keys(el).forEach((key) => {
-            rel[key] = el[key]._id || el[key];
-          });
-          c[idx] = rel;
-        });
-        if(this.newcollection.classification) this.newcollection.classification.forEach((el, idx, c) => {
-          var rel = {};
-          Object.keys(el).forEach((key) => {
-            rel[key] = el[key]._id || el[key];
-          });
-          c[idx] = rel;
-        });
+        c[idx] = rel;
+      });
       this.post({ type: 'collect', body: this.newcollection }).then((res) => {
         this.newcollection = {};
         this.collectiondialog = false;

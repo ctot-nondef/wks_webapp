@@ -127,8 +127,8 @@ export default {
     ]),
     getRecords() {
       this.loading = true;
-      let q = {}
-      if (this.namefilter != '') q.name = {"$regex": this.namefilter };
+      let q = {};
+      if (this.namefilter !== '') q.name = { '$regex': this.namefilter };
       this.get({
         type: 'Inventory',
         sort: this.pagination.descending ? `-${this.pagination.sortBy}` : this.pagination.sortBy,
@@ -153,13 +153,13 @@ export default {
           _id: _id,
         }),
         populate: JSON.stringify([
-          {"path":"inventory"},
-          {"path":"place","select":"name"},
-          {"path":"partOf","select":"name"},
-          {"path":"creator.role","select":"name"},
-          {"path":"creator.id","select":"name"},
-          {"path":"classification.aspect","select":"name"},
-          {"path":"classification.descriptor","select":"name"}
+          { path: 'inventory' },
+          { path: 'place', select: 'name' },
+          { path: 'partOf', select: 'name' },
+          { path: 'creator.role', select: 'name' },
+          { path: 'creator.id', select: 'name' },
+          { path: 'classification.aspect', select: 'name' },
+          { path: 'classification.descriptor', select: 'name' },
         ]),
       }).then((res) => {
         this.cedit = res.data[0];
@@ -168,25 +168,25 @@ export default {
     },
     saveInventory() {
       if (this.cedit._id) {
-          if(this.cedit.creator) this.cedit.creator.forEach((el, idx, c) => {
+        if (this.cedit.creator) this.cedit.creator.forEach((el, idx, c) => {
           var rel = {};
           Object.keys(el).forEach((key) => {
             rel[key] = el[key]._id || el[key];
           });
           c[idx] = rel;
         });
-         if(this.cedit.classification) this.cedit.classification.forEach((el, idx, c) => {
+        if (this.cedit.classification) this.cedit.classification.forEach((el, idx, c) => {
           var rel = {};
           Object.keys(el).forEach((key) => {
             rel[key] = el[key]._id || el[key];
           });
           c[idx] = rel;
         });
-       if(this.cedit.place) {
-          this.cedit.place = this.cedit.place._id
+        if (this.cedit.place) {
+          this.cedit.place = this.cedit.place._id;
         }
-         if(this.cedit.partOf) {
-          this.cedit.partOf = this.cedit.partOf._id
+        if (this.cedit.partOf) {
+          this.cedit.partOf = this.cedit.partOf._id;
         }
         console.log(this.cedit);
         this.post({ type: 'inventory', id: this.cedit._id, body: this.cedit }).then((res) => {
@@ -205,12 +205,12 @@ export default {
     },
     clearNameFilter() {
       this.namefilter = '';
-      this.getRecords()
+      this.getRecords();
     },
   },
   created() {
   },
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

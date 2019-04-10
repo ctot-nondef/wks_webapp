@@ -16,30 +16,29 @@ export default {
     'itemprop',
     'refsto',
     'reftype',
-    'label'
+    'label',
   ],
   data() {
     return {
-        name:null
-      };
+      name: null,
+    };
   },
-  created(){
-      this.getText(this.refsto);
+  created() {
+    this.getText(this.refsto);
   },
   methods: {
-    ...mapActions("api", ["get"]),
-      getText(refid) {
+    ...mapActions('api', ['get']),
+    getText(refid) {
       if (refid && refid !== '') {
-    this.get({
-            type: this.reftype,
-            query: JSON.stringify({
-              _id: refid
-            })
-    }).then(res => {
-
-        this.name = res.data[0].name;
-    });
-    }
+        this.get({
+          type: this.reftype,
+          query: JSON.stringify({
+            _id: refid,
+          }),
+        }).then((res) => {
+          this.name = res.data[0].name;
+        });
+      }
     },
   },
   watch: {

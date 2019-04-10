@@ -128,8 +128,8 @@ export default {
     getRecords() {
       this.loading = true;
       console.log(this.pagination);
-      let q = {}
-      if (this.namefilter != '') q.name = {"$regex": this.namefilter };
+      let q = {};
+      if (this.namefilter !== '') q.name = {"$regex": this.namefilter };
       this.get({
         type: 'Collect',
         sort: this.pagination.descending ? `-${this.pagination.sortBy}` : this.pagination.sortBy,
@@ -154,13 +154,13 @@ export default {
           _id: _id,
         }),
         populate: JSON.stringify([
-          {"path":"creator.role","select":"name"},
-          {"path":"creator.id","select":"name"},
-          {"path":"place","select":"name"},
-          {"path":"time","select":"name"},
-          {"path":"classification.aspect","select":"name"},
-          {"path":"classification.descriptor","select":"name"},
-          {"path":"documents.ref"},
+          { path: 'creator.role', select: 'name' },
+          { path: 'creator.id', select: 'name' },
+          { path: 'place', select: 'name' },
+          { path: 'time', select: 'name' },
+          { path: 'classification.aspect', select: 'name' },
+          { path: 'classification.descriptor', select: 'name' },
+          { path: 'documents.ref' },
         ]),
       }).then((res) => {
         this.cedit = res.data[0];
@@ -170,20 +170,20 @@ export default {
     saveCollection() {
       if (this.cedit._id) {
         console.log(this.cedit);
-        if(this.cedit.place) this.cedit.place.forEach((el, idx, c) => {
+        if (this.cedit.place) this.cedit.place.forEach((el, idx, c) => {
           c[idx] = el._id;
         });
-        if(this.cedit.time) this.cedit.time.forEach((el, idx, c) => {
+        if (this.cedit.time) this.cedit.time.forEach((el, idx, c) => {
           c[idx] = el._id;
         });
-        if(this.cedit.creator) this.cedit.creator.forEach((el, idx, c) => {
+        if (this.cedit.creator) this.cedit.creator.forEach((el, idx, c) => {
           var rel = {};
           Object.keys(el).forEach((key) => {
             rel[key] = el[key]._id || el[key];
           });
           c[idx] = rel;
         });
-        if(this.cedit.classification) this.cedit.classification.forEach((el, idx, c) => {
+        if (this.cedit.classification) this.cedit.classification.forEach((el, idx, c) => {
           var rel = {};
           Object.keys(el).forEach((key) => {
             rel[key] = el[key]._id || el[key];
@@ -206,12 +206,12 @@ export default {
     },
     clearNameFilter() {
       this.namefilter = '';
-      this.getRecords()
+      this.getRecords();
     },
   },
   created() {
   },
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

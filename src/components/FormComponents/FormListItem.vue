@@ -15,15 +15,15 @@ export default {
   props: [
     'styletype',
     'itemprop',
-    'refsto'
+    'refsto',
   ],
   data() {
     return {
-        name:null
-      };
+      name: null,
+    };
   },
   methods: {
-    ...mapActions("api", ["get"]),
+    ...mapActions('api', ['get']),
   },
  /* created() {
     if (this.itemprop["x-ref"]) {
@@ -37,6 +37,6 @@ export default {
         this.name = res.data[0].name;
     });
     }
-  },*/
+  },  */
 };
 </script>

@@ -94,39 +94,39 @@ export default {
       'delete',
     ]),
     addobject() {
-      if(this.newobject.currentOwner) this.newobject.currentOwner.forEach((el, idx, c) => {
-          c[idx] = el._id;
+      if (this.newobject.currentOwner) this.newobject.currentOwner.forEach((el, idx, c) => {
+        c[idx] = el._id;
+      });
+      if (this.newobject.material) this.newobject.material.forEach((el, idx, c) => {
+        c[idx] = el._id;
+      });
+      if (this.newobject.technique) this.newobject.technique.forEach((el, idx, c) => {
+        c[idx] = el._id;
+      });
+      if (this.newobject.creator) this.newobject.creator.forEach((el, idx, c) => {
+        var rel = {};
+        Object.keys(el).forEach((key) => {
+          rel[key] = el[key]._id || el[key];
         });
-        if(this.newobject.material) this.newobject.material.forEach((el, idx, c) => {
-          c[idx] = el._id;
+        c[idx] = rel;
+      });
+      if (this.newobject.dimensions) this.newobject.dimensions.forEach((el, idx, c) => {
+        var rel = {};
+        Object.keys(el).forEach((key) => {
+          rel[key] = el[key]._id || el[key];
         });
-        if(this.newobject.technique) this.newobject.technique.forEach((el, idx, c) => {
-          c[idx] = el._id;
+        c[idx] = rel;
+      });
+      if (this.newobject.classification) this.newobject.classification.forEach((el, idx, c) => {
+        var rel = {};
+        Object.keys(el).forEach((key) => {
+          rel[key] = el[key]._id || el[key];
         });
-        if(this.newobject.creator) this.newobject.creator.forEach((el, idx, c) => {
-          var rel = {};
-          Object.keys(el).forEach((key) => {
-            rel[key] = el[key]._id || el[key];
-          });
-          c[idx] = rel;
-        });
-        if(this.newobject.dimensions) this.newobject.dimensions.forEach((el, idx, c) => {
-          var rel = {};
-          Object.keys(el).forEach((key) => {
-            rel[key] = el[key]._id || el[key];
-          });
-          c[idx] = rel;
-        });
-        if(this.newobject.classification) this.newobject.classification.forEach((el, idx, c) => {
-          var rel = {};
-          Object.keys(el).forEach((key) => {
-            rel[key] = el[key]._id || el[key];
-          });
-          c[idx] = rel;
-        });
-        if(this.newobject.collector) this.newobject.collector.forEach((el, idx, c) => {
-          c[idx] = el._id;
-        });
+        c[idx] = rel;
+      });
+      if (this.newobject.collector) this.newobject.collector.forEach((el, idx, c) => {
+        c[idx] = el._id;
+      });
       this.post({ type: 'object', body: this.newobject }).then((res) => {
         this.newobject = {};
         this.objectdialog = false;

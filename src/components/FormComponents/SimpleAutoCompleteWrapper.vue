@@ -6,14 +6,12 @@
   </div>
 </template>
 <script>
-import axios from 'axios';
 import autocomp from '../AutoCompleteComponents/Autocomp';
-import { mapActions } from 'vuex';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 export default {
   components: {
-    autocomp
+    autocomp,
   },
   props: [
     'entity',
@@ -23,23 +21,23 @@ export default {
   ],
   data() {
     return {
-        isEditing:false,
-        model:{}
+      isEditing: false,
+      model: {},
     };
   },
   watch: {
-      value(val) {
-         this.model = val;
-      }
+    value(val) {
+      this.model = val;
+    },
   },
   methods: {
     setEditingToRead() {
       this.updateval(this.model);
       this.isEditing = false;
     },
-    updateval(val){
-        this.$emit("update:prop",val);
-    }
+    updateval(val) {
+      this.$emit('update:prop', val);
+    },
   },
 };
 </script>
