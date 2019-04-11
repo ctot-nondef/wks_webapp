@@ -34,7 +34,7 @@
           <v-list-tile-content v-text="data.item"></v-list-tile-content>
         </template>
         <template v-else>
-          <v-list-tile-content>
+          <v-list-tile-content class="listcontent">
             <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
             <v-list-tile-sub-title class="subpropwrapper" v-for="(prop,propname) in displayitemprops" :key="propname" v-if="displayitemprops" >
               <span class="subprop" v-for="(subprop,index) in prop" :key="index">{{getItemPropFromPath(data.item,index,subprop['path']) | renderProps}}</span>
@@ -158,21 +158,23 @@ export default {
   },
   filters: {
     renderProps: (value) => {
-      let newvalue = ' ';
+      let newvalue = '';
       if (value) {
+        if (typeof value !== 'string') {
         Object.keys(value).forEach((key) => {
           if (typeof value[key] === 'string' || typeof value[key] === 'number') {
-            newvalue += value[key];
+            newvalue += `${value[key]} `;
           } else { newvalue += `${value[key].name} `; }
         });
+      } else {
+        newvalue = value;
+      }
       }
       return newvalue;
     },
   },
 };
 </script>
-<style scoped>
-
-a.v-list__tile{height:auto;}
-
+<style>
+.v-list a {height:auto;}
 </style>
