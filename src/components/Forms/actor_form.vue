@@ -48,7 +48,7 @@
               <v-select :items="$store.state.api.schemas.actor.properties.relations.items.properties.kind.enum" label="Relation Type" v-model='props.newitem.kind'></v-select>
             </v-flex>
               <v-flex x12>
-            <autocomp entity="actor" v-model="props.newitem.target"  label="Actor" :multiple="false"></autocomp>
+            <autocomp entity="Actor" v-model="props.newitem.target"  label="Actor" :multiple="false"></autocomp>
             </v-flex>
             <v-flex xs10>
               <v-textarea v-model="props.newitem.annotation" label="Annotation" />

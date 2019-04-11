@@ -13,7 +13,7 @@
     <v-layout justify-start row fill-height>
       <v-flex xs6>
           <!-- object currenOwner -->
-        <autocomp entity="actor" v-model="object.currentOwner" :parententity="object._id" label="Current Owners" :multiple="true"></autocomp>
+        <autocomp entity="Actor" v-model="object.currentOwner" :parententity="object._id" label="Current Owners" :multiple="true"></autocomp>
       </v-flex>
     </v-layout>
     <v-layout justify-start row fill-height>
@@ -22,10 +22,10 @@
         <formlistcomponent :items="object.creator" :itemprops="$store.state.api.schemas.object.properties.creator.items.properties" :listitemstyletypes="creatoritemstyletypes" label="Creator" nodatamessage="No creators added">
           <template slot="form" slot-scope="props">
           <v-flex xs5>
-              <autocomp entity="descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"></autocomp>
+              <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"></autocomp>
           </v-flex>
             <v-flex xs5>
-              <autocomp entity="actor" v-model="props.newitem.id" label="Collector" :multiple="false"></autocomp>
+              <autocomp entity="Actor" v-model="props.newitem.id" label="Collector" :multiple="false"></autocomp>
           </v-flex>
           <v-flex xs12>
           <v-textarea  v-model="props.newitem.note" label="Note" /> 
@@ -55,13 +55,13 @@
     <v-layout justify-start row fill-height>
       <v-flex xs6>
         <!-- object material -->
-        <autocomp entity="descriptor" filter="MATER" v-model="object.material" label="Material" :multiple="true" @input="returnObject();"></autocomp>
+        <autocomp entity="Descriptor" filter="MATER" v-model="object.material" label="Material" :multiple="true" @input="returnObject();"></autocomp>
       </v-flex>
     </v-layout>
     <v-layout justify-start row fill-height>
       <v-flex xs6>
       <!-- object technique -->
-        <autocomp entity="descriptor" filter="TECHN" v-model="object.technique" label="Technique" :multiple="true" @input="returnObject();"></autocomp>
+        <autocomp entity="Descriptor" filter="TECHN" v-model="object.technique" label="Technique" :multiple="true" @input="returnObject();"></autocomp>
       </v-flex>
     </v-layout>
     <v-layout justify-start row fill-height>
@@ -73,10 +73,10 @@
               <v-text-field  v-model.number="props.newitem.amount" label="Amount"></v-text-field>
           </v-flex>
           <v-flex xs5>
-              <autocomp entity="descriptor" filter="DIM" v-model="props.newitem.aspect" label="Aspect" :multiple="false"></autocomp>
+              <autocomp entity="Descriptor" filter="DIM" v-model="props.newitem.aspect" label="Aspect" :multiple="false"></autocomp>
           </v-flex>
             <v-flex xs5>
-              <autocomp entity="descriptor" filter="UNIT" v-model="props.newitem.unit" label="Descriptor" :multiple="false"></autocomp>
+              <autocomp entity="Descriptor" filter="UNIT" v-model="props.newitem.unit" label="Descriptor" :multiple="false"></autocomp>
           </v-flex>
           </template>
         </formlistcomponent>
@@ -88,10 +88,10 @@
         <formlistcomponent v-if="object.classification" :items="object.classification" :itemprops="$store.state.api.schemas.collect.properties.classification.items.properties" :listitemstyletypes="classificationitemstyletypes" label="Classification" nodatamessage="No classifications added">
           <template slot="form" slot-scope="props">
           <v-flex xs5>
-            <autocomp entity="descriptor" filter="KEYWORD" v-model="props.newitem.aspect" label="Aspect" :multiple="false"></autocomp>
+            <autocomp entity="Descriptor" filter="KEYWORD" v-model="props.newitem.aspect" label="Aspect" :multiple="false"></autocomp>
           </v-flex>
           <v-flex xs5>
-            <autocomp entity="descriptor" v-model="props.newitem.descriptor" label="Descriptor" :multiple="false"></autocomp>
+            <autocomp entity="Descriptor" v-model="props.newitem.descriptor" label="Descriptor" :multiple="false"></autocomp>
           </v-flex>
           </template>
         </formlistcomponent>

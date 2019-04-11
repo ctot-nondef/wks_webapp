@@ -49,13 +49,13 @@
      <!-- entry material -->
      <v-layout justify-start row fill-height>
        <v-flex xs6>
-         <autocomp entity="descriptor" filter="MATER" v-model="entry.material" label="Material" :multiple="true" @input="returnObject();"></autocomp>
+         <autocomp entity="Descriptor" filter="MATER" v-model="entry.material" label="Material" :multiple="true" @input="returnObject();"></autocomp>
       </v-flex>
     </v-layout>
     <!-- entry technique -->
     <v-layout justify-start row fill-height>
       <v-flex xs6>
-        <autocomp entity="descriptor" filter="TECHN" v-model="entry.technique" label="Technique" :multiple="true" @input="returnObject();"></autocomp>
+        <autocomp entity="Descriptor" filter="TECHN" v-model="entry.technique" label="Technique" :multiple="true" @input="returnObject();"></autocomp>
       </v-flex>
     </v-layout>
     <!-- entry dimensions -->
@@ -67,10 +67,10 @@
               <v-text-field  v-model.number="props.newitem.amount" label="Amount"></v-text-field>
           </v-flex>
           <v-flex xs5>
-              <autocomp entity="descriptor" filter="DIM" v-model="props.newitem.aspect" label="Aspect" :multiple="false"></autocomp>
+              <autocomp entity="Descriptor" filter="DIM" v-model="props.newitem.aspect" label="Aspect" :multiple="false"></autocomp>
           </v-flex>
             <v-flex xs5>
-              <autocomp entity="descriptor" filter="UNIT" v-model="props.newitem.unit" label="Descriptor" :multiple="false"></autocomp>
+              <autocomp entity="Descriptor" filter="UNIT" v-model="props.newitem.unit" label="Descriptor" :multiple="false"></autocomp>
           </v-flex>
           </template>
         </formlistcomponent>
@@ -97,7 +97,7 @@
               <v-select :items="$store.state.api.schemas.entry.properties.relations.items.properties.kind.enum" label="Relation Type" v-model='props.newitem.kind'></v-select>
             </v-flex>
               <v-flex x12>
-            <autocomp entity="entry" v-model="props.newitem.target"  label="Entry" :multiple="false" :displayitemprops="autcompdisplayprops"></autocomp>
+            <autocomp entity="Entry" v-model="props.newitem.target"  label="Entry" :multiple="false" :displayitemprops="autcompdisplayprops"></autocomp>
             </v-flex>
             </template>
           </formlistcomponent>
@@ -115,10 +115,10 @@
         <formlistcomponent v-if="entry.classification" :items="entry.classification" :itemprops="$store.state.api.schemas.entry.properties.classification.items.properties" :listitemstyletypes="classificationitemstyletypes" label="Classification" nodatamessage="No classifications added">
           <template slot="form" slot-scope="props">
           <v-flex xs5>
-            <autocomp entity="descriptor" filter="KEYWORD" v-model="props.newitem.aspect" label="Aspect" :multiple="false"></autocomp>
+            <autocomp entity="Descriptor" filter="KEYWORD" v-model="props.newitem.aspect" label="Aspect" :multiple="false"></autocomp>
           </v-flex>
           <v-flex xs5>
-            <autocomp entity="descriptor" v-model="props.newitem.descriptor" label="Descriptor" :multiple="false"></autocomp>
+            <autocomp entity="Descriptor" v-model="props.newitem.descriptor" label="Descriptor" :multiple="false"></autocomp>
           </v-flex>
           </template>
         </formlistcomponent>

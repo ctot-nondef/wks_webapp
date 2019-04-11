@@ -16,10 +16,10 @@
         <formlistcomponent :items="inventory.creator" :itemprops="$store.state.api.schemas.inventory.properties.creator.items.properties" :listitemstyletypes="creatoritemstyletypes" label="Creator" nodatamessage="No creators added">
           <template slot="form" slot-scope="props">
           <v-flex xs5>
-              <autocomp entity="descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"></autocomp>
+              <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"></autocomp>
           </v-flex>
           <v-flex xs5>
-            <autocomp entity="actor" v-model="props.newitem.id" label="Creator" :multiple="false"></autocomp>
+            <autocomp entity="Actor" v-model="props.newitem.id" label="Creator" :multiple="false"></autocomp>
           </v-flex>
           <v-flex xs12>
             <v-textarea  v-model="props.newitem.note" label="Note" />
@@ -76,10 +76,10 @@
         <formlistcomponent v-if="inventory.classification" :items="inventory.classification" :itemprops="$store.state.api.schemas.inventory.properties.classification.items.properties" :listitemstyletypes="classificationitemstyletypes" label="Classification" nodatamessage="No classifications added">
           <template slot="form" slot-scope="props">
             <v-flex xs5>
-              <autocomp entity="descriptor" filter="KEYWORD"  v-model="props.newitem.aspect" label="Aspect"  :multiple="false"></autocomp>
+              <autocomp entity="Descriptor" filter="KEYWORD"  v-model="props.newitem.aspect" label="Aspect"  :multiple="false"></autocomp>
             </v-flex>
             <v-flex xs5>
-              <autocomp entity="descriptor" v-model="props.newitem.descriptor" label="Descriptor"  :multiple="false"></autocomp>
+              <autocomp entity="Descriptor" v-model="props.newitem.descriptor" label="Descriptor"  :multiple="false"></autocomp>
             </v-flex>
           </template>
         </formlistcomponent>
@@ -88,7 +88,7 @@
     <!-- inventory partOf -->
     <v-layout justify-start row fill-height>
       <v-flex xs5>
-        <simpleautocompwrapper entity="collect" v-model="inventory.partOf" v-bind:prop.sync="inventory.partOf" label="Part Of Collection"/>
+        <simpleautocompwrapper entity="Collect" v-model="inventory.partOf" v-bind:prop.sync="inventory.partOf" label="Part Of Collection"/>
       </v-flex>
      </v-layout>
      <!-- inventory comments -->
