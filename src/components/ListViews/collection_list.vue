@@ -169,7 +169,6 @@ export default {
     },
     saveCollection() {
       if (this.cedit._id) {
-        console.log(this.cedit);
         if (this.cedit.place) this.cedit.place.forEach((el, idx, c) => {
           c[idx] = el._id;
         });
@@ -179,14 +178,18 @@ export default {
         if (this.cedit.creator) this.cedit.creator.forEach((el, idx, c) => {
           var rel = {};
           Object.keys(el).forEach((key) => {
-            rel[key] = el[key]._id || el[key];
+            if (el[key] !== null) {
+              rel[key] = el[key]._id || el[key];
+            }
           });
           c[idx] = rel;
         });
         if (this.cedit.classification) this.cedit.classification.forEach((el, idx, c) => {
           var rel = {};
           Object.keys(el).forEach((key) => {
-            rel[key] = el[key]._id || el[key];
+            if (el[key] !== null) {
+              rel[key] = el[key]._id || el[key];
+            }
           });
           c[idx] = rel;
         });

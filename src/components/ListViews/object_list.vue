@@ -197,28 +197,33 @@ export default {
         if (this.cedit.creator) this.cedit.creator.forEach((el, idx, c) => {
           var rel = {};
           Object.keys(el).forEach((key) => {
-            rel[key] = el[key]._id || el[key];
+            if (el[key] !== null) {
+              rel[key] = el[key]._id || el[key];
+            }
           });
           c[idx] = rel;
         });
         if (this.cedit.dimensions) this.cedit.dimensions.forEach((el, idx, c) => {
           var rel = {};
           Object.keys(el).forEach((key) => {
-            rel[key] = el[key]._id || el[key];
+            if (el[key] !== null) {
+              rel[key] = el[key]._id || el[key];
+            }
           });
           c[idx] = rel;
         });
         if (this.cedit.classification) this.cedit.classification.forEach((el, idx, c) => {
           var rel = {};
           Object.keys(el).forEach((key) => {
-            rel[key] = el[key]._id || el[key];
+            if (el[key] !== null) {
+              rel[key] = el[key]._id || el[key];
+            }
           });
           c[idx] = rel;
         });
         if (this.cedit.collector) this.cedit.collector.forEach((el, idx, c) => {
           c[idx] = el._id;
         });
-        console.log(this.cedit);
         this.post({ type: 'object', id: this.cedit._id, body: this.cedit }).then((res) => {
           this.getRecords();
         });

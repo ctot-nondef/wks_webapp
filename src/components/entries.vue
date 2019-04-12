@@ -109,21 +109,27 @@ export default {
       if (this.newentry.creator) this.newentry.creator.forEach((el, idx, c) => {
         var rel = {};
         Object.keys(el).forEach((key) => {
-          rel[key] = el[key]._id || el[key];
+          if (el[key] !== null) {
+              rel[key] = el[key]._id || el[key];
+          }
         });
         c[idx] = rel;
       });
       if (this.newentry.dimensions) this.newentry.dimensions.forEach((el, idx, c) => {
         var rel = {};
         Object.keys(el).forEach((key) => {
-          rel[key] = el[key]._id || el[key];
+          if (el[key] !== null) {
+            rel[key] = el[key]._id || el[key];
+          }
         });
         c[idx] = rel;
       });
       if (this.newentry.classification) this.newentry.classification.forEach((el, idx, c) => {
         var rel = {};
         Object.keys(el).forEach((key) => {
-          rel[key] = el[key]._id || el[key];
+          if (el[key] !== null) {
+            rel[key] = el[key]._id || el[key];
+          }
         });
         c[idx] = rel;
       });
@@ -133,7 +139,9 @@ export default {
       if (this.newentry.relations) this.newentry.relations.forEach((el, idx, c) => {
         var rel = {};
         Object.keys(el).forEach((key) => {
-          rel[key] = el[key]._id || el[key];
+          if (el[key] !== null) {
+            rel[key] = el[key]._id || el[key];
+          }
         });
         c[idx] = rel;
       });

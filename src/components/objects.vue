@@ -106,21 +106,27 @@ export default {
       if (this.newobject.creator) this.newobject.creator.forEach((el, idx, c) => {
         var rel = {};
         Object.keys(el).forEach((key) => {
-          rel[key] = el[key]._id || el[key];
+          if (el[key] !== null) {
+            rel[key] = el[key]._id || el[key];
+          }
         });
         c[idx] = rel;
       });
       if (this.newobject.dimensions) this.newobject.dimensions.forEach((el, idx, c) => {
         var rel = {};
         Object.keys(el).forEach((key) => {
-          rel[key] = el[key]._id || el[key];
+          if (el[key] !== null) {
+            rel[key] = el[key]._id || el[key];
+          }
         });
         c[idx] = rel;
       });
       if (this.newobject.classification) this.newobject.classification.forEach((el, idx, c) => {
         var rel = {};
         Object.keys(el).forEach((key) => {
-          rel[key] = el[key]._id || el[key];
+          if (el[key] !== null) {
+            rel[key] = el[key]._id || el[key];
+          }
         });
         c[idx] = rel;
       });

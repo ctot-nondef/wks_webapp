@@ -120,6 +120,8 @@ export default {
           this.$set(this.items[this.editingItemIndex], key, this.newitem[key]);
         }
       });
+      this.editingMode = false;
+      this.clearItem();
     },
     clearItem() {
       Object.keys(this.newitem).forEach((key) => {

@@ -91,14 +91,18 @@ export default {
       if (this.newinventory.creator) this.newinventory.creator.forEach((el, idx, c) => {
         var rel = {};
         Object.keys(el).forEach((key) => {
-          rel[key] = el[key]._id || el[key];
+          if (el[key] !== null) {
+            rel[key] = el[key]._id || el[key];
+          }
         });
         c[idx] = rel;
       });
       if (this.newinventory.classification) this.newinventory.classification.forEach((el, idx, c) => {
         var rel = {};
         Object.keys(el).forEach((key) => {
-          rel[key] = el[key]._id || el[key];
+          if (el[key] !== null) {
+            rel[key] = el[key]._id || el[key];
+          }
         });
         c[idx] = rel;
       });
