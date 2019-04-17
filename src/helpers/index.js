@@ -39,7 +39,7 @@ const CONFIG = {
     PARAMS: {
     },
     HEADERS: {
-      "Accept":"application/json",
+      Accept: 'application/json',
     },
   },
 };
@@ -47,25 +47,25 @@ const CONFIG = {
 const IMPORT = {
   GND: {
     Person: {
-      preferredName: "name",
-      dateOfBirth: "beginOfExistence",
-      dateOfDeath: "endOfExistence",
-      biographicalOrHistoricalInformation: "description",
+      preferredName: 'name',
+      dateOfBirth: 'beginOfExistence',
+      dateOfDeath: 'endOfExistence',
+      biographicalOrHistoricalInformation: 'description',
     },
     CorporateBody: {
-      preferredName: "name",
-      dateOfEstablishment: "beginOfExistence",
-      dateOfTermination: "endOfExistence",
+      preferredName: 'name',
+      dateOfEstablishment: 'beginOfExistence',
+      dateOfTermination: 'endOfExistence',
     },
     PlaceOrGeographicName: {
-      preferredName: "name",
-      biographicalOrHistoricalInformation: "description",
-      definition: "description",
+      preferredName: 'name',
+      biographicalOrHistoricalInformation: 'description',
+      definition: 'description',
     },
     SubjectHeading: {
-      preferredName: "name",
-      definition: "description",
-    }
+      preferredName: 'name',
+      definition: 'description',
+    },
   },
 };
 
@@ -173,16 +173,16 @@ export default {
     */
     mapGNDImport(type, obj) {
       console.log(this.IMPORT.GND[type]);
-      let map = Object.keys(this.IMPORT.GND[type]);
+      const map = Object.keys(this.IMPORT.GND[type]);
       let idx = map.length - 1;
-      let res = {};
-      while(idx + 1) {
+      const res = {};
+      while (idx + 1) {
         res[this.IMPORT.GND[type][map[idx]]] = obj[map[idx]];
         idx -= 1;
       }
       res.identifier = [`GND:${obj.gndIdentifier}`];
       res.labels = [{
-        lang: "de",
+        lang: 'de',
         label: obj.preferredName,
       }];
       return res;
