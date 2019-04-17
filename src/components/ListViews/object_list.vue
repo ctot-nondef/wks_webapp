@@ -136,9 +136,9 @@ export default {
     ]),
     getRecords() {
       this.loading = true;
-      let q = {};
+      const q = {};
       if (this.classfilter !== '') q.instanceOf = this.classfilter;
-      if (this.namefilter !== '') q.name = { "$regex": this.namefilter };
+      if (this.namefilter !== '') q.name = { $regex: this.namefilter };
       this.get({
         type: 'Object',
         sort: this.pagination.descending ? `-${this.pagination.sortBy}` : this.pagination.sortBy,
@@ -151,7 +151,7 @@ export default {
       }).then((res) => {
         this.loading = false;
         this.data = res.data;
-        this.totalHits = parseInt(res.headers['x-total-count']);
+        this.totalHits = parseInt(res.headers['x-total-count'], 10);
       }).catch((err) => {
         console.log(err);
         if (err.response.data && err.response.data.detail === 'Invalid page.') {
@@ -164,7 +164,7 @@ export default {
       this.get({
         type: 'Object',
         query: JSON.stringify({
-          _id: _id,
+          _id,
         }),
         populate: JSON.stringify([
           { path: 'instanceOf' },
@@ -184,6 +184,9 @@ export default {
       });
     },
     saveobject() {
+      // this needs to be redone
+      // how can we systematically reduce all referenced/populated docs
+      // to ids before submission?
       if (this.cedit._id) {
         if (this.cedit.currentOwner) this.cedit.currentOwner.forEach((el, idx, c) => {
           c[idx] = el._id;
@@ -195,7 +198,7 @@ export default {
           c[idx] = el._id;
         });
         if (this.cedit.creator) this.cedit.creator.forEach((el, idx, c) => {
-          var rel = {};
+          const rel = {};
           Object.keys(el).forEach((key) => {
             if (el[key] !== null) {
               rel[key] = el[key]._id || el[key];
@@ -204,7 +207,7 @@ export default {
           c[idx] = rel;
         });
         if (this.cedit.dimensions) this.cedit.dimensions.forEach((el, idx, c) => {
-          var rel = {};
+          const rel = {};
           Object.keys(el).forEach((key) => {
             if (el[key] !== null) {
               rel[key] = el[key]._id || el[key];
@@ -213,7 +216,7 @@ export default {
           c[idx] = rel;
         });
         if (this.cedit.classification) this.cedit.classification.forEach((el, idx, c) => {
-          var rel = {};
+          const rel = {};
           Object.keys(el).forEach((key) => {
             if (el[key] !== null) {
               rel[key] = el[key]._id || el[key];
