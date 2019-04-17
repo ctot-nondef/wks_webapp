@@ -120,20 +120,20 @@ export default {
     ]),
     getRecords() {
       this.loading = true;
-      let q = {}
+      const q = {};
       this.get({
         type: 'User',
         sort: this.pagination.descending ? `-${this.pagination.sortBy}` : this.pagination.sortBy,
         limit: this.pagination.rowsPerPage,
         skip: (this.pagination.page - 1) * this.pagination.rowsPerPage,
         populate: JSON.stringify([
-          {"path":"instanceOf"},
+          { path: 'instanceOf' },
         ]),
         query: JSON.stringify(q),
       }).then((res) => {
         this.loading = false;
         this.data = res.data;
-        this.totalHits = parseInt(res.headers['x-total-count']);
+        this.totalHits = parseInt(res.headers['x-total-count'], 10);
       }).catch((err) => {
         console.log(err);
         if (err.response.data && err.response.data.detail === 'Invalid page.') {
@@ -156,17 +156,18 @@ export default {
     },
     saveuser() {
       if (this.cedit._id) {
-        if(this.cedit.relations) this.cedit.relations.forEach((el, idx, c) => {
-          var rel = {};
-          Object.keys(el).forEach((key) => {
-            if (el[key] !== null) {
-              rel[key] = el[key]._id || el[key];
-            }
+        if (this.cedit.relations) {
+          this.cedit.relations.forEach((el, idx, c) => {
+            const rel = {};
+            Object.keys(el).forEach((key) => {
+              if (el[key] !== null) {
+                rel[key] = el[key]._id || el[key];
+              }
+            });
+            c[idx] = rel;
           });
-          c[idx] = rel;
-        });
-        console.log('saved');
-      this.patch({ type: 'user', id: this.cedit._id, body: this.cedit }).then((res) => {
+        }
+        this.patch({ type: 'user', id: this.cedit._id, body: this.cedit }).then((res) => {
           this.getRecords();
         });
       }
@@ -182,22 +183,19 @@ export default {
     },
     clearClassFilter() {
       this.classfilter = '';
-      this.getRecords()
+      this.getRecords();
     },
     clearNameFilter() {
       this.namefilter = '';
-      this.getRecords()
+      this.getRecords();
     },
     usercheck(username) {
-      if(username == this.$store.state.api.user.username) return false;
+      if (username === this.$store.state.api.user.username) return false;
       else if (this.$store.state.api.user.admin) return false;
-      else return true;
+      return true;
     },
   },
-  created() {
-
-  },
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
