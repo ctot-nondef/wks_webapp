@@ -186,8 +186,8 @@ import autocomp from '../AutoCompleteComponents/Autocomp';
 import formlistcomponent from '../FormComponents/FormListComponent';
 import chips from '../FormComponents/Chips';
 import datecomponent from '../FormComponents/DateComponent';
-import zoterolist from '../ListViews/zotero_list'
-import HELPERS from "../../helpers";
+import zoterolist from '../ListViews/zotero_list';
+import HELPERS from '../../helpers';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 export default {
@@ -240,39 +240,39 @@ export default {
     pickFile() {
       this.$refs.image.click();
     },
-		onFilePicked (e) {
-			const files = e.target.files
-			if(files[0] !== undefined) {
-				this.imageName = files[0].name
-				if(this.imageName.lastIndexOf('.') <= 0) {
-					return
-				}
-				const fr = new FileReader ()
-				fr.readAsDataURL(files[0])
-				fr.addEventListener('load', () => {
-					this.imageUrl = fr.result;
-					this.imageFile = files[0];
-          var formData = new FormData();
+    onFilePicked(e) {
+      const files = e.target.files;
+      if (files[0] !== undefined) {
+        const fr = new FileReader();
+        this.imageName = files[0].name;
+        if (this.imageName.lastIndexOf('.') <= 0) {
+          return;
+        }
+        fr.readAsDataURL(files[0]);
+        fr.addEventListener('load', () => {
+          const formData = new FormData();
+          this.imageUrl = fr.result;
+          this.imageFile = files[0];
           formData.append('file', this.imageFile);
           axios.post('https://wksdev.hephaistos.arz.oeaw.ac.at/api/v1/upload/', formData, {
             headers: {
-              'Content-Type': 'multipart/form-data'
-            }
+              'Content-Type': 'multipart/form-data',
+            },
           }).then((res) => {
             if (!this.collection.documents) this.collection.documents = [];
-            this.collection.documents.push({ref: res.data, note: 'test'});
+            this.collection.documents.push({ ref: res.data, note: 'test' });
             this.returnObject();
             this.imageName = '';
             this.imageFile = '';
             this.imageUrl = '';
           });
-				})
-			} else {
-				this.imageName = '';
-				this.imageFile = '';
-				this.imageUrl = '';
-			}
-		},
+        });
+      } else {
+        this.imageName = '';
+        this.imageFile = '';
+        this.imageUrl = '';
+      }
+    },
     removeimage(index) {
       this.collection.documents.splice(index, 1);
       this.returnObject();
