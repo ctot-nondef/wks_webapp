@@ -137,7 +137,7 @@ export default {
         c[idx] = el._id;
       });
       if (this.newentry.relations) this.newentry.relations.forEach((el, idx, c) => {
-        var rel = {};
+        const rel = {};
         Object.keys(el).forEach((key) => {
           if (el[key] !== null) {
             rel[key] = el[key]._id || el[key];

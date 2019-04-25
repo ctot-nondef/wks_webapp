@@ -28,7 +28,6 @@
   </v-menu>
 </template>
 <script>
-import { mapActions } from 'vuex';
 import HELPERS from '../../helpers';
 
 export default {
@@ -54,18 +53,18 @@ export default {
     datepickermenu(val) {
       val && this.$nextTick(() => (this.$refs.picker.activePicker = 'YEAR'));
     },
-    date(val) {
+    date() {
       this.dateFormatted = this.formatDate(this.dateval);
     },
   },
   methods: {
     save(dateval) {
       this.$refs.datepickermenu.save(dateval);
-      this.$emit('update:date', dateval + 'T00:00:00.000Z');
+      this.$emit('update:date', `${dateval}T00:00:00.000Z`);
     },
     formatDate(dateval) {
+      let dwot = null;
       if (!dateval) return null;
-      var dwot = null;
       if (dateval instanceof Array) {
         dwot = dateval[0].replace('T00:00:00.000Z', '');
       } else {

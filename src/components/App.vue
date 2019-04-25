@@ -50,7 +50,7 @@ export default {
       .then((res) => {
         this.$store.commit('app/setConfig', res.data);
         this.$store.dispatch('app/init', pstate);
-        this.$store.dispatch('api/init', {pstate, config: res.data});
+        this.$store.dispatch('api/init', { pstate, config: res.data });
       })
       .catch(error => this.$log(error));
   },

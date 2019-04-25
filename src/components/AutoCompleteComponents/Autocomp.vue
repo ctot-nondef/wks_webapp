@@ -1,7 +1,7 @@
 <template>
 <div>
-    <v-autocomplete 
-      
+    <v-autocomplete
+
       :loading="loading"
       :items="items"
       :search-input.sync="search"
@@ -71,7 +71,7 @@ export default {
     };
   },
   watch: {
-    search(newval, oldval) {
+    search(newval) {
       if (newval) {
         this.querySelections(newval);
       }
@@ -88,7 +88,7 @@ export default {
   },
   methods: {
     getItemPropFromPath(obj, index, path) {
-      var res = obj;
+      let res = obj;
       if (path.includes('.')) {
         path.split('.').forEach((key) => {
           if (res.length) res = res[index];
@@ -161,14 +161,14 @@ export default {
       let newvalue = '';
       if (value) {
         if (typeof value !== 'string') {
-        Object.keys(value).forEach((key) => {
-          if (typeof value[key] === 'string' || typeof value[key] === 'number') {
-            newvalue += `${value[key]} `;
-          } else { newvalue += `${value[key].name} `; }
-        });
-      } else {
-        newvalue = value;
-      }
+          Object.keys(value).forEach((key) => {
+            if (typeof value[key] === 'string' || typeof value[key] === 'number') {
+              newvalue += `${value[key]} `;
+            } else { newvalue += `${value[key].name} `; }
+          });
+        } else {
+          newvalue = value;
+        }
       }
       return newvalue;
     },
