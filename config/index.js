@@ -49,8 +49,8 @@ module.exports = {
 
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: 'db/static',
-    assetsPublicPath: 'db/',
+    assetsSubDirectory: 'static',
+    assetsPublicPath: '',
 
     /**
      * Source Maps

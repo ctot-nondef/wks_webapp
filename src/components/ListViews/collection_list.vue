@@ -127,7 +127,6 @@ export default {
     ]),
     getRecords() {
       this.loading = true;
-      console.log(this.pagination);
       let q = {};
       if (this.namefilter !== '') q.name = {"$regex": this.namefilter };
       this.get({
