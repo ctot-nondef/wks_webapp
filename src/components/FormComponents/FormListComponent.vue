@@ -3,10 +3,8 @@
     <v-layout justify-start row fill-height>
       <v-label>{{label}}</v-label>
     </v-layout>
-    <!-- message if no data present -->
-    <p v-if="citems.length === 0"><i>{{nodatamessage}}</i></p>
     <!-- table view if array of objects -->
-    <v-data-table v-if="citems.length >= 1 && itemprops"
+    <v-data-table v-if="itemprops"
         :headers="headers"
         :items="citems"
         class="elevation-1"

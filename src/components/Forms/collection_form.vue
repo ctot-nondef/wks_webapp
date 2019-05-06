@@ -149,6 +149,7 @@
         </formlistcomponent>
       </v-flex>
     </v-layout>
+    <!-- zotero ref selection popup -->
     <v-layout column justify-space-between>
       <v-dialog
         v-model="zoterodialog"
