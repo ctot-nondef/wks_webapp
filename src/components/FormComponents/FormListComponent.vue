@@ -23,7 +23,7 @@
            {{props.item[header.name].name}}
          </template>
          <template v-else-if="header.name === 'ref'">
-          <a :href="props.item[header.name].replace('api.', '')" target="_blank">{{props.item[header.name]}}</a>
+          <a :href="props.item[header.name].replace('api.', '')" target="_blank">link</a>
          </template>
          <template v-else>
           {{props.item[header.name]}}

@@ -19,6 +19,7 @@ import dialogs from './Dialogs/Dialogs';
 /* eslint no-return-assign: "off" */
 
 import HELPERS from '../helpers';
+import config from '../config.js'
 
 export default {
   mixins: [HELPERS],
@@ -46,13 +47,9 @@ export default {
   beforeCreate() {
     const pstate = HELPERS.methods.getLatestSession();
     HELPERS.methods.deleteOldSessions();
-    axios.get('/static/nav.json')
-      .then((res) => {
-        this.$store.commit('app/setConfig', res.data);
-        this.$store.dispatch('app/init', pstate);
-        this.$store.dispatch('api/init', { pstate, config: res.data });
-      })
-      .catch(error => this.$log(error));
+    this.$store.commit('app/setConfig', config);
+    this.$store.dispatch('app/init', pstate);
+    this.$store.dispatch('api/init', { pstate, config });
   },
 };
 </script>

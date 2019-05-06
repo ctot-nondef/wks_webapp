@@ -90,6 +90,9 @@ export default {
     fundamentcard,
     inventoryform,
   },
+  props: [
+    'filter'
+  ],
   data() {
     return {
       data: [],
@@ -113,6 +116,9 @@ export default {
         this.getRecords();
       },
       deep: true,
+    },
+    filter(f) {
+      console.log(f);
     },
   },
   methods: {
