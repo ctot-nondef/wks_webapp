@@ -4,7 +4,7 @@
       <v-layout justify-start row fill-height>
       <v-flex xs6>
         <v-text-field
-           v-model="namefilter"
+           v-model="filters.name"
            label="Filter By Name"
            @input="getRecords()"
            append-icon="close"
@@ -81,6 +81,7 @@ import { mapMutations, mapActions } from 'vuex';
 
 import fundamentcard from '../Fundament/FundamentCard';
 import inventoryform from '../Forms/inventory_form';
+import simpleautocompwrapper from '../FormComponents/SimpleAutoCompleteWrapper';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 /* eslint no-console: ["error", { allow: ["log"] }] */
@@ -89,6 +90,7 @@ export default {
   components: {
     fundamentcard,
     inventoryform,
+    simpleautocompwrapper,
   },
   props: [
     'filter'
@@ -102,7 +104,10 @@ export default {
       loading: false,
       itemOptions: [10, 10, 50],
       totalHits: 0,
-      namefilter: '',
+      filters: {
+        name: '',
+        parent: '',
+      },
       headers: [
         { text: 'Name', value: 'name' },
         { text: 'Actions', value: 'actions' },
@@ -118,7 +123,12 @@ export default {
       deep: true,
     },
     filter(f) {
-      console.log(f);
+      if(f) {
+        Object.keys(f).forEach((key) => {
+          this.filters[key] = f[key];
+        });
+      }
+      this.getRecords();
     },
   },
   methods: {
@@ -134,7 +144,8 @@ export default {
     getRecords() {
       this.loading = true;
       let q = {};
-      if (this.namefilter !== '') q.name = { '$regex': this.namefilter };
+      if (this.filters.name !== '') q.name = { '$regex': this.filters.name };
+      if (this.filters.parent !== '') q.partOf = this.filters.parent;
       this.get({
         type: 'Inventory',
         sort: this.pagination.descending ? `-${this.pagination.sortBy}` : this.pagination.sortBy,

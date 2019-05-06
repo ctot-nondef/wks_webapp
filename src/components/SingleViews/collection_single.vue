@@ -5,11 +5,53 @@
         <div slot="content">
           <v-layout justify-center column fill-height>
             <v-flex xs12>
+              <v-layout justify-end row fill-height>
+                <v-btn fab dark small color="warning" @click="inventorydialog=true">
+                  <v-icon dark>add</v-icon>
+                </v-btn>
+              </v-layout>
+            </v-flex>
+            <v-flex xs12>
               <inventorylist ref="inventorylist" :filter="{ parent: this.$route.params.id }"></inventorylist>
             </v-flex>
           </v-layout>
         </div>
       </fundamentcard>
+      <v-layout column justify-space-between>
+        <v-dialog
+          v-model="inventorydialog"
+          @keydown.esc="inventorydialog=false"
+          fullscreen
+          hide-overlay
+          transition="dialog-bottom-transition"
+          >
+          <v-card>
+            <v-toolbar dark color="primary">
+              <v-btn icon dark @click.native="inventorydialog=false">
+                <v-icon>close</v-icon>
+              </v-btn>
+              <v-toolbar-title>Create Inventory</v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-toolbar-items>
+              </v-toolbar-items>
+              <v-menu bottom right offset-y>
+                <v-btn slot="activator" dark icon>
+                  <v-icon>more_vert</v-icon>
+                </v-btn>
+              </v-menu>
+            </v-toolbar>
+            <v-container grid-list-md text-xs-center>
+              <v-card color="grey lighten-2" class="pa-4">
+                <inventoryform v-if="$store.state.api.schemas.inventory" :value="newinventory" @input="newinventory=$event"></inventoryform>
+                <v-layout justify-end row fill-height>
+                  <v-btn color="warning" @click="addInventory()">Save</v-btn>
+                  <v-btn color="primary" flat @click.native="inventorydialog=false">Discard</v-btn>
+                </v-layout>
+              </v-card>
+            </v-container>
+          </v-card>
+        </v-dialog>
+      </v-layout>
     </v-container>
     <v-container grid-list-md v-if="!$store.state.app.loggedin">
       Bitte loggen Sie sich ein um die Datenbank zu benutzen.
@@ -74,8 +116,10 @@ export default {
         this.newinventory.partOf = this.newinventory.partOf._id;
       }
       this.post({ type: 'inventory', body: this.newinventory }).then((res) => {
-        this.newinventory = {};
-        this.iventorydialog = false;
+        this.newinventory = {
+          partOf: this.view,
+        }
+        this.inventorydialog = false;
         this.$refs.inventorylist.getRecords();
       });
     },
@@ -85,7 +129,11 @@ export default {
   created() {
     this.get({ type: 'Collect', id: this.$route.params.id }).then((res) => {
       this.view = res.data;
+      this.newinventory = {
+        partOf: res.data,
+      }
     });
+
   },
 };
 </script>
