@@ -281,6 +281,7 @@ export default {
       if (!this.collection.references) this.collection.references = [];
       this.collection.references.push({ ref: ref.links.self.href });
       this.zoterodialog = false;
+      console.log(this.collection.references);
     },
   },
 };

@@ -3,46 +3,57 @@
     <v-layout justify-start row fill-height>
       <v-label>{{label}}</v-label>
     </v-layout>
+    <!-- message if no data present -->
     <p v-if="citems.length === 0"><i>{{nodatamessage}}</i></p>
+    <!-- table view if array of objects -->
     <v-data-table v-if="citems.length >= 1 && itemprops"
         :headers="headers"
-        :items="items"
+        :items="citems"
         class="elevation-1"
+        disable-initial-sort
       >
-      <template slot="headers" slot-scope="props">
-        <th  v-for="header in props.headers">
-          {{ header.name }}
-        </th>
-      </template>
-      <template slot="items" slot-scope="props">
-           <tr @click="props.expanded = !props.expanded">
-              <td v-for="header in headers">
-               <template  v-if="typeof props.item === 'object' && props.item[header.name] && props.item[header.name].name && header.name !== '_id'"> {{props.item[header.name].name}}</template>
-                <template v-if="typeof props.item === 'object' && props.item[header.name] && typeof props.item[header.name] === 'string' || typeof props.item[header.name] === 'number'  && header.name !== '_id'">
-               {{props.item[header.name]}}
-               </template>
-             </td>
-             <td class="justify-center layout px-0">
-              <v-icon
-                small
-                class="mr-2"
-                @click="editItem(props.index)"
-                :disabled="editingMode"
-              >
-                edit
-              </v-icon>
-              <v-icon
-                small
-                :disabled="editingMode"
-                @click="removeItem(props.index,items)"
-              >
-                delete
-              </v-icon>
-            </td>
-            </tr>
-          </template>
+    <template slot="headers" slot-scope="props">
+      <th  v-for="header in props.headers">
+        {{ header.name }}
+      </th>
+      <th>Actions</th>
+    </template>
+    <template slot="items" slot-scope="props">
+     <tr>
+        <td v-for="header in headers">
+          <template
+            v-if="typeof props.item === 'object' && props.item[header.name] && props.item[header.name].name && header.name !== '_id'"
+          >
+           {{props.item[header.name].name}}
+         </template>
+         <template
+            v-if="typeof props.item === 'object' && props.item[header.name] && typeof props.item[header.name] === 'string' || typeof props.item[header.name] === 'number'  && header.name !== '_id'"
+          >
+          {{props.item[header.name]}}
+         </template>
+       </td>
+       <td class="justify-center layout px-0">
+        <v-icon
+          small
+          class="mr-2"
+          @click="editItem(props.index)"
+          :disabled="editingMode"
+        >
+          edit
+        </v-icon>
+        <v-icon
+          small
+          :disabled="editingMode"
+          @click="removeItem(props.index,items)"
+        >
+          delete
+        </v-icon>
+      </td>
+      </tr>
+    </template>
     </v-data-table>
-   <v-list two-line v-if="!itemprops && citems.length >= 1">
+    <!-- list display if array of strings -->
+    <v-list two-line v-if="!itemprops && citems.length >= 1">
       <v-list-tile v-for="(item, index) in items" v-bind:key="index">
         <v-list-tile-content>
           <v-list-tile-title v-if="typeof item === 'string'" v-text="item"></v-list-tile-title>
@@ -52,6 +63,7 @@
         </v-btn>
       </v-list-tile>
     </v-list>
+    <!-- form slot -->
     <v-layout justify-end row fill-height>
       <v-flex xs10>
         <slot name="form" :newitem="newitem"></slot>
