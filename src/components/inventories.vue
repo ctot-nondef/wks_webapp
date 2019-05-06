@@ -91,7 +91,7 @@ export default {
       if (this.newinventory.creator) this.newinventory.creator.forEach((el, idx, c) => {
         var rel = {};
         Object.keys(el).forEach((key) => {
-          if (el[key] !== null) {
+          if (el[key]) {
             rel[key] = el[key]._id || el[key];
           }
         });
@@ -100,7 +100,7 @@ export default {
       if (this.newinventory.classification) this.newinventory.classification.forEach((el, idx, c) => {
         var rel = {};
         Object.keys(el).forEach((key) => {
-          if (el[key] !== null) {
+          if (el[key]) {
             rel[key] = el[key]._id || el[key];
           }
         });

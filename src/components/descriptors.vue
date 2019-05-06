@@ -107,7 +107,7 @@ export default {
       if (this.newdescriptor.relations) this.newdescriptor.relations.forEach((el, idx, c) => {
         var rel = {};
         Object.keys(el).forEach((key) => {
-          if (el[key] !== null) {
+          if (el[key]) {
             rel[key] = el[key]._id || el[key];
           }
         });

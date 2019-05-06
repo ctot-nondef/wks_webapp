@@ -201,7 +201,7 @@ export default {
         if (this.cedit.creator) this.cedit.creator.forEach((el, idx, c) => {
           var rel = {};
           Object.keys(el).forEach((key) => {
-            if (el[key] !== null) {
+            if (el[key]) {
                 rel[key] = el[key]._id || el[key];
             }
           });
@@ -210,7 +210,7 @@ export default {
         if (this.cedit.relations) this.cedit.relations.forEach((el, idx, c) => {
           var rel = {};
           Object.keys(el).forEach((key) => {
-            if (el[key] !== null) {
+            if (el[key]) {
               rel[key] = el[key]._id || el[key];
             }
           });
@@ -219,7 +219,7 @@ export default {
         if (this.cedit.dimensions) this.cedit.dimensions.forEach((el, idx, c) => {
           var rel = {};
           Object.keys(el).forEach((key) => {
-            if (el[key] !== null) {
+            if (el[key]) {
               rel[key] = el[key]._id || el[key];
             }
           });
@@ -228,7 +228,7 @@ export default {
         if (this.cedit.classification) this.cedit.classification.forEach((el, idx, c) => {
           var rel = {};
           Object.keys(el).forEach((key) => {
-            if (el[key] !== null) {
+            if (el[key]) {
               rel[key] = el[key]._id || el[key];
             }
           });

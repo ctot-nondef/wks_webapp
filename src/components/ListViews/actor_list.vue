@@ -191,7 +191,7 @@ export default {
         if (this.cedit.relations) this.cedit.relations.forEach((el, idx, c) => {
           var rel = {};
           Object.keys(el).forEach((key) => {
-            if (el[key] !== null) {
+            if (el[key]) {
               rel[key] = el[key]._id || el[key];
             }
           });

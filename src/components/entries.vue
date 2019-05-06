@@ -109,7 +109,7 @@ export default {
       if (this.newentry.creator) this.newentry.creator.forEach((el, idx, c) => {
         var rel = {};
         Object.keys(el).forEach((key) => {
-          if (el[key] !== null) {
+          if (el[key]) {
               rel[key] = el[key]._id || el[key];
           }
         });
@@ -118,7 +118,7 @@ export default {
       if (this.newentry.dimensions) this.newentry.dimensions.forEach((el, idx, c) => {
         var rel = {};
         Object.keys(el).forEach((key) => {
-          if (el[key] !== null) {
+          if (el[key]) {
             rel[key] = el[key]._id || el[key];
           }
         });
@@ -127,7 +127,7 @@ export default {
       if (this.newentry.classification) this.newentry.classification.forEach((el, idx, c) => {
         var rel = {};
         Object.keys(el).forEach((key) => {
-          if (el[key] !== null) {
+          if (el[key]) {
             rel[key] = el[key]._id || el[key];
           }
         });
@@ -139,7 +139,7 @@ export default {
       if (this.newentry.relations) this.newentry.relations.forEach((el, idx, c) => {
         const rel = {};
         Object.keys(el).forEach((key) => {
-          if (el[key] !== null) {
+          if (el[key]) {
             rel[key] = el[key]._id || el[key];
           }
         });
