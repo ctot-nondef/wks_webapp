@@ -89,6 +89,9 @@
             <v-flex xs6>
               <autocomp entity="Descriptor" v-model="props.newitem.descriptor" label="Descriptor" :multiple="false"></autocomp>
             </v-flex>
+            <v-flex xs12>
+              <v-textarea v-model="props.newitem.note" label="Note" />
+            </v-flex>         
           </v-layout>
           </template>
         </formlistcomponent>
