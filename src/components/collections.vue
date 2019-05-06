@@ -97,7 +97,7 @@ export default {
       if (this.newcollection.creator) this.newcollection.creator.forEach((el, idx, c) => {
         var rel = {};
         Object.keys(el).forEach((key) => {
-          if (el[key] !== null) {
+          if (el[key]) {
               rel[key] = el[key]._id || el[key];
           }
         });
@@ -106,7 +106,7 @@ export default {
       if(this.newcollection.classification) this.newcollection.classification.forEach((el, idx, c) => {
         var rel = {};
         Object.keys(el).forEach((key) => {
-          if (el[key] !== null) {
+          if (el[key]) {
             rel[key] = el[key]._id || el[key];
           }
         });

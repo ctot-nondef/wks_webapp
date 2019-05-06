@@ -20,28 +20,27 @@
           nodatamessage="No creators added"
         >
           <template slot="form" slot-scope="props">
-          <v-flex xs5>
-              <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"></autocomp>
-          </v-flex>
-            <v-flex xs5>
-          <autocomp entity="Actor" v-model="props.newitem.id" label="Collector" :multiple="false"></autocomp>
-          </v-flex>
-          <v-flex xs12>
-          <v-textarea v-model="props.newitem.note" label="Note" />
-          </v-flex>
+          <v-layout justify-end row fill-height wrap>
+            <v-flex xs6>
+                <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"></autocomp>
+            </v-flex>
+            <v-flex xs6>
+              <autocomp entity="Actor" v-model="props.newitem.id" label="Collector" :multiple="false"></autocomp>
+            </v-flex>
+            <v-flex xs12>
+              <v-textarea v-model="props.newitem.note" label="Note" />
+            </v-flex>
+          </v-layout>
           </template>
         </formlistcomponent>
       </v-flex>
     </v-layout>
-    <!-- collection places -->
+    <!-- collection places, times -->
     <v-layout justify-end row fill-height>
-      <v-flex xs12>
+      <v-flex xs6>
         <autocomp entity="Descriptor" filter="PLACE" v-model="collection.place" label="Place" :multiple="true" @input="returnObject();"></autocomp>
       </v-flex>
-    </v-layout>
-    <!-- collection times -->
-    <v-layout justify-end row fill-height>
-      <v-flex xs12>
+      <v-flex xs6>
         <autocomp entity="Descriptor" filter="PERIOD" v-model="collection.time" label="Time" :multiple="true" @input="returnObject();"></autocomp>
       </v-flex>
     </v-layout>
@@ -83,24 +82,23 @@
           label="Classification"
           nodatamessage="No classifications added">
           <template slot="form" slot-scope="props">
-          <v-flex xs5>
-              <autocomp entity="Descriptor" filter="KEYWORD" v-model="props.newitem.aspect" label="Aspect" :multiple="false"></autocomp>
-          </v-flex>
-          <v-flex xs5>
-          <autocomp entity="Descriptor" v-model="props.newitem.descriptor" label="Descriptor" :multiple="false"></autocomp>
-          </v-flex>
+          <v-layout justify-end row fill-height wrap>
+            <v-flex xs6>
+                <autocomp entity="Descriptor" filter="KEYWORD" v-model="props.newitem.aspect" label="Aspect" :multiple="false"></autocomp>
+            </v-flex>
+            <v-flex xs6>
+              <autocomp entity="Descriptor" v-model="props.newitem.descriptor" label="Descriptor" :multiple="false"></autocomp>
+            </v-flex>
+          </v-layout>
           </template>
         </formlistcomponent>
       </v-flex>
     </v-layout>
-    <!-- collection begin of existence -->
+    <!-- collection beginn/end of existence -->
     <v-layout justify-start row fill-height>
       <v-flex xs6>
         <datecomponent v-bind:date.sync="collection.beginOfExistence" label="Begin of Existence"/>
       </v-flex>
-    </v-layout>
-    <!-- collection end of existence -->
-    <v-layout justify-start row fill-height>
       <v-flex xs6>
         <datecomponent v-bind:date.sync="collection.endOfExistence" label="End of Existence"/>
       </v-flex>
@@ -121,15 +119,17 @@
           nodatamessage="No Bibliograpic References added"
         >
           <template slot="form" slot-scope="props">
-          <v-flex xs6>
-              <v-text-field label="Zotero Reference URI" @click='zoterodialog=true' v-model='props.newitem.ref' prepend-icon='attach_file'></v-text-field>
-          </v-flex>
-          <v-flex xs6>
-              <v-text-field v-model="props.newitem.pageno" label="Page Number/Range"></v-text-field>
-          </v-flex>
-          <v-flex xs12>
-            <v-textarea v-model="props.newitem.note" label="Note" />
-          </v-flex>
+            <v-layout justify-end row fill-height wrap>
+              <v-flex xs6>
+                  <v-text-field label="Zotero Reference URI" @click='zoterodialog=true' v-model='props.newitem.ref' prepend-icon='attach_file'></v-text-field>
+              </v-flex>
+              <v-flex xs6>
+                  <v-text-field v-model="props.newitem.pageno" label="Page Number/Range"></v-text-field>
+              </v-flex>
+              <v-flex xs12>
+                <v-textarea v-model="props.newitem.note" label="Note" />
+              </v-flex>
+            </v-layout>
           </template>
         </formlistcomponent>
       </v-flex>

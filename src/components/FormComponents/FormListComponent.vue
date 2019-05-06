@@ -1,6 +1,6 @@
 <template>
-  <div class="formlist">
-    <v-layout justify-start row fill-height>
+  <div class="formlist pa-3">
+    <v-layout justify-start row fill-height class="pt-3 pb-3">
       <v-label>{{label}}</v-label>
     </v-layout>
     <!-- table view if array of objects -->
@@ -181,6 +181,5 @@ export default {
 <style>
 .formlist {
   background: #f1f1f1;
-  padding: 10px;
 }
 </style>
