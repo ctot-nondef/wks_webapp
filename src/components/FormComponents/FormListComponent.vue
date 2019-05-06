@@ -19,14 +19,13 @@
     <template slot="items" slot-scope="props">
      <tr>
         <td v-for="header in headers">
-          <template
-            v-if="typeof props.item === 'object' && props.item[header.name] && props.item[header.name].name && header.name !== '_id'"
-          >
+          <template v-if="typeof props.item === 'object' && props.item[header.name] && props.item[header.name].name">
            {{props.item[header.name].name}}
          </template>
-         <template
-            v-if="typeof props.item === 'object' && props.item[header.name] && typeof props.item[header.name] === 'string' || typeof props.item[header.name] === 'number'  && header.name !== '_id'"
-          >
+         <template v-else-if="header.name === 'ref'">
+          <a :href="props.item[header.name].replace('api.', '')" target="_blank">{{props.item[header.name]}}</a>
+         </template>
+         <template v-else>
           {{props.item[header.name]}}
          </template>
        </td>
