@@ -106,7 +106,7 @@ export default {
       totalHits: 0,
       filters: {
         name: '',
-        parent: '',
+        partOf: '',
       },
       headers: [
         { text: 'Name', value: 'name' },
@@ -145,7 +145,7 @@ export default {
       this.loading = true;
       let q = {};
       if (this.filters.name !== '') q.name = { '$regex': this.filters.name };
-      if (this.filters.parent !== '') q.partOf = this.filters.parent;
+      if (this.filters.partOf !== '') q.partOf = this.filters.partOf;
       this.get({
         type: 'Inventory',
         sort: this.pagination.descending ? `-${this.pagination.sortBy}` : this.pagination.sortBy,

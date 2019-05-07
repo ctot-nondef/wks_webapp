@@ -97,6 +97,9 @@ export default {
     fundamentcard,
     entryform,
   },
+  props: [
+    'filter'
+  ],
   data() {
     return {
       data: [],
@@ -106,11 +109,14 @@ export default {
       loading: false,
       itemOptions: [10, 20, 50],
       totalHits: 0,
+      filters: {
+        name: '',
+        partOf: '',
+      },
       classfilter: '',
       namefilter: '',
       headers: [
         { text: 'Name', value: 'name' },
-        { text: 'Type', value: 'instanceOf' },
         { text: 'Actions', value: 'actions' },
       ],
       pagination: {},
@@ -122,6 +128,14 @@ export default {
         this.getRecords();
       },
       deep: true,
+    },
+    filter(f) {
+      if(f) {
+        Object.keys(f).forEach((key) => {
+          this.filters[key] = f[key];
+        });
+      }
+      this.getRecords();
     },
   },
   methods: {
@@ -137,8 +151,8 @@ export default {
     getRecords() {
       this.loading = true;
       let q = {};
-      if (this.classfilter !== '') q.instanceOf = this.classfilter;
-      if (this.namefilter !== '') q.name = { '$regex': this.namefilter };
+      if (this.filters.name !== '') q.name = { '$regex': this.filters.name };
+      if (this.filters.partOf !== '') q.partOf = this.filters.partOf;
       this.get({
         type: 'Entry',
         sort: this.pagination.descending ? `-${this.pagination.sortBy}` : this.pagination.sortBy,

@@ -12,7 +12,7 @@
               </v-layout>
             </v-flex>
             <v-flex xs12>
-              <inventorylist ref="inventorylist" :filter="{ parent: this.$route.params.id }"></inventorylist>
+              <inventorylist ref="inventorylist" :filter="{ partOf: this.$route.params.id }"></inventorylist>
             </v-flex>
           </v-layout>
         </div>
