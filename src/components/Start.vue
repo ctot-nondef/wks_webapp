@@ -11,17 +11,18 @@
           <fundamentsectiondiv icon="description" caption="Sammlungsdaten"></fundamentsectiondiv>
           <v-flex xs12 sm6>
             <fundamentcard
-              caption="Anlegen eines neuen Inventars."
+              caption="Collections & Inventories"
+              :link="{ name: 'collections', params: { lang: 'en' }}"
             >
-              <p class="card-text">
-                <v-btn @click="openCreateDialog('inventory')" color="info">Create</v-btn>
-              </p>
+              <template v-slot:content>
+                <h1>Here might be a page title</h1>
+              </template>
             </fundamentcard>
           </v-flex>
           <v-flex xs12 sm6>
             <fundamentcard
-              caption="Anlegen einer neuen Sammlung."
-              :link="{ name: 'create', params: { lang: 'en' }}"
+              caption="Identified Objects"
+              :link="{ name: 'objects', params: { lang: 'en' }}"
             >
               <p class="card-text"></p>
             </fundamentcard>
@@ -29,16 +30,16 @@
           <fundamentsectiondiv icon="device_hub" caption="Normdaten"></fundamentsectiondiv>
           <v-flex xs12 sm6>
             <fundamentcard
-              caption="Anlegen einer neuen Person."
-              :link="{ name: 'store', params: { lang: 'en' }}"
+              caption="Thesaurus"
+              :link="{ name: 'descriptors', params: { lang: 'en' }}"
             >
               <p class="card-text"></p>
             </fundamentcard>
           </v-flex>
           <v-flex xs12 sm6>
             <fundamentcard
-              caption="Anlegen eines neuen Thesauruseintrags."
-              :link="{ name: 'create', params: { lang: 'en' }}"
+              caption="Actors"
+              :link="{ name: 'actors', params: { lang: 'en' }}"
             >
               <p class="card-text"></p>
             </fundamentcard>

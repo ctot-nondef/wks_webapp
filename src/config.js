@@ -22,7 +22,7 @@ export default {
 				"items":""
 			},
 			{
-				"caption":"Sammlungen",
+				"caption":"Collections",
 				"arialabel":"",
 				"icon":"collections",
 				"abstract":"",
@@ -34,7 +34,7 @@ export default {
 				"items":""
 			},
 			{
-				"caption":"Inventare",
+				"caption":"Inventories",
 				"arialabel":"",
 				"icon":"assignment",
 				"abstract":"",
@@ -46,7 +46,7 @@ export default {
 				"items":""
 			},
 			{
-				"caption":"Objekte",
+				"caption":"Objects",
 				"arialabel":"",
 				"icon":"category",
 				"abstract":"",
@@ -58,7 +58,7 @@ export default {
 				"items":""
 			},
 			{
-				"caption":"Personen",
+				"caption":"Actors",
 				"arialabel":"",
 				"icon":"person",
 				"abstract":"",
@@ -95,5 +95,5 @@ export default {
 			}
 		],
 	"repo":"",
-	"api":"https://wksdev.hephaistos.arz.oeaw.ac.at",
+	"api":"https://wks.acdh.oeaw.ac.at",
 }

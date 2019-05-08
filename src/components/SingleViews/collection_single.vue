@@ -34,11 +34,7 @@
               <v-spacer></v-spacer>
               <v-toolbar-items>
               </v-toolbar-items>
-              <v-menu bottom right offset-y>
-                <v-btn slot="activator" dark icon>
-                  <v-icon>more_vert</v-icon>
-                </v-btn>
-              </v-menu>
+              <v-btn color="warning" @click="saveInventory()">Save</v-btn>
             </v-toolbar>
             <v-container grid-list-md text-xs-center>
               <v-card color="grey lighten-2" class="pa-4">

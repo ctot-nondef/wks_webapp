@@ -17,6 +17,7 @@
       prepend-icon="event"
       readonly
       @blur="dateval = parseDate(dateFormatted)"
+      box
     ></v-text-field>
     <v-date-picker
       ref="picker"

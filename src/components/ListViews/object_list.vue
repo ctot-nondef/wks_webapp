@@ -31,9 +31,9 @@
             </div>
           </td>
           <td>
-            <v-btn fab dark small :to="{ name: 'objectsingle', params: { id:  props.item._id  }}" color="primary">
+            <!-- <v-btn fab dark small :to="{ name: 'objectsingle', params: { id:  props.item._id  }}" color="primary">
               <v-icon dark>collections_bookmark</v-icon>
-            </v-btn>
+            </v-btn> -->
             <v-btn fab dark small color="warning" @click="editobject(props.item._id)">
               <v-icon dark>edit</v-icon>
             </v-btn>
@@ -51,7 +51,6 @@
         fullscreen
         hide-overlay
         transition="dialog-bottom-transition"
-        scrollable
         >
         <v-card>
           <v-toolbar dark color="primary">
@@ -62,11 +61,7 @@
             <v-spacer></v-spacer>
             <v-toolbar-items>
             </v-toolbar-items>
-            <v-menu bottom right offset-y>
-              <v-btn slot="activator" dark icon>
-                <v-icon>more_vert</v-icon>
-              </v-btn>
-            </v-menu>
+            <v-btn color="warning" @click="saveobject()">Save</v-btn>
           </v-toolbar>
           <v-container grid-list-md text-xs-center>
             <v-card color="grey lighten-2" class="pa-4">

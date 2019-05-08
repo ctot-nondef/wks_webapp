@@ -31,9 +31,9 @@
             </div>
           </td>
           <td>
-            <v-btn fab dark small :to="{ name: 'entrysingle', params: { id:  props.item._id  }}" color="primary">
+            <!-- <v-btn fab dark small :to="{ name: 'entrysingle', params: { id:  props.item._id  }}" color="primary">
               <v-icon dark>collections_bookmark</v-icon>
-            </v-btn>
+            </v-btn> -->
             <v-btn fab dark small color="warning" @click="editentry(props.item._id)">
               <v-icon dark>edit</v-icon>
             </v-btn>
@@ -45,13 +45,11 @@
     </v-data-table>
     <v-layout column justify-space-between>
       <v-dialog
-
         v-model="entrydialog"
         @keydown.esc="entrydialog=false"
         fullscreen
         hide-overlay
         transition="dialog-bottom-transition"
-        scrollable
         >
         <v-card>
           <v-toolbar dark color="primary">

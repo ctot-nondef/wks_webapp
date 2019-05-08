@@ -18,6 +18,7 @@
       @click:append-outer="runfunc"
       hide-selected
       hide-no-data
+      box
       >
     <template slot="selection" slot-scope="data">
         <template v-if="multiple">

@@ -34,18 +34,14 @@
               <v-spacer></v-spacer>
               <v-toolbar-items>
               </v-toolbar-items>
-              <v-menu bottom right offset-y>
-                <v-btn slot="activator" dark icon>
-                  <v-icon>more_vert</v-icon>
-                </v-btn>
-              </v-menu>
+              <v-btn color="warning" @click="addInventory()">Save</v-btn>
             </v-toolbar>
             <v-container grid-list-md text-xs-center>
               <v-card color="grey lighten-2" class="pa-4">
                 <inventoryform v-if="$store.state.api.schemas.inventory" :value="newinventory" @input="newinventory=$event"></inventoryform>
                 <v-layout justify-end row fill-height>
                   <v-btn color="warning" @click="addInventory()">Save</v-btn>
-                  <v-btn color="primary" flat @click.native="inventorydialog=false">Discard</v-btn>
+                  <v-btn color="primary" dark flat @click.native="inventorydialog=false">Discard</v-btn>
                 </v-layout>
               </v-card>
             </v-container>

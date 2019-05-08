@@ -7,7 +7,7 @@
     <!-- collection name -->
     <v-layout justify-start row fill-height>
       <v-flex xs6>
-        <v-text-field v-model="collection.name" label="Name" @input="returnObject()"></v-text-field>
+        <v-text-field v-model="collection.name" box label="Name" @input="returnObject()"></v-text-field>
       </v-flex>
     </v-layout>
     <!-- collection creators -->
@@ -28,7 +28,7 @@
               <autocomp entity="Actor" v-model="props.newitem.id" label="Collector" :multiple="false"></autocomp>
             </v-flex>
             <v-flex xs12>
-              <v-textarea v-model="props.newitem.note" label="Note" />
+              <v-textarea v-model="props.newitem.note" box label="Note" />
             </v-flex>
           </v-layout>
           </template>
@@ -47,7 +47,7 @@
     <!-- collection description -->
     <v-layout justify-end row fill-height>
       <v-flex xs12>
-        <v-textarea v-model="collection.description" label="Description" @input="returnObject()"></v-textarea>
+        <v-textarea v-model="collection.description" box label="Description" @input="returnObject()"></v-textarea>
       </v-flex>
     </v-layout>
     <!-- collection documents -->
@@ -69,7 +69,7 @@
             </v-list-tile>
           </template>
         </v-list>
-        <v-text-field label="Select PDF Document" @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
+        <v-text-field label="Select PDF Document" box @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
         <input type="file" style="display: none" ref="image" accept="application/pdf" @change="onFilePicked">
       </v-flex>
     </v-layout>
@@ -90,8 +90,8 @@
               <autocomp entity="Descriptor" v-model="props.newitem.descriptor" label="Descriptor" :multiple="false"></autocomp>
             </v-flex>
             <v-flex xs12>
-              <v-textarea v-model="props.newitem.note" label="Note" />
-            </v-flex>         
+              <v-textarea box v-model="props.newitem.note" label="Note" />
+            </v-flex>
           </v-layout>
           </template>
         </formlistcomponent>
@@ -109,7 +109,7 @@
     <!-- collection destitution -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
-        <v-textarea v-model="collection.destitution" label="Destitution" @input="returnObject()"></v-textarea>
+        <v-textarea box v-model="collection.destitution" label="Destitution" @input="returnObject()"></v-textarea>
       </v-flex>
     </v-layout>
     <!-- collection references zotero -->
@@ -124,13 +124,13 @@
           <template slot="form" slot-scope="props">
             <v-layout justify-end row fill-height wrap>
               <v-flex xs6>
-                  <v-text-field label="Zotero Reference URI" @click='zoterodialog=true' v-model='props.newitem.ref' prepend-icon='attach_file'></v-text-field>
+                  <v-text-field box label="Zotero Reference URI" @click='zoterodialog=true' v-model='props.newitem.ref' prepend-icon='attach_file'></v-text-field>
               </v-flex>
               <v-flex xs6>
-                  <v-text-field v-model="props.newitem.pageno" label="Page Number/Range"></v-text-field>
+                  <v-text-field box v-model="props.newitem.pageno" label="Page Number/Range"></v-text-field>
               </v-flex>
               <v-flex xs12>
-                <v-textarea v-model="props.newitem.note" label="Note" />
+                <v-textarea box v-model="props.newitem.note" label="Note" />
               </v-flex>
             </v-layout>
           </template>
@@ -146,7 +146,7 @@
           nodatamessage="No comments added">
           <template slot="form" slot-scope="props">
           <v-flex xs12>
-              <v-textarea v-model="props.newitem.textval" label="New Comment"></v-textarea>
+              <v-textarea box v-model="props.newitem.textval" label="New Comment"></v-textarea>
           </v-flex>
           </template>
         </formlistcomponent>
@@ -258,7 +258,7 @@ export default {
           this.imageUrl = fr.result;
           this.imageFile = files[0];
           formData.append('file', this.imageFile);
-          axios.post('https://wksdev.hephaistos.arz.oeaw.ac.at/api/v1/upload/', formData, {
+          axios.post(`${this.$store.state.api.url}/api/v1/upload/`, formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
             },
