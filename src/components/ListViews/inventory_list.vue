@@ -51,7 +51,7 @@
             <v-btn icon dark @click.native="inventorydialog=false">
               <v-icon>close</v-icon>
             </v-btn>
-            <v-toolbar-title>Edit Inventory</v-toolbar-title>
+            <v-toolbar-title>Edit Entry</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
             </v-toolbar-items>

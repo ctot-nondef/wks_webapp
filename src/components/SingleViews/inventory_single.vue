@@ -30,7 +30,7 @@
               <v-btn icon dark @click.native="inventorydialog=false">
                 <v-icon>close</v-icon>
               </v-btn>
-              <v-toolbar-title>Create Inventory</v-toolbar-title>
+              <v-toolbar-title>Create Entry</v-toolbar-title>
               <v-spacer></v-spacer>
               <v-toolbar-items>
               </v-toolbar-items>
@@ -112,7 +112,7 @@ export default {
         this.newinventory.partOf = this.newinventory.partOf._id;
       }
       this.post({ type: 'inventory', body: this.newinventory }).then((res) => {
-        this.newinventory = {
+        this.newentry = {
           partOf: this.view,
         }
         this.inventorydialog = false;
@@ -125,7 +125,7 @@ export default {
   created() {
     this.get({ type: 'Inventory', id: this.$route.params.id }).then((res) => {
       this.view = res.data;
-      this.newinventory = {
+      this.newentry = {
         partOf: res.data,
       }
     });
