@@ -34,7 +34,7 @@
               <v-spacer></v-spacer>
               <v-toolbar-items>
               </v-toolbar-items>
-              <v-btn color="warning" @click="saveCollection()">Save</v-btn>
+              <v-btn color="warning" @click="addCollection()">Save</v-btn>
             </v-toolbar>
             <v-container grid-list-md text-xs-center>
               <v-card color="grey lighten-2" class="pa-4">
