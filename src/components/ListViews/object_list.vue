@@ -105,7 +105,6 @@ export default {
       namefilter: '',
       headers: [
         { text: 'Name', value: 'name' },
-        { text: 'Type', value: 'instanceOf' },
         { text: 'Actions', value: 'actions' },
       ],
       pagination: {},
@@ -163,6 +162,7 @@ export default {
         }),
         populate: JSON.stringify([
           { path: 'instanceOf' },
+          { path: 'images.reference' },
           { path: 'currentOwner', select: 'name' },
           { path: 'material', select: 'name' },
           { path: 'technique', select: 'name' },
