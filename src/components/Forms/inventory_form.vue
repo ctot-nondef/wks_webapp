@@ -69,6 +69,12 @@
         <input type="file" style="display: none" ref="image" accept="application/pdf" @change="onFilePicked">
       </v-flex>
     </v-layout>
+    <!-- inventory transcription -->
+   <v-layout justify-start row fill-height>
+     <v-flex xs12>
+       <v-textarea v-model="inventory.transcription" label="Transcription"></v-textarea>
+     </v-flex>
+   </v-layout>
     <!-- inventory references zotero? -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
