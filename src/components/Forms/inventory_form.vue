@@ -46,18 +46,18 @@
         <datecomponent v-bind:date.sync="inventory.endOfExistence" label="End of Existence"/>
       </v-flex>
     </v-layout>
-    <v-layout justify-start row fill-height>
+    <!-- inventory documents -->
+    <v-layout justify-end row fill-height>
       <v-flex xs12>
-        <!-- inventory images or documents? -->
         <v-list two-line>
           <template v-for="(item, index) in inventory.documents">
-            <v-list-tile :key="item._id" avatar  @click="">
+            <v-list-tile :key="item._id" avatar :href="`${$store.state.api.url}/${item.ref.path}`" target="_blank">
               <v-list-tile-avatar>
-                <img :src="`https://wksgoose.acdh-dev.oeaw.ac.at/${item.path.split('.')[0]}_thumb.jpg`">
+                <img :src="`${$store.state.api.url}/asset/uploads/thumbs/${item.ref.name.split('.')[0]}_thumb.jpg`">
               </v-list-tile-avatar>
               <v-list-tile-content>
-                <v-list-tile-title v-html="item.name"></v-list-tile-title>
-                <v-list-tile-sub-title v-html="item.path"></v-list-tile-sub-title>
+                <v-list-tile-title v-html="item.ref.name"></v-list-tile-title>
+                <v-list-tile-sub-title v-html="item.ref.path"></v-list-tile-sub-title>
               </v-list-tile-content>
               <v-btn fab dark small color="error" @click="removeimage(index)">
                 <v-icon dark>delete</v-icon>
@@ -65,8 +65,8 @@
             </v-list-tile>
           </template>
         </v-list>
-        <v-text-field label="Select Image" @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
-        <input type="file" style="display: none"  ref="image"  accept="image/*"  @change="onFilePicked"/>
+        <v-text-field label="Select PDF Document" box @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
+        <input type="file" style="display: none" ref="image" accept="application/pdf" @change="onFilePicked">
       </v-flex>
     </v-layout>
     <!-- inventory references zotero? -->
@@ -191,14 +191,14 @@ export default {
           const formData = new FormData();
           this.imageUrl = fr.result;
           this.imageFile = files[0];
-          formData.append('image', this.imageFile);
-          axios.post('https://wksgoose.acdh-dev.oeaw.ac.at/api/v1/upload/', formData, {
+          formData.append('file', this.imageFile);
+          axios.post(`${this.$store.state.api.url}/api/v1/upload/`, formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
             },
           }).then((res) => {
             if (!this.inventory.documents) this.inventory.documents = [];
-            this.inventory.documents.push(res.data);
+            this.inventory.documents.push({ ref: res.data });
             this.returnObject();
             this.imageName = '';
             this.imageFile = '';

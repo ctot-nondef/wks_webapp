@@ -264,7 +264,7 @@ export default {
             },
           }).then((res) => {
             if (!this.collection.documents) this.collection.documents = [];
-            this.collection.documents.push({ ref: res.data, note: 'test' });
+            this.collection.documents.push({ ref: res.data });
             this.returnObject();
             this.imageName = '';
             this.imageFile = '';
