@@ -2,7 +2,15 @@
   <div class="">
     <v-layout justify-end row fill-height>
       <!-- descriptor identifiers -->
-      <chips :items="descriptor.identifier"/>
+      <v-flex xs12>
+        <v-combobox
+          v-model="descriptor.identifier"
+          chips
+          box
+          multiple
+          label="Identifiers"
+        ></v-combobox>
+      </v-flex>
     </v-layout>
     <v-layout justify-end row fill-height>
       <v-flex xs6>

@@ -2,7 +2,15 @@
   <div class="">
     <v-layout justify-end row fill-height>
       <!-- actor identifiers -->
-      <chips :items="actor.identifier"/>
+      <v-flex xs12>
+        <v-combobox
+          v-model="actor.identifier"
+          chips
+          box
+          multiple
+          label="Identifiers"
+        ></v-combobox>
+      </v-flex>
     </v-layout>
     <v-layout justify-start row fill-height>
       <v-flex xs6>
