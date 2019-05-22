@@ -110,7 +110,7 @@ export default {
       }
       this.post({ type: 'inventory', body: this.newinventory }).then((res) => {
         this.newinventory = {};
-        this.iventorydialog = false;
+        this.inventorydialog = false;
         this.$refs.inventorylist.getRecords();
       });
     },
