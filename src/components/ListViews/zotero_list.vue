@@ -26,7 +26,7 @@ import ZOTERO from '../../zotero';
 export default {
   mixins: [HELPERS, ZOTERO],
   data: () => ({
-    LibToFetch: '2083331',
+    LibToFetch: '2258599',
     loading: true,
     totalItems: 7,
     search: '',
