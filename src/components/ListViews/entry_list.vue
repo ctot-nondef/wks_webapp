@@ -25,11 +25,7 @@
       <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
       <template slot="items" slot-scope="props" >
           <td>{{ props.item.name }}</td>
-          <td>
-            <div v-if="props.item.instanceOf">
-              {{ props.item.instanceOf.labels[4].label }}
-            </div>
-          </td>
+          <td>{{ props.item.originalTitle }}</td>
           <td>
             <!-- <v-btn fab dark small :to="{ name: 'entrysingle', params: { id:  props.item._id  }}" color="primary">
               <v-icon dark>collections_bookmark</v-icon>
@@ -115,6 +111,7 @@ export default {
       namefilter: '',
       headers: [
         { text: 'Name', value: 'name' },
+        { text: 'Original Title', value: 'originalTitle' },
         { text: 'Actions', value: 'actions' },
       ],
       pagination: {},
