@@ -9,23 +9,24 @@
 </template>
 
 <script>
-import debounce from 'debounce'
+import debounce from 'debounce';
+import axios from 'axios';
 
 export default {
-  data () {
+  data() {
     return {
       state: null,
-      states: []
-    }
+      states: [],
+    };
   },
   methods: {
     loadStates: debounce((event) => {
       if (event.target.value.length > 2) {
         axios.get(`/api/states?q=${event.target.value}`).then(({ data }) => {
-          this.states = data
-        })
+          this.states = data;
+        });
       }
-    }, 200)
-  }
-}
+    }, 200),
+  },
+};
 </script>

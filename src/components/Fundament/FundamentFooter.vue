@@ -99,13 +99,14 @@ footer h3 {
   margin-left: 8px; }
 
 .footer-login-button i {
-  color: $acdh_blue;
+  /*color: $acdh_blue;*/
   font-size: 22px;
   margin-top: 6px;
   transition: color ease .2s; }
 
 .footer-login-button i:hover, .footer-login-button i:focus {
-  color: #3B89AD; }
+  color: #3B89AD;
+}
 
 .footer-imprint-bar {
   text-align: center;
