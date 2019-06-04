@@ -50,8 +50,9 @@ export default {
     },
   },
   watch: {
-    datepickermenu(val) {
-      val && this.$nextTick(() => (this.$refs.picker.activePicker = 'YEAR'));
+    datepickermenu() {
+      // eslint-disable-next-line no-return-assign
+      this.$nextTick(() => (this.$refs.picker.activePicker = 'YEAR'));
     },
     date() {
       this.dateFormatted = this.formatDate(this.dateval);

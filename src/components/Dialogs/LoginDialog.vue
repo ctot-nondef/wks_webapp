@@ -64,10 +64,10 @@ export default {
           password: this.password,
         },
         $config: {
-          withCredentials: true
+          withCredentials: true,
         },
       }).then((res) => {
-        this.setToken({token: res.data.session, user: res.data.user});
+        this.setToken({ token: res.data.session, user: res.data.user });
         this.loginMut();
         this.closeDialog('loginDialog');
       });

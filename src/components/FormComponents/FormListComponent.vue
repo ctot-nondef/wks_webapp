@@ -55,7 +55,7 @@
         <v-list-tile-content>
           <v-list-tile-title v-if="typeof item === 'string'" v-text="item"></v-list-tile-title>
           </v-list-tile-content>
-        <v-btn fab dark small color="error" @click="removeItem(index,items);">
+        <v-btn fab dark small color="error" @click="removeItem(index,items)">
           <v-icon dark>delete</v-icon>
         </v-btn>
       </v-list-tile>
@@ -66,13 +66,13 @@
         <slot name="form" :newitem="newitem"></slot>
       </v-flex>
       <v-flex xs2>
-        <v-btn ref="addbutton" v-if="editingMode === false" center fab dark small color="warning" @click.native="addItem(newitem,items);clearItem()">
+        <v-btn ref="addbutton" v-if="editingMode === false" center fab dark small color="warning" @click.native="addItem(newitem,items); clearItem()">
           <v-icon dark>add</v-icon>
         </v-btn>
         <v-btn v-if="editingMode === true" center fab dark small color="warning" @click.native="saveItem(newitem,items)">
           <v-icon dark>save</v-icon>
         </v-btn>
-        <v-btn v-if="editingMode === true" center fab dark small color="warning" @click.native="cancelEditing();">
+        <v-btn v-if="editingMode === true" center fab dark small color="warning" @click.native="cancelEditing()">
           <v-icon dark>cancel</v-icon>
         </v-btn>
       </v-flex>

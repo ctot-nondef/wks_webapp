@@ -41,18 +41,19 @@ export default {
     return {
       user: {
         username: '',
-        password: ''
+        password: '',
       },
       rules: {
         required: value => !!value || 'Required.',
         min: v => v.length >= 8 || 'Min 8 characters',
       },
       showPwd: false,
-    }
+    };
   },
   watch: {
     value(val) {
-      if(!val.password) val.password = '';
+      // eslint-disable-next-line no-param-reassign
+      if (!val.password) val.password = '';
       this.user = val;
     },
   },
@@ -62,8 +63,8 @@ export default {
     },
   },
   created() {
-  }
-}
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

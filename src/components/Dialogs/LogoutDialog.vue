@@ -50,7 +50,7 @@ export default {
     logout() {
       this.f('getLogout')({
         $config: {
-          withCredentials: true
+          withCredentials: true,
         },
       }).then(() => {
         this.logoutMut();
