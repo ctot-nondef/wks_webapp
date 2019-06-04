@@ -18,9 +18,9 @@ const getters = {
 
 const mutations = {
   setState(s, pstate) {
-    for (const key in pstate) {
-      if (pstate.hasOwnProperty(key) && s.hasOwnProperty(key)) s[key] = pstate[key];
-    }
+    Object.keys(pstate).forEach((key) => {
+      if (pstate[key] !== undefined && s[key] !== undefined) s[key] = pstate[key];
+    });
   },
   setConfig(s, config) {
     s.config = config;
@@ -53,7 +53,7 @@ const mutations = {
 
 const actions = {
   init({ commit }, pstate) {
-    if (pstate!= null && pstate.pState.app) commit('setState', pstate.pState.app);
+    if (pstate !== null && pstate.pState.app) commit('setState', pstate.pState.app);
   },
   toggleAppMode({ commit }) {
     commit('toggleDrawer');

@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import * as api from './api';
 
 const state = {
@@ -14,7 +15,7 @@ const state = {
 };
 
 const $config = {
-  withCredentials: true
+  withCredentials: true,
 };
 
 /* eslint no-param-reassign: ["error", { "props": false }] */
@@ -24,12 +25,7 @@ const getters = {
   f: s => name => s.apilib[name],
   schema: s => name => s.schemas[name],
   types: s => Object.keys(s.schemas),
-  getClassByName: s => ({ type, name }) => {
-      console.log(type, name);
-      let res = s.classes[type].find(item => item.name === name);
-      console.log(res);
-      return res;
-  },
+  getClassByName: s => ({ type, name }) => s.classes[type].find(item => item.name === name),
 };
 
 const mutations = {
@@ -40,15 +36,15 @@ const mutations = {
     s.apilib = lib;
   },
   setApiURL(s, url) {
-    if(s.apilib.setDomain) {
+    if (s.apilib.setDomain) {
       s.apilib.setDomain(`${url}/api/v1`);
       s.url = url;
     }
   },
   setState(s, pstate) {
-    for (const key in pstate) {
-      if (pstate.hasOwnProperty(key) && s.hasOwnProperty(key)) s[key] = pstate[key];
-    }
+    Object.keys(pstate).forEach((key) => {
+      if (pstate[key] !== undefined && s[key] !== undefined) s[key] = pstate[key];
+    });
   },
   setToken(s, { token, user }) {
     s.token = token;
@@ -81,15 +77,16 @@ const mutations = {
 };
 
 const actions = {
+  // eslint-disable-next-line no-shadow
   init({ state, commit }, config) {
     commit('setApiLib', api);
-    commit('setApiURL', `${config.config.api}`)
-    if (config.pstate!= null && config.pstate.pState.api) commit('setState', config.pstate.pState.api);
+    commit('setApiURL', `${config.config.api}`);
+    if (config.pstate !== null && config.pstate.pState.api) commit('setState', config.pstate.pState.api);
     commit('setLoading', 'Loading Database Configuration.');
-    state.apilib.get( { $config } ).then((res) => {
+    state.apilib.get({ $config }).then((res) => {
       if (res.data.data && res.data.data.length > 0) {
         const sa = res.data.data;
-        for (let i = 0; i < sa.length; i++) {
+        for (let i = 0; i < sa.length; i += 1) {
           commit('setSchema', sa[i]);
         }
         commit('setLoadingFinished');
@@ -99,24 +96,24 @@ const actions = {
       $config,
       type: 'Descriptor',
       query: JSON.stringify({
-        description: "Class of Actor",
+        description: 'Class of Actor',
       }),
     }).then((res) => {
-      commit('setClasses', { type: 'Actor', classlist: res.data});
+      commit('setClasses', { type: 'Actor', classlist: res.data });
     });
     state.apilib.getDescriptor({
       $config,
       type: 'Descriptor',
       query: JSON.stringify({
-        description: "Class of Descriptor",
+        description: 'Class of Descriptor',
       }),
     }).then((res) => {
-      commit('setClasses', { type: 'Descriptor', classlist: res.data});
+      commit('setClasses', { type: 'Descriptor', classlist: res.data });
     });
   },
   get({ state, commit }, { type, id, sort, skip, limit, query, populate }) {
     let p = {};
-    let t = type.charAt(0).toUpperCase() + type.slice(1);
+    const t = type.charAt(0).toUpperCase() + type.slice(1);
     return new Promise((resolve, reject) => {
       if (type && id) {
         commit('setLoading', `Getting ${type} ${id} from Database`);
@@ -137,12 +134,12 @@ const actions = {
   },
   post({ state, commit }, { type, id, body }) {
     let p = {};
-    let params = {
-      $config
-    }
+    const params = {
+      $config,
+    };
     params[type] = body;
     params.id = id;
-    let t = type.charAt(0).toUpperCase() + type.slice(1);
+    const t = type.charAt(0).toUpperCase() + type.slice(1);
     return new Promise((resolve, reject) => {
       if (type && id) {
         commit('setLoading', `Updating ${type} ${id} to Database`);
@@ -163,12 +160,12 @@ const actions = {
   },
   patch({ state, commit }, { type, id, body }) {
     let p = {};
-    let params = {
-      $config
-    }
+    const params = {
+      $config,
+    };
     params[type] = body;
     params.id = id;
-    let t = type.charAt(0).toUpperCase() + type.slice(1);
+    const t = type.charAt(0).toUpperCase() + type.slice(1);
     return new Promise((resolve, reject) => {
       if (type && id) {
         commit('setLoading', `Updating ${type} ${id} to Database`);
@@ -189,7 +186,7 @@ const actions = {
   },
   delete({ state, commit }, { type, id }) {
     let p = {};
-    let t = type.charAt(0).toUpperCase() + type.slice(1);
+    const t = type.charAt(0).toUpperCase() + type.slice(1);
     return new Promise((resolve, reject) => {
       if (type && id) {
         commit('setLoading', `Deleting ${type} ${id} in Database`);
