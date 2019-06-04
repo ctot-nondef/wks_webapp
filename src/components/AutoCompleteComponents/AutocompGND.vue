@@ -38,64 +38,62 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+  /* eslint-disable no-underscore-dangle */
+
+  import { mapActions } from 'vuex';
 import HELPERS from '../../helpers';
 
 export default {
-  mixins: [HELPERS],
-  props: [
-    'value',
-    'label',
-    'multiple',
-    'type',
-  ],
-  data() {
-    return {
-      loading: false,
-      items: [],
-      select: this.value || [],
-      search: null,
-    };
-  },
-  watch: {
-    search(newval) {
-      if (newval) this.querySelections(newval);
+    mixins: [HELPERS],
+    props: [
+      'value',
+      'label',
+      'multiple',
+      'type',
+    ],
+    data() {
+      return {
+        loading: false,
+        items: [],
+        select: this.value || [],
+        search: null,
+      };
     },
-    value(val) {
-      this.select = val;
-      this.items = val;
-    },
-  },
-  methods: {
-    querySelections() {
-      this.loading = true;
-      this.APIS.GND.SEARCH.get('', { params:
-      {
-        q: this.search,
-        format: 'json:suggest',
-        filter: this.type ? `type:${this.type}` : '',
+    watch: {
+      search(newval) {
+        if (newval) this.querySelections(newval);
       },
-      })
-      .then((res) => {
-        this.items = res.data;
-        this.loading = false;
-      })
-      .catch((res) => {
-        this.$debug(res);
-        this.loading = false;
-      });
+      value(val) {
+        this.select = val;
+        this.items = val;
+      },
     },
-    ...mapActions('api', [
-      'get',
-    ]),
-    remove(item) {
-      const index = this.select.findIndex(r => r._id === item._id);
-      if (index >= 0) this.select.splice(index, 1);
-      this.$emit('input', this.select);
+    methods: {
+      querySelections() {
+        this.loading = true;
+        this.APIS.GND.SEARCH.get('', { params:
+        {
+          q: this.search,
+          format: 'json:suggest',
+          filter: this.type ? `type:${this.type}` : '',
+        },
+        })
+        .then((res) => {
+          this.items = res.data;
+          this.loading = false;
+        })
+        .catch(() => {
+          this.loading = false;
+        });
+      },
+      ...mapActions('api', [
+        'get',
+      ]),
+      remove(item) {
+        const index = this.select.findIndex(r => r._id === item._id);
+        if (index >= 0) this.select.splice(index, 1);
+        this.$emit('input', this.select);
+      },
     },
-  },
-  created() {
-
-  },
 };
 </script>
