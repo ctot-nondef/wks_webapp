@@ -48,132 +48,133 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+  /* eslint-disable no-underscore-dangle */
+
+  import { mapGetters, mapActions } from 'vuex';
 import HELPERS from '../../helpers';
 
 export default {
-  mixins: [HELPERS],
-  props: [
-    'value',
-    'label',
-    'multiple',
-    'entity',
-    'filter',
-    'icon',
-    'clickevent',
-    'displayitemprops',
-  ],
-  data() {
-    return {
-      loading: false,
-      items: [],
-      select: [] || '',
-      search: null,
-    };
-  },
-  watch: {
-    search(newval) {
-      if (newval) {
-        this.querySelections(newval);
-      }
-    },
-    value(val) {
-      if (this.multiple === true) {
-        this.select = val;
-        this.items = val;
-      } else {
-        this.select = val;
-        this.items.push(val);
-      }
-    },
-  },
-  methods: {
-    getItemPropFromPath(obj, index, path) {
-      let res = obj;
-      if (path.includes('.')) {
-        path.split('.').forEach((key) => {
-          if (res.length) res = res[index];
-          else res = res[key];
-        });
-      } else res = obj[path];
-      return res;
-    },
-    clear() {
-      this.select = null;
-      this.items.length = 0;
-    },
-    runfunc() {
-      if (this.clickevent) {
-        this.clickevent();
-      }
-    },
-    querySelections() {
-      this.loading = true;
-      let filterval = '';
-      const queryparams = { name: { $regex: this.search || '' } };
-      const requestparams = {
-        type: this.entity,
+    mixins: [HELPERS],
+    props: [
+      'value',
+      'label',
+      'multiple',
+      'entity',
+      'filter',
+      'icon',
+      'clickevent',
+      'displayitemprops',
+    ],
+    data() {
+      return {
+        loading: false,
+        items: [],
+        select: [] || '',
+        search: null,
       };
-      if (this.filter) {
-        filterval = this.filterDescriptors(this.filter);
-        queryparams.instanceOf = filterval;
-      }
-      if (this.displayitemprops) {
-        const populateprops = [];
-        Object.keys(this.displayitemprops).forEach((key) => {
-          this.displayitemprops[key].forEach((obj) => {
-            if (obj.populate === true) {
-              populateprops.push({ path: obj.path, select: obj.select });
-            }
-          });
-        });
-        requestparams.populate = JSON.stringify(populateprops);
-      }
-
-      requestparams.query = JSON.stringify(queryparams);
-      this.get(requestparams)
-      .then((res) => {
-        if (Array.isArray(res.data)) this.items = res.data;
-        this.loading = false;
-      })
-      .catch((res) => {
-        this.$debug(res);
-        this.loading = false;
-      });
     },
-    ...mapActions('api', [
-      'get',
-    ]),
-    ...mapGetters('api', [
-      'getClassByName',
-    ]),
-    filterDescriptors(descriptortype) {
-      return this.$store.state.api.classes[this.entity]
-        .find(item => item.name === descriptortype)._id;
-    },
-    remove(item) {
-      const index = this.select.indexOf(item._id);
-      if (index >= 0) this.select.splice(index, 1);
-      this.$emit('input', this.select);
-    },
-  },
-  filters: {
-    renderProps: (value) => {
-      let newvalue = '';
-      if (value) {
-        if (typeof value !== 'string') {
-          Object.keys(value).forEach((key) => {
-            if (typeof value[key] === 'string' || typeof value[key] === 'number') {
-              newvalue += `${value[key]} `;
-            } else { newvalue += `${value[key].name} `; }
-          });
-        } else {
-          newvalue = value;
+    watch: {
+      search(newval) {
+        if (newval) {
+          this.querySelections(newval);
         }
-      }
-      return newvalue;
+      },
+      value(val) {
+        if (this.multiple === true) {
+          this.select = val;
+          this.items = val;
+        } else {
+          this.select = val;
+          this.items.push(val);
+        }
+      },
     },
-  },
+    methods: {
+      getItemPropFromPath(obj, index, path) {
+        let res = obj;
+        if (path.includes('.')) {
+          path.split('.').forEach((key) => {
+            if (res.length) res = res[index];
+            else res = res[key];
+          });
+        } else res = obj[path];
+        return res;
+      },
+      clear() {
+        this.select = null;
+        this.items.length = 0;
+      },
+      runfunc() {
+        if (this.clickevent) {
+          this.clickevent();
+        }
+      },
+      querySelections() {
+        this.loading = true;
+        let filterval = '';
+        const queryparams = { name: { $regex: this.search || '' } };
+        const requestparams = {
+          type: this.entity,
+        };
+        if (this.filter) {
+          filterval = this.filterDescriptors(this.filter);
+          queryparams.instanceOf = filterval;
+        }
+        if (this.displayitemprops) {
+          const populateprops = [];
+          Object.keys(this.displayitemprops).forEach((key) => {
+            this.displayitemprops[key].forEach((obj) => {
+              if (obj.populate === true) {
+                populateprops.push({ path: obj.path, select: obj.select });
+              }
+            });
+          });
+          requestparams.populate = JSON.stringify(populateprops);
+        }
+
+        requestparams.query = JSON.stringify(queryparams);
+        this.get(requestparams)
+        .then((res) => {
+          if (Array.isArray(res.data)) this.items = res.data;
+          this.loading = false;
+        })
+        .catch(() => {
+          this.loading = false;
+        });
+      },
+      ...mapActions('api', [
+        'get',
+      ]),
+      ...mapGetters('api', [
+        'getClassByName',
+      ]),
+      filterDescriptors(descriptortype) {
+        return this.$store.state.api.classes[this.entity]
+          .find(item => item.name === descriptortype)._id;
+      },
+      remove(item) {
+        const index = this.select.indexOf(item._id);
+        if (index >= 0) this.select.splice(index, 1);
+        this.$emit('input', this.select);
+      },
+    },
+    filters: {
+      renderProps: (value) => {
+        let newvalue = '';
+        if (value) {
+          if (typeof value !== 'string') {
+            Object.keys(value).forEach((key) => {
+              if (typeof value[key] === 'string' || typeof value[key] === 'number') {
+                newvalue += `${value[key]} `;
+              } else { newvalue += `${value[key].name} `; }
+            });
+          } else {
+            newvalue = value;
+          }
+        }
+        return newvalue;
+      },
+    },
 };
 </script>
 <style>
