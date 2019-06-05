@@ -78,7 +78,9 @@
 </template>
 
 <script>
-import { mapMutations, mapActions } from 'vuex';
+  /* eslint-disable no-underscore-dangle,no-param-reassign */
+
+  import { mapMutations, mapActions } from 'vuex';
 
 import fundamentcard from '../Fundament/FundamentCard';
 import entryform from '../Forms/entry_form';
@@ -87,191 +89,204 @@ import entryform from '../Forms/entry_form';
 /* eslint no-console: ["error", { allow: ["log"] }] */
 
 export default {
-  components: {
-    fundamentcard,
-    entryform,
-  },
-  props: [
-    'filter'
-  ],
-  data() {
-    return {
-      data: [],
-      cedit: {},
-      cedits: {},
-      entrydialog: false,
-      loading: false,
-      itemOptions: [10, 20, 50],
-      totalHits: 0,
-      filters: {
-        name: '',
-        partOf: '',
-      },
-      classfilter: '',
-      namefilter: '',
-      headers: [
-        { text: 'Name', value: 'name' },
-        { text: 'Original Title', value: 'originalTitle' },
-        { text: 'Actions', value: 'actions' },
-      ],
-      pagination: {},
-    };
-  },
-  watch: {
-    pagination: {
-      handler() {
-        this.getRecords();
-      },
-      deep: true,
+    components: {
+      fundamentcard,
+      entryform,
     },
-    filter(f) {
-      if(f) {
-        Object.keys(f).forEach((key) => {
-          this.filters[key] = f[key];
-        });
-      }
-      this.getRecords();
+    props: [
+      'filter',
+    ],
+    data() {
+      return {
+        data: [],
+        cedit: {},
+        cedits: {},
+        entrydialog: false,
+        loading: false,
+        itemOptions: [10, 20, 50],
+        totalHits: 0,
+        filters: {
+          name: '',
+          partOf: '',
+        },
+        classfilter: '',
+        namefilter: '',
+        headers: [
+          { text: 'Name', value: 'name' },
+          { text: 'Original Title', value: 'originalTitle' },
+          { text: 'Actions', value: 'actions' },
+        ],
+        pagination: {},
+      };
     },
-  },
-  methods: {
-    ...mapActions('api', [
-      'get',
-      'post',
-      'delete',
-    ]),
-    ...mapMutations('api', [
-      'setPage',
-      'setSize',
-    ]),
-    getRecords() {
-      this.loading = true;
-      let q = {};
-      if (this.filters.name !== '') q.name = { '$regex': this.filters.name };
-      if (this.filters.partOf !== '') q.partOf = this.filters.partOf;
-      this.get({
-        type: 'Entry',
-        sort: this.pagination.descending ? `-${this.pagination.sortBy}` : this.pagination.sortBy,
-        limit: this.pagination.rowsPerPage,
-        skip: (this.pagination.page - 1) * this.pagination.rowsPerPage,
-        populate: JSON.stringify([
-          { path: 'instanceOf' },
-        ]),
-        query: JSON.stringify(q),
-      }).then((res) => {
-        this.loading = false;
-        this.data = res.data;
-        this.totalHits = parseInt(res.headers['x-total-count']);
-      }).catch((err) => {
-        console.log(err);
-        if (err.response.data && err.response.data.detail === 'Invalid page.') {
-          this.pagination.page -= 1;
+    watch: {
+      pagination: {
+        handler() {
           this.getRecords();
+        },
+        deep: true,
+      },
+      filter(f) {
+        if (f) {
+          Object.keys(f).forEach((key) => {
+            this.filters[key] = f[key];
+          });
         }
-      });
+        this.getRecords();
+      },
     },
-    editentry(_id) {
-      this.get({
-        type: 'Entry',
-        query: JSON.stringify({
-          _id: _id,
-        }),
-        populate: JSON.stringify([
-          { path: 'partOf', select: 'name' },
-          { path: 'material', select: 'name' },
-          { path: 'technique', select: 'name' },
-          { path: 'creator.role', select: 'name' },
-          { path: 'creator.id', select: 'name' },
-          { path: 'dimensions.aspect', select: 'name' },
-          { path: 'dimensions.unit', select: 'name' },
-          { path: 'classification.aspect', select: 'name' },
-          { path: 'classification.descriptor', select: 'name' },
-          { path: 'relations.target', select: 'name' },
-          { path: 'transaction', select: 'name' },
-        ]),
-      }).then((res) => {
-        this.cedit = res.data[0];
-        this.entrydialog = true;
-      });
-    },
-    saveentry() {
-      if (this.cedit._id) {
-        if (this.cedit.partOf) {
-          this.cedit.partOf = this.cedit.partOf._id;
+    methods: {
+      ...mapActions('api', [
+        'get',
+        'post',
+        'delete',
+      ]),
+      ...mapMutations('api', [
+        'setPage',
+        'setSize',
+      ]),
+      getRecords() {
+        this.loading = true;
+        const q = {};
+        if (this.filters.name !== '') q.name = { $regex: this.filters.name };
+        if (this.filters.partOf !== '') q.partOf = this.filters.partOf;
+        this.get({
+          type: 'Entry',
+          sort: this.pagination.descending ? `-${this.pagination.sortBy}` : this.pagination.sortBy,
+          limit: this.pagination.rowsPerPage,
+          skip: (this.pagination.page - 1) * this.pagination.rowsPerPage,
+          populate: JSON.stringify([
+            { path: 'instanceOf' },
+          ]),
+          query: JSON.stringify(q),
+        }).then((res) => {
+          this.loading = false;
+          this.data = res.data;
+          this.totalHits = parseInt(res.headers['x-total-count'], 10);
+        }).catch((err) => {
+          console.log(err);
+          if (err.response.data && err.response.data.detail === 'Invalid page.') {
+            this.pagination.page -= 1;
+            this.getRecords();
+          }
+        });
+      },
+      editentry(_id) {
+        this.get({
+          type: 'Entry',
+          query: JSON.stringify({
+            _id,
+          }),
+          populate: JSON.stringify([
+            { path: 'partOf', select: 'name' },
+            { path: 'material', select: 'name' },
+            { path: 'technique', select: 'name' },
+            { path: 'creator.role', select: 'name' },
+            { path: 'creator.id', select: 'name' },
+            { path: 'dimensions.aspect', select: 'name' },
+            { path: 'dimensions.unit', select: 'name' },
+            { path: 'classification.aspect', select: 'name' },
+            { path: 'classification.descriptor', select: 'name' },
+            { path: 'relations.target', select: 'name' },
+            { path: 'transaction', select: 'name' },
+          ]),
+        }).then((res) => {
+          this.cedit = res.data[0];
+          this.entrydialog = true;
+        });
+      },
+      saveentry() {
+        if (this.cedit._id) {
+          if (this.cedit.partOf) {
+            this.cedit.partOf = this.cedit.partOf._id;
+          }
+          if (this.cedit.material) {
+            this.cedit.material.forEach((el, idx, c) => {
+              c[idx] = el._id;
+            });
+          }
+          if (this.cedit.technique) {
+            this.cedit.technique.forEach((el, idx, c) => {
+              c[idx] = el._id;
+            });
+          }
+          if (this.cedit.transaction) {
+            this.cedit.transaction.forEach((el, idx, c) => {
+              c[idx] = el._id;
+            });
+          }
+          if (this.cedit.creator) {
+            this.cedit.creator.forEach((el, idx, c) => {
+              const rel = {};
+              Object.keys(el).forEach((key) => {
+                if (el[key]) {
+                  rel[key] = el[key]._id || el[key];
+                }
+              });
+              c[idx] = rel;
+            });
+          }
+          if (this.cedit.relations) {
+            this.cedit.relations.forEach((el, idx, c) => {
+              const rel = {};
+              Object.keys(el).forEach((key) => {
+                if (el[key]) {
+                  rel[key] = el[key]._id || el[key];
+                }
+              });
+              c[idx] = rel;
+            });
+          }
+          if (this.cedit.dimensions) {
+            this.cedit.dimensions.forEach((el, idx, c) => {
+              const rel = {};
+              Object.keys(el).forEach((key) => {
+                if (el[key]) {
+                  rel[key] = el[key]._id || el[key];
+                }
+              });
+              c[idx] = rel;
+            });
+          }
+          if (this.cedit.classification) {
+            this.cedit.classification.forEach((el, idx, c) => {
+              const rel = {};
+              Object.keys(el).forEach((key) => {
+                if (el[key]) {
+                  rel[key] = el[key]._id || el[key];
+                }
+              });
+              c[idx] = rel;
+            });
+          }
+          if (this.cedit.collector) {
+            this.cedit.collector.forEach((el, idx, c) => {
+              c[idx] = el._id;
+            });
+          }
+          this.post({ type: 'entry', id: this.cedit._id, body: this.cedit }).then((res) => {
+            this.getRecords();
+          });
         }
-        if (this.cedit.material) this.cedit.material.forEach((el, idx, c) => {
-          c[idx] = el._id;
-        });
-        if (this.cedit.technique) this.cedit.technique.forEach((el, idx, c) => {
-          c[idx] = el._id;
-        });
-        if (this.cedit.transaction) this.cedit.transaction.forEach((el, idx, c) => {
-          c[idx] = el._id;
-        });
-        if (this.cedit.creator) this.cedit.creator.forEach((el, idx, c) => {
-          var rel = {};
-          Object.keys(el).forEach((key) => {
-            if (el[key]) {
-                rel[key] = el[key]._id || el[key];
-            }
-          });
-          c[idx] = rel;
-        });
-        if (this.cedit.relations) this.cedit.relations.forEach((el, idx, c) => {
-          var rel = {};
-          Object.keys(el).forEach((key) => {
-            if (el[key]) {
-              rel[key] = el[key]._id || el[key];
-            }
-          });
-          c[idx] = rel;
-        });
-        if (this.cedit.dimensions) this.cedit.dimensions.forEach((el, idx, c) => {
-          var rel = {};
-          Object.keys(el).forEach((key) => {
-            if (el[key]) {
-              rel[key] = el[key]._id || el[key];
-            }
-          });
-          c[idx] = rel;
-        });
-        if (this.cedit.classification) this.cedit.classification.forEach((el, idx, c) => {
-          var rel = {};
-          Object.keys(el).forEach((key) => {
-            if (el[key]) {
-              rel[key] = el[key]._id || el[key];
-            }
-          });
-          c[idx] = rel;
-        });
-        if (this.cedit.collector) this.cedit.collector.forEach((el, idx, c) => {
-          c[idx] = el._id;
-        });
-        this.post({ type: 'entry', id: this.cedit._id, body: this.cedit }).then((res) => {
+        this.entrydialog = false;
+      },
+      deleteentry(_id) {
+        this.delete({ type: 'Entry', id: _id }).then((res) => {
+          this.getRecords();
+        })
+        .catch((err) => {
           this.getRecords();
         });
-      }
-      this.entrydialog = false;
-    },
-    deleteentry(_id) {
-      this.delete({ type: 'Entry', id: _id }).then((res) => {
+      },
+      clearClassFilter() {
+        this.classfilter = '';
         this.getRecords();
-      })
-      .catch((err) => {
+      },
+      clearNameFilter() {
+        this.namefilter = '';
         this.getRecords();
-      });
+      },
     },
-    clearClassFilter() {
-      this.classfilter = '';
-      this.getRecords();
-    },
-    clearNameFilter() {
-      this.namefilter = '';
-      this.getRecords();
-    },
-  },
-  created() {
-
-  },
 };
 </script>
 

@@ -73,7 +73,9 @@
 </template>
 
 <script>
-import { mapMutations, mapActions } from 'vuex';
+  /* eslint-disable no-underscore-dangle,no-param-reassign */
+
+  import { mapMutations, mapActions } from 'vuex';
 
 import fundamentcard from '../Fundament/FundamentCard';
 import collectionform from '../Forms/collection_form';
@@ -82,133 +84,139 @@ import collectionform from '../Forms/collection_form';
 /* eslint no-console: ["error", { allow: ["log"] }] */
 
 export default {
-  components: {
-    fundamentcard,
-    collectionform,
-  },
-  data() {
-    return {
-      data: [],
-      cedit: {},
-      cedits: {},
-      collectiondialog: false,
-      loading: false,
-      itemOptions: [10, 10, 50],
-      totalHits: 0,
-      namefilter: '',
-      headers: [
-        { text: 'Name', value: 'name' },
-        { text: 'Actions', value: 'actions' },
-      ],
-      pagination: {},
-    };
-  },
-  watch: {
-    pagination: {
-      handler() {
+    components: {
+      fundamentcard,
+      collectionform,
+    },
+    data() {
+      return {
+        data: [],
+        cedit: {},
+        cedits: {},
+        collectiondialog: false,
+        loading: false,
+        itemOptions: [10, 10, 50],
+        totalHits: 0,
+        namefilter: '',
+        headers: [
+          { text: 'Name', value: 'name' },
+          { text: 'Actions', value: 'actions' },
+        ],
+        pagination: {},
+      };
+    },
+    watch: {
+      pagination: {
+        handler() {
+          this.getRecords();
+        },
+        deep: true,
+      },
+    },
+    methods: {
+      ...mapActions('api', [
+        'get',
+        'post',
+        'delete',
+      ]),
+      ...mapMutations('api', [
+        'setPage',
+        'setSize',
+      ]),
+      getRecords() {
+        this.loading = true;
+        const q = {};
+        if (this.namefilter !== '') q.name = { $regex: this.namefilter };
+        this.get({
+          type: 'Collect',
+          sort: this.pagination.descending ? `-${this.pagination.sortBy}` : this.pagination.sortBy,
+          limit: this.pagination.rowsPerPage,
+          skip: (this.pagination.page - 1) * this.pagination.rowsPerPage,
+          query: JSON.stringify(q),
+        }).then((res) => {
+          this.loading = false;
+          this.data = res.data;
+          this.totalHits = parseInt(res.headers['x-total-count'], 10);
+        }).catch((err) => {
+          if (err.response.data && err.response.data.detail === 'Invalid page.') {
+            this.pagination.page -= 1;
+            this.getRecords();
+          }
+        });
+      },
+      editCollection(_id) {
+        this.get({
+          type: 'Collect',
+          query: JSON.stringify({
+            _id,
+          }),
+          populate: JSON.stringify([
+            { path: 'creator.role', select: 'name' },
+            { path: 'creator.id', select: 'name' },
+            { path: 'place', select: 'name' },
+            { path: 'time', select: 'name' },
+            { path: 'classification.aspect', select: 'name' },
+            { path: 'classification.descriptor', select: 'name' },
+            { path: 'documents.ref' },
+          ]),
+        }).then((res) => {
+          this.cedit = res.data[0];
+          this.collectiondialog = true;
+        });
+      },
+      saveCollection() {
+        if (this.cedit._id) {
+          if (this.cedit.place) {
+            this.cedit.place.forEach((el, idx, c) => {
+              c[idx] = el._id;
+            });
+          }
+          if (this.cedit.time) {
+            this.cedit.time.forEach((el, idx, c) => {
+              c[idx] = el._id;
+            });
+          }
+          if (this.cedit.creator) {
+            this.cedit.creator.forEach((el, idx, c) => {
+              const rel = {};
+              Object.keys(el).forEach((key) => {
+                if (el[key]) {
+                  rel[key] = el[key]._id || el[key];
+                }
+              });
+              c[idx] = rel;
+            });
+          }
+          if (this.cedit.classification) {
+            this.cedit.classification.forEach((el, idx, c) => {
+              const rel = {};
+              Object.keys(el).forEach((key) => {
+                if (el[key]) {
+                  rel[key] = el[key]._id || el[key];
+                }
+              });
+              c[idx] = rel;
+            });
+          }
+          this.post({ type: 'collect', id: this.cedit._id, body: this.cedit }).then((res) => {
+            this.getRecords();
+          });
+        }
+        this.collectiondialog = false;
+      },
+      deleteCollection(_id) {
+        this.delete({ type: 'Collect', id: _id }).then((res) => {
+          this.getRecords();
+        })
+        .catch((err) => {
+          this.getRecords();
+        });
+      },
+      clearNameFilter() {
+        this.namefilter = '';
         this.getRecords();
       },
-      deep: true,
     },
-  },
-  methods: {
-    ...mapActions('api', [
-      'get',
-      'post',
-      'delete',
-    ]),
-    ...mapMutations('api', [
-      'setPage',
-      'setSize',
-    ]),
-    getRecords() {
-      this.loading = true;
-      let q = {};
-      if (this.namefilter !== '') q.name = {"$regex": this.namefilter };
-      this.get({
-        type: 'Collect',
-        sort: this.pagination.descending ? `-${this.pagination.sortBy}` : this.pagination.sortBy,
-        limit: this.pagination.rowsPerPage,
-        skip: (this.pagination.page - 1) * this.pagination.rowsPerPage,
-        query: JSON.stringify(q),
-      }).then((res) => {
-        this.loading = false;
-        this.data = res.data;
-        this.totalHits = parseInt(res.headers['x-total-count']);
-      }).catch((err) => {
-        if (err.response.data && err.response.data.detail === 'Invalid page.') {
-          this.pagination.page -= 1;
-          this.getRecords();
-        }
-      });
-    },
-    editCollection(_id) {
-      this.get({
-        type: 'Collect',
-        query: JSON.stringify({
-          _id: _id,
-        }),
-        populate: JSON.stringify([
-          { path: 'creator.role', select: 'name' },
-          { path: 'creator.id', select: 'name' },
-          { path: 'place', select: 'name' },
-          { path: 'time', select: 'name' },
-          { path: 'classification.aspect', select: 'name' },
-          { path: 'classification.descriptor', select: 'name' },
-          { path: 'documents.ref' },
-        ]),
-      }).then((res) => {
-        this.cedit = res.data[0];
-        this.collectiondialog = true;
-      });
-    },
-    saveCollection() {
-      if (this.cedit._id) {
-        if (this.cedit.place) this.cedit.place.forEach((el, idx, c) => {
-          c[idx] = el._id;
-        });
-        if (this.cedit.time) this.cedit.time.forEach((el, idx, c) => {
-          c[idx] = el._id;
-        });
-        if (this.cedit.creator) this.cedit.creator.forEach((el, idx, c) => {
-          var rel = {};
-          Object.keys(el).forEach((key) => {
-            if (el[key]) {
-              rel[key] = el[key]._id || el[key];
-            }
-          });
-          c[idx] = rel;
-        });
-        if (this.cedit.classification) this.cedit.classification.forEach((el, idx, c) => {
-          var rel = {};
-          Object.keys(el).forEach((key) => {
-            if (el[key]) {
-              rel[key] = el[key]._id || el[key];
-            }
-          });
-          c[idx] = rel;
-        });
-        this.post({ type: 'collect', id: this.cedit._id, body: this.cedit }).then((res) => {
-          this.getRecords();
-        });
-      }
-      this.collectiondialog = false;
-    },
-    deleteCollection(_id) {
-      this.delete({ type: 'Collect', id: _id }).then((res) => {
-        this.getRecords();
-      })
-      .catch((err) => {
-        this.getRecords();
-      });
-    },
-    clearNameFilter() {
-      this.namefilter = '';
-      this.getRecords();
-    },
-  },
-  created() {
-  },
 };
 </script>
 

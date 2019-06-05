@@ -90,7 +90,9 @@
 </template>
 
 <script>
-import { mapMutations, mapActions } from 'vuex';
+  /* eslint-disable no-underscore-dangle */
+
+  import { mapMutations, mapActions } from 'vuex';
 
 import fundamentcard from '../Fundament/FundamentCard';
 import actorform from '../Forms/actor_form';
@@ -99,126 +101,125 @@ import actorform from '../Forms/actor_form';
 /* eslint no-console: ["error", { allow: ["log"] }] */
 
 export default {
-  components: {
-    fundamentcard,
-    actorform,
-  },
-  data() {
-    return {
-      data: [],
-      cedit: {},
-      cedits: {},
-      actordialog: false,
-      loading: false,
-      itemOptions: [10, 20, 50],
-      totalHits: 0,
-      classfilter: '',
-      namefilter: '',
-      headers: [
-        { text: 'Name', value: 'name' },
-        { text: 'Type', value: 'instanceOf' },
-        { text: 'Actions', value: 'actions' },
-      ],
-      pagination: {},
-    };
-  },
-  watch: {
-    pagination: {
-      handler() {
+    components: {
+      fundamentcard,
+      actorform,
+    },
+    data() {
+      return {
+        data: [],
+        cedit: {},
+        cedits: {},
+        actordialog: false,
+        loading: false,
+        itemOptions: [10, 20, 50],
+        totalHits: 0,
+        classfilter: '',
+        namefilter: '',
+        headers: [
+          { text: 'Name', value: 'name' },
+          { text: 'Type', value: 'instanceOf' },
+          { text: 'Actions', value: 'actions' },
+        ],
+        pagination: {},
+      };
+    },
+    watch: {
+      pagination: {
+        handler() {
+          this.getRecords();
+        },
+        deep: true,
+      },
+    },
+    methods: {
+      ...mapActions('api', [
+        'get',
+        'post',
+        'delete',
+      ]),
+      ...mapMutations('api', [
+        'setPage',
+        'setSize',
+      ]),
+      getRecords() {
+        this.loading = true;
+        const q = {};
+        if (this.classfilter !== '') q.instanceOf = this.classfilter;
+        if (this.namefilter !== '') q.name = { $regex: this.namefilter };
+        this.get({
+          type: 'Actor',
+          sort: this.pagination.descending ? `-${this.pagination.sortBy}` : this.pagination.sortBy,
+          limit: this.pagination.rowsPerPage,
+          skip: (this.pagination.page - 1) * this.pagination.rowsPerPage,
+          populate: JSON.stringify([
+            { path: 'instanceOf' },
+          ]),
+          query: JSON.stringify(q),
+        }).then((res) => {
+          this.loading = false;
+          this.data = res.data;
+          this.totalHits = parseInt(res.headers['x-total-count'], 10);
+        }).catch((err) => {
+          console.log(err);
+          if (err.response.data && err.response.data.detail === 'Invalid page.') {
+            this.pagination.page -= 1;
+            this.getRecords();
+          }
+        });
+      },
+      editactor(_id) {
+        this.get({
+          type: 'Actor',
+          query: JSON.stringify({
+            _id,
+          }),
+          populate: JSON.stringify([
+            { path: 'instanceOf' },
+            { path: 'relations.target', select: 'name' },
+          ]),
+        }).then((res) => {
+          this.cedit = res.data[0];
+          this.actordialog = true;
+        });
+      },
+      saveactor() {
+        if (this.cedit._id) {
+          if (this.cedit.relations) {
+            this.cedit.relations.forEach((el, idx, c) => {
+              const rel = {};
+              Object.keys(el).forEach((key) => {
+                if (el[key]) {
+                  rel[key] = el[key]._id || el[key];
+                }
+              });
+              // eslint-disable-next-line no-param-reassign
+              c[idx] = rel;
+            });
+          }
+          this.post({ type: 'actor', id: this.cedit._id, body: this.cedit }).then((res) => {
+            this.getRecords();
+          });
+        }
+        this.actordialog = false;
+      },
+      deleteactor(_id) {
+        this.delete({ type: 'Actor', id: _id }).then((res) => {
+          this.getRecords();
+        })
+        .catch((err) => {
+          this.getRecords();
+        });
+      },
+      clearClassFilter() {
+        this.classfilter = '';
         this.getRecords();
       },
-      deep: true,
-    },
-  },
-  methods: {
-    ...mapActions('api', [
-      'get',
-      'post',
-      'delete',
-    ]),
-    ...mapMutations('api', [
-      'setPage',
-      'setSize',
-    ]),
-    getRecords() {
-      this.loading = true;
-      let q = {};
-      if (this.classfilter !== '') q.instanceOf = this.classfilter;
-      if (this.namefilter !== '') q.name = {"$regex": this.namefilter };
-      this.get({
-        type: 'Actor',
-        sort: this.pagination.descending ? `-${this.pagination.sortBy}` : this.pagination.sortBy,
-        limit: this.pagination.rowsPerPage,
-        skip: (this.pagination.page - 1) * this.pagination.rowsPerPage,
-        populate: JSON.stringify([
-          { path: 'instanceOf' },
-        ]),
-        query: JSON.stringify(q),
-      }).then((res) => {
-        this.loading = false;
-        this.data = res.data;
-        this.totalHits = parseInt(res.headers['x-total-count']);
-      }).catch((err) => {
-        console.log(err);
-        if (err.response.data && err.response.data.detail === 'Invalid page.') {
-          this.pagination.page -= 1;
-          this.getRecords();
-        }
-      });
-    },
-    editactor(_id) {
-      this.get({
-        type: 'Actor',
-        query: JSON.stringify({
-          _id: _id,
-        }),
-        populate: JSON.stringify([
-          { path: 'instanceOf' },
-          { path: 'relations.target', select: 'name' },
-        ]),
-      }).then((res) => {
-        this.cedit = res.data[0];
-        this.actordialog = true;
-      });
-    },
-    saveactor() {
-      if (this.cedit._id) {
-        if (this.cedit.relations) this.cedit.relations.forEach((el, idx, c) => {
-          var rel = {};
-          Object.keys(el).forEach((key) => {
-            if (el[key]) {
-              rel[key] = el[key]._id || el[key];
-            }
-          });
-          c[idx] = rel;
-        });
-        console.log('saved');
-        this.post({ type: 'actor', id: this.cedit._id, body: this.cedit }).then((res) => {
-          this.getRecords();
-        });
-      }
-      this.actordialog = false;
-    },
-    deleteactor(_id) {
-      this.delete({ type: 'Actor', id: _id }).then((res) => {
+      clearNameFilter() {
+        this.namefilter = '';
         this.getRecords();
-      })
-      .catch((err) => {
-        this.getRecords();
-      });
+      },
     },
-    clearClassFilter() {
-      this.classfilter = '';
-      this.getRecords();
-    },
-    clearNameFilter() {
-      this.namefilter = '';
-      this.getRecords();
-    },
-  },
-  created() {
-
-  },
 };
 </script>
 
