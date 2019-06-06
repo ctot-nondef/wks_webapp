@@ -181,6 +181,7 @@ export default {
           this.inventorydialog = true;
         });
       },
+      /* TODO: move reduction of populated ref fields to store */
       saveInventory() {
         if (this.cedit._id) {
           if (this.cedit.creator) {

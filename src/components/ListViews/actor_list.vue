@@ -183,6 +183,7 @@ export default {
           this.actordialog = true;
         });
       },
+      /* TODO: move reduction of populated ref fields to store */
       saveactor() {
         if (this.cedit._id) {
           if (this.cedit.relations) {

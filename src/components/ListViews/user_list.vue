@@ -67,8 +67,7 @@
 
 <script>
   /* eslint-disable no-param-reassign,no-underscore-dangle */
-
-  import { mapMutations, mapActions } from 'vuex';
+import { mapMutations, mapActions } from 'vuex';
 
 import fundamentcard from '../Fundament/FundamentCard';
 import userform from '../Forms/user_form';
@@ -156,6 +155,7 @@ export default {
           this.userdialog = true;
         });
       },
+      /* TODO: move reduction of populated ref fields to store */
       saveuser() {
         if (this.cedit._id) {
           if (this.cedit.relations) {

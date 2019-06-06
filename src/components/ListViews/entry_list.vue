@@ -195,6 +195,7 @@ export default {
           this.entrydialog = true;
         });
       },
+      /* TODO: move reduction of populated ref fields to store */
       saveentry() {
         if (this.cedit._id) {
           if (this.cedit.partOf) {

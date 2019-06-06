@@ -180,6 +180,7 @@ export default {
           this.objectdialog = true;
         });
       },
+      /* TODO: move reduction of populated ref fields to store */
       saveobject() {
         // this needs to be redone
         // how can we systematically reduce all referenced/populated docs

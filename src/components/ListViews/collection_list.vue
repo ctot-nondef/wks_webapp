@@ -164,6 +164,7 @@ export default {
           this.collectiondialog = true;
         });
       },
+      /* TODO: move reduction of populated ref fields to store */
       saveCollection() {
         if (this.cedit._id) {
           if (this.cedit.place) {

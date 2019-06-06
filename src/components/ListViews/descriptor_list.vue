@@ -185,6 +185,7 @@ export default {
           this.descriptordialog = true;
         });
       },
+      /* TODO: move reduction of populated ref fields to store */
       savedescriptor() {
         console.log(this.cedit);
         if (this.cedit._id) {
