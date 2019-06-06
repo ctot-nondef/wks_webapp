@@ -133,7 +133,7 @@ const actions = {
     });
   },
   /* TODO: provide convenience function to reduce populated ref fields to doc IDs
-     when done, remove code from list view save functions accordingly*/
+     when done, remove code from list view save functions accordingly */
   post({ state, commit }, { type, id, body }) {
     let p = {};
     const params = {

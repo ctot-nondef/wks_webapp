@@ -56,7 +56,9 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+  /* eslint-disable no-underscore-dangle,no-param-reassign */
+
+  import { mapActions } from 'vuex';
 
 import fundamentcard from './Fundament/FundamentCard';
 import inventorylist from './ListViews/inventory_list';
@@ -66,59 +68,59 @@ import inventoryform from './Forms/inventory_form';
 /* eslint no-console: ["error", { allow: ["log"] }] */
 
 export default {
-  components: {
-    fundamentcard,
-    inventorylist,
-    inventoryform,
-  },
-  data() {
-    return {
-      inventorydialog: false,
-      newinventory: {},
-    };
-  },
-  methods: {
-    ...mapActions('api', [
-      'get',
-      'post',
-      'delete',
-    ]),
-    addInventory() {
-      if (this.newinventory.creator) this.newinventory.creator.forEach((el, idx, c) => {
-        var rel = {};
-        Object.keys(el).forEach((key) => {
-          if (el[key]) {
-            rel[key] = el[key]._id || el[key];
-          }
-        });
-        c[idx] = rel;
-      });
-      if (this.newinventory.classification) this.newinventory.classification.forEach((el, idx, c) => {
-        var rel = {};
-        Object.keys(el).forEach((key) => {
-          if (el[key]) {
-            rel[key] = el[key]._id || el[key];
-          }
-        });
-        c[idx] = rel;
-      });
-      if (this.newinventory.place) {
-        this.newinventory.place = this.newinventory.place._id;
-      }
-      if (this.newinventory.partOf) {
-        this.newinventory.partOf = this.newinventory.partOf._id;
-      }
-      this.post({ type: 'inventory', body: this.newinventory }).then((res) => {
-        this.newinventory = {};
-        this.inventorydialog = false;
-        this.$refs.inventorylist.getRecords();
-      });
+    components: {
+      fundamentcard,
+      inventorylist,
+      inventoryform,
     },
-  },
-  computed: {
-  },
-  created() {
-  },
+    data() {
+      return {
+        inventorydialog: false,
+        newinventory: {},
+      };
+    },
+    methods: {
+      ...mapActions('api', [
+        'get',
+        'post',
+        'delete',
+      ]),
+      addInventory() {
+        if (this.newinventory.creator) {
+          this.newinventory.creator.forEach((el, idx, c) => {
+            const rel = {};
+            Object.keys(el).forEach((key) => {
+              if (el[key]) {
+                rel[key] = el[key]._id || el[key];
+              }
+            });
+            c[idx] = rel;
+          });
+        }
+        if (this.newinventory.classification) {
+          this.newinventory.classification.forEach((el, idx, c) => {
+            const rel = {};
+            Object.keys(el).forEach((key) => {
+              if (el[key]) {
+                rel[key] = el[key]._id || el[key];
+              }
+            });
+            c[idx] = rel;
+          });
+        }
+        if (this.newinventory.place) {
+          this.newinventory.place = this.newinventory.place._id;
+        }
+        if (this.newinventory.partOf) {
+          this.newinventory.partOf = this.newinventory.partOf._id;
+        }
+        this.post({ type: 'inventory', body: this.newinventory }).then((res) => {
+          this.newinventory = {};
+          this.inventorydialog = false;
+          this.$refs.inventorylist.getRecords();
+        });
+      },
+    },
 };
 </script>
 

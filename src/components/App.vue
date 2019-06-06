@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import { mapActions, mapMutations } from 'vuex';
 import fundamentnav from './Fundament/FundamentNav';
 import fundamentfooter from './Fundament/FundamentFooter';
@@ -19,7 +18,7 @@ import dialogs from './Dialogs/Dialogs';
 /* eslint no-return-assign: "off" */
 
 import HELPERS from '../helpers';
-import config from '../config.js'
+import config from '../config';
 
 export default {
   mixins: [HELPERS],

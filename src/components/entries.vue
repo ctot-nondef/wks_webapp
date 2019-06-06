@@ -56,7 +56,9 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+  /* eslint-disable no-underscore-dangle */
+
+  import { mapActions, mapGetters } from 'vuex';
 
 import HELPERS from '../helpers';
 

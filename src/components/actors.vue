@@ -64,7 +64,9 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+  /* eslint-disable no-underscore-dangle,no-param-reassign */
+
+  import { mapActions, mapGetters } from 'vuex';
 
 import HELPERS from '../helpers';
 
@@ -77,60 +79,60 @@ import autocompgnd from './AutoCompleteComponents/AutocompGND';
 /* eslint no-console: ["error", { allow: ["log"] }] */
 
 export default {
-  mixins: [HELPERS],
-  components: {
-    fundamentcard,
-    actorlist,
-    actorform,
-    autocompgnd,
-  },
-  data() {
-    return {
-      actordialog: false,
-      newactor: {},
-      iactor: {},
-      itype: 'Person',
-    };
-  },
-  methods: {
-    ...mapActions('api', [
-      'get',
-      'post',
-      'delete',
-    ]),
-    addactor() {
-      if (this.newactor.relations) this.newactor.relations.forEach((el, idx, c) => {
-        var rel = {};
-        Object.keys(el).forEach((key) => {
-          if (el[key]) {
-              rel[key] = el[key]._id || el[key];
-          }
-        });
-        c[idx] = rel;
-      });
-      this.post({ type: 'actor', body: this.newactor }).then((res) => {
-        this.newactor = {};
-        this.actordialog = false;
-        this.$refs.actorlist.getRecords();
-      });
+    mixins: [HELPERS],
+    components: {
+      fundamentcard,
+      actorlist,
+      actorform,
+      autocompgnd,
     },
-    importactor() {
-      if (this.iactor.id) {
-        let id = this.iactor.id.split('/').slice(-1)[0];
-        this.APIS.GND.DIRECT.get(id).then((res) => {
-          console.log(res.data);
-          this.newactor = this.mapGNDImport(this.itype, res.data);
-        });
-      }
+    data() {
+      return {
+        actordialog: false,
+        newactor: {},
+        iactor: {},
+        itype: 'Person',
+      };
     },
-  },
-  computed: {
-    ...mapGetters('api', [
-      'apiloaded',
-    ]),
-  },
-  created() {
-  },
+    methods: {
+      ...mapActions('api', [
+        'get',
+        'post',
+        'delete',
+      ]),
+      addactor() {
+        if (this.newactor.relations) {
+          this.newactor.relations.forEach((el, idx, c) => {
+            const rel = {};
+            Object.keys(el).forEach((key) => {
+              if (el[key]) {
+                rel[key] = el[key]._id || el[key];
+              }
+            });
+            c[idx] = rel;
+          });
+        }
+        this.post({ type: 'actor', body: this.newactor }).then(() => {
+          this.newactor = {};
+          this.actordialog = false;
+          this.$refs.actorlist.getRecords();
+        });
+      },
+      importactor() {
+        if (this.iactor.id) {
+          const id = this.iactor.id.split('/').slice(-1)[0];
+          this.APIS.GND.DIRECT.get(id).then((res) => {
+            console.log(res.data);
+            this.newactor = this.mapGNDImport(this.itype, res.data);
+          });
+        }
+      },
+    },
+    computed: {
+      ...mapGetters('api', [
+        'apiloaded',
+      ]),
+    },
 };
 </script>
 

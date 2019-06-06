@@ -142,10 +142,12 @@
   </div>
 </template>
 <script>
+import axios from 'axios';
 import autocomp from '../AutoCompleteComponents/Autocomp';
 import formlistcomponent from '../FormComponents/FormListComponent';
 import chips from '../FormComponents/Chips';
 import datecomponent from '../FormComponents/DateComponent';
+
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 export default {
   components: {

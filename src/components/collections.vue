@@ -56,7 +56,9 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+  /* eslint-disable no-param-reassign,no-underscore-dangle */
+
+  import { mapActions } from 'vuex';
 
 import fundamentcard from './Fundament/FundamentCard';
 import collectionlist from './ListViews/collection_list';
@@ -66,59 +68,63 @@ import collectionform from './Forms/collection_form';
 /* eslint no-console: ["error", { allow: ["log"] }] */
 
 export default {
-  components: {
-    fundamentcard,
-    collectionlist,
-    collectionform,
-  },
-  data() {
-    return {
-      collectiondialog: false,
-      newcollection: {},
-    };
-  },
-  methods: {
-    ...mapActions('api', [
-      'get',
-      'post',
-      'delete',
-    ]),
-    addCollection() {
-      if (this.newcollection.place) this.newcollection.place.forEach((el, idx, c) => {
-        c[idx] = el._id;
-      });
-      if (this.newcollection.time) this.newcollection.time.forEach((el, idx, c) => {
-        c[idx] = el._id;
-      });
-      if (this.newcollection.creator) this.newcollection.creator.forEach((el, idx, c) => {
-        var rel = {};
-        Object.keys(el).forEach((key) => {
-          if (el[key]) {
-              rel[key] = el[key]._id || el[key];
-          }
-        });
-        c[idx] = rel;
-      });
-      if(this.newcollection.classification) this.newcollection.classification.forEach((el, idx, c) => {
-        var rel = {};
-        Object.keys(el).forEach((key) => {
-          if (el[key]) {
-            rel[key] = el[key]._id || el[key];
-          }
-        });
-        c[idx] = rel;
-      });
-      this.post({ type: 'collect', body: this.newcollection }).then((res) => {
-        this.newcollection = {};
-        this.collectiondialog = false;
-        this.$refs.collectionlist.getRecords();
-      });
+    components: {
+      fundamentcard,
+      collectionlist,
+      collectionform,
     },
-  },
-  computed: {
-  },
-  created() {
-  },
+    data() {
+      return {
+        collectiondialog: false,
+        newcollection: {},
+      };
+    },
+    methods: {
+      ...mapActions('api', [
+        'get',
+        'post',
+        'delete',
+      ]),
+      addCollection() {
+        if (this.newcollection.place) {
+          this.newcollection.place.forEach((el, idx, c) => {
+            c[idx] = el._id;
+          });
+        }
+        if (this.newcollection.time) {
+          this.newcollection.time.forEach((el, idx, c) => {
+            c[idx] = el._id;
+          });
+        }
+        if (this.newcollection.creator) {
+          this.newcollection.creator.forEach((el, idx, c) => {
+            const rel = {};
+            Object.keys(el).forEach((key) => {
+              if (el[key]) {
+                rel[key] = el[key]._id || el[key];
+              }
+            });
+            c[idx] = rel;
+          });
+        }
+        if (this.newcollection.classification) {
+          this.newcollection.classification.forEach((el, idx, c) => {
+            const rel = {};
+            Object.keys(el).forEach((key) => {
+              if (el[key]) {
+                rel[key] = el[key]._id || el[key];
+              }
+            });
+            c[idx] = rel;
+          });
+        }
+        this.post({ type: 'collect', body: this.newcollection }).then((res) => {
+          this.newcollection = {};
+          this.collectiondialog = false;
+          this.$refs.collectionlist.getRecords();
+        });
+      },
+    },
 };
 </script>
 

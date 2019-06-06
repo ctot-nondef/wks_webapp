@@ -64,7 +64,9 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+  /* eslint-disable no-param-reassign,no-underscore-dangle */
+
+  import { mapActions } from 'vuex';
 
 import HELPERS from '../helpers';
 
@@ -77,57 +79,55 @@ import autocompgnd from './AutoCompleteComponents/AutocompGND';
 /* eslint no-console: ["error", { allow: ["log"] }] */
 
 export default {
-  mixins: [HELPERS],
-  components: {
-    fundamentcard,
-    descriptorlist,
-    descriptorform,
-    autocompgnd,
-  },
-  data() {
-    return {
-      descriptordialog: false,
-      newdescriptor: {},
-      idescriptor: {},
-      itype: 'PlaceOrGeographicName',
-    };
-  },
-  methods: {
-    ...mapActions('api', [
-      'get',
-      'post',
-      'delete',
-    ]),
-    adddescriptor() {
-      if (this.newdescriptor.relations) this.newdescriptor.relations.forEach((el, idx, c) => {
-        var rel = {};
-        Object.keys(el).forEach((key) => {
-          if (el[key]) {
-            rel[key] = el[key]._id || el[key];
-          }
-        });
-        c[idx] = rel;
-      });
-      this.post({ type: 'descriptor', body: this.newdescriptor }).then((res) => {
-        this.newdescriptor = {};
-        this.descriptordialog = false;
-        this.$refs.descriptorlist.getRecords();
-      });
+    mixins: [HELPERS],
+    components: {
+      fundamentcard,
+      descriptorlist,
+      descriptorform,
+      autocompgnd,
     },
-    importdescriptor() {
-      if (this.idescriptor.id) {
-        let id = this.idescriptor.id.split('/').slice(-1)[0];
-        this.APIS.GND.DIRECT.get(id).then((res) => {
-          console.log(res.data);
-          this.newdescriptor = this.mapGNDImport(this.itype, res.data);
-        });
-      }
+    data() {
+      return {
+        descriptordialog: false,
+        newdescriptor: {},
+        idescriptor: {},
+        itype: 'PlaceOrGeographicName',
+      };
     },
-  },
-  computed: {
-  },
-  created() {
-  },
+    methods: {
+      ...mapActions('api', [
+        'get',
+        'post',
+        'delete',
+      ]),
+      adddescriptor() {
+        if (this.newdescriptor.relations) {
+          this.newdescriptor.relations.forEach((el, idx, c) => {
+            const rel = {};
+            Object.keys(el).forEach((key) => {
+              if (el[key]) {
+                rel[key] = el[key]._id || el[key];
+              }
+            });
+            c[idx] = rel;
+          });
+        }
+        this.post({ type: 'descriptor', body: this.newdescriptor }).then((res) => {
+          this.newdescriptor = {};
+          this.descriptordialog = false;
+          this.$refs.descriptorlist.getRecords();
+        });
+      },
+      importdescriptor() {
+        if (this.idescriptor.id) {
+          const id = this.idescriptor.id.split('/').slice(-1)[0];
+          this.APIS.GND.DIRECT.get(id).then((res) => {
+            console.log(res.data);
+            this.newdescriptor = this.mapGNDImport(this.itype, res.data);
+          });
+        }
+      },
+    },
 };
 </script>
 

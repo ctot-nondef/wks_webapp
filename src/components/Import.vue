@@ -93,7 +93,7 @@ export default {
       });
     },
     importRecords() {
-      for (let i = 0; i < this.tabledata.length; i++) {
+      for (let i = 0; i < this.tabledata.length; i += 1) {
         // first check if it's already there
         const r = this.tabledata[i];
         this.checkIfPresent(this.target, this.db, r.priref[0])
