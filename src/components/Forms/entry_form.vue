@@ -19,7 +19,7 @@
     <v-layout justify-start row fill-height>
       <v-flex xs12>
         <!-- entry creators -->
-        <formlistcomponent :items="entry.creator" :itemprops="$store.state.api.schemas.entry.properties.creator.items.properties" :listitemstyletypes="creatoritemstyletypes" label="Creator" nodatamessage="No creators added">
+        <formlistcomponent :items="entry.creator" :itemprops="$store.state.api.schemas.entry.properties.creator.items.properties" label="Creator" nodatamessage="No creators added">
           <template slot="form" slot-scope="props">
           <v-flex xs5>
               <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"></autocomp>
@@ -28,8 +28,8 @@
               <autocomp entity="Actor" v-model="props.newitem.id" label="Collector" :multiple="false"></autocomp>
           </v-flex>
           <v-flex xs12>
-          <v-textarea  v-model="props.newitem.note" label="Note" /> 
-          </v-flex> 
+          <v-textarea  v-model="props.newitem.note" label="Note" />
+          </v-flex>
           </template>
         </formlistcomponent>
       </v-flex>
@@ -61,7 +61,7 @@
     <!-- entry dimensions -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
-        <formlistcomponent :items="entry.dimensions" :itemprops="$store.state.api.schemas.entry.properties.dimensions.items.properties" :listitemstyletypes="dimensionsitemstyletypes" label="Dimensions" nodatamessage="No dimensions added">
+        <formlistcomponent :items="entry.dimensions" :itemprops="$store.state.api.schemas.entry.properties.dimensions.items.properties" label="Dimensions" nodatamessage="No dimensions added">
           <template slot="form" slot-scope="props">
             <v-flex xs5>
               <v-text-field  v-model.number="props.newitem.amount" label="Amount"></v-text-field>
@@ -91,7 +91,7 @@
     <!-- entry related entries -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
-        <formlistcomponent  :items="entry.relations" :itemprops="$store.state.api.schemas.entry.properties.relations.items.properties" :listitemstyletypes="relationitemstyletypes" label="Related Entries" nodatamessage="No relations added">
+        <formlistcomponent  :items="entry.relations" :itemprops="$store.state.api.schemas.entry.properties.relations.items.properties" label="Related Entries" nodatamessage="No relations added">
             <template slot="form" slot-scope="props">
             <v-flex xs2>
               <v-select :items="$store.state.api.schemas.entry.properties.relations.items.properties.kind.enum" label="Relation Type" v-model='props.newitem.kind'></v-select>
@@ -112,7 +112,7 @@
      <!-- entry classifications -->
     <v-layout justify-start row fill-height>
       <v-flex xs12 class="mt-3">
-        <formlistcomponent v-if="entry.classification" :items="entry.classification" :itemprops="$store.state.api.schemas.entry.properties.classification.items.properties" :listitemstyletypes="classificationitemstyletypes" label="Classification" nodatamessage="No classifications added">
+        <formlistcomponent v-if="entry.classification" :items="entry.classification" :itemprops="$store.state.api.schemas.entry.properties.classification.items.properties" label="Classification" nodatamessage="No classifications added">
           <template slot="form" slot-scope="props">
           <v-flex xs5>
             <autocomp entity="Descriptor" filter="KEYWORD" v-model="props.newitem.aspect" label="Aspect" :multiple="false"></autocomp>
@@ -129,7 +129,7 @@
      <!-- entry comments -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
-        <formlistcomponent v-if="entry.comments" :items="entry.comments" :listitemstyletypes="['title']" label="Comments" nodatamessage="No comments added">
+        <formlistcomponent v-if="entry.comments" :items="entry.comments" label="Comments" nodatamessage="No comments added">
           <template slot="form" slot-scope="props">
           <v-flex xs5>
               <v-textarea v-model="props.newitem.textval" label="New Comment"></v-textarea>
@@ -137,6 +137,36 @@
           </template>
         </formlistcomponent>
       </v-flex>
+    </v-layout>
+    <!-- transaction popup -->
+    <v-layout column justify-space-between>
+      <v-dialog
+        v-model="zoterodialog"
+        @keydown.esc="zoterodialog=false"
+        fullscreen
+        hide-overlay
+        transition="dialog-bottom-transition"
+      >
+        <v-card>
+          <v-toolbar dark color="primary">
+            <v-btn icon dark @click.native="transactiondialog=false">
+              <v-icon>close</v-icon>
+            </v-btn>
+            <v-toolbar-title>Select or create Transaction</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-toolbar-items>
+            </v-toolbar-items>
+            <v-menu bottom right offset-y>
+              <v-btn slot="activator" dark icon>
+                <v-icon>more_vert</v-icon>
+              </v-btn>
+            </v-menu>
+          </v-toolbar>
+          <v-container grid-list-md text-xs-center>
+  <!--          <zoterolist @selectref="pickZoteroRef($event)"></zoterolist>-->
+          </v-container>
+        </v-card>
+      </v-dialog>
     </v-layout>
   </div>
 </template>
@@ -166,25 +196,7 @@ export default {
       comment: '',
       public: false,
       url: '',
-      creatoritemstyletypes: [
-        'title',
-        'subtitle',
-        'subtitle',
-      ],
-      dimensionsitemstyletypes: [
-        'title',
-        'subtitle',
-        'subtitle',
-      ],
-      classificationitemstyletypes: [
-        'title',
-        'subtitle',
-      ],
-      relationitemstyletypes: [
-        'title',
-        'subtitle',
-        'subtitle',
-      ],
+      transactiondialog: false,
       autcompdisplayprops: {
         dimensions: [
           { path: 'dimensions.amount', populate: false },

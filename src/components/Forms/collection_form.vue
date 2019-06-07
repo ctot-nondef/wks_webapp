@@ -282,11 +282,9 @@ export default {
       this.returnObject();
     },
     pickZoteroRef(ref) {
-      console.log(ref);
       if (!this.collection.references) this.collection.references = [];
       this.collection.references.push({ ref: ref.links.self.href, name: ref.data.title });
       this.zoterodialog = false;
-      console.log(this.collection.references);
     },
   },
 };
