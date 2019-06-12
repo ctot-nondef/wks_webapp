@@ -22,7 +22,7 @@
           <template v-if="typeof props.item === 'object' && props.item[header.name] && props.item[header.name].name">
            {{props.item[header.name].name}}
          </template>
-         <template v-else-if="header.name === 'ref'">
+         <template v-else-if="props.item[header.name] && header.name === 'ref'">
           <a :href="props.item[header.name].replace('api.', '')" target="_blank">link</a>
          </template>
          <template v-else>

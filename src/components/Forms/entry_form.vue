@@ -104,9 +104,25 @@
       </v-flex>
     </v-layout>
     <!-- entry transaction -->
-     <v-layout justify-start row fill-height>
-       <v-flex xs6>
-         <autocomp entity="transaction" v-model="entry.transaction" label="Transaction" :multiple="true" @input="returnObject();"></autocomp>
+    <v-layout justify-end row fill-height>
+      <v-flex xs12>
+        <formlistcomponent
+          :items="entry.transaction"
+          :itemprops="$store.state.api.schemas.entry.properties.transaction.items.properties"
+          label="Transactions"
+          nodatamessage="No transactions linked to this entry"
+        >
+          <template slot="form" slot-scope="props">
+            <v-layout justify-end row fill-height wrap>
+              <v-flex xs6>
+                <v-text-field box label="Transaction ID" @click='transactiondialog=true' v-model='props.newitem.ref' prepend-icon='attach_file'></v-text-field>
+              </v-flex>
+              <v-flex xs6>
+                <autocomp entity="Descriptor" v-model="props.newitem.type" label="Type" :multiple="false"></autocomp>
+              </v-flex>
+            </v-layout>
+          </template>
+        </formlistcomponent>
       </v-flex>
     </v-layout>
      <!-- entry classifications -->
@@ -124,8 +140,6 @@
         </formlistcomponent>
       </v-flex>
     </v-layout>
-    <!-- entry images -->
-    <!-- entry references zotero?-->
      <!-- entry comments -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
@@ -141,8 +155,8 @@
     <!-- transaction popup -->
     <v-layout column justify-space-between>
       <v-dialog
-        v-model="zoterodialog"
-        @keydown.esc="zoterodialog=false"
+        v-model="transactiondialog"
+        @keydown.esc="transactiondialog=false"
         fullscreen
         hide-overlay
         transition="dialog-bottom-transition"
@@ -176,6 +190,7 @@ import simpleautocompwrapper from '../FormComponents/SimpleAutoCompleteWrapper';
 import formlistcomponent from '../FormComponents/FormListComponent';
 import chips from '../FormComponents/Chips';
 import datecomponent from '../FormComponents/DateComponent';
+import transactionform from '../Forms/transaction_form';
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 export default {
   components: {
@@ -184,6 +199,7 @@ export default {
     formlistcomponent,
     datecomponent,
     chips,
+    transactionform,
   },
   props: [
     'value',
@@ -229,6 +245,9 @@ export default {
       }
       if (!this.entry.dimensions) {
         this.$set(this.entry, 'dimensions', []);
+      }
+      if (!this.entry.transaction) {
+        this.$set(this.entry, 'transaction', []);
       }
     },
   },

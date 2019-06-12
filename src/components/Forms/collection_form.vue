@@ -127,7 +127,7 @@
                   <v-text-field box label="Zotero Reference URI" @click='zoterodialog=true' v-model='props.newitem.ref' prepend-icon='attach_file'></v-text-field>
               </v-flex>
               <v-flex xs6>
-                  <v-text-field box v-model="props.newitem.pageno" label="Page Number/Range"></v-text-field>
+                  <v-text-field box v-model="props.newitem.pageno" label="Page Number/Range" type="number"></v-text-field>
               </v-flex>
               <v-flex xs12>
                 <v-textarea box v-model="props.newitem.note" label="Note" />
