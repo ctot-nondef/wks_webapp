@@ -22,7 +22,8 @@
           <template v-if="typeof props.item === 'object' && props.item[header.name] && props.item[header.name].name">
            {{props.item[header.name].name}}
          </template>
-         <template v-else-if="props.item[header.name] && header.name === 'ref'">
+         <!-- TODO: adjust to filter out zotero refs for link parsing         -->
+         <template v-else-if="typeof props.item === 'object' && props.item[header.name] && header.name === 'ref'">
           <a :href="props.item[header.name].replace('api.', '')" target="_blank">link</a>
          </template>
          <template v-else>
@@ -109,6 +110,17 @@ export default {
   },
   methods: {
     ...mapActions('api', ['get']),
+    addItem(item, items) {
+      if (!item.textval) {
+        const newitem = Object.assign({}, item);
+        items.push(newitem);
+      } else {
+        items.push(item.textval);
+      }
+    },
+    removeItem(index, items) {
+      items.splice(index, 1);
+    },
     editItem(index) {
       this.editingMode = true;
       this.editingItemIndex = index;

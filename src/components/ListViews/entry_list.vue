@@ -188,7 +188,8 @@ export default {
             { path: 'classification.aspect', select: 'name' },
             { path: 'classification.descriptor', select: 'name' },
             { path: 'relations.target', select: 'name' },
-            { path: 'transaction', select: 'name' },
+            { path: 'transaction.ref' },
+            { path: 'transaction.type', select: 'name' },
           ]),
         }).then((res) => {
           this.cedit = res.data[0];
@@ -208,11 +209,6 @@ export default {
           }
           if (this.cedit.technique) {
             this.cedit.technique.forEach((el, idx, c) => {
-              c[idx] = el._id;
-            });
-          }
-          if (this.cedit.transaction) {
-            this.cedit.transaction.forEach((el, idx, c) => {
               c[idx] = el._id;
             });
           }
@@ -257,6 +253,18 @@ export default {
                   rel[key] = el[key]._id || el[key];
                 }
               });
+              c[idx] = rel;
+            });
+          }
+          if (this.cedit.transaction) {
+            this.cedit.transaction.forEach((el, idx, c) => {
+              const rel = {};
+              Object.keys(el).forEach((key) => {
+                if (el[key]) {
+                  rel[key] = el[key]._id || el[key];
+                }
+              });
+              console.log(rel);
               c[idx] = rel;
             });
           }

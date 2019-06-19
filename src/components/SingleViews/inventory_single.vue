@@ -101,7 +101,14 @@ export default {
           c[idx] = el._id;
         });
         if (this.newentry.transaction) this.newentry.transaction.forEach((el, idx, c) => {
-          c[idx] = el._id;
+          var rel = {};
+          Object.keys(el).forEach((key) => {
+            if (el[key]) {
+              rel[key] = el[key]._id || el[key];
+            }
+          });
+          console.log(rel);
+          c[idx] = rel;
         });
         if (this.newentry.creator) this.newentry.creator.forEach((el, idx, c) => {
           var rel = {};
