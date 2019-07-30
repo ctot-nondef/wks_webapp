@@ -88,16 +88,23 @@ export default {
   watch: {
     value(val) {
       this.descriptor = val;
-      if (!this.descriptor.relations) {
-        this.$set(this.descriptor, 'relations', []);
-      }
+      this.initVals();
     },
   },
   methods: {
     returnObject() {
       this.$emit('input', this.descriptor);
     },
+    initVals() {
+      if (!this.descriptor.relations) {
+        this.$set(this.descriptor, 'relations', []);
+      }
+    }
   },
+  mounted() {
+    this.initVals();
+    this.returnObject();
+  }
 };
 </script>
 

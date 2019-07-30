@@ -1,7 +1,6 @@
 <template>
 <div>
     <v-autocomplete
-
       :loading="loading"
       :items="items"
       :search-input.sync="search"

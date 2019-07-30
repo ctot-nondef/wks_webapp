@@ -79,7 +79,7 @@
     <v-layout justify-start row fill-height>
       <v-flex xs12>
         <!-- inventory classifications -->
-        <formlistcomponent v-if="inventory.classification" :items="inventory.classification" :itemprops="$store.state.api.schemas.inventory.properties.classification.items.properties" :listitemstyletypes="classificationitemstyletypes" label="Classification" nodatamessage="No classifications added">
+        <formlistcomponent :items="inventory.classification" :itemprops="$store.state.api.schemas.inventory.properties.classification.items.properties" :listitemstyletypes="classificationitemstyletypes" label="Classification" nodatamessage="No classifications added">
           <template slot="form" slot-scope="props">
             <v-flex xs5>
               <autocomp entity="Descriptor" filter="KEYWORD"  v-model="props.newitem.aspect" label="Aspect"  :multiple="false"></autocomp>
@@ -163,15 +163,7 @@ export default {
     value(val) {
       this.inventory = val;
       this.selectedcollection = val.partOf || {};
-      if (!this.inventory.classification) {
-        this.$set(this.inventory, 'classification', []);
-      }
-      if (!this.inventory.creator) {
-        this.$set(this.inventory, 'creator', []);
-      }
-      if (!this.inventory.comments) {
-        this.$set(this.inventory, 'comments', []);
-      }
+      this.initVals();
     },
   },
   methods: {
@@ -221,6 +213,21 @@ export default {
       this.inventory.documents.splice(index, 1);
       this.returnObject();
     },
+    initVals() {
+      if (!this.inventory.classification) {
+        this.$set(this.inventory, 'classification', []);
+      }
+      if (!this.inventory.creator) {
+        this.$set(this.inventory, 'creator', []);
+      }
+      if (!this.inventory.comments) {
+        this.$set(this.inventory, 'comments', []);
+      }
+    },
+  },
+  mounted() {
+    this.initVals();
+    this.returnObject();
   },
 };
 </script>

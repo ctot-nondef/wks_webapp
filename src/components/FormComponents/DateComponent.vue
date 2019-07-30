@@ -12,7 +12,7 @@
   >
     <v-text-field
       slot="activator"
-     v-model="computedDateFormatted"
+      v-model="computedDateFormatted"
       :label="label"
       prepend-icon="event"
       @blur="dateval = parseDate(dateFormatted)"

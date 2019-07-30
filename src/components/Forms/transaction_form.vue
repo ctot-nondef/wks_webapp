@@ -3,7 +3,7 @@
     <!-- transaction date -->
     <v-layout justify-start row fill-height>
       <v-flex xs5>
-        <datecomponent v-bind:date.sync="transaction.date" label="Created Start"/>
+        <datecomponent v-bind:date.sync="transaction.date" label="Created Start" @input="returnObject()"/>
       </v-flex>
     </v-layout>
     <!-- transaction price -->
@@ -55,7 +55,7 @@
     <!-- transaction comments -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
-        <formlistcomponent v-if="transaction.comments" :items="transaction.comments" label="Comments" nodatamessage="No comments added">
+        <formlistcomponent :items="transaction.comments" label="Comments" nodatamessage="No comments added">
           <template slot="form" slot-scope="props">
           <v-flex xs5>
               <v-textarea v-model="props.newitem.textval" label="New Comment"></v-textarea>
@@ -96,7 +96,18 @@ export default {
   },
   watch: {
     value(val) {
-      this.entry = val;
+      this.transaction = val;
+      this.initVals();
+    },
+  },
+  methods: {
+    returnObject() {
+      this.$emit('input', this.transaction);
+    },
+    parseDate(datestring) {
+      return new Date(datestring);
+    },
+    initVals() {
       if (!this.transaction.price) {
         this.$set(this.transaction, 'price', []);
       }
@@ -108,13 +119,9 @@ export default {
       }
     },
   },
-  methods: {
-    returnObject() {
-      this.$emit('input', this.entry);
-    },
-    parseDate(datestring) {
-      return new Date(datestring);
-    },
+  mounted() {
+    this.initVals();
+    this.returnObject();
   },
 };
 </script>

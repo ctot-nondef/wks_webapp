@@ -104,17 +104,22 @@ export default {
   watch: {
     value(val) {
       this.actor = val;
-      if (!this.actor.relations) {
-        this.$set(this.actor, 'relations', []);
-      }
+      this.initVals();
     },
   },
   methods: {
     returnObject() {
       this.$emit('input', this.actor);
     },
+    initVals() {
+      if (!this.actor.relations) {
+        this.$set(this.actor, 'relations', []);
+      }
+    },
   },
-  created() {
+  mounted() {
+    this.initVals();
+    this.returnObject();
   },
 };
 </script>

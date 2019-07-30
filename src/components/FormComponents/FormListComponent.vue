@@ -20,15 +20,19 @@
      <tr>
         <td v-for="header in headers">
           <template v-if="typeof props.item === 'object' && props.item[header.name] && props.item[header.name].name">
-           {{props.item[header.name].name}}
-         </template>
-         <!-- TODO: adjust to filter out zotero refs for link parsing         -->
-         <template v-else-if="typeof props.item === 'object' && props.item[header.name] && header.name === 'ref'">
-          <a :href="props.item[header.name].replace('api.', '')" target="_blank">link</a>
-         </template>
-         <template v-else>
-          {{props.item[header.name]}}
-         </template>
+             {{props.item[header.name].name}}
+          </template>
+          <!-- zotero refs for link parsing -->
+          <template v-else-if="typeof props.item === 'object' && typeof props.item[header.name] === 'string' && header.name === 'ref'">
+            <a :href="props.item[header.name].replace('api.', '')" target="_blank">link</a>
+          </template>
+          <!-- transaction refs -->
+          <template v-else-if="typeof props.item === 'object' && typeof props.item[header.name] === 'object' && header.name === 'ref'">
+            {{ props.item[header.name]._id }}
+          </template>
+          <template v-else>
+            {{props.item[header.name]}}
+          </template>
        </td>
        <td class="justify-center layout px-0">
         <v-icon
@@ -149,7 +153,7 @@ export default {
         if (key === 'textval') {
           this.$set(this.newitem, key, '');
         } else if (typeof this.newitem[key] === 'object') {
-          this.$set(this.newitem, key, null);
+          this.$set(this.newitem, key, {});
         } else {
           this.$set(this.newitem, key, '');
         }

@@ -226,15 +226,7 @@ export default {
   watch: {
     value(val) {
       this.collection = val;
-      if (!this.collection.classification) {
-        this.$set(this.collection, 'classification', []);
-      }
-      if (!this.collection.creator) {
-        this.$set(this.collection, 'creator', []);
-      }
-      if (!this.collection.comments) {
-        this.$set(this.collection, 'comments', []);
-      }
+      this.initVals();
     },
   },
   methods: {
@@ -286,6 +278,21 @@ export default {
       this.collection.references.push({ ref: ref.links.self.href, name: ref.data.title });
       this.zoterodialog = false;
     },
+    initVals() {
+      if (!this.collection.classification) {
+        this.$set(this.collection, 'classification', []);
+      }
+      if (!this.collection.creator) {
+        this.$set(this.collection, 'creator', []);
+      }
+      if (!this.collection.comments) {
+        this.$set(this.collection, 'comments', []);
+      }
+    },
+  },
+  mounted() {
+    this.initVals();
+    this.returnObject();
   },
 };
 </script>

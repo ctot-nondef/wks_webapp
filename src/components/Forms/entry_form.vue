@@ -19,7 +19,12 @@
     <v-layout justify-start row fill-height>
       <v-flex xs12>
         <!-- entry creators -->
-        <formlistcomponent :items="entry.creator" :itemprops="$store.state.api.schemas.entry.properties.creator.items.properties" label="Creator" nodatamessage="No creators added">
+        <formlistcomponent
+          :items="entry.creator"
+          :itemprops="$store.state.api.schemas.entry.properties.creator.items.properties"
+          label="Creator"
+          nodatamessage="No creators added"
+        >
           <template slot="form" slot-scope="props">
           <v-flex xs5>
               <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"></autocomp>
@@ -28,7 +33,7 @@
               <autocomp entity="Actor" v-model="props.newitem.id" label="Collector" :multiple="false"></autocomp>
           </v-flex>
           <v-flex xs12>
-          <v-textarea  v-model="props.newitem.note" label="Note" />
+            <v-textarea  v-model="props.newitem.note" label="Note" />
           </v-flex>
           </template>
         </formlistcomponent>
@@ -162,23 +167,7 @@
         transition="dialog-bottom-transition"
       >
         <v-card>
-          <v-toolbar dark color="primary">
-            <v-btn icon dark @click.native="transactiondialog=false">
-              <v-icon>close</v-icon>
-            </v-btn>
-            <v-toolbar-title>Select or create Transaction</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-toolbar-items>
-            </v-toolbar-items>
-            <v-menu bottom right offset-y>
-              <v-btn slot="activator" dark icon>
-                <v-icon>more_vert</v-icon>
-              </v-btn>
-            </v-menu>
-          </v-toolbar>
-          <v-container grid-list-md text-xs-center>
-  <!--          <zoterolist @selectref="pickZoteroRef($event)"></zoterolist>-->
-          </v-container>
+          <transactionpopup @selectTransactionRef="pickTransactionRef($event)" @closeTransactionPopup="transactiondialog=false"></transactionpopup>
         </v-card>
       </v-dialog>
     </v-layout>
@@ -190,7 +179,7 @@ import simpleautocompwrapper from '../FormComponents/SimpleAutoCompleteWrapper';
 import formlistcomponent from '../FormComponents/FormListComponent';
 import chips from '../FormComponents/Chips';
 import datecomponent from '../FormComponents/DateComponent';
-import transactionform from '../Forms/transaction_form';
+import transactionpopup from '../Forms/transaction_popup';
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 export default {
   components: {
@@ -199,7 +188,7 @@ export default {
     formlistcomponent,
     datecomponent,
     chips,
-    transactionform,
+    transactionpopup,
   },
   props: [
     'value',
@@ -234,6 +223,17 @@ export default {
   watch: {
     value(val) {
       this.entry = val;
+      this.initVals();
+    },
+  },
+  methods: {
+    returnObject() {
+      this.$emit('input', this.entry);
+    },
+    parseDate(datestring) {
+      return new Date(datestring);
+    },
+    initVals() {
       if (!this.entry.creator) {
         this.$set(this.entry, 'creator', []);
       }
@@ -250,14 +250,14 @@ export default {
         this.$set(this.entry, 'transaction', []);
       }
     },
+    pickTransactionRef(e) {
+      this.entry.transaction.push({ ref: e });
+      this.transactiondialog = false;
+    },
   },
-  methods: {
-    returnObject() {
-      this.$emit('input', this.entry);
-    },
-    parseDate(datestring) {
-      return new Date(datestring);
-    },
+  mounted() {
+    this.initVals();
+    this.returnObject();
   },
 };
 </script>
