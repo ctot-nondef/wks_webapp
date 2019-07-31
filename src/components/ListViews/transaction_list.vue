@@ -17,6 +17,9 @@
             <div v-if="props.item.actor[0] && props.item.actor[0].role">{{ props.item.actor[0].role.name }}</div>
           </td>
           <td>
+            <v-btn fab dark small :to="{ name: 'transactionsingle', params: { id:  props.item._id  }}" color="primary">
+              <v-icon dark>collections_bookmark</v-icon>
+            </v-btn>
             <v-btn fab dark small color="warning" @click="editTransaction(props.item._id)">
               <v-icon dark>edit</v-icon>
             </v-btn>

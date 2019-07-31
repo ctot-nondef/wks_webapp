@@ -6,6 +6,7 @@ import Start from '../components/Start';
 import collections from '../components/collections';
 import collectionsingle from '../components/SingleViews/collection_single';
 import inventorysingle from '../components/SingleViews/inventory_single';
+import transactionsingle from '../components/SingleViews/transaction_single';
 // import zoterosingle from '../components/SingleViews/zotero_single';
 import actors from '../components/actors';
 import descriptors from '../components/descriptors';
@@ -59,10 +60,38 @@ export default new Router({
           },
         },
         {
-          path: 'inventory/:id',
+          path: 'inventories',
+          name: 'inventories',
+          components: {
+            Content: inventories,
+          },
+        },
+        {
+          path: 'inventories/:id',
           name: 'inventorysingle',
           components: {
             Content: inventorysingle,
+          },
+        },
+        {
+          path: 'entries',
+          name: 'entries',
+          components: {
+            Content: entries,
+          },
+        },
+        {
+          path: 'transactions',
+          name: 'transactions',
+          components: {
+            Content: transactions,
+          },
+        },
+        {
+          path: 'transactions/:id',
+          name: 'transactionsingle',
+          components: {
+            Content: transactionsingle,
           },
         },
         {
@@ -91,27 +120,6 @@ export default new Router({
           name: 'descriptors',
           components: {
             Content: descriptors,
-          },
-        },
-        {
-          path: 'inventories',
-          name: 'inventories',
-          components: {
-            Content: inventories,
-          },
-        },
-        {
-          path: 'entries',
-          name: 'entries',
-          components: {
-            Content: entries,
-          },
-        },
-        {
-          path: 'transactions',
-          name: 'transactions',
-          components: {
-            Content: transactions,
           },
         },
         {

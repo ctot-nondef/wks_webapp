@@ -122,8 +122,8 @@
               <v-flex xs6 v-if="!props.newitem.ref || !props.newitem.ref._id">
                 <v-btn color="warning" @click='transactiondialog=true'>Add or link Transaction</v-btn>
               </v-flex>
-              <v-flex v-if="props.newitem.ref && props.newitem.ref._id" xs3 >
-                <v-btn color="warning" @click="editTransaction(props.newitem.ref._id)">Edit linked Transaction</v-btn>
+              <v-flex v-if="props.newitem.ref && props.newitem.ref._id" xs6 >
+                <v-btn color="warning" :to="{ name: 'transactionsingle', params: { id:  props.newitem.ref._id, edit: true  }}">Edit linked Transaction</v-btn>
               </v-flex>
               <v-flex xs6>
                 <autocomp entity="Descriptor" v-model="props.newitem.type" label="Type" :multiple="false"></autocomp>
@@ -258,7 +258,7 @@ export default {
       this.transactiondialog = false;
     },
     editTransaction(a) {
-      console.log(a);
+
     },
   },
   mounted() {
