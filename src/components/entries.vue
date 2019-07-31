@@ -56,7 +56,7 @@
 </template>
 
 <script>
-  /* eslint-disable no-underscore-dangle */
+  /* eslint-disable no-underscore-dangle,no-param-reassign */
 
   import { mapActions, mapGetters } from 'vuex';
 
@@ -70,92 +70,106 @@ import entryform from './Forms/entry_form';
 /* eslint no-console: ["error", { allow: ["log"] }] */
 
 export default {
-  mixins: [HELPERS],
-  components: {
-    fundamentcard,
-    entrylist,
-    entryform,
-  },
-  data() {
-    return {
-      entrydialog: false,
-      newentry: {},
-      ientry: {},
-      itype: 'Entry',
-    };
-  },
-  methods: {
-    ...mapActions('api', [
-      'get',
-      'post',
-      'delete',
-    ]),
-    addentry() {
-      if (this.newentry.partOf) {
-        this.newentry.partOf = this.newentry.partOf._id;
-      }
-      if (this.newentry.material) this.newentry.material.forEach((el, idx, c) => {
-        c[idx] = el._id;
-      });
-      if (this.newentry.technique) this.newentry.technique.forEach((el, idx, c) => {
-        c[idx] = el._id;
-      });
-      if (this.newentry.transaction) this.newentry.transaction.forEach((el, idx, c) => {
-        c[idx] = el._id;
-      });
-      if (this.newentry.creator) this.newentry.creator.forEach((el, idx, c) => {
-        var rel = {};
-        Object.keys(el).forEach((key) => {
-          if (el[key]) {
-              rel[key] = el[key]._id || el[key];
-          }
-        });
-        c[idx] = rel;
-      });
-      if (this.newentry.dimensions) this.newentry.dimensions.forEach((el, idx, c) => {
-        var rel = {};
-        Object.keys(el).forEach((key) => {
-          if (el[key]) {
-            rel[key] = el[key]._id || el[key];
-          }
-        });
-        c[idx] = rel;
-      });
-      if (this.newentry.classification) this.newentry.classification.forEach((el, idx, c) => {
-        var rel = {};
-        Object.keys(el).forEach((key) => {
-          if (el[key]) {
-            rel[key] = el[key]._id || el[key];
-          }
-        });
-        c[idx] = rel;
-      });
-      if (this.newentry.collector) this.newentry.collector.forEach((el, idx, c) => {
-        c[idx] = el._id;
-      });
-      if (this.newentry.relations) this.newentry.relations.forEach((el, idx, c) => {
-        const rel = {};
-        Object.keys(el).forEach((key) => {
-          if (el[key]) {
-            rel[key] = el[key]._id || el[key];
-          }
-        });
-        c[idx] = rel;
-      });
-      this.post({ type: 'entry', body: this.newentry }).then((res) => {
-        this.newentry = {};
-        this.entrydialog = false;
-        this.$refs.entrylist.getRecords();
-      });
+    mixins: [HELPERS],
+    components: {
+      fundamentcard,
+      entrylist,
+      entryform,
     },
-  },
-  computed: {
-    ...mapGetters('api', [
-      'apiloaded',
-    ]),
-  },
-  created() {
-  },
+    data() {
+      return {
+        entrydialog: false,
+        newentry: {},
+        ientry: {},
+        itype: 'Entry',
+      };
+    },
+    methods: {
+      ...mapActions('api', [
+        'get',
+        'post',
+        'delete',
+      ]),
+      addentry() {
+        if (this.newentry.partOf) {
+          this.newentry.partOf = this.newentry.partOf._id;
+        }
+        if (this.newentry.material) {
+          this.newentry.material.forEach((el, idx, c) => {
+            c[idx] = el._id;
+          });
+        }
+        if (this.newentry.technique) {
+          this.newentry.technique.forEach((el, idx, c) => {
+            c[idx] = el._id;
+          });
+        }
+        if (this.newentry.transaction) {
+          this.newentry.transaction.forEach((el, idx, c) => {
+            c[idx] = el._id;
+          });
+        }
+        if (this.newentry.creator) {
+          this.newentry.creator.forEach((el, idx, c) => {
+            const rel = {};
+            Object.keys(el).forEach((key) => {
+              if (el[key]) {
+                rel[key] = el[key]._id || el[key];
+              }
+            });
+            c[idx] = rel;
+          });
+        }
+        if (this.newentry.dimensions) {
+          this.newentry.dimensions.forEach((el, idx, c) => {
+            const rel = {};
+            Object.keys(el).forEach((key) => {
+              if (el[key]) {
+                rel[key] = el[key]._id || el[key];
+              }
+            });
+            c[idx] = rel;
+          });
+        }
+        if (this.newentry.classification) {
+          this.newentry.classification.forEach((el, idx, c) => {
+            const rel = {};
+            Object.keys(el).forEach((key) => {
+              if (el[key]) {
+                rel[key] = el[key]._id || el[key];
+              }
+            });
+            c[idx] = rel;
+          });
+        }
+        if (this.newentry.collector) {
+          this.newentry.collector.forEach((el, idx, c) => {
+            c[idx] = el._id;
+          });
+        }
+        if (this.newentry.relations) {
+          this.newentry.relations.forEach((el, idx, c) => {
+            const rel = {};
+            Object.keys(el).forEach((key) => {
+              if (el[key]) {
+                rel[key] = el[key]._id || el[key];
+              }
+            });
+            c[idx] = rel;
+          });
+        }
+        this.post({ type: 'entry', body: this.newentry }).then((res) => {
+          this.newentry = {};
+          this.entrydialog = false;
+          this.$refs.entrylist.getRecords();
+        });
+      },
+    },
+    computed: {
+      ...mapGetters('api', [
+        'apiloaded',
+      ]),
+    },
 };
 </script>
 

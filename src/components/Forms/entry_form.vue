@@ -123,10 +123,7 @@
                 <v-btn color="warning" @click='transactiondialog=true'>Add or link Transaction</v-btn>
               </v-flex>
               <v-flex v-if="props.newitem.ref && props.newitem.ref._id" xs3 >
-                <v-btn color="warning" @click="editTransaction()">Edit linked Transaction</v-btn>
-              </v-flex>
-              <v-flex v-if="props.newitem.ref && props.newitem.ref._id" xs3 >
-                <v-btn color="warning" @click="removeLink()">Remove Link</v-btn>
+                <v-btn color="warning" @click="editTransaction(props.newitem.ref._id)">Edit linked Transaction</v-btn>
               </v-flex>
               <v-flex xs6>
                 <autocomp entity="Descriptor" v-model="props.newitem.type" label="Type" :multiple="false"></autocomp>
@@ -163,7 +160,7 @@
         </formlistcomponent>
       </v-flex>
     </v-layout>
-    <!-- transaction popup -->
+    <!-- transaction selection popup -->
     <v-layout column justify-space-between>
       <v-dialog
         v-model="transactiondialog"
@@ -259,6 +256,9 @@ export default {
     pickTransactionRef(e) {
       this.entry.transaction.push({ ref: e });
       this.transactiondialog = false;
+    },
+    editTransaction(a) {
+      console.log(a);
     },
   },
   mounted() {
