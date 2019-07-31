@@ -76,7 +76,6 @@
         this.$emit('selectTransactionRef', e);
       },
       createAndSelect() {
-        console.log(JSON.stringify(this.newtransaction));
         if (this.newtransaction.price) {
           this.newtransaction.price.forEach((el, idx, c) => {
             const rel = {};

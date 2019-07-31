@@ -11,7 +11,11 @@
     >
       <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
       <template slot="items" slot-scope="props" >
-          <td>{{ props.item.name }}</td>
+          <td>{{ props.item.date }}</td>
+          <td>
+            <div v-if="props.item.actor[0] && props.item.actor[0].id">{{ props.item.actor[0].id.name }}</div> -
+            <div v-if="props.item.actor[0] && props.item.actor[0].role">{{ props.item.actor[0].role.name }}</div>
+          </td>
           <td>
             <v-btn fab dark small color="warning" @click="editTransaction(props.item._id)">
               <v-icon dark>edit</v-icon>
@@ -88,7 +92,8 @@ export default {
           partOf: '',
         },
         headers: [
-          { text: 'Name', value: 'name' },
+          { text: 'Date', value: 'name' },
+          { text: 'Actor', value: 'actor' },
           { text: 'Actions', value: 'actions' },
         ],
         pagination: {},
@@ -129,6 +134,10 @@ export default {
           limit: this.pagination.rowsPerPage,
           skip: (this.pagination.page - 1) * this.pagination.rowsPerPage,
           query: JSON.stringify(q),
+          populate: JSON.stringify([
+            { path: 'actor.id', select: 'name' },
+            { path: 'actor.role', select: 'name' },
+          ]),
         }).then((res) => {
           this.loading = false;
           this.data = res.data;
@@ -181,7 +190,7 @@ export default {
               c[idx] = rel;
             });
           }
-          this.post({ type: 'Transaction', id: this.cedit._id, body: this.cedit }).then(() => {
+          this.post({ type: 'transaction', id: this.cedit._id, body: this.cedit }).then(() => {
             this.getRecords();
           });
         }
