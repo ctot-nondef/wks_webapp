@@ -119,8 +119,14 @@
         >
           <template slot="form" slot-scope="props">
             <v-layout justify-end row fill-height wrap>
-              <v-flex xs6>
-                <v-text-field box label="Transaction ID" @click='transactiondialog=true' v-model='props.newitem.ref' prepend-icon='attach_file'></v-text-field>
+              <v-flex xs6 v-if="!props.newitem.ref || !props.newitem.ref._id">
+                <v-btn color="warning" @click='transactiondialog=true'>Add or link Transaction</v-btn>
+              </v-flex>
+              <v-flex v-if="props.newitem.ref && props.newitem.ref._id" xs3 >
+                <v-btn color="warning" @click="editTransaction()">Edit linked Transaction</v-btn>
+              </v-flex>
+              <v-flex v-if="props.newitem.ref && props.newitem.ref._id" xs3 >
+                <v-btn color="warning" @click="removeLink()">Remove Link</v-btn>
               </v-flex>
               <v-flex xs6>
                 <autocomp entity="Descriptor" v-model="props.newitem.type" label="Type" :multiple="false"></autocomp>

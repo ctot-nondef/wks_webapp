@@ -190,6 +190,10 @@ export default {
       if (!Array.isArray(this.items)) return [];
       return this.items;
     },
+    em() {
+      if (this.editingMode) return true;
+      return false;
+    },
   },
 };
 </script>
