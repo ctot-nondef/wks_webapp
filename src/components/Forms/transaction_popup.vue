@@ -45,6 +45,8 @@
 </template>
 
 <script>
+  /* eslint-disable no-underscore-dangle,no-param-reassign */
+
   import { mapActions } from 'vuex';
   import transactionform from '../Forms/transaction_form';
   import transactionlist from '../ListViews/transaction_list';
@@ -101,7 +103,6 @@
           this.newtransaction = {};
           this.selectTransactionRef(res.data);
         });
-
       },
     },
   };
