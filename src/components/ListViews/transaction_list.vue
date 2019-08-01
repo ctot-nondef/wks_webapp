@@ -13,8 +13,8 @@
       <template slot="items" slot-scope="props" >
           <td>{{ props.item.date }}</td>
           <td>
-            <div v-if="props.item.actor[0] && props.item.actor[0].id">{{ props.item.actor[0].id.name }}</div> -
-            <div v-if="props.item.actor[0] && props.item.actor[0].role">{{ props.item.actor[0].role.name }}</div>
+            <span v-if="props.item.actor[0] && props.item.actor[0].id">{{ props.item.actor[0].id.name }}</span> -
+            <span v-if="props.item.actor[0] && props.item.actor[0].role">{{ props.item.actor[0].role.name }}</span>
           </td>
           <td>
             <v-btn fab dark small :to="{ name: 'transactionsingle', params: { id:  props.item._id  }}" color="primary">
@@ -95,7 +95,7 @@ export default {
           partOf: '',
         },
         headers: [
-          { text: 'Date', value: 'name' },
+          { text: 'Date', value: 'date' },
           { text: 'Actor', value: 'actor' },
           { text: 'Actions', value: 'actions' },
         ],

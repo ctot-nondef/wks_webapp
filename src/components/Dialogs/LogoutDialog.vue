@@ -2,7 +2,7 @@
     <v-dialog v-model="logoutDialog.status" id="askForStore" max-width="500px">
       <v-card>
         <v-card-title>
-          VCHC DATABASE LOGIN
+          VCHC DATABASE LOGOUT
         </v-card-title>
         <v-card-text>
           Do you really want to logout?
