@@ -27,6 +27,9 @@ const getters = {
   schema: s => name => s.schemas[name],
   types: s => Object.keys(s.schemas),
   getClassByName: s => ({ type, name }) => s.classes[type].find(item => item.name === name),
+  getPopulateableFields: s => name => {
+    return Object.keys(s.schemas[name].properties);
+  },
 };
 
 const mutations = {
@@ -82,18 +85,19 @@ const mutations = {
 
 const actions = {
   // eslint-disable-next-line no-shadow
-  init({ state, commit }, config) {
+  init({ state, commit, getters }, config) {
     commit('setApiLib', api);
     commit('setApiURL', `${config.config.api}`);
     if (config.pstate !== null && config.pstate.pState.api) commit('setState', config.pstate.pState.api);
     commit('setLoading', 'Loading Database Configuration.');
-    let p = [];
+    const p = [];
     p.push(
       state.apilib.get({ $config }).then((res) => {
         if (res.data.data && res.data.data.length > 0) {
           const sa = res.data.data;
           for (let i = 0; i < sa.length; i += 1) {
             commit('setSchema', sa[i]);
+            console.log(getters.getPopulateableFields(sa[i]['type']));
           }
         }
       }),
