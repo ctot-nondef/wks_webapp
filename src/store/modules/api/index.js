@@ -3,6 +3,7 @@ import * as api from './api';
 
 const state = {
   apilib: {},
+  init: false,
   url: '',
   user: {},
   token: null,
@@ -74,6 +75,9 @@ const mutations = {
       s.classes[type] = classlist;
     }
   },
+  setInit(s) {
+    s.init = true;
+  },
 };
 
 const actions = {
@@ -83,32 +87,36 @@ const actions = {
     commit('setApiURL', `${config.config.api}`);
     if (config.pstate !== null && config.pstate.pState.api) commit('setState', config.pstate.pState.api);
     commit('setLoading', 'Loading Database Configuration.');
-    state.apilib.get({ $config }).then((res) => {
-      if (res.data.data && res.data.data.length > 0) {
-        const sa = res.data.data;
-        for (let i = 0; i < sa.length; i += 1) {
-          commit('setSchema', sa[i]);
+    let p = [];
+    p.push(
+      state.apilib.get({ $config }).then((res) => {
+        if (res.data.data && res.data.data.length > 0) {
+          const sa = res.data.data;
+          for (let i = 0; i < sa.length; i += 1) {
+            commit('setSchema', sa[i]);
+          }
         }
-        commit('setLoadingFinished');
-      }
-    });
-    state.apilib.getDescriptor({
-      $config,
-      type: 'Descriptor',
-      query: JSON.stringify({
-        description: 'Class of Actor',
       }),
-    }).then((res) => {
-      commit('setClasses', { type: 'Actor', classlist: res.data });
-    });
-    state.apilib.getDescriptor({
-      $config,
-      type: 'Descriptor',
-      query: JSON.stringify({
-        description: 'Class of Descriptor',
+      state.apilib.getDescriptor({
+        $config,
+        query: JSON.stringify({
+          description: 'Class of Actor',
+        }),
+      }).then((res) => {
+        commit('setClasses', { type: 'Actor', classlist: res.data });
       }),
-    }).then((res) => {
-      commit('setClasses', { type: 'Descriptor', classlist: res.data });
+      state.apilib.getDescriptor({
+        $config,
+        query: JSON.stringify({
+          description: 'Class of Descriptor',
+        }),
+      }).then((res) => {
+        commit('setClasses', { type: 'Descriptor', classlist: res.data });
+      }),
+    );
+    return Promise.all(p).then((res) => {
+      commit('setLoadingFinished');
+      commit('setInit');
     });
   },
   get({ state, commit }, { type, id, sort, skip, limit, query, populate }) {

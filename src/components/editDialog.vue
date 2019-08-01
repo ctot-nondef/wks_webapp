@@ -46,6 +46,7 @@ export default {
     return {
       active: false,
       item: null,
+      type: null,
     };
   },
   computed: {
@@ -58,13 +59,13 @@ export default {
     ]),
     getItem(type, _id) {
       this.item = {};
+      this.type = type;
       this.get({
         type,
         query: JSON.stringify({
           _id,
         }),
         populate: JSON.stringify([
-          { path: 'inventory' },
           { path: 'place', select: 'name' },
           { path: 'partOf', select: 'name' },
           { path: 'creator.role', select: 'name' },
@@ -107,7 +108,7 @@ export default {
         if (this.item.partOf) {
           this.item.partOf = this.item.partOf._id;
         }
-        this.post({ type: 'inventory', id: this.item._id, body: this.item }).then(() => {
+        this.post({ type: this.type, id: this.item._id, body: this.item }).then(() => {
           this.active = false;
           this.$emit('close');
         });
