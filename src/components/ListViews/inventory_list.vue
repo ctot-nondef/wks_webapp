@@ -29,7 +29,7 @@
             <v-btn fab dark small :to="{ name: 'inventorysingle', params: { id:  props.item._id  }}" color="primary">
               <v-icon dark>collections_bookmark</v-icon>
             </v-btn>
-            <v-btn fab dark small color="warning" @click="editInventory(props.item._id)">
+            <v-btn fab dark small color="warning" @click="$refs.editdialog.getItem('Inventory', props.item._id)">
               <v-icon dark>edit</v-icon>
             </v-btn>
             <v-btn fab dark small color="error" @click="deleteInventory(props.item._id)">
@@ -38,37 +38,11 @@
           </td>
       </template>
     </v-data-table>
-    <v-layout column justify-space-between>
-      <v-dialog
-        v-model="inventorydialog"
-        @keydown.esc="inventorydialog=false"
-        fullscreen
-        hide-overlay
-        transition="dialog-bottom-transition"
-        >
-        <v-card>
-          <v-toolbar dark color="primary">
-            <v-btn icon dark @click.native="inventorydialog=false">
-              <v-icon>close</v-icon>
-            </v-btn>
-            <v-toolbar-title>Edit Entry</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-toolbar-items>
-            </v-toolbar-items>
-            <v-btn color="warning" @click="saveInventory()">Save</v-btn>
-          </v-toolbar>
-          <v-container grid-list-md text-xs-center>
-            <v-card color="grey lighten-2" class="pa-4">
-              <inventoryform v-if="$store.state.api.schemas.inventory" :value="cedit" @input="cedits=$event"></inventoryform>
-              <v-layout justify-end row fill-height>
-                <v-btn color="warning" @click="saveInventory()">Save</v-btn>
-                <v-btn color="primary" flat @click.native="inventorydialog=false">Discard</v-btn>
-              </v-layout>
-            </v-card>
-          </v-container>
-        </v-card>
-      </v-dialog>
-    </v-layout>
+    <editdialog title="Edit Inventory" ref="editdialog" @close="getRecords()">
+      <template slot="form" slot-scope="props">
+        <inventoryform :value="props.item" @input="props.item=$event"></inventoryform>
+      </template>
+    </editdialog>
   </div>
 </template>
 
@@ -80,6 +54,7 @@
 import fundamentcard from '../Fundament/FundamentCard';
 import inventoryform from '../Forms/inventory_form';
 import simpleautocompwrapper from '../FormComponents/SimpleAutoCompleteWrapper';
+import editdialog from '../editDialog';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 /* eslint no-console: ["error", { allow: ["log"] }] */
@@ -89,6 +64,7 @@ export default {
       fundamentcard,
       inventoryform,
       simpleautocompwrapper,
+      editdialog,
     },
     props: [
       'filter',
@@ -96,9 +72,6 @@ export default {
     data() {
       return {
         data: [],
-        cedit: {},
-        cedits: {},
-        inventorydialog: false,
         loading: false,
         itemOptions: [10, 10, 50],
         totalHits: 0,
@@ -160,63 +133,6 @@ export default {
             this.getRecords();
           }
         });
-      },
-      editInventory(_id) {
-        this.get({
-          type: 'Inventory',
-          query: JSON.stringify({
-            _id,
-          }),
-          populate: JSON.stringify([
-            { path: 'inventory' },
-            { path: 'place', select: 'name' },
-            { path: 'partOf', select: 'name' },
-            { path: 'creator.role', select: 'name' },
-            { path: 'creator.id', select: 'name' },
-            { path: 'classification.aspect', select: 'name' },
-            { path: 'classification.descriptor', select: 'name' },
-          ]),
-        }).then((res) => {
-          this.cedit = res.data[0];
-          this.inventorydialog = true;
-        });
-      },
-      /* TODO: move reduction of populated ref fields to store */
-      saveInventory() {
-        if (this.cedit._id) {
-          if (this.cedit.creator) {
-            this.cedit.creator.forEach((el, idx, c) => {
-              const rel = {};
-              Object.keys(el).forEach((key) => {
-                if (el[key]) {
-                  rel[key] = el[key]._id || el[key];
-                }
-              });
-              c[idx] = rel;
-            });
-          }
-          if (this.cedit.classification) {
-            this.cedit.classification.forEach((el, idx, c) => {
-              const rel = {};
-              Object.keys(el).forEach((key) => {
-                if (el[key]) {
-                  rel[key] = el[key]._id || el[key];
-                }
-              });
-              c[idx] = rel;
-            });
-          }
-          if (this.cedit.place) {
-            this.cedit.place = this.cedit.place._id;
-          }
-          if (this.cedit.partOf) {
-            this.cedit.partOf = this.cedit.partOf._id;
-          }
-          this.post({ type: 'inventory', id: this.cedit._id, body: this.cedit }).then(() => {
-            this.getRecords();
-          });
-        }
-        this.inventorydialog = false;
       },
       deleteInventory(_id) {
         this.delete({ type: 'Inventory', id: _id }).then((res) => {

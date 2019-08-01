@@ -59,7 +59,7 @@
       <v-list-tile v-for="(item, index) in items" v-bind:key="index">
         <v-list-tile-content>
           <v-list-tile-title v-if="typeof item === 'string'" v-text="item"></v-list-tile-title>
-          </v-list-tile-content>
+        </v-list-tile-content>
         <v-btn fab dark small color="error" @click="removeItem(index,items)">
           <v-icon dark>delete</v-icon>
         </v-btn>
