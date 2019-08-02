@@ -4,25 +4,25 @@ import * as api from './api';
 function PopulateablePathsFromSchemaObject(vm, schema, path) {
   let p = [];
   let t = '';
-  if(path.length>0) t = vm._.get(schema, path).type;
+  if (path.length > 0) t = vm._.get(schema, path).type;
   else t = schema.type;
   if (t === 'object') {
     Object.keys(vm._.get(schema, path.concat(['properties']))).forEach((cp) => {
       p = p.concat(PopulateablePathsFromSchemaObject(vm, schema, path.concat(['properties', cp])));
     });
-  } else if ( t === 'array') {
+  } else if (t === 'array') {
     if (vm._.get(schema, path.concat(['items'])).type === 'string' && vm._.get(schema, path.concat(['items']))['x-ref']) {
-      p.push(path.filter((a) => { return (a != 'properties' && a != 'items') }).join('.'));
+      p.push(path.filter(a => (a !== 'properties' && a !== 'items')).join('.'));
     } else if (vm._.get(schema, path.concat(['items'])).type === 'object') {
       Object.keys(vm._.get(schema, path.concat(['items', 'properties']))).forEach((cp) => {
         p = p.concat(PopulateablePathsFromSchemaObject(vm, schema, path.concat(['items', 'properties', cp])));
       });
     }
   } else if (t === 'string' && vm._.get(schema, path)['x-ref']) {
-    p.push(path.filter((a) => { return (a != 'properties' && a != 'items') }).join('.'));
+    p.push(path.filter(a => (a !== 'properties' && a !== 'items')).join('.'));
   }
   return p;
-};
+}
 
 const state = {
   apilib: {},
@@ -98,7 +98,7 @@ const mutations = {
     }
   },
   setPopulateablePaths(s, { type, paths }) {
-    if(type && paths) {
+    if (type && paths) {
       s.ppaths[type] = paths;
     }
   },
@@ -126,7 +126,7 @@ const actions = {
           const sa = res.data.data;
           for (let i = 0; i < sa.length; i += 1) {
             commit('setSchema', sa[i]);
-            commit('setPopulateablePaths', {type: sa[i].type, paths: PopulateablePathsFromSchemaObject(config.vm, sa[i].attributes,[])});
+            commit('setPopulateablePaths', { type: sa[i].type, paths: PopulateablePathsFromSchemaObject(config.vm, sa[i].attributes, []) });
           }
         }
       }),
@@ -147,7 +147,7 @@ const actions = {
         commit('setClasses', { type: 'Descriptor', classlist: res.data });
       }),
     );
-    return Promise.all(p).then((res) => {
+    return Promise.all(p).then(() => {
       commit('setLoadingFinished');
       commit('setInit');
     });
