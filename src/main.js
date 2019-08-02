@@ -4,6 +4,7 @@ import Vue from 'vue';
 import Vuetify from 'vuetify';
 import VueAxios from 'vue-axios';
 import axios from 'axios';
+import VueLodash from 'vue-lodash';
 
 import 'vuetify/dist/vuetify.min.css';
 import 'vue2-animate/dist/vue2-animate.min.css';
@@ -21,6 +22,8 @@ Vue.use(vueLogger, {
   shortname: true,
   levels: ['log', 'warn', 'debug', 'error', 'dir', 'info'],
 });
+
+Vue.use(VueLodash);
 
 Vue.use(VueAxios, axios);
 

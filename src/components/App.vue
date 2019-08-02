@@ -48,7 +48,7 @@ export default {
     HELPERS.methods.deleteOldSessions();
     this.$store.commit('app/setConfig', config);
     this.$store.dispatch('app/init', pstate);
-    this.$store.dispatch('api/init', { pstate, config });
+    this.$store.dispatch('api/init', { pstate, config, vm: this });
   },
 };
 </script>
