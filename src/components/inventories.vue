@@ -63,6 +63,7 @@
 import fundamentcard from './Fundament/FundamentCard';
 import inventorylist from './ListViews/inventory_list';
 import inventoryform from './Forms/inventory_form';
+import editdialog from './editDialog';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 /* eslint no-console: ["error", { allow: ["log"] }] */
@@ -72,6 +73,7 @@ export default {
       fundamentcard,
       inventorylist,
       inventoryform,
+      editdialog,
     },
     data() {
       return {

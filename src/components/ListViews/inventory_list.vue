@@ -29,7 +29,7 @@
             <v-btn fab dark small :to="{ name: 'inventorysingle', params: { id:  props.item._id  }}" color="primary">
               <v-icon dark>collections_bookmark</v-icon>
             </v-btn>
-            <v-btn fab dark small color="warning" @click="$refs.editdialog.getItem('Inventory', props.item._id)">
+            <v-btn fab dark small color="warning" @click="$refs.editdialog.getItem('inventory', props.item._id)">
               <v-icon dark>edit</v-icon>
             </v-btn>
             <v-btn fab dark small color="error" @click="deleteInventory(props.item._id)">

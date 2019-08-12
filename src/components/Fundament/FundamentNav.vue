@@ -31,26 +31,27 @@
                 v-for="(item, i) in $store.state.app.config.menu"
                 :key="i"
                 :to="item.startpage"
+                class="navtile"
                 >
-                  <v-btn icon>
-                    <v-icon v-html="item.icon"></v-icon>
-                  </v-btn>
+                  <v-list-tile-avatar>
+                    <v-icon>{{ item.icon }}</v-icon>
+                  </v-list-tile-avatar>
                   <v-list-tile-content >
                     <v-list-tile-title class="toolbarcaption">{{item.caption}}</v-list-tile-title>
                   </v-list-tile-content>
               </v-list-tile>
-              <v-list-tile value="true" @click.stop="openDialog('loginDialog')" v-if="!$store.state.app.loggedin">
-                  <v-btn icon>
+              <v-list-tile value="true" @click.stop="openDialog('loginDialog')" v-if="!$store.state.app.loggedin" class="navtile">
+                  <v-list-tile-avatar>
                     <v-icon>input</v-icon>
-                  </v-btn>
+                  </v-list-tile-avatar>
                   <v-list-tile-content >
                     <v-list-tile-title class="toolbarcaption">LOGIN</v-list-tile-title>
                   </v-list-tile-content>
               </v-list-tile>
-              <v-list-tile value="true" @click.stop="openDialog('logoutDialog')" v-if="$store.state.app.loggedin">
-                  <v-btn icon>
+              <v-list-tile value="true" @click.stop="openDialog('logoutDialog')" v-if="$store.state.app.loggedin" class="navtile">
+                  <v-list-tile-avatar>
                     <v-icon>power_settings_new</v-icon>
-                  </v-btn>
+                  </v-list-tile-avatar>
                   <v-list-tile-content >
                     <v-list-tile-title class="toolbarcaption">LOGOUT</v-list-tile-title>
                   </v-list-tile-content>
@@ -178,6 +179,11 @@ export default {
   color:white;
   white-space: nowrap;
   font-family: 'Montserrat', sans-serif;
+}
+
+.navtile {
+  margin-left: -16px!important;
+  margin-right: -16px!important;
 }
 
 </style>

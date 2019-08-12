@@ -34,7 +34,7 @@
 
 <script>
 import HELPERS from '../helpers';
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   mixins: [HELPERS],
@@ -50,7 +50,9 @@ export default {
     };
   },
   computed: {
-
+    ...mapGetters('api', [
+      'getPathsByName',
+    ]),
   },
   methods: {
     ...mapActions('api', [
@@ -65,14 +67,7 @@ export default {
         query: JSON.stringify({
           _id,
         }),
-        populate: JSON.stringify([
-          { path: 'place', select: 'name' },
-          { path: 'partOf', select: 'name' },
-          { path: 'creator.role', select: 'name' },
-          { path: 'creator.id', select: 'name' },
-          { path: 'classification.aspect', select: 'name' },
-          { path: 'classification.descriptor', select: 'name' },
-        ]),
+        populate: JSON.stringify(this.getPathsByName(type).map(path => { return {path: path} })),
       }).then((res) => {
         this.item = res.data[0];
         this.active = true;

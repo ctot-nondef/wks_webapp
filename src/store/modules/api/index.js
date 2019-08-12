@@ -51,9 +51,7 @@ const getters = {
   schema: s => name => s.schemas[name],
   types: s => Object.keys(s.schemas),
   getClassByName: s => ({ type, name }) => s.classes[type].find(item => item.name === name),
-  getPopulateablePaths: (s, g) => ({ vm, path }) => {
-
-  },
+  getPathsByName: s => name => s.ppaths[name],
 };
 
 const mutations = {
