@@ -29,7 +29,7 @@
             <v-btn fab dark small :to="{ name: 'collectionsingle', params: { id:  props.item._id  }}" color="primary">
               <v-icon dark>collections_bookmark</v-icon>
             </v-btn>
-            <v-btn fab dark small color="warning" @click="editCollection(props.item._id)">
+            <v-btn fab dark small color="warning" @click="$refs.editdialog.getItem('collect', props.item._id)">
               <v-icon dark>edit</v-icon>
             </v-btn>
             <v-btn fab dark small color="error" @click="deleteCollection(props.item._id)">
@@ -38,37 +38,11 @@
           </td>
       </template>
     </v-data-table>
-    <v-layout column justify-space-between>
-      <v-dialog
-        v-model="collectiondialog"
-        @keydown.esc="collectiondialog=false"
-        fullscreen
-        hide-overlay
-        transition="dialog-bottom-transition"
-        >
-        <v-card>
-          <v-toolbar dark color="primary">
-            <v-btn icon dark @click.native="collectiondialog=false">
-              <v-icon>close</v-icon>
-            </v-btn>
-            <v-toolbar-title>Edit Collection</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-toolbar-items>
-            </v-toolbar-items>
-            <v-btn color="warning" @click="saveCollection()">Save</v-btn>
-          </v-toolbar>
-          <v-container grid-list-md text-xs-center>
-            <v-card color="grey lighten-2" class="pa-4">
-              <collectionform v-if="$store.state.api.schemas.collect" :value="cedit" @input="cedits=$event"></collectionform>
-              <v-layout justify-end row fill-height>
-                <v-btn color="warning" @click="saveCollection()">Save</v-btn>
-                <v-btn color="primary" flat @click.native="collectiondialog=false">Discard</v-btn>
-              </v-layout>
-            </v-card>
-          </v-container>
-        </v-card>
-      </v-dialog>
-    </v-layout>
+    <editdialog title="Edit Collection" ref="editdialog" @close="getRecords()">
+      <template slot="form" slot-scope="props">
+        <collectionform :value="props.item" @input="props.item=$event"></collectionform>
+      </template>
+    </editdialog>
   </div>
 </template>
 
@@ -79,6 +53,7 @@
 
 import fundamentcard from '../Fundament/FundamentCard';
 import collectionform from '../Forms/collection_form';
+import editdialog from '../editDialog';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 /* eslint no-console: ["error", { allow: ["log"] }] */
@@ -87,6 +62,7 @@ export default {
     components: {
       fundamentcard,
       collectionform,
+      editdialog,
     },
     data() {
       return {
@@ -143,67 +119,6 @@ export default {
             this.getRecords();
           }
         });
-      },
-      editCollection(_id) {
-        this.get({
-          type: 'Collect',
-          query: JSON.stringify({
-            _id,
-          }),
-          populate: JSON.stringify([
-            { path: 'creator.role', select: 'name' },
-            { path: 'creator.id', select: 'name' },
-            { path: 'place', select: 'name' },
-            { path: 'time', select: 'name' },
-            { path: 'classification.aspect', select: 'name' },
-            { path: 'classification.descriptor', select: 'name' },
-            { path: 'documents.ref' },
-          ]),
-        }).then((res) => {
-          this.cedit = res.data[0];
-          this.collectiondialog = true;
-        });
-      },
-      /* TODO: move reduction of populated ref fields to store */
-      saveCollection() {
-        if (this.cedit._id) {
-          if (this.cedit.place) {
-            this.cedit.place.forEach((el, idx, c) => {
-              c[idx] = el._id;
-            });
-          }
-          if (this.cedit.time) {
-            this.cedit.time.forEach((el, idx, c) => {
-              c[idx] = el._id;
-            });
-          }
-          if (this.cedit.creator) {
-            this.cedit.creator.forEach((el, idx, c) => {
-              const rel = {};
-              Object.keys(el).forEach((key) => {
-                if (el[key]) {
-                  rel[key] = el[key]._id || el[key];
-                }
-              });
-              c[idx] = rel;
-            });
-          }
-          if (this.cedit.classification) {
-            this.cedit.classification.forEach((el, idx, c) => {
-              const rel = {};
-              Object.keys(el).forEach((key) => {
-                if (el[key]) {
-                  rel[key] = el[key]._id || el[key];
-                }
-              });
-              c[idx] = rel;
-            });
-          }
-          this.post({ type: 'collect', id: this.cedit._id, body: this.cedit }).then((res) => {
-            this.getRecords();
-          });
-        }
-        this.collectiondialog = false;
       },
       deleteCollection(_id) {
         this.delete({ type: 'Collect', id: _id }).then((res) => {

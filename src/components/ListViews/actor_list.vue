@@ -46,7 +46,7 @@
             <v-btn fab dark small :to="{ name: 'actorsingle', params: { id:  props.item._id  }}" color="primary">
               <v-icon dark>collections_bookmark</v-icon>
             </v-btn>
-            <v-btn fab dark small color="warning" @click="editactor(props.item._id)">
+            <v-btn fab dark small color="warning" @click="$refs.editdialog.getItem('actor', props.item._id)">
               <v-icon dark>edit</v-icon>
             </v-btn>
             <v-btn fab dark small color="error" @click="deleteactor(props.item._id)">
@@ -55,37 +55,11 @@
           </td>
       </template>
     </v-data-table>
-    <v-layout column justify-space-between>
-      <v-dialog
-        v-model="actordialog"
-        @keydown.esc="actordialog=false"
-        fullscreen
-        hide-overlay
-        transition="dialog-bottom-transition"
-        >
-        <v-card>
-          <v-toolbar dark color="primary">
-            <v-btn icon dark @click.native="actordialog=false">
-              <v-icon>close</v-icon>
-            </v-btn>
-            <v-toolbar-title>Edit Actor</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-toolbar-items>
-            </v-toolbar-items>
-            <v-btn color="warning" @click="saveactor()">Save</v-btn>
-          </v-toolbar>
-          <v-container grid-list-md text-xs-center>
-            <v-card color="grey lighten-2" class="pa-4">
-              <actorform v-if="$store.state.api.schemas.actor" :value="cedit" @input="cedits=$event"></actorform>
-              <v-layout justify-end row fill-height>
-                <v-btn color="warning" @click="saveactor()">Save</v-btn>
-                <v-btn color="primary" flat @click.native="actordialog=false">Discard</v-btn>
-              </v-layout>
-            </v-card>
-          </v-container>
-        </v-card>
-      </v-dialog>
-    </v-layout>
+    <editdialog title="Edit Actor Record" ref="editdialog" @close="getRecords()">
+      <template slot="form" slot-scope="props">
+        <actorform :value="props.item" @input="props.item=$event"></actorform>
+      </template>
+    </editdialog>
   </div>
 </template>
 
@@ -96,6 +70,7 @@
 
 import fundamentcard from '../Fundament/FundamentCard';
 import actorform from '../Forms/actor_form';
+import editdialog from '../editDialog';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 /* eslint no-console: ["error", { allow: ["log"] }] */
@@ -104,6 +79,7 @@ export default {
     components: {
       fundamentcard,
       actorform,
+      editdialog,
     },
     data() {
       return {
@@ -167,42 +143,6 @@ export default {
             this.getRecords();
           }
         });
-      },
-      editactor(_id) {
-        this.get({
-          type: 'Actor',
-          query: JSON.stringify({
-            _id,
-          }),
-          populate: JSON.stringify([
-            { path: 'instanceOf' },
-            { path: 'relations.target', select: 'name' },
-          ]),
-        }).then((res) => {
-          this.cedit = res.data[0];
-          this.actordialog = true;
-        });
-      },
-      /* TODO: move reduction of populated ref fields to store */
-      saveactor() {
-        if (this.cedit._id) {
-          if (this.cedit.relations) {
-            this.cedit.relations.forEach((el, idx, c) => {
-              const rel = {};
-              Object.keys(el).forEach((key) => {
-                if (el[key]) {
-                  rel[key] = el[key]._id || el[key];
-                }
-              });
-              // eslint-disable-next-line no-param-reassign
-              c[idx] = rel;
-            });
-          }
-          this.post({ type: 'actor', id: this.cedit._id, body: this.cedit }).then((res) => {
-            this.getRecords();
-          });
-        }
-        this.actordialog = false;
       },
       deleteactor(_id) {
         this.delete({ type: 'Actor', id: _id }).then((res) => {

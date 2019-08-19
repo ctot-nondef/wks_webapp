@@ -33,8 +33,9 @@
 </template>
 
 <script>
-import HELPERS from '../helpers';
 import { mapActions, mapGetters } from 'vuex';
+import HELPERS from '../helpers';
+
 
 export default {
   mixins: [HELPERS],
@@ -67,7 +68,7 @@ export default {
         query: JSON.stringify({
           _id,
         }),
-        populate: JSON.stringify(this.getPathsByName(type).map(path => { return {path: path} })),
+        populate: JSON.stringify(this.getPathsByName(type).map(path => ({ path }))),
       }).then((res) => {
         this.item = res.data[0];
         this.active = true;
@@ -75,40 +76,11 @@ export default {
     },
     saveItem() {
       if (this.item._id) {
-        if (this.item.creator) {
-          this.item.creator.forEach((el, idx, c) => {
-            const rel = {};
-            Object.keys(el).forEach((key) => {
-              if (el[key]) {
-                rel[key] = el[key]._id || el[key];
-              }
-            });
-            c[idx] = rel;
-          });
-        }
-        if (this.item.classification) {
-          this.item.classification.forEach((el, idx, c) => {
-            const rel = {};
-            Object.keys(el).forEach((key) => {
-              if (el[key]) {
-                rel[key] = el[key]._id || el[key];
-              }
-            });
-            c[idx] = rel;
-          });
-        }
-        if (this.item.place) {
-          this.item.place = this.item.place._id;
-        }
-        if (this.item.partOf) {
-          this.item.partOf = this.item.partOf._id;
-        }
         this.post({ type: this.type, id: this.item._id, body: this.item }).then(() => {
           this.active = false;
           this.$emit('close');
         });
       }
-
     },
     discard() {
       // clear form component
