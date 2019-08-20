@@ -47,7 +47,7 @@
             <v-btn fab dark small :to="{ name: 'descriptorsingle', params: { id:  props.item._id  }}" color="primary">
               <v-icon dark>collections_bookmark</v-icon>
             </v-btn>
-            <v-btn fab dark small color="warning" @click="editdescriptor(props.item._id)">
+            <v-btn fab dark small color="warning" @click="$refs.editdialog.getItem('descriptor', props.item._id)">
               <v-icon dark>edit</v-icon>
             </v-btn>
             <v-btn fab dark small color="error" @click="deletedescriptor(props.item._id)">
@@ -56,37 +56,11 @@
           </td>
       </template>
     </v-data-table>
-    <v-layout column justify-space-between>
-      <v-dialog
-        v-model="descriptordialog"
-        @keydown.esc="descriptordialog=false"
-        fullscreen
-        hide-overlay
-        transition="dialog-bottom-transition"
-        >
-        <v-card>
-          <v-toolbar dark color="primary">
-            <v-btn icon dark @click.native="descriptordialog=false">
-              <v-icon>close</v-icon>
-            </v-btn>
-            <v-toolbar-title>Edit descriptor</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-toolbar-items>
-            </v-toolbar-items>
-            <v-btn color="warning" @click="adddescriptor()">Save</v-btn>
-          </v-toolbar>
-          <v-container grid-list-md text-xs-center>
-            <v-card color="grey lighten-2" class="pa-4">
-              <descriptorform v-if="$store.state.api.schemas.descriptor" :value="cedit" @input="cedits=$event"></descriptorform>
-              <v-layout justify-end row fill-height>
-                <v-btn color="warning" @click="savedescriptor()">Save</v-btn>
-                <v-btn color="primary" flat @click.native="descriptordialog=false">Discard</v-btn>
-              </v-layout>
-            </v-card>
-          </v-container>
-        </v-card>
-      </v-dialog>
-    </v-layout>
+    <editdialog title="Edit Descriptor Record" ref="editdialog" @close="getRecords()">
+      <template slot="form" slot-scope="props">
+        <descriptorform :value="props.item" @input="props.item=$event"></descriptorform>
+      </template>
+    </editdialog>
   </div>
 </template>
 
@@ -97,7 +71,7 @@
 
 import fundamentcard from '../Fundament/FundamentCard';
 import descriptorform from '../Forms/descriptor_form';
-
+import editdialog from '../editDialog';
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 /* eslint no-console: ["error", { allow: ["log"] }] */
 
@@ -105,6 +79,7 @@ export default {
     components: {
       fundamentcard,
       descriptorform,
+      editdialog,
     },
     data() {
       return {
@@ -169,42 +144,6 @@ export default {
             this.getRecords();
           }
         });
-      },
-      editdescriptor(_id) {
-        this.get({
-          type: 'Descriptor',
-          query: JSON.stringify({
-            _id,
-          }),
-          populate: JSON.stringify([
-            { path: 'instanceOf' },
-            { path: 'relations.target', select: 'name' },
-          ]),
-        }).then((res) => {
-          this.cedit = res.data[0];
-          this.descriptordialog = true;
-        });
-      },
-      /* TODO: move reduction of populated ref fields to store */
-      savedescriptor() {
-        console.log(this.cedit);
-        if (this.cedit._id) {
-          if (this.cedit.relations) {
-            this.cedit.relations.forEach((el, idx, c) => {
-              const rel = {};
-              Object.keys(el).forEach((key) => {
-                if (el[key]) {
-                  rel[key] = el[key]._id || el[key];
-                }
-              });
-              c[idx] = rel;
-            });
-          }
-          this.post({ type: 'descriptor', id: this.cedit._id, body: this.cedit }).then((res) => {
-            this.getRecords();
-          });
-        }
-        this.descriptordialog = false;
       },
       deletedescriptor(_id) {
         this.delete({ type: 'Descriptor', id: _id }).then((res) => {

@@ -34,7 +34,7 @@
             <!-- <v-btn fab dark small :to="{ name: 'objectsingle', params: { id:  props.item._id  }}" color="primary">
               <v-icon dark>collections_bookmark</v-icon>
             </v-btn> -->
-            <v-btn fab dark small color="warning" @click="editobject(props.item._id)">
+            <v-btn fab dark small color="warning" @click="$refs.editdialog.getItem('object', props.item._id)">
               <v-icon dark>edit</v-icon>
             </v-btn>
             <v-btn fab dark small color="error" @click="deleteobject(props.item._id)">
@@ -43,38 +43,11 @@
           </td>
       </template>
     </v-data-table>
-    <v-layout column justify-space-between>
-      <v-dialog
-
-        v-model="objectdialog"
-        @keydown.esc="objectdialog=false"
-        fullscreen
-        hide-overlay
-        transition="dialog-bottom-transition"
-        >
-        <v-card>
-          <v-toolbar dark color="primary">
-            <v-btn icon dark @click.native="objectdialog=false">
-              <v-icon>close</v-icon>
-            </v-btn>
-            <v-toolbar-title>Edit Object</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-toolbar-items>
-            </v-toolbar-items>
-            <v-btn color="warning" @click="saveobject()">Save</v-btn>
-          </v-toolbar>
-          <v-container grid-list-md text-xs-center>
-            <v-card color="grey lighten-2" class="pa-4">
-              <objectform v-if="$store.state.api.schemas.object" :value="cedit" @input="cedits=$event"></objectform>
-              <v-layout justify-end row fill-height>
-                <v-btn color="warning" @click="saveobject()">Save</v-btn>
-                <v-btn color="primary" flat @click.native="objectdialog=false">Discard</v-btn>
-              </v-layout>
-            </v-card>
-          </v-container>
-        </v-card>
-      </v-dialog>
-    </v-layout>
+    <editdialog title="Edit Identified Object Record" ref="editdialog" @close="getRecords()">
+      <template slot="form" slot-scope="props">
+        <objectform :value="props.item" @input="props.item=$event"></objectform>
+      </template>
+    </editdialog>
   </div>
 </template>
 
@@ -85,6 +58,7 @@
 
 import fundamentcard from '../Fundament/FundamentCard';
 import objectform from '../Forms/object_form';
+import editdialog from '../editDialog';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 /* eslint no-console: ["error", { allow: ["log"] }] */
@@ -93,6 +67,7 @@ export default {
     components: {
       fundamentcard,
       objectform,
+      editdialog,
     },
     data() {
       return {
@@ -155,95 +130,6 @@ export default {
             this.getRecords();
           }
         });
-      },
-      editobject(_id) {
-        this.get({
-          type: 'Object',
-          query: JSON.stringify({
-            _id,
-          }),
-          populate: JSON.stringify([
-            { path: 'instanceOf' },
-            { path: 'images.reference' },
-            { path: 'currentOwner', select: 'name' },
-            { path: 'material', select: 'name' },
-            { path: 'technique', select: 'name' },
-            { path: 'creator.role', select: 'name' },
-            { path: 'creator.id', select: 'name' },
-            { path: 'dimensions.aspect', select: 'name' },
-            { path: 'dimensions.unit', select: 'name' },
-            { path: 'classification.aspect', select: 'name' },
-            { path: 'classification.descriptor', select: 'name' },
-          ]),
-        }).then((res) => {
-          this.cedit = res.data[0];
-          this.objectdialog = true;
-        });
-      },
-      /* TODO: move reduction of populated ref fields to store */
-      saveobject() {
-        // this needs to be redone
-        // how can we systematically reduce all referenced/populated docs
-        // to ids before submission?
-        if (this.cedit._id) {
-          if (this.cedit.currentOwner) {
-            this.cedit.currentOwner.forEach((el, idx, c) => {
-              c[idx] = el._id;
-            });
-          }
-          if (this.cedit.material) {
-            this.cedit.material.forEach((el, idx, c) => {
-              c[idx] = el._id;
-            });
-          }
-          if (this.cedit.technique) {
-            this.cedit.technique.forEach((el, idx, c) => {
-              c[idx] = el._id;
-            });
-          }
-          if (this.cedit.creator) {
-            this.cedit.creator.forEach((el, idx, c) => {
-              const rel = {};
-              Object.keys(el).forEach((key) => {
-                if (el[key]) {
-                  rel[key] = el[key]._id || el[key];
-                }
-              });
-              c[idx] = rel;
-            });
-          }
-          if (this.cedit.dimensions) {
-            this.cedit.dimensions.forEach((el, idx, c) => {
-              const rel = {};
-              Object.keys(el).forEach((key) => {
-                if (el[key]) {
-                  rel[key] = el[key]._id || el[key];
-                }
-              });
-              c[idx] = rel;
-            });
-          }
-          if (this.cedit.classification) {
-            this.cedit.classification.forEach((el, idx, c) => {
-              const rel = {};
-              Object.keys(el).forEach((key) => {
-                if (el[key]) {
-                  rel[key] = el[key]._id || el[key];
-                }
-              });
-              c[idx] = rel;
-            });
-          }
-          if (this.cedit.collector) {
-            this.cedit.collector.forEach((el, idx, c) => {
-              c[idx] = el._id;
-            });
-          }
-          this.post({ type: 'object', id: this.cedit._id, body: this.cedit }).then(() => {
-            this.getRecords();
-          });
-        }
-        this.objectdialog = false;
       },
       deleteobject(_id) {
         this.delete({ type: 'Object', id: _id }).then(() => {

@@ -30,7 +30,7 @@
             <!-- <v-btn fab dark small :to="{ name: 'entrysingle', params: { id:  props.item._id  }}" color="primary">
               <v-icon dark>collections_bookmark</v-icon>
             </v-btn> -->
-            <v-btn fab dark small color="warning" @click="editentry(props.item._id)">
+            <v-btn fab dark small color="warning" @click="$refs.editdialog.getItem('entry', props.item._id)">
               <v-icon dark>edit</v-icon>
             </v-btn>
             <v-btn fab dark small color="error" @click="deleteentry(props.item._id)">
@@ -39,41 +39,11 @@
           </td>
       </template>
     </v-data-table>
-    <v-layout column justify-space-between>
-      <v-dialog
-        v-model="entrydialog"
-        @keydown.esc="entrydialog=false"
-        fullscreen
-        hide-overlay
-        transition="dialog-bottom-transition"
-        >
-        <v-card>
-          <v-toolbar dark color="primary">
-            <v-btn icon dark @click.native="entrydialog=false">
-              <v-icon>close</v-icon>
-            </v-btn>
-            <v-toolbar-title>Edit Entry</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-toolbar-items>
-            </v-toolbar-items>
-            <v-menu bottom right offset-y>
-              <v-btn slot="activator" dark icon>
-                <v-icon>more_vert</v-icon>
-              </v-btn>
-            </v-menu>
-          </v-toolbar>
-          <v-container grid-list-md text-xs-center>
-            <v-card color="grey lighten-2" class="pa-4">
-              <entryform v-if="$store.state.api.schemas.entry" :value="cedit" @input="cedits=$event"></entryform>
-              <v-layout justify-end row fill-height>
-                <v-btn color="warning" @click="saveentry()">Save</v-btn>
-                <v-btn color="primary" flat @click.native="entrydialog=false">Discard</v-btn>
-              </v-layout>
-            </v-card>
-          </v-container>
-        </v-card>
-      </v-dialog>
-    </v-layout>
+    <editdialog title="Edit Inventory Entry" ref="editdialog" @close="getRecords()">
+      <template slot="form" slot-scope="props">
+        <entryform :value="props.item" @input="props.item=$event"></entryform>
+      </template>
+    </editdialog>
   </div>
 </template>
 
@@ -84,6 +54,7 @@
 
 import fundamentcard from '../Fundament/FundamentCard';
 import entryform from '../Forms/entry_form';
+import editdialog from '../editDialog';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 /* eslint no-console: ["error", { allow: ["log"] }] */
@@ -92,6 +63,7 @@ export default {
     components: {
       fundamentcard,
       entryform,
+      editdialog,
     },
     props: [
       'filter',
@@ -170,114 +142,6 @@ export default {
             this.getRecords();
           }
         });
-      },
-      editentry(_id) {
-        this.get({
-          type: 'Entry',
-          query: JSON.stringify({
-            _id,
-          }),
-          populate: JSON.stringify([
-            { path: 'partOf', select: 'name' },
-            { path: 'material', select: 'name' },
-            { path: 'technique', select: 'name' },
-            { path: 'creator.role', select: 'name' },
-            { path: 'creator.id', select: 'name' },
-            { path: 'dimensions.aspect', select: 'name' },
-            { path: 'dimensions.unit', select: 'name' },
-            { path: 'classification.aspect', select: 'name' },
-            { path: 'classification.descriptor', select: 'name' },
-            { path: 'relations.target', select: 'name' },
-            { path: 'transaction.ref' },
-            { path: 'transaction.type', select: 'name' },
-          ]),
-        }).then((res) => {
-          this.cedit = res.data[0];
-          this.entrydialog = true;
-        });
-      },
-      /* TODO: move reduction of populated ref fields to store */
-      saveentry() {
-        if (this.cedit._id) {
-          if (this.cedit.partOf) {
-            this.cedit.partOf = this.cedit.partOf._id;
-          }
-          if (this.cedit.material) {
-            this.cedit.material.forEach((el, idx, c) => {
-              c[idx] = el._id;
-            });
-          }
-          if (this.cedit.technique) {
-            this.cedit.technique.forEach((el, idx, c) => {
-              c[idx] = el._id;
-            });
-          }
-          if (this.cedit.creator) {
-            this.cedit.creator.forEach((el, idx, c) => {
-              const rel = {};
-              Object.keys(el).forEach((key) => {
-                if (el[key]) {
-                  rel[key] = el[key]._id || el[key];
-                }
-              });
-              c[idx] = rel;
-            });
-          }
-          if (this.cedit.relations) {
-            this.cedit.relations.forEach((el, idx, c) => {
-              const rel = {};
-              Object.keys(el).forEach((key) => {
-                if (el[key]) {
-                  rel[key] = el[key]._id || el[key];
-                }
-              });
-              c[idx] = rel;
-            });
-          }
-          if (this.cedit.dimensions) {
-            this.cedit.dimensions.forEach((el, idx, c) => {
-              const rel = {};
-              Object.keys(el).forEach((key) => {
-                if (el[key]) {
-                  rel[key] = el[key]._id || el[key];
-                }
-              });
-              c[idx] = rel;
-            });
-          }
-          if (this.cedit.classification) {
-            this.cedit.classification.forEach((el, idx, c) => {
-              const rel = {};
-              Object.keys(el).forEach((key) => {
-                if (el[key]) {
-                  rel[key] = el[key]._id || el[key];
-                }
-              });
-              c[idx] = rel;
-            });
-          }
-          if (this.cedit.transaction) {
-            this.cedit.transaction.forEach((el, idx, c) => {
-              const rel = {};
-              Object.keys(el).forEach((key) => {
-                if (el[key]) {
-                  rel[key] = el[key]._id || el[key];
-                }
-              });
-              console.log(rel);
-              c[idx] = rel;
-            });
-          }
-          if (this.cedit.collector) {
-            this.cedit.collector.forEach((el, idx, c) => {
-              c[idx] = el._id;
-            });
-          }
-          this.post({ type: 'entry', id: this.cedit._id, body: this.cedit }).then((res) => {
-            this.getRecords();
-          });
-        }
-        this.entrydialog = false;
       },
       deleteentry(_id) {
         this.delete({ type: 'Entry', id: _id }).then((res) => {

@@ -155,7 +155,6 @@ export default {
           this.userdialog = true;
         });
       },
-      /* TODO: move reduction of populated ref fields to store */
       saveuser() {
         if (this.cedit._id) {
           if (this.cedit.relations) {
