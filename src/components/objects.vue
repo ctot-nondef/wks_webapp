@@ -12,7 +12,7 @@
               </v-layout>
             </v-flex>
             <v-flex xs12>
-              <objectlist ref="objectlist"></objectlist>
+              <list ref="objectlist" EntityType="object" :headers="listheaders" ></list>
             </v-flex>
           </v-layout>
         </div>
@@ -61,7 +61,7 @@ import { mapActions, mapGetters } from 'vuex';
 import HELPERS from '../helpers';
 
 import fundamentcard from './Fundament/FundamentCard';
-import objectlist from './ListViews/object_list';
+import list from './genericList/list';
 import objectform from './Forms/object_form';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
@@ -71,7 +71,7 @@ export default {
   mixins: [HELPERS],
   components: {
     fundamentcard,
-    objectlist,
+    list,
     objectform,
   },
   data() {
@@ -80,6 +80,10 @@ export default {
       newobject: {},
       iobject: {},
       itype: 'Object',
+      listheaders: [
+        { text: 'Name', value: 'name', path: 'name' },
+        { text: 'Actions' },
+      ],
     };
   },
   methods: {

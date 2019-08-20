@@ -12,7 +12,7 @@
               </v-layout>
             </v-flex>
             <v-flex xs12>
-              <entrylist ref="entrylist"></entrylist>
+              <list ref="entrylist" EntityType="entry" :headers="listheaders" ></list>
             </v-flex>
           </v-layout>
         </div>
@@ -63,7 +63,7 @@
 import HELPERS from '../helpers';
 
 import fundamentcard from './Fundament/FundamentCard';
-import entrylist from './ListViews/entry_list';
+import list from './genericList/list';
 import entryform from './Forms/entry_form';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
@@ -73,7 +73,7 @@ export default {
     mixins: [HELPERS],
     components: {
       fundamentcard,
-      entrylist,
+      list,
       entryform,
     },
     data() {
@@ -82,6 +82,11 @@ export default {
         newentry: {},
         ientry: {},
         itype: 'Entry',
+        listheaders: [
+          { text: 'Name', value: 'name', path: 'name' },
+          { text: 'Original Title', value: 'originalTitle', path: 'originalTitle' },
+          { text: 'Actions' },
+        ],
       };
     },
     methods: {

@@ -54,7 +54,7 @@ export default new Router({
         },
         {
           path: 'collections/:id',
-          name: 'collectionsingle',
+          name: 'collectsingle',
           components: {
             Content: collectionsingle,
           },

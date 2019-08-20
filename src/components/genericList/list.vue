@@ -4,7 +4,7 @@
       <v-layout justify-start row fill-height>
       <v-flex xs6>
         <v-text-field
-           v-model="filters.name"
+           v-model="namefilter"
            label="Filter By Name"
            @input="getRecords()"
            append-icon="close"
@@ -14,7 +14,7 @@
      </v-layout>
     </v-card>
     <v-data-table
-      :headers="headers"
+      :headers="Headers"
       :items="data"
       :loading="loading"
       :total-items="totalHits"
@@ -24,36 +24,51 @@
     >
       <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
       <template slot="items" slot-scope="props" >
-          <td>{{ props.item.name }}</td>
+          <td v-for="column in Headers" v-if="column.path">{{ _.get(props.item, column.path) }}</td>
           <td>
-            <v-btn fab dark small :to="{ name: 'inventorysingle', params: { id:  props.item._id  }}" color="primary">
+            <v-btn fab dark small :to="{ name: `${EntityType}single`, params: { id:  props.item._id  }}" color="primary">
               <v-icon dark>collections_bookmark</v-icon>
             </v-btn>
-            <v-btn fab dark small color="warning" @click="$refs.editdialog.getItem('inventory', props.item._id)">
+            <v-btn fab dark small color="warning" @click="$refs.editdialog.getItem(EntityType, props.item._id)">
               <v-icon dark>edit</v-icon>
             </v-btn>
-            <v-btn fab dark small color="error" @click="deleteInventory(props.item._id)">
+            <v-btn fab dark small color="error" @click="deleteRequest(props.item)">
               <v-icon dark>delete</v-icon>
             </v-btn>
           </td>
       </template>
     </v-data-table>
-    <editdialog title="Edit Inventory" ref="editdialog" @close="getRecords()">
+    <editdialog :title="`Edit ${EntityType}`" ref="editdialog" @close="getRecords()">
       <template slot="form" slot-scope="props">
-        <inventoryform :value="props.item" @input="props.item=$event"></inventoryform>
+        <component :is="componentLoader" :value="props.item" @input="props.item=$event"></component>
       </template>
     </editdialog>
+    <v-dialog v-model="deleteDialog.status" v-if="deleteDialog.rec" max-width="500px">
+      <v-card>
+        <v-card-title>
+          CONFIRM DELETION
+        </v-card-title>
+        <v-card-text>
+          Do you really want to delete record <b>{{ deleteDialog.rec.name }}</b>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn @click="deleteConfirm(deleteDialog.rec._id)" large color="error">
+            DELETE
+          </v-btn>
+          <v-btn @click="deleteDialog.status = false" large color="secondary">
+            CANCEL
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
 <script>
   /* eslint-disable no-underscore-dangle,no-param-reassign */
-
-  import { mapMutations, mapActions } from 'vuex';
+import { mapMutations, mapActions } from 'vuex';
 
 import fundamentcard from '../Fundament/FundamentCard';
-import inventoryform from '../Forms/inventory_form';
-import simpleautocompwrapper from '../FormComponents/SimpleAutoCompleteWrapper';
 import editdialog from '../editDialog';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
@@ -62,27 +77,33 @@ import editdialog from '../editDialog';
 export default {
     components: {
       fundamentcard,
-      inventoryform,
-      simpleautocompwrapper,
       editdialog,
     },
-    props: [
-      'filter',
-    ],
+    props: {
+      EntityType: {
+        type: String,
+        default: () => null,
+      },
+      Headers: {
+        type: Array,
+        default: () => null,
+      },
+      Filter: {
+        type: Object,
+        default: () => {},
+      },
+    },
     data() {
       return {
         data: [],
+        deleteDialog: {
+          status: false,
+          rec: null,
+        },
         loading: false,
         itemOptions: [10, 10, 50],
         totalHits: 0,
-        filters: {
-          name: '',
-          partOf: '',
-        },
-        headers: [
-          { text: 'Name', value: 'name' },
-          { text: 'Actions', value: 'actions' },
-        ],
+        namefilter: '',
         pagination: {},
       };
     },
@@ -115,10 +136,9 @@ export default {
       getRecords() {
         this.loading = true;
         const q = {};
-        if (this.filters.name !== '') q.name = { $regex: this.filters.name };
-        if (this.filters.partOf !== '') q.partOf = this.filters.partOf;
+        if (this.namefilter !== '') q.name = { $regex: this.namefilter };
         this.get({
-          type: 'Inventory',
+          type: this.EntityType,
           sort: this.pagination.descending ? `-${this.pagination.sortBy}` : this.pagination.sortBy,
           limit: this.pagination.rowsPerPage,
           skip: (this.pagination.page - 1) * this.pagination.rowsPerPage,
@@ -134,8 +154,16 @@ export default {
           }
         });
       },
-      deleteInventory(_id) {
-        this.delete({ type: 'Inventory', id: _id }).then((res) => {
+      deleteRequest(rec) {
+        this.deleteDialog.rec = rec;
+        this.deleteDialog.status = true;
+      },
+      deleteConfirm(_id) {
+        this.delete({ type: this.EntityType, id: _id }).then((res) => {
+          this.deleteDialog = {
+            status: false,
+            rec: null,
+          }
           this.getRecords();
         })
         .catch((err) => {
@@ -145,6 +173,11 @@ export default {
       clearNameFilter() {
         this.namefilter = '';
         this.getRecords();
+      },
+    },
+    computed: {
+      componentLoader() {
+        return () => import(`../Forms/${this.EntityType}_form`)
       },
     },
 };

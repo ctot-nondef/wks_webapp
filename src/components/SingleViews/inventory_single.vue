@@ -12,7 +12,7 @@
               </v-layout>
             </v-flex>
             <v-flex xs12>
-              <entrylist ref="entrylist" :filter="{ partOf: this.$route.params.id }"></entrylist>
+              <list ref="entrylist" EntityType="entry" :headers="listheaders" :filter="{ partOf: this.$route.params.id }"></list>
             </v-flex>
           </v-layout>
         </div>
@@ -59,7 +59,7 @@
 import { mapActions } from 'vuex';
 
 import fundamentcard from '../Fundament/FundamentCard';
-import entrylist from '../ListViews/entry_list';
+import list from '../genericList/list';
 import entryform from '../Forms/entry_form';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
@@ -68,17 +68,17 @@ import entryform from '../Forms/entry_form';
 export default {
   components: {
     fundamentcard,
-    entrylist,
+    list,
     entryform,
   },
   data() {
     return {
       view: {},
       data: [],
-      headers: [
-        { text: 'Name', value: 'name' },
-        { text: 'Range', value: 'type' },
-        { text: 'Type', value: 'range' },
+      listheaders: [
+        { text: 'Name', value: 'name', path: 'name' },
+        { text: 'Original Title', value: 'originalTitle', path: 'originalTitle' },
+        { text: 'Actions' },
       ],
       entrydialog: false,
       newentry: {},

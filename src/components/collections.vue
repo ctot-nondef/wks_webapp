@@ -12,7 +12,7 @@
               </v-layout>
             </v-flex>
             <v-flex xs12>
-              <collectionlist ref="collectionlist"></collectionlist>
+              <list ref="collectionlist" EntityType="collect" :headers="listheaders" ></list>
             </v-flex>
           </v-layout>
         </div>
@@ -61,8 +61,8 @@
   import { mapActions } from 'vuex';
 
 import fundamentcard from './Fundament/FundamentCard';
-import collectionlist from './ListViews/collection_list';
-import collectionform from './Forms/collection_form';
+import list from './genericList/list';
+import collectionform from './Forms/collect_form';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 /* eslint no-console: ["error", { allow: ["log"] }] */
@@ -70,13 +70,17 @@ import collectionform from './Forms/collection_form';
 export default {
     components: {
       fundamentcard,
-      collectionlist,
       collectionform,
+      list,
     },
     data() {
       return {
         collectiondialog: false,
         newcollection: {},
+        listheaders: [
+          { text: 'Name', value: 'name', path: 'name' },
+          { text: 'Actions' },
+        ],
       };
     },
     methods: {

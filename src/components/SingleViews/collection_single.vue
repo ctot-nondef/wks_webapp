@@ -12,7 +12,7 @@
               </v-layout>
             </v-flex>
             <v-flex xs12>
-              <inventorylist ref="inventorylist" :filter="{ partOf: this.$route.params.id }"></inventorylist>
+              <list ref="inventorylist" EntityType="inventory" :headers="listheaders" :filter="{ partOf: this.$route.params.id }"></list>
             </v-flex>
           </v-layout>
         </div>
@@ -59,7 +59,7 @@
 import { mapActions } from 'vuex';
 
 import fundamentcard from '../Fundament/FundamentCard';
-import inventorylist from '../ListViews/inventory_list';
+import list from '../genericList/list';
 import inventoryform from '../Forms/inventory_form';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
@@ -68,17 +68,16 @@ import inventoryform from '../Forms/inventory_form';
 export default {
   components: {
     fundamentcard,
-    inventorylist,
+    list,
     inventoryform,
   },
   data() {
     return {
       view: {},
       data: [],
-      headers: [
-        { text: 'Name', value: 'name' },
-        { text: 'Range', value: 'type' },
-        { text: 'Type', value: 'range' },
+      listheaders: [
+        { text: 'Name', value: 'name', path: 'name' },
+        { text: 'Actions' },
       ],
       inventorydialog: false,
       newinventory: {},

@@ -12,7 +12,7 @@
               </v-layout>
             </v-flex>
             <v-flex xs12>
-              <inventorylist ref="inventorylist"></inventorylist>
+              <list ref="inventorylist" EntityType="inventory" :headers="listheaders"></list>
             </v-flex>
           </v-layout>
         </div>
@@ -61,7 +61,7 @@
   import { mapActions } from 'vuex';
 
 import fundamentcard from './Fundament/FundamentCard';
-import inventorylist from './ListViews/inventory_list';
+import list from './genericList/list';
 import inventoryform from './Forms/inventory_form';
 import editdialog from './editDialog';
 
@@ -71,7 +71,7 @@ import editdialog from './editDialog';
 export default {
     components: {
       fundamentcard,
-      inventorylist,
+      list,
       inventoryform,
       editdialog,
     },
@@ -79,6 +79,10 @@ export default {
       return {
         inventorydialog: false,
         newinventory: {},
+        listheaders: [
+          { text: 'Name', value: 'name', path: 'name' },
+          { text: 'Actions' },
+        ],
       };
     },
     methods: {

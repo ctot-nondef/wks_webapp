@@ -12,7 +12,7 @@
               </v-layout>
             </v-flex>
             <v-flex xs12>
-              <descriptorlist ref="descriptorlist"></descriptorlist>
+              <list ref="descriptorlist" EntityType="descriptor" :headers="listheaders" ></list>
             </v-flex>
           </v-layout>
         </div>
@@ -71,7 +71,7 @@
 import HELPERS from '../helpers';
 
 import fundamentcard from './Fundament/FundamentCard';
-import descriptorlist from './ListViews/descriptor_list';
+import list from './genericList/list';
 import descriptorform from './Forms/descriptor_form';
 import autocompgnd from './AutoCompleteComponents/AutocompGND';
 
@@ -82,7 +82,7 @@ export default {
     mixins: [HELPERS],
     components: {
       fundamentcard,
-      descriptorlist,
+      list,
       descriptorform,
       autocompgnd,
     },
@@ -92,6 +92,12 @@ export default {
         newdescriptor: {},
         idescriptor: {},
         itype: 'PlaceOrGeographicName',
+        listheaders: [
+          { text: 'Name', value: 'name', path: 'name' },
+          { text: 'Type', value: 'instanceOf', path: 'instanceOf._labels[4].label' },
+          { text: 'Description', value: 'description', path: 'description' },
+          { text: 'Actions' },
+        ],
       };
     },
     methods: {

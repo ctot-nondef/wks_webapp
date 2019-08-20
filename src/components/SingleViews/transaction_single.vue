@@ -27,8 +27,7 @@
 import { mapActions } from 'vuex';
 
 import fundamentcard from '../Fundament/FundamentCard';
-import entrylist from '../ListViews/entry_list';
-import entryform from '../Forms/entry_form';
+
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 /* eslint no-console: ["error", { allow: ["log"] }] */
@@ -36,8 +35,6 @@ import entryform from '../Forms/entry_form';
 export default {
   components: {
     fundamentcard,
-    entrylist,
-    entryform,
   },
   data() {
     return {

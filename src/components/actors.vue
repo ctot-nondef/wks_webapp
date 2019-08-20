@@ -12,7 +12,7 @@
               </v-layout>
             </v-flex>
             <v-flex xs12>
-              <actorlist ref="actorlist"></actorlist>
+              <list ref="actorlist" EntityType="actor" :headers="listheaders" ></list>
             </v-flex>
           </v-layout>
         </div>
@@ -71,7 +71,7 @@
 import HELPERS from '../helpers';
 
 import fundamentcard from './Fundament/FundamentCard';
-import actorlist from './ListViews/actor_list';
+import list from './genericList/list';
 import actorform from './Forms/actor_form';
 import autocompgnd from './AutoCompleteComponents/AutocompGND';
 
@@ -82,7 +82,7 @@ export default {
     mixins: [HELPERS],
     components: {
       fundamentcard,
-      actorlist,
+      list,
       actorform,
       autocompgnd,
     },
@@ -92,6 +92,11 @@ export default {
         newactor: {},
         iactor: {},
         itype: 'Person',
+        listheaders: [
+          { text: 'Name', value: 'name', path: 'name' },
+          { text: 'Type', value: 'instanceOf', path: 'instanceOf._labels[4].label' },
+          { text: 'Actions' },
+        ],
       };
     },
     methods: {
