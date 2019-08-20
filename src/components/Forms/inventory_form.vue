@@ -31,7 +31,7 @@
     <v-layout justify-start row fill-height>
       <v-flex xs5>
         <!-- inventory place -->
-        <simpleautocompwrapper entity="descriptor" filter="GEOKEYW" v-model="inventory.place" v-bind:prop.sync="inventory.place" label="Place"/>
+        <simpleautocompwrapper entity="Descriptor" filter="GEOKEYW" v-model="inventory.place" v-bind:prop.sync="inventory.place" label="Place"/>
       </v-flex>
     </v-layout>
     <v-layout justify-start row fill-height>
