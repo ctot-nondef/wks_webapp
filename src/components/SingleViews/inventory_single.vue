@@ -91,71 +91,12 @@ export default {
       'delete',
     ]),
     addEntry() {
-        if (this.newentry.partOf) {
-          this.newentry.partOf = this.newentry.partOf._id;
-        }
-        if (this.newentry.material) this.newentry.material.forEach((el, idx, c) => {
-          c[idx] = el._id;
-        });
-        if (this.newentry.technique) this.newentry.technique.forEach((el, idx, c) => {
-          c[idx] = el._id;
-        });
-        if (this.newentry.transaction) this.newentry.transaction.forEach((el, idx, c) => {
-          var rel = {};
-          Object.keys(el).forEach((key) => {
-            if (el[key]) {
-              rel[key] = el[key]._id || el[key];
-            }
-          });
-          console.log(rel);
-          c[idx] = rel;
-        });
-        if (this.newentry.creator) this.newentry.creator.forEach((el, idx, c) => {
-          var rel = {};
-          Object.keys(el).forEach((key) => {
-            if (el[key]) {
-                rel[key] = el[key]._id || el[key];
-            }
-          });
-          c[idx] = rel;
-        });
-        if (this.newentry.relations) this.newentry.relations.forEach((el, idx, c) => {
-          var rel = {};
-          Object.keys(el).forEach((key) => {
-            if (el[key]) {
-              rel[key] = el[key]._id || el[key];
-            }
-          });
-          c[idx] = rel;
-        });
-        if (this.newentry.dimensions) this.newentry.dimensions.forEach((el, idx, c) => {
-          var rel = {};
-          Object.keys(el).forEach((key) => {
-            if (el[key]) {
-              rel[key] = el[key]._id || el[key];
-            }
-          });
-          c[idx] = rel;
-        });
-        if (this.newentry.classification) this.newentry.classification.forEach((el, idx, c) => {
-          var rel = {};
-          Object.keys(el).forEach((key) => {
-            if (el[key]) {
-              rel[key] = el[key]._id || el[key];
-            }
-          });
-          c[idx] = rel;
-        });
-        if (this.newentry.collector) this.newentry.collector.forEach((el, idx, c) => {
-          c[idx] = el._id;
-        });
-        console.log(this.newentry);
-        this.post({ type: 'entry', body: this.newentry }).then((res) => {
-          this.$refs.entrylist.getRecords();
-          this.newentry = {
-            partOf: this.view,
-          }
-        });
+      this.post({ type: 'entry', body: this.newentry }).then((res) => {
+        this.$refs.entrylist.getRecords();
+        this.newentry = {
+          partOf: this.view,
+        };
+      });
       this.entrydialog = false;
     },
   },
@@ -166,9 +107,8 @@ export default {
       this.view = res.data;
       this.newentry = {
         partOf: res.data,
-      }
+      };
     });
-
   },
 };
 </script>

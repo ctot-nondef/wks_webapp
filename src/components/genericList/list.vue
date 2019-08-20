@@ -163,7 +163,7 @@ export default {
           this.deleteDialog = {
             status: false,
             rec: null,
-          }
+          };
           this.getRecords();
         })
         .catch((err) => {
@@ -177,7 +177,7 @@ export default {
     },
     computed: {
       componentLoader() {
-        return () => import(`../Forms/${this.EntityType}_form`)
+        return () => import(`../Forms/${this.EntityType}_form`);
       },
     },
 };

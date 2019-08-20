@@ -63,7 +63,6 @@ export default {
   created() {
     this.get({ type: 'Transaction', id: this.$route.params.id }).then((res) => {
       this.view = res.data;
-
     });
   },
 };

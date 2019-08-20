@@ -33,61 +33,63 @@
 </template>
 
 <script>
+  /* eslint-disable no-underscore-dangle */
+
 import { mapActions, mapGetters } from 'vuex';
 import HELPERS from '../helpers';
 
 
 export default {
-  mixins: [HELPERS],
-  props: {
-    title: String,
-    itemref: String,
-  },
-  data() {
-    return {
-      active: false,
-      item: null,
-      type: null,
-    };
-  },
-  computed: {
-    ...mapGetters('api', [
-      'getPathsByName',
-    ]),
-  },
-  methods: {
-    ...mapActions('api', [
-      'get',
-      'post',
-    ]),
-    getItem(type, _id) {
-      this.item = {};
-      this.type = type;
-      this.get({
-        type,
-        query: JSON.stringify({
-          _id,
-        }),
-        populate: JSON.stringify(this.getPathsByName(type).map(path => ({ path }))),
-      }).then((res) => {
-        this.item = res.data[0];
-        this.active = true;
-      });
+    mixins: [HELPERS],
+    props: {
+      title: String,
+      itemref: String,
     },
-    saveItem() {
-      if (this.item._id) {
-        this.post({ type: this.type, id: this.item._id, body: this.item }).then(() => {
-          this.active = false;
-          this.$emit('close');
+    data() {
+      return {
+        active: false,
+        item: null,
+        type: null,
+      };
+    },
+    computed: {
+      ...mapGetters('api', [
+        'getPathsByName',
+      ]),
+    },
+    methods: {
+      ...mapActions('api', [
+        'get',
+        'post',
+      ]),
+      getItem(type, _id) {
+        this.item = {};
+        this.type = type;
+        this.get({
+          type,
+          query: JSON.stringify({
+            _id,
+          }),
+          populate: JSON.stringify(this.getPathsByName(type).map(path => ({ path }))),
+        }).then((res) => {
+          this.item = res.data[0];
+          this.active = true;
         });
-      }
+      },
+      saveItem() {
+        if (this.item._id) {
+          this.post({ type: this.type, id: this.item._id, body: this.item }).then(() => {
+            this.active = false;
+            this.$emit('close');
+          });
+        }
+      },
+      discard() {
+        // clear form component
+        this.active = false;
+        this.$emit('close');
+      },
     },
-    discard() {
-      // clear form component
-      this.active = false;
-      this.$emit('close');
-    },
-  },
 };
 </script>
 

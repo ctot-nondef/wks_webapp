@@ -96,13 +96,6 @@ export default {
       'delete',
     ]),
     adduser() {
-      if (this.newuser.relations) this.newuser.relations.forEach((el, idx, c) => {
-        const rel = {};
-        Object.keys(el).forEach((key) => {
-          rel[key] = el[key]._id || el[key];
-        });
-        c[idx] = rel;
-      });
       this.newuser.username = `${this.newuser.firstName[0].toLowerCase()}${this.newuser.lastName.toLowerCase()}`;
       this.post({ type: 'user', body: this.newuser }).then((res) => {
         this.newuser = {};

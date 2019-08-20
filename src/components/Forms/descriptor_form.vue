@@ -99,12 +99,12 @@ export default {
       if (!this.descriptor.relations) {
         this.$set(this.descriptor, 'relations', []);
       }
-    }
+    },
   },
   mounted() {
     this.initVals();
     this.returnObject();
-  }
+  },
 };
 </script>
 

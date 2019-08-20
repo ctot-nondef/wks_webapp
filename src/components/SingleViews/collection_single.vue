@@ -34,7 +34,7 @@
               <v-spacer></v-spacer>
               <v-toolbar-items>
               </v-toolbar-items>
-              <v-btn color="warning" @click="saveInventory()">Save</v-btn>
+              <v-btn color="warning" @click="addInventory()">Save</v-btn>
             </v-toolbar>
             <v-container grid-list-md text-xs-center>
               <v-card color="grey lighten-2" class="pa-4">
@@ -90,30 +90,10 @@ export default {
       'delete',
     ]),
     addInventory() {
-      if (this.newinventory.creator) this.newinventory.creator.forEach((el, idx, c) => {
-        var rel = {};
-        Object.keys(el).forEach((key) => {
-          rel[key] = el[key]._id || el[key];
-        });
-        c[idx] = rel;
-      });
-      if (this.newinventory.classification) this.newinventory.classification.forEach((el, idx, c) => {
-        var rel = {};
-        Object.keys(el).forEach((key) => {
-          rel[key] = el[key]._id || el[key];
-        });
-        c[idx] = rel;
-      });
-      if (this.newinventory.place) {
-        this.newinventory.place = this.newinventory.place._id;
-      }
-      if (this.newinventory.partOf) {
-        this.newinventory.partOf = this.newinventory.partOf._id;
-      }
       this.post({ type: 'inventory', body: this.newinventory }).then((res) => {
         this.newinventory = {
           partOf: this.view,
-        }
+        };
         this.inventorydialog = false;
         this.$refs.inventorylist.getRecords();
       });
@@ -126,9 +106,8 @@ export default {
       this.view = res.data;
       this.newinventory = {
         partOf: res.data,
-      }
+      };
     });
-
   },
 };
 </script>
