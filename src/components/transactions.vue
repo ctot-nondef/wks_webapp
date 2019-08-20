@@ -12,7 +12,7 @@
               </v-layout>
             </v-flex>
             <v-flex xs12>
-              <transactionlist ref="transactionlist"></transactionlist>
+              <list ref="transactionlist" EntityType="transaction" :headers="listheaders" ></list>
             </v-flex>
           </v-layout>
         </div>
@@ -63,7 +63,7 @@
 import HELPERS from '../helpers';
 
 import fundamentcard from './Fundament/FundamentCard';
-import transactionlist from './ListViews/transaction_list';
+import list from './genericList/list';
 import transactionform from './Forms/transaction_form';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
@@ -73,7 +73,7 @@ export default {
     mixins: [HELPERS],
     components: {
       fundamentcard,
-      transactionlist,
+      list,
       transactionform,
     },
     data() {
@@ -82,6 +82,11 @@ export default {
         newtransaction: {},
         itransaction: {},
         itype: 'Transaction',
+        listheaders: [
+          { text: 'Date', value: 'date' },
+          { text: 'Actor', value: 'actor[0].id.name' },
+          { text: 'Actions' },
+        ],
       };
     },
     methods: {

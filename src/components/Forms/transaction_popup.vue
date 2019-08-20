@@ -27,7 +27,7 @@
       <v-tabs-items v-model="tabs" class="white elevation-1">
         <v-tab-item key="1" value="select">
           <v-card>
-            <transactionlist @selectTransactionRef="selectTransactionRef($event)"></transactionlist>
+            <list ref="transactionlist" EntityType="transaction" :headers="listheaders" ></list>
           </v-card>
         </v-tab-item>
         <v-tab-item key="2" value="create">
@@ -49,18 +49,23 @@
 
   import { mapActions } from 'vuex';
   import transactionform from '../Forms/transaction_form';
-  import transactionlist from '../ListViews/transaction_list';
+  import list from '../genericList/list';
 
   export default {
     name: 'transaction_popup',
     components: {
       transactionform,
-      transactionlist,
+      list,
     },
     data() {
       return {
         tabs: 'select',
         newtransaction: null,
+        listheaders: [
+          { text: 'Date', value: 'date', path: 'date' },
+          { text: 'Actor', value: 'actor', path: 'actor[0].id.name' },
+          { text: 'Actions' },
+        ],
       };
     },
     watch: {
