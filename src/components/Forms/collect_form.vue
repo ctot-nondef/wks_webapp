@@ -20,17 +20,17 @@
           nodatamessage="No creators added"
         >
           <template slot="form" slot-scope="props">
-          <v-layout justify-end row fill-height wrap>
-            <v-flex xs6>
-                <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"></autocomp>
-            </v-flex>
-            <v-flex xs6>
-              <autocomp entity="Actor" v-model="props.newitem.id" label="Collector" :multiple="false"></autocomp>
-            </v-flex>
-            <v-flex xs12>
-              <v-textarea v-model="props.newitem.note" box label="Note" />
-            </v-flex>
-          </v-layout>
+            <v-layout justify-end row fill-height wrap>
+              <v-flex xs6>
+                  <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"></autocomp>
+              </v-flex>
+              <v-flex xs6>
+                <autocomp entity="Actor" v-model="props.newitem.id" label="Collector" :multiple="false"></autocomp>
+              </v-flex>
+              <v-flex xs12>
+                <v-textarea v-model="props.newitem.note" box label="Note" />
+              </v-flex>
+            </v-layout>
           </template>
         </formlistcomponent>
       </v-flex>
