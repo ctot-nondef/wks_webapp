@@ -44,13 +44,14 @@ const CONFIG = {
   },
 };
 
+//TODO: this should probably be a pair of arrays, to accomodate complex paths
 const IMPORT = {
   GND: {
     Person: {
       preferredName: 'name',
       dateOfBirth: 'beginOfExistence',
       dateOfDeath: 'endOfExistence',
-      biographicalOrHistoricalInformation: 'description',
+      'biographicalOrHistoricalInformation[0]': 'description',
     },
     CorporateBody: {
       preferredName: 'name',
@@ -59,7 +60,7 @@ const IMPORT = {
     },
     PlaceOrGeographicName: {
       preferredName: 'name',
-      biographicalOrHistoricalInformation: 'description',
+      'biographicalOrHistoricalInformation[0]': 'description',
       definition: 'description',
     },
     SubjectHeading: {
@@ -172,12 +173,11 @@ export default {
     returns mapped object for DB
     */
     mapGNDImport(type, obj) {
-      console.log(this.IMPORT.GND[type]);
       const map = Object.keys(this.IMPORT.GND[type]);
       let idx = map.length - 1;
       const res = {};
       while (idx + 1) {
-        res[this.IMPORT.GND[type][map[idx]]] = obj[map[idx]];
+        res[this.IMPORT.GND[type][map[idx]]] = this._.get(obj, map[idx]);
         idx -= 1;
       }
       res.identifier = [`GND:${obj.gndIdentifier}`];

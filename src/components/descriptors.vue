@@ -117,7 +117,6 @@ export default {
         if (this.idescriptor.id) {
           const id = this.idescriptor.id.split('/').slice(-1)[0];
           this.APIS.GND.DIRECT.get(id).then((res) => {
-            console.log(res.data);
             this.newdescriptor = this.mapGNDImport(this.itype, res.data);
           });
         }
