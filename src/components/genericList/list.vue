@@ -178,7 +178,7 @@ export default {
     },
     computed: {
       componentLoader() {
-        return () => import(/* webpackMode: "eager" */ `../Forms/${this.EntityType}_form`);
+        return () => import(/* webpackMode: "lazy-once" */ `../Forms/${this.EntityType}_form`);
       },
     },
 };
