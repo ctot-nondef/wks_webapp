@@ -88,7 +88,7 @@ export default {
         type: Array,
         default: () => null,
       },
-      Filter: {
+      filter: {
         type: Object,
         default: () => {},
       },
@@ -105,6 +105,7 @@ export default {
         totalHits: 0,
         namefilter: '',
         pagination: {},
+        q: {},
       };
     },
     watch: {
@@ -117,7 +118,7 @@ export default {
       filter(f) {
         if (f) {
           Object.keys(f).forEach((key) => {
-            this.filters[key] = f[key];
+            this.q[key] = f[key];
           });
         }
         this.getRecords();
@@ -135,7 +136,7 @@ export default {
       ]),
       getRecords() {
         this.loading = true;
-        const q = {};
+        const q = this.q;
         if (this.namefilter !== '') q.name = { $regex: this.namefilter };
         this.get({
           type: this.EntityType,
@@ -177,7 +178,7 @@ export default {
     },
     computed: {
       componentLoader() {
-        return () => import(/* webpackMode: "lazy" */ `../Forms/${this.EntityType}_form`);
+        return () => import(/* webpackMode: "eager" */ `../Forms/${this.EntityType}_form`);
       },
     },
 };

@@ -12,7 +12,7 @@
               </v-layout>
             </v-flex>
             <v-flex xs12>
-              <list ref="entrylist" EntityType="entry" :headers="listheaders" :filter="{ partOf: this.$route.params.id }"></list>
+              <list ref="entrylist" EntityType="entry" :Headers="listheaders" :filter="{ partOf: this.$route.params.id }"></list>
             </v-flex>
           </v-layout>
         </div>
