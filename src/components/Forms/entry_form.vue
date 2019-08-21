@@ -42,7 +42,7 @@
      <!-- entry original title -->
     <v-layout justify-start row fill-height>
       <v-flex xs6>
-        <v-text-field v-model="entry.originaltitle" label="Original Title" @input="returnObject()"></v-text-field>
+        <v-text-field v-model="entry.originalTitle" label="Original Title" @input="returnObject()"></v-text-field>
       </v-flex>
     </v-layout>
     <!-- entry transscription -->

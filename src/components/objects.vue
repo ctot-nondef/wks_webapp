@@ -82,6 +82,7 @@ export default {
       itype: 'Object',
       listheaders: [
         { text: 'Name', value: 'name', path: 'name' },
+        { text: 'Original Title', value: 'originalTitle', path: 'originalTitle' },
         { text: 'Actions' },
       ],
     };

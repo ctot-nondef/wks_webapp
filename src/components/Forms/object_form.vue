@@ -49,7 +49,7 @@
     <!-- object original title -->
     <v-layout justify-start row fill-height>
       <v-flex xs6>
-        <v-text-field v-model="object.originaltitle" label="Original Title" @input="returnObject()"></v-text-field>
+        <v-text-field v-model="object.originalTitle" label="Original Title" @input="returnObject()"></v-text-field>
       </v-flex>
     </v-layout>
     <v-layout justify-start row fill-height>
