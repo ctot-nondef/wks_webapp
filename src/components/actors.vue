@@ -106,17 +106,6 @@ export default {
         'delete',
       ]),
       addactor() {
-        if (this.newactor.relations) {
-          this.newactor.relations.forEach((el, idx, c) => {
-            const rel = {};
-            Object.keys(el).forEach((key) => {
-              if (el[key]) {
-                rel[key] = el[key]._id || el[key];
-              }
-            });
-            c[idx] = rel;
-          });
-        }
         this.post({ type: 'actor', body: this.newactor }).then(() => {
           this.newactor = {};
           this.actordialog = false;
