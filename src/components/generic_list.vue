@@ -105,18 +105,20 @@ export default {
       },
       mapParams() {
         try {
-          let a = JSON.parse(this.$route.params.query);
-          if(typeof a === 'object') this.query = a;
-          else throw 'faulty params';
-        }
-        catch (e) {
+          const a = JSON.parse(this.$route.params.query);
+          if (typeof a === 'object') this.query = a;
+          else throw new Error('faulty query object');
+        } catch (e) {
           // TODO: this might be shorter if done with vuex sync?
-          this.$router.push({name: 'query', params: {
-            entity: this.$route.params.entity,
+          this.$router.push({
+            name: 'query',
+            params: {
+              entity: this.$route.params.entity,
               query: '{}',
               page: this.$route.params.page,
               size: this.$route.params.size,
-          }});
+            },
+          });
         }
       },
     },
