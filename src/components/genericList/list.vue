@@ -25,7 +25,7 @@
       <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
       <template slot="items" slot-scope="props" >
           <td v-for="column in Headers" v-if="column.path">{{ _.get(props.item, column.path) }}</td>
-          <td>
+          <td v-if="$store.state.app.loggedin">
             <v-btn fab dark small :to="{ name: `${EntityType}single`, params: { id:  props.item._id  }}" color="primary">
               <v-icon dark>collections_bookmark</v-icon>
             </v-btn>
@@ -36,6 +36,7 @@
               <v-icon dark>delete</v-icon>
             </v-btn>
           </td>
+          <td v-if="!$store.state.app.loggedin"></td>
       </template>
     </v-data-table>
     <editdialog :title="`Edit ${EntityType}`" ref="editdialog" @close="getRecords()">

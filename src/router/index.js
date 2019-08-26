@@ -15,6 +15,7 @@ import objects from '../components/objects';
 import entries from '../components/entries';
 import transactions from '../components/transactions';
 import users from '../components/users';
+import query from '../components/generic_list';
 
 Vue.use(Router);
 
@@ -25,7 +26,6 @@ export default new Router({
       name: 'root',
       redirect: (to) => {
         if (to.params.lang !== 'en' || to.params.lang !== 'de') {
-          // const language = window.navigator.userLanguage || window.navigator.language;
           return '/en';
         }
         return to.fullPath;
@@ -43,6 +43,13 @@ export default new Router({
           name: 'start',
           components: {
             Content: Start,
+          },
+        },
+        {
+          path: 'q/:entity/:query/:page/:size',
+          name: 'query',
+          components: {
+            Content: query,
           },
         },
         {
