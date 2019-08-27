@@ -46,7 +46,7 @@ export default new Router({
           },
         },
         {
-          path: 'q/:entity/:query/:page/:size',
+          path: 'q/:entity/:query',
           name: 'query',
           components: {
             Content: query,

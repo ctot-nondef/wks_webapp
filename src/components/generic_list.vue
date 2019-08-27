@@ -55,8 +55,7 @@
 <script>
   /* eslint-disable no-param-reassign,no-underscore-dangle */
 
-  import { mapActions } from 'vuex';
-
+import { mapActions } from 'vuex';
 import fundamentcard from './Fundament/FundamentCard';
 import list from './genericList/list';
 import collectionform from './Forms/collect_form';
@@ -79,7 +78,7 @@ export default {
           { text: 'Actions' },
         ],
         query: {},
-
+        pagination: {},
       };
     },
     watch: {
@@ -105,8 +104,8 @@ export default {
       },
       mapParams() {
         try {
-          const a = JSON.parse(this.$route.params.query);
-          if (typeof a === 'object') this.query = a;
+          const q = JSON.parse(this.$route.params.query);
+          if (typeof q === 'object') this.query = q;
           else throw new Error('faulty query object');
         } catch (e) {
           // TODO: this might be shorter if done with vuex sync?
@@ -122,7 +121,7 @@ export default {
         }
       },
     },
-    created() {
+    mounted() {
       this.mapParams();
     },
 };

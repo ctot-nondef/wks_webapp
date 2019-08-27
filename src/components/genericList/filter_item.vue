@@ -1,5 +1,18 @@
 <template>
   <div class="">
+    <v-card color="grey lighten-2" class="pa-4 mb-3">
+      <v-layout justify-start row fill-height>
+      <v-flex xs6>
+        <v-text-field
+           v-model="namefilter"
+           label="Filter By Name"
+           @input="getRecords()"
+           append-icon="close"
+           :append-icon-cb="clearNameFilter"
+         ></v-text-field>
+       </v-flex>
+     </v-layout>
+    </v-card>
     <v-data-table
       :headers="Headers"
       :items="data"
@@ -80,6 +93,10 @@ export default {
         type: Object,
         default: () => {},
       },
+      p: {
+        type: Object,
+        default: () => {},
+      },
     },
     data() {
       return {
@@ -120,6 +137,10 @@ export default {
         'get',
         'post',
         'delete',
+      ]),
+      ...mapMutations('api', [
+        'setPage',
+        'setSize',
       ]),
       getRecords() {
         this.loading = true;
