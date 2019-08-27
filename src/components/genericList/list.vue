@@ -54,7 +54,7 @@
 
 <script>
   /* eslint-disable no-underscore-dangle,no-param-reassign */
-import { mapMutations, mapActions } from 'vuex';
+import { mapActions } from 'vuex';
 
 import fundamentcard from '../Fundament/FundamentCard';
 import editdialog from '../editDialog';

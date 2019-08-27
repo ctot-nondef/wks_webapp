@@ -24,6 +24,11 @@ function PopulateablePathsFromSchemaObject(vm, schema, path) {
   return p;
 }
 
+function computeFieldType(vm, entity, field) {
+  console.log(vm, entity, field);
+  return 'text';
+}
+
 const state = {
   apilib: {},
   init: false,
@@ -52,6 +57,7 @@ const getters = {
   types: s => Object.keys(s.schemas),
   getClassByName: s => ({ type, name }) => s.classes[type].find(item => item.name === name),
   getPathsByName: s => name => s.ppaths[name],
+  getFieldType: s => ({ type, name }) => computeFieldType(this, type, name),
 };
 
 const mutations = {
@@ -171,8 +177,6 @@ const actions = {
       });
     });
   },
-  /* TODO: provide convenience function to reduce populated ref fields to doc IDs
-     when done, remove code from list view save functions accordingly */
   post({ state, commit }, { type, id, body }) {
     let p = {};
     const params = {
