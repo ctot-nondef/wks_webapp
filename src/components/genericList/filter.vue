@@ -14,7 +14,7 @@
   /* eslint-disable no-underscore-dangle,no-param-reassign */
 import { mapGetters } from 'vuex';
 import fundamentcard from '../Fundament/FundamentCard';
-
+import filteritem from './filter_item_text';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 /* eslint no-console: ["error", { allow: ["log"] }] */
@@ -22,6 +22,7 @@ import fundamentcard from '../Fundament/FundamentCard';
 export default {
     components: {
       fundamentcard,
+      filteritem,
     },
     props: {
       filter: {
