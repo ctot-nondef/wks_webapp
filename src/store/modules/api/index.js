@@ -24,8 +24,8 @@ function PopulateablePathsFromSchemaObject(vm, schema, path) {
   return p;
 }
 
-function computeFieldType(vm, entity, field) {
-  console.log(vm, entity, field);
+function computeFieldType(vm, type, name) {
+  console.log(name);
   return 'text';
 }
 
@@ -57,7 +57,7 @@ const getters = {
   types: s => Object.keys(s.schemas),
   getClassByName: s => ({ type, name }) => s.classes[type].find(item => item.name === name),
   getPathsByName: s => name => s.ppaths[name],
-  getFieldType: s => ({ type, name }) => computeFieldType(this, type, name),
+  getFieldType: s => ({ vm, type, name }) => computeFieldType(vm, type, name),
 };
 
 const mutations = {

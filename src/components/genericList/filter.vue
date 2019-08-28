@@ -2,8 +2,8 @@
   <div class="">
     <v-card color="grey lighten-2" class="pa-4 mb-3">
       <v-layout justify-start row fill-height>
-      <v-flex xs6 v-for="f in Object.keys(filter)">
-        <component :is="componentLoader" :value="props.item" @input="props.item=$event"></component>
+      <v-flex xs6 v-for="(value, name, index) in filter">
+        <component :is="componentLoader(name)" :value="value" :name="name" @input="filter[name]=$event"></component>
        </v-flex>
      </v-layout>
     </v-card>
@@ -14,7 +14,6 @@
   /* eslint-disable no-underscore-dangle,no-param-reassign */
 import { mapGetters } from 'vuex';
 import fundamentcard from '../Fundament/FundamentCard';
-import filteritem from './filter_item_text';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 /* eslint no-console: ["error", { allow: ["log"] }] */
@@ -22,9 +21,12 @@ import filteritem from './filter_item_text';
 export default {
     components: {
       fundamentcard,
-      filteritem,
     },
     props: {
+      EntityType: {
+        type: String,
+        default: () => '',
+      },
       filter: {
         type: Object,
         default: () => {},
@@ -53,8 +55,14 @@ export default {
       removeFilter(f) {
         console.log(f);
       },
+      componentLoader() {
+        return name => import(/* webpackMode: "lazy-once" */ `./filter_item_${this.getFieldType({vm: this, type: this.EntityType, name})}`);
+      },
     },
     computed: {
+      ...mapGetters('api', [
+        'getFieldType',
+      ]),
     },
 };
 </script>

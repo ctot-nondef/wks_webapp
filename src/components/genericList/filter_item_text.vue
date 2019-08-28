@@ -21,6 +21,10 @@ export default {
         type: Object,
         default: () => {},
       },
+      label: {
+        type: String,
+        default: () => '',
+      },
     },
     data() {
       return {
@@ -36,14 +40,6 @@ export default {
       },
     },
     methods: {
-    },
-    computed: {
-      ...mapGetters('api', [
-        'computeFieldType',
-      ]),
-      componentLoader(prop) {
-        return () => import(/* webpackMode: "lazy-once" */ `./${this.EntityType}_form`);
-      },
     },
 };
 </script>

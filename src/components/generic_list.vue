@@ -12,6 +12,9 @@
               </v-layout>
             </v-flex>
             <v-flex xs12>
+              <filterlist :EntityType="$route.params.entity" :filter="query" @input="query=$event"></filterlist>
+            </v-flex>
+            <v-flex xs12>
               <list ref="resultlist" :EntityType="$route.params.entity" :filter="query" :headers="listheaders" ></list>
             </v-flex>
           </v-layout>
@@ -58,7 +61,9 @@
 import { mapActions } from 'vuex';
 import fundamentcard from './Fundament/FundamentCard';
 import list from './genericList/list';
+import filterlist from './genericList/filter';
 import collectionform from './Forms/collect_form';
+
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 /* eslint no-console: ["error", { allow: ["log"] }] */
@@ -68,6 +73,7 @@ export default {
       fundamentcard,
       collectionform,
       list,
+      filterlist,
     },
     data() {
       return {
@@ -82,8 +88,8 @@ export default {
       };
     },
     watch: {
-      '$route.params': {
-        handler: 'mapParams',
+      'query': {
+        handler: 'updateParams',
         deep: true,
         immediate: true,
       },
@@ -120,6 +126,9 @@ export default {
           });
         }
       },
+      updateParams(a) {
+        console.log(a);
+      }
     },
     mounted() {
       this.mapParams();
