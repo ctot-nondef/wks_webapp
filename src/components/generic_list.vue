@@ -128,7 +128,7 @@ export default {
       },
       updateParams(a) {
         console.log(a);
-      }
+      },
     },
     mounted() {
       this.mapParams();

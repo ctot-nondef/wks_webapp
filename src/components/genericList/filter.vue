@@ -2,8 +2,8 @@
   <div class="">
     <v-card color="grey lighten-2" class="pa-4 mb-3">
       <v-layout justify-start row fill-height>
-      <v-flex xs6 v-for="(value, name, index) in filter">
-        <component :is="componentLoader(name)" :value="value" :name="name" @input="filter[name]=$event"></component>
+      <v-flex xs6 v-for="(value, path, index) in filter">
+        <v-text-field v-if="getFieldType(path) === 'text'" v-model="filter[path]['$regex']" box :label="path" :key="index" ></v-text-field>
        </v-flex>
      </v-layout>
     </v-card>
@@ -54,14 +54,6 @@ export default {
       },
       removeFilter(f) {
         console.log(f);
-      },
-      componentLoader(name) {
-        return new Promise((resolve, reject) => {
-          let a = import(/* webpackMode: "lazy-once" */ `./filter_item_${this.getFieldType({vm: this, type: this.EntityType, name})}`);
-          console.log(a, name);
-          a.then((res) => {return res});
-        });
-
       },
     },
     computed: {
