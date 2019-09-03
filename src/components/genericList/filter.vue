@@ -55,8 +55,13 @@ export default {
       removeFilter(f) {
         console.log(f);
       },
-      componentLoader() {
-        return name => import(/* webpackMode: "lazy-once" */ `./filter_item_${this.getFieldType({vm: this, type: this.EntityType, name})}`);
+      componentLoader(name) {
+        return new Promise((resolve, reject) => {
+          let a = import(/* webpackMode: "lazy-once" */ `./filter_item_${this.getFieldType({vm: this, type: this.EntityType, name})}`);
+          console.log(a, name);
+          a.then((res) => {return res});
+        });
+
       },
     },
     computed: {

@@ -153,7 +153,7 @@ export default {
         if (key === 'textval') {
           this.$set(this.newitem, key, '');
         } else if (typeof this.newitem[key] === 'object') {
-          this.$set(this.newitem, key, {});
+          this.$set(this.newitem, key, null);
         } else {
           this.$set(this.newitem, key, '');
         }

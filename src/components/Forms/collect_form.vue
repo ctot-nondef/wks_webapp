@@ -38,10 +38,10 @@
     <!-- collection places, times -->
     <v-layout justify-end row fill-height>
       <v-flex xs6>
-        <autocomp entity="Descriptor" filter="GEOKEYW" v-model="collection.place" label="Place" :multiple="true" @input="returnObject();"></autocomp>
+        <autocomp entity="Descriptor" filter="GEOKEYW" v-model="collection.place" label="Place" :multiple="true" @input="returnObject()"></autocomp>
       </v-flex>
       <v-flex xs6>
-        <autocomp entity="Descriptor" filter="PERIOD" v-model="collection.time" label="Time" :multiple="true" @input="returnObject();"></autocomp>
+        <autocomp entity="Descriptor" filter="PERIOD" v-model="collection.time" label="Time" :multiple="true" @input="returnObject()"></autocomp>
       </v-flex>
     </v-layout>
     <!-- collection description -->

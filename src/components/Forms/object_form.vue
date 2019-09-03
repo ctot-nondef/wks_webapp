@@ -85,14 +85,24 @@
     <v-layout justify-start row fill-height>
       <v-flex xs12 class="mt-3">
         <!-- object classifications -->
-        <formlistcomponent v-if="object.classification" :items="object.classification" :itemprops="$store.state.api.schemas.collect.properties.classification.items.properties" :listitemstyletypes="classificationitemstyletypes" label="Classification" nodatamessage="No classifications added">
+        <formlistcomponent
+          v-if="object.classification"
+          :items="object.classification"
+          :itemprops="$store.state.api.schemas.object.properties.classification.items.properties"
+          label="Classification"
+          nodatamessage="No classifications added">
           <template slot="form" slot-scope="props">
-          <v-flex xs5>
-            <autocomp entity="Descriptor" filter="KEYWORD" v-model="props.newitem.aspect" label="Aspect" :multiple="false"></autocomp>
-          </v-flex>
-          <v-flex xs5>
-            <autocomp entity="Descriptor" v-model="props.newitem.descriptor" label="Descriptor" :multiple="false"></autocomp>
-          </v-flex>
+            <v-layout justify-end row fill-height wrap>
+              <v-flex xs6>
+                <autocomp entity="Descriptor" filter="KEYWORD" v-model="props.newitem.aspect" label="Aspect" :multiple="false"></autocomp>
+              </v-flex>
+              <v-flex xs6>
+                <autocomp entity="Descriptor" v-model="props.newitem.descriptor" label="Descriptor" :multiple="false"></autocomp>
+              </v-flex>
+              <v-flex xs12>
+                <v-textarea box v-model="props.newitem.note" label="Note" />
+              </v-flex>
+            </v-layout>
           </template>
         </formlistcomponent>
       </v-flex>
