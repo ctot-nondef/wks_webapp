@@ -34,13 +34,19 @@ export default {
     },
     data() {
       return {
-        f: {},
+        f: null,
       };
     },
     watch: {
       f: {
         handler(f) {
-          console.log(f);
+          if(f && typeof f === 'object') this.$emit('input', f);
+        },
+        deep: true,
+      },
+      filter: {
+        handler(f) {
+          if(f && typeof f === 'object') this.f = this.filter;
         },
         deep: true,
       },
@@ -60,6 +66,9 @@ export default {
       ...mapGetters('api', [
         'getFieldType',
       ]),
+    },
+    mounted() {
+      this.f = this.filter;
     },
 };
 </script>

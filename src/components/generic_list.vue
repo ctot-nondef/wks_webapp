@@ -12,7 +12,7 @@
               </v-layout>
             </v-flex>
             <v-flex xs12>
-              <filterlist :EntityType="$route.params.entity" :filter="query" @input="query=$event"></filterlist>
+              <filterlist :EntityType="$route.params.entity" :filter="query" @input="query = $event"></filterlist>
             </v-flex>
             <v-flex xs12>
               <list ref="resultlist" :EntityType="$route.params.entity" :filter="query" :headers="listheaders" ></list>
@@ -83,7 +83,7 @@ export default {
           { text: 'Name', value: 'name', path: 'name' },
           { text: 'Actions' },
         ],
-        query: {},
+        query: null,
         pagination: {},
       };
     },
@@ -91,7 +91,6 @@ export default {
       'query': {
         handler: 'updateParams',
         deep: true,
-        immediate: true,
       },
     },
     methods: {
