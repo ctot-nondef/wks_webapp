@@ -12,7 +12,7 @@
               </v-layout>
             </v-flex>
             <v-flex xs12>
-              <filterlist :EntityType="$route.params.entity" :filter="query" @input="query = $event"></filterlist>
+              <filterlist :EntityType="$route.params.entity" :filter="query"></filterlist>
             </v-flex>
             <v-flex xs12>
               <list ref="resultlist" :EntityType="$route.params.entity" :filter="query" :headers="listheaders" ></list>
@@ -83,7 +83,7 @@ export default {
           { text: 'Name', value: 'name', path: 'name' },
           { text: 'Actions' },
         ],
-        query: null,
+        query: {},
         pagination: {},
       };
     },
@@ -107,7 +107,7 @@ export default {
           this.$refs.resultlist.getRecords();
         });
       },
-      mapParams() {
+      parseQuery() {
         try {
           const q = JSON.parse(this.$route.params.query);
           if (typeof q === 'object') this.query = q;
@@ -119,8 +119,6 @@ export default {
             params: {
               entity: this.$route.params.entity,
               query: '{}',
-              page: this.$route.params.page,
-              size: this.$route.params.size,
             },
           });
         }
@@ -130,7 +128,7 @@ export default {
       },
     },
     mounted() {
-      this.mapParams();
+      this.parseQuery();
     },
 };
 </script>

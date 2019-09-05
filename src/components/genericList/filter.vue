@@ -1,6 +1,12 @@
 <template>
   <div class="">
     <v-card color="grey lighten-2" class="pa-4 mb-3">
+      <v-select
+        v-model="EntityType"
+        :items="Object.keys($store.state.api.schemas)"
+        item-value="_id"
+        label="Type"
+      ></v-select>
       <v-layout justify-start row fill-height>
       <v-flex xs6 v-for="(value, path, index) in filter">
         <v-text-field v-if="getFieldType(path) === 'text'" v-model="filter[path]['$regex']" box :label="path" :key="index" ></v-text-field>
@@ -38,12 +44,6 @@ export default {
       };
     },
     watch: {
-      f: {
-        handler(f) {
-          if(f && typeof f === 'object') this.$emit('input', f);
-        },
-        deep: true,
-      },
       filter: {
         handler(f) {
           if(f && typeof f === 'object') this.f = this.filter;
@@ -66,9 +66,6 @@ export default {
       ...mapGetters('api', [
         'getFieldType',
       ]),
-    },
-    mounted() {
-      this.f = this.filter;
     },
 };
 </script>
