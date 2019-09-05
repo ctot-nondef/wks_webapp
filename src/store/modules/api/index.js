@@ -46,6 +46,14 @@ const state = {
 
 const $config = {
   withCredentials: true,
+  headers: {
+    'X-Requested-With': 'XMLHttpRequest',
+    'cache-control': 'no-cache, must-revalidate, post-check=0, pre-check=0',
+    // 'cache-control': 'max-age=0',
+    // 'expires': '0',
+    // 'expires': 'Tue, 01 Jan 1980 1:00:00 GMT',
+    'pragma': 'no-cache',
+  },
 };
 
 /* eslint no-param-reassign: ["error", { "props": false }] */
