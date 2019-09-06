@@ -58,7 +58,7 @@
 <script>
   /* eslint-disable no-param-reassign,no-underscore-dangle */
 
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import fundamentcard from './Fundament/FundamentCard';
 import list from './genericList/list';
 import filterlist from './genericList/filter';
@@ -88,7 +88,7 @@ export default {
       };
     },
     watch: {
-      'query': {
+      query: {
         handler: 'updateParams',
         deep: true,
       },

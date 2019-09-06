@@ -3,8 +3,7 @@
     <v-card color="grey lighten-2" class="pa-4 mb-3">
       <v-select
         v-model="EntityType"
-        :items="Object.keys($store.state.api.schemas)"
-        item-value="_id"
+        :items="types"
         label="Type"
       ></v-select>
       <v-layout justify-start row fill-height>
@@ -65,6 +64,7 @@ export default {
     computed: {
       ...mapGetters('api', [
         'getFieldType',
+        'types',
       ]),
     },
 };

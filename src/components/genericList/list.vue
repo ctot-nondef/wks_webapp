@@ -114,6 +114,11 @@ export default {
         },
         deep: true,
       },
+      EntityType: {
+        handler() {
+          this.getRecords();
+        },
+      }
     },
     methods: {
       ...mapActions('api', [
