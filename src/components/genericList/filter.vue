@@ -2,13 +2,14 @@
   <div class="">
     <v-card color="grey lighten-2" class="pa-4 mb-3">
       <v-select
-        v-model="EntityType"
+        :value="entitytype"
         :items="types"
         label="Type"
+        @input="$emit('update', { type: $event, filter: filter })"
       ></v-select>
       <v-layout justify-start row fill-height>
       <v-flex xs6 v-for="(value, path, index) in filter">
-        <v-text-field v-if="getFieldType(path) === 'text'" v-model="filter[path]['$regex']" box :label="path" :key="index" ></v-text-field>
+        <v-text-field v-if="getFieldType(path) === 'text'" :value="filter[path]['$regex']" box :label="path" :key="index" @input="updateFilter({ key: `${path}.$regex`, value: $event })"></v-text-field>
        </v-flex>
      </v-layout>
     </v-card>
@@ -28,29 +29,25 @@ export default {
       fundamentcard,
     },
     props: {
-      EntityType: {
+      entitytype: {
         type: String,
-        default: () => '',
+        default: () => null,
       },
       filter: {
         type: Object,
-        default: () => {},
+        default: () => null,
       },
     },
     data() {
       return {
-        f: null,
       };
     },
-    watch: {
-      filter: {
-        handler(f) {
-          if(f && typeof f === 'object') this.f = this.filter;
-        },
-        deep: true,
-      },
-    },
     methods: {
+      updateFilter(f) {
+        let nf = JSON.parse(JSON.stringify(this.filter));
+        this._.set(nf, f.key, f.value);
+        this.$emit('update', { type: this.entitytype, filter: nf });
+      },
       clearFilter(f) {
         console.log(f);
       },

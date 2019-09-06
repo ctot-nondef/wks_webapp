@@ -12,7 +12,7 @@
               </v-layout>
             </v-flex>
             <v-flex xs12>
-              <filterlist :EntityType="$route.params.entity" :filter="query"></filterlist>
+              <filterlist :entitytype="$route.params.entity" :filter="query" @update="updateParams($event)"></filterlist>
             </v-flex>
             <v-flex xs12>
               <list ref="resultlist" :EntityType="$route.params.entity" :filter="query" :headers="listheaders" ></list>
@@ -87,12 +87,6 @@ export default {
         pagination: {},
       };
     },
-    watch: {
-      query: {
-        handler: 'updateParams',
-        deep: true,
-      },
-    },
     methods: {
       ...mapActions('api', [
         'get',
@@ -124,7 +118,15 @@ export default {
         }
       },
       updateParams(a) {
-        console.log(a);
+        this.query = a.filter;
+        this.$router.push({
+          name: 'query',
+          params: {
+            entity: a.type,
+            query: JSON.stringify(a.filter),
+          },
+        });
+        this.parseQuery();
       },
     },
     mounted() {
