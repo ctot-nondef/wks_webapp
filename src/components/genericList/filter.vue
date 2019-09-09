@@ -2,6 +2,7 @@
   <div class="">
     <v-card color="grey lighten-2" class="pa-4 mb-3">
       <v-select
+        v-if="!fixedtype"
         :value="entitytype"
         :items="types"
         label="Type"
@@ -29,6 +30,10 @@ export default {
       fundamentcard,
     },
     props: {
+      fixedtype: {
+        type: Boolean,
+        default: () => false,
+      },
       entitytype: {
         type: String,
         default: () => null,
@@ -44,7 +49,7 @@ export default {
     },
     methods: {
       updateFilter(f) {
-        let nf = JSON.parse(JSON.stringify(this.filter));
+        const nf = JSON.parse(JSON.stringify(this.filter));
         this._.set(nf, f.key, f.value);
         this.$emit('update', { type: this.entitytype, filter: nf });
       },

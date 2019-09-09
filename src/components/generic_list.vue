@@ -12,7 +12,7 @@
               </v-layout>
             </v-flex>
             <v-flex xs12>
-              <filterlist :entitytype="$route.params.entity" :filter="query" @update="updateParams($event)"></filterlist>
+              <filterlist :entitytype="$route.params.entity" :filter="query" @update="updateParams($event)" :fixedtype="false"></filterlist>
             </v-flex>
             <v-flex xs12>
               <list ref="resultlist" :EntityType="$route.params.entity" :filter="query" :headers="listheaders" ></list>
