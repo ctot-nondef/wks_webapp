@@ -58,7 +58,7 @@
 <script>
   /* eslint-disable no-param-reassign,no-underscore-dangle */
 
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
 import fundamentcard from './Fundament/FundamentCard';
 import list from './genericList/list';
 import filterlist from './genericList/filter';

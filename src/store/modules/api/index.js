@@ -1,32 +1,37 @@
 /* eslint-disable no-shadow */
+import { set, get } from 'lodash';
 import * as api from './api';
 
-function PopulateablePathsFromSchemaObject(vm, schema, path) {
+
+function PopulateablePathsFromSchemaObject(schema, path) {
   let p = [];
   let t = '';
-  if (path.length > 0) t = vm._.get(schema, path).type;
+  if (path.length > 0) t = get(schema, path).type;
   else t = schema.type;
   if (t === 'object') {
-    Object.keys(vm._.get(schema, path.concat(['properties']))).forEach((cp) => {
-      p = p.concat(PopulateablePathsFromSchemaObject(vm, schema, path.concat(['properties', cp])));
+    Object.keys(get(schema, path.concat(['properties']))).forEach((cp) => {
+      p = p.concat(PopulateablePathsFromSchemaObject(schema, path.concat(['properties', cp])));
     });
   } else if (t === 'array') {
-    if (vm._.get(schema, path.concat(['items'])).type === 'string' && vm._.get(schema, path.concat(['items']))['x-ref']) {
+    if (get(schema, path.concat(['items'])).type === 'string' && get(schema, path.concat(['items']))['x-ref']) {
       p.push(path.filter(a => (a !== 'properties' && a !== 'items')).join('.'));
-    } else if (vm._.get(schema, path.concat(['items'])).type === 'object') {
-      Object.keys(vm._.get(schema, path.concat(['items', 'properties']))).forEach((cp) => {
-        p = p.concat(PopulateablePathsFromSchemaObject(vm, schema, path.concat(['items', 'properties', cp])));
+    } else if (get(schema, path.concat(['items'])).type === 'object') {
+      Object.keys(get(schema, path.concat(['items', 'properties']))).forEach((cp) => {
+        p = p.concat(PopulateablePathsFromSchemaObject(schema, path.concat(['items', 'properties', cp])));
       });
     }
-  } else if (t === 'string' && vm._.get(schema, path)['x-ref']) {
+  } else if (t === 'string' && get(schema, path)['x-ref']) {
     p.push(path.filter(a => (a !== 'properties' && a !== 'items')).join('.'));
   }
   return p;
 }
 
-function computeFieldType(vm, type, name) {
-  console.log(name);
-  return 'text';
+function computeFieldType(field, name) {
+  if (name === 'instanceOf') return `class_${field['x-ref']}`;
+  if (field.type === 'array') return computeFieldType(field.items);
+  if (field.type === 'string' && field['x-ref']) return field['x-ref'];
+  if (field.type === 'string' && field['format']) return field['format'];
+  return field.type;
 }
 
 const state = {
@@ -52,7 +57,7 @@ const $config = {
     // 'cache-control': 'max-age=0',
     // 'expires': '0',
     // 'expires': 'Tue, 01 Jan 1980 1:00:00 GMT',
-    'pragma': 'no-cache',
+    pragma: 'no-cache',
   },
 };
 
@@ -65,7 +70,7 @@ const getters = {
   types: s => Object.keys(s.schemas),
   getClassByName: s => ({ type, name }) => s.classes[type].find(item => item.name === name),
   getPathsByName: s => name => s.ppaths[name],
-  getFieldType: s => ({ vm, type, name }) => computeFieldType(vm, type, name),
+  getFieldType: s => ({ type, name }) => computeFieldType(s.schemas[type].properties[name], name),
 };
 
 const mutations = {
@@ -138,7 +143,7 @@ const actions = {
           const sa = res.data.data;
           for (let i = 0; i < sa.length; i += 1) {
             commit('setSchema', sa[i]);
-            commit('setPopulateablePaths', { type: sa[i].type, paths: PopulateablePathsFromSchemaObject(config.vm, sa[i].attributes, []) });
+            commit('setPopulateablePaths', { type: sa[i].type, paths: PopulateablePathsFromSchemaObject(sa[i].attributes, []) });
           }
         }
       }),
