@@ -4,7 +4,7 @@
       <fundamentcard caption="Actors">
         <div slot="content">
           <v-layout justify-center column fill-height>
-            <v-flex xs12>
+            <v-flex xs12 v-if="!$store.state.app.loggedin">
               <v-layout justify-end row fill-height>
                 <v-btn fab dark small color="warning" @click="actordialog=true">
                   <v-icon dark>add</v-icon>
@@ -12,7 +12,10 @@
               </v-layout>
             </v-flex>
             <v-flex xs12>
-              <list ref="actorlist" EntityType="actor" :headers="listheaders" ></list>
+              <filterlist entitytype="actor" :filter="query" @update="query = $event.filter" :fixedtype="true"></filterlist>
+            </v-flex>
+            <v-flex xs12>
+              <list ref="actorlist" EntityType="actor" :filter="query"  :headers="listheaders" ></list>
             </v-flex>
           </v-layout>
         </div>
@@ -57,9 +60,6 @@
         </v-dialog>
       </v-layout>
     </v-container>
-    <v-container grid-list-md v-if="!$store.state.app.loggedin">
-      Bitte loggen Sie sich ein um die Datenbank zu benutzen.
-    </v-container>
   </div>
 </template>
 
@@ -72,6 +72,7 @@ import HELPERS from '../helpers';
 
 import fundamentcard from './Fundament/FundamentCard';
 import list from './genericList/list';
+import filterlist from './genericList/filter';
 import actorform from './Forms/actor_form';
 import autocompgnd from './AutoCompleteComponents/AutocompGND';
 
@@ -83,6 +84,7 @@ export default {
     components: {
       fundamentcard,
       list,
+      filterlist,
       actorform,
       autocompgnd,
     },
@@ -97,6 +99,7 @@ export default {
           { text: 'Type', value: 'instanceOf', path: 'instanceOf._labels[4].label' },
           { text: 'Actions' },
         ],
+        query: {'name':{'$regex':''}, instanceOf: null},
       };
     },
     methods: {

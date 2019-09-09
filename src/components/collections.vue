@@ -1,10 +1,10 @@
 <template>
   <div class="">
-    <v-container grid-list-md v-if="$store.state.app.loggedin">
+    <v-container grid-list-md >
       <fundamentcard caption="Collections">
         <div slot="content">
           <v-layout justify-center column fill-height>
-            <v-flex xs12>
+            <v-flex xs12 v-if="!$store.state.app.loggedin">
               <v-layout justify-end row fill-height>
                 <v-btn fab dark small color="warning" @click="collectiondialog=true">
                   <v-icon dark>add</v-icon>
@@ -12,7 +12,10 @@
               </v-layout>
             </v-flex>
             <v-flex xs12>
-              <list ref="collectionlist" EntityType="collect" :headers="listheaders" ></list>
+              <filterlist entitytype="collect" :filter="query" @update="query = $event.filter" :fixedtype="true"></filterlist>
+            </v-flex>
+            <v-flex xs12>
+              <list ref="collectionlist" EntityType="collect" :filter="query" :headers="listheaders" ></list>
             </v-flex>
           </v-layout>
         </div>
@@ -49,9 +52,6 @@
         </v-dialog>
       </v-layout>
     </v-container>
-    <v-container grid-list-md v-if="!$store.state.app.loggedin">
-      Bitte loggen Sie sich ein um die Datenbank zu benutzen.
-    </v-container>
   </div>
 </template>
 
@@ -62,6 +62,7 @@
 
 import fundamentcard from './Fundament/FundamentCard';
 import list from './genericList/list';
+import filterlist from './genericList/filter';
 import collectionform from './Forms/collect_form';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
@@ -72,6 +73,7 @@ export default {
       fundamentcard,
       collectionform,
       list,
+      filterlist,
     },
     data() {
       return {
@@ -81,6 +83,7 @@ export default {
           { text: 'Name', value: 'name', path: 'name' },
           { text: 'Actions' },
         ],
+        query: {'name':{'$regex':''}},
       };
     },
     methods: {

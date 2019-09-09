@@ -1,10 +1,10 @@
 <template>
   <div class="">
-    <v-container grid-list-md v-if="$store.state.app.loggedin">
+    <v-container grid-list-md >
       <fundamentcard caption="Inventories">
         <div slot="content">
           <v-layout justify-center column fill-height>
-            <v-flex xs12>
+            <v-flex xs12 v-if="$store.state.app.loggedin">
               <v-layout justify-end row fill-height>
                 <v-btn fab dark small color="warning" @click="inventorydialog=true">
                   <v-icon dark>add</v-icon>
@@ -12,7 +12,10 @@
               </v-layout>
             </v-flex>
             <v-flex xs12>
-              <list ref="inventorylist" EntityType="inventory" :headers="listheaders"></list>
+              <filterlist entitytype="inventory" :filter="query" @update="query = $event.filter" :fixedtype="true"></filterlist>
+            </v-flex>
+            <v-flex xs12>
+              <list ref="inventorylist" EntityType="inventory" :filter="query"  :headers="listheaders"></list>
             </v-flex>
           </v-layout>
         </div>
@@ -49,9 +52,6 @@
         </v-dialog>
       </v-layout>
     </v-container>
-    <v-container grid-list-md v-if="!$store.state.app.loggedin">
-      Bitte loggen Sie sich ein um die Datenbank zu benutzen.
-    </v-container>
   </div>
 </template>
 
@@ -62,6 +62,7 @@
 
 import fundamentcard from './Fundament/FundamentCard';
 import list from './genericList/list';
+import filterlist from './genericList/filter';
 import inventoryform from './Forms/inventory_form';
 import editdialog from './editDialog';
 
@@ -72,6 +73,7 @@ export default {
     components: {
       fundamentcard,
       list,
+      filterlist,
       inventoryform,
       editdialog,
     },
@@ -83,6 +85,7 @@ export default {
           { text: 'Name', value: 'name', path: 'name' },
           { text: 'Actions' },
         ],
+        query: {'name':{'$regex':''}, 'partOf': null},
       };
     },
     methods: {

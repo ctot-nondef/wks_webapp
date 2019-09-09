@@ -19,9 +19,8 @@
             box
             :label="path"
             :key="index"
-            @input="updateFilter({ key: `${path}.$regex`, value: $event })">
-          </v-text-field>
-          <!-- descriptor class select -->
+            @input="updateFilter({ key: `${path}.$regex`, value: $event })"/>
+          <!-- descriptor/actor class select -->
           <v-select
             v-if="getFieldType({type: entitytype, name: path}) === 'class_descriptor'"
             :value="value"
@@ -29,8 +28,13 @@
             item-text="_labels[4].label"
             item-value="_id"
             label="Type"
-            @input="updateFilter({ key: `${path}`, value: $event })"
-          ></v-select>
+            @input="updateFilter({ key: `${path}`, value: $event })"/>
+          <!-- simple xref select -->
+          <simpleautocompwrapper
+            v-if="getFieldType({type: entitytype, name: path}) === 'collect'"
+            entity="Collect" :value="value"
+            label="Part Of"
+            @update:prop="updateFilter({ key: `${path}`, value: $event })"/>
         </v-flex>
       </v-layout>
     </v-card>
@@ -41,6 +45,7 @@
   /* eslint-disable no-underscore-dangle,no-param-reassign */
 import { mapGetters } from 'vuex';
 import fundamentcard from '../Fundament/FundamentCard';
+import simpleautocompwrapper from '../FormComponents/SimpleAutoCompleteWrapper';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 /* eslint no-console: ["error", { allow: ["log"] }] */
@@ -48,6 +53,7 @@ import fundamentcard from '../Fundament/FundamentCard';
 export default {
     components: {
       fundamentcard,
+      simpleautocompwrapper,
     },
     props: {
       fixedtype: {
