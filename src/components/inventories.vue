@@ -85,7 +85,7 @@ export default {
           { text: 'Name', value: 'name', path: 'name' },
           { text: 'Actions' },
         ],
-        query: {'name':{'$regex':''}, 'partOf': null},
+        query: {'name':{'$regex':''}},
       };
     },
     methods: {
