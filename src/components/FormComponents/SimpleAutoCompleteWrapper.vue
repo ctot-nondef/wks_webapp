@@ -6,6 +6,7 @@
   </div>
 </template>
 <script>
+/* eslint-disable no-underscore-dangle */
 import autocomp from '../AutoCompleteComponents/Autocomp';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
@@ -27,7 +28,7 @@ export default {
   },
   watch: {
     value(val) {
-      if(val &&  typeof val === 'object') this.model = val;
+      if (val && typeof val === 'object') this.model = val;
       else this.model = {};
     },
     model(val) {

@@ -99,7 +99,7 @@ export default {
           { text: 'Type', value: 'instanceOf', path: 'instanceOf._labels[4].label' },
           { text: 'Actions' },
         ],
-        query: {'name':{'$regex':''}, instanceOf: null},
+        query: { name: { $regex: null }, instanceOf: null },
       };
     },
     methods: {

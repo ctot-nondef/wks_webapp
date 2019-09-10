@@ -118,7 +118,7 @@ export default {
         handler() {
           this.getRecords();
         },
-      }
+      },
     },
     methods: {
       ...mapActions('api', [

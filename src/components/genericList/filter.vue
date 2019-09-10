@@ -11,14 +11,13 @@
       <v-layout justify-start row fill-height>
 
         <!-- text field for regex query -->
-        <v-flex xs6 v-for="(value, path, index) in filter">
+        <v-flex xs6 v-for="(value, path, index) in filter" :key="index">
           <!-- text field for regex query -->
           <v-text-field
             v-if="getFieldType({type: entitytype, name: path}) === 'string'"
             :value="value['$regex']"
             box
             :label="path"
-            :key="index"
             @input="updateFilter({ key: `${path}.$regex`, value: $event })"/>
           <!-- descriptor/actor class select -->
           <v-select

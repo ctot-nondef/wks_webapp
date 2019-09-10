@@ -41,7 +41,7 @@ sync(store, router);
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
-const app = new Vue({
+new Vue({
   store,
   router,
 }).$mount('#app');

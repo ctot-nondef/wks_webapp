@@ -83,7 +83,7 @@ export default {
           { text: 'Name', value: 'name', path: 'name' },
           { text: 'Actions' },
         ],
-        query: {'name':{'$regex':''}},
+        query: { name: { $regex: null } },
       };
     },
     methods: {
@@ -93,38 +93,6 @@ export default {
         'delete',
       ]),
       addCollection() {
-        if (this.newcollection.place) {
-          this.newcollection.place.forEach((el, idx, c) => {
-            c[idx] = el._id;
-          });
-        }
-        if (this.newcollection.time) {
-          this.newcollection.time.forEach((el, idx, c) => {
-            c[idx] = el._id;
-          });
-        }
-        if (this.newcollection.creator) {
-          this.newcollection.creator.forEach((el, idx, c) => {
-            const rel = {};
-            Object.keys(el).forEach((key) => {
-              if (el[key]) {
-                rel[key] = el[key]._id || el[key];
-              }
-            });
-            c[idx] = rel;
-          });
-        }
-        if (this.newcollection.classification) {
-          this.newcollection.classification.forEach((el, idx, c) => {
-            const rel = {};
-            Object.keys(el).forEach((key) => {
-              if (el[key]) {
-                rel[key] = el[key]._id || el[key];
-              }
-            });
-            c[idx] = rel;
-          });
-        }
         this.post({ type: 'collect', body: this.newcollection }).then((res) => {
           this.newcollection = {};
           this.collectiondialog = false;
