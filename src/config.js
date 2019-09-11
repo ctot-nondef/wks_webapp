@@ -94,5 +94,5 @@ export default {
     },
   ],
   repo: '',
-  api: 'https://wks.acdh.oeaw.ac.at',
+  api: 'https://wksdev.hephaistos.arz.oeaw.ac.at',
 };
