@@ -165,7 +165,7 @@ export default {
             Object.keys(value).forEach((key) => {
               if (typeof value[key] === 'string' || typeof value[key] === 'number') {
                 newvalue += `${value[key]} `;
-              } else if (typeof value[key] === 'object' && value[key] !== null ) {
+              } else if (typeof value[key] === 'object' && value[key] !== null) {
                 newvalue += `${value[key].name} `;
               }
             });
