@@ -55,13 +55,13 @@
     <v-layout justify-start row fill-height>
       <v-flex xs6>
         <!-- object material -->
-        <autocomp entity="Descriptor" filter="MATER" v-model="object.material" label="Material" :multiple="true" @input="returnObject();"></autocomp>
+        <autocomp entity="Descriptor" filter="MATER" v-model="object.material" label="Material" :multiple="true" @input="returnObject()"></autocomp>
       </v-flex>
     </v-layout>
     <v-layout justify-start row fill-height>
       <v-flex xs6>
       <!-- object technique -->
-        <autocomp entity="Descriptor" filter="TECHN" v-model="object.technique" label="Technique" :multiple="true" @input="returnObject();"></autocomp>
+        <autocomp entity="Descriptor" filter="TECHN" v-model="object.technique" label="Technique" :multiple="true" @input="returnObject()"></autocomp>
       </v-flex>
     </v-layout>
     <v-layout justify-start row fill-height>
