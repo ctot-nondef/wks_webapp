@@ -65,7 +65,7 @@ const IMPORT = {
     },
     SubjectHeading: {
       preferredName: 'name',
-      definition: 'description',
+      'definition[0]': 'description',
     },
   },
 };
