@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <v-container grid-list-md v-if="$store.state.app.loggedin">
+    <v-container grid-list-md v-if="$store.state.api.loggedin">
       <fundamentcard :caption="view._id">
         <div slot="content">
           <v-layout justify-center column fill-height>
@@ -17,7 +17,7 @@
         </div>
       </fundamentcard>
     </v-container>
-    <v-container grid-list-md v-if="!$store.state.app.loggedin">
+    <v-container grid-list-md v-if="!$store.state.api.loggedin">
       Bitte loggen Sie sich ein um die Datenbank zu benutzen.
     </v-container>
   </div>

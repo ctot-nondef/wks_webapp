@@ -38,6 +38,7 @@ const state = {
   apilib: {},
   init: false,
   url: '',
+  loggedin: false,
   user: {},
   token: null,
   loadmsg: '',
@@ -91,9 +92,15 @@ const mutations = {
       if (pstate[key] !== undefined && s[key] !== undefined) s[key] = pstate[key];
     });
   },
-  setToken(s, { token, user }) {
+  loginMut(s, { token, user }) {
     s.token = token;
     s.user = user;
+    s.loggedin = true;
+  },
+  logoutMut(s) {
+    s.token = null;
+    s.user = {};
+    s.loggedin = false;
   },
   setPage(s, page) {
     s.page = page;
@@ -162,6 +169,10 @@ const actions = {
         }),
       }).then((res) => {
         commit('setClasses', { type: 'Descriptor', classlist: res.data });
+      }),
+      state.apilib.getUserCount().catch((err) => {
+        console.log('logon expired');
+        commit('logoutMut');
       }),
     );
     return Promise.all(p).then(() => {

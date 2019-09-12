@@ -38,7 +38,7 @@ export default {
     ]),
   },
   methods: {
-    ...mapMutations('app', [
+    ...mapMutations('api', [
       'logoutMut',
     ]),
     ...mapMutations('dialogs', [

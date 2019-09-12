@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <v-container grid-list-md v-if="$store.state.app.loggedin">
+    <v-container grid-list-md v-if="$store.state.api.loggedin">
       <v-form >
         <v-select
           v-model="db"
@@ -43,7 +43,7 @@
         Imported {{ done }} of {{ tabledata.length }} records.
       </div>
     </v-container>
-    <v-container grid-list-md v-if="!$store.state.app.loggedin">
+    <v-container grid-list-md v-if="!$store.state.api.loggedin">
       Bitte loggen Sie sich ein um die Datenbank zu benutzen.
     </v-container>
   </div>

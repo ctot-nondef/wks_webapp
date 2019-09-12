@@ -4,7 +4,7 @@
       <fundamentcard caption="Inventories">
         <div slot="content">
           <v-layout justify-center column fill-height>
-            <v-flex xs12 v-if="$store.state.app.loggedin">
+            <v-flex xs12 v-if="$store.state.api.loggedin">
               <v-layout justify-end row fill-height>
                 <v-btn fab dark small color="warning" @click="inventorydialog=true">
                   <v-icon dark>add</v-icon>

@@ -45,11 +45,8 @@ export default {
     ...mapActions('api', {
       dbInit: 'init',
     }),
-    ...mapMutations('app', [
-      'loginMut',
-    ]),
     ...mapMutations('api', [
-      'setToken',
+      'loginMut',
     ]),
     ...mapMutations('dialogs', [
       'closeDialog',
@@ -67,8 +64,7 @@ export default {
           withCredentials: true,
         },
       }).then((res) => {
-        this.setToken({ token: res.data.session, user: res.data.user });
-        this.loginMut();
+        this.loginMut({ token: res.data.session, user: res.data.user });
         this.closeDialog('loginDialog');
       });
     },

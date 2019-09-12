@@ -6,7 +6,7 @@
         subtitle=""
       >
       </fundamentjumbo>
-      <v-container grid-list-md v-if="$store.state.app.loggedin">
+      <v-container grid-list-md v-if="$store.state.api.loggedin">
         <v-layout justify-space-around row wrap>
           <fundamentsectiondiv icon="description" caption="Sammlungsdaten"></fundamentsectiondiv>
           <v-flex xs12 sm6>
@@ -46,7 +46,7 @@
           </v-flex>
         </v-layout>
       </v-container>
-      <v-container grid-list-md v-if="!$store.state.app.loggedin">
+      <v-container grid-list-md v-if="!$store.state.api.loggedin">
         Bitte loggen Sie sich ein um die Datenbank zu benutzen.
       </v-container>
   </div>

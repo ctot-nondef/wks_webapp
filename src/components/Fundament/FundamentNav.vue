@@ -40,7 +40,7 @@
                     <v-list-tile-title class="toolbarcaption">{{item.caption}}</v-list-tile-title>
                   </v-list-tile-content>
               </v-list-tile>
-              <v-list-tile value="true" @click.stop="openDialog('loginDialog')" v-if="!$store.state.app.loggedin" class="navtile">
+              <v-list-tile value="true" @click.stop="openDialog('loginDialog')" v-if="!$store.state.api.loggedin" class="navtile">
                   <v-list-tile-avatar>
                     <v-icon>input</v-icon>
                   </v-list-tile-avatar>
@@ -48,7 +48,7 @@
                     <v-list-tile-title class="toolbarcaption">LOGIN</v-list-tile-title>
                   </v-list-tile-content>
               </v-list-tile>
-              <v-list-tile value="true" @click.stop="openDialog('logoutDialog')" v-if="$store.state.app.loggedin" class="navtile">
+              <v-list-tile value="true" @click.stop="openDialog('logoutDialog')" v-if="$store.state.api.loggedin" class="navtile">
                   <v-list-tile-avatar>
                     <v-icon>power_settings_new</v-icon>
                   </v-list-tile-avatar>
