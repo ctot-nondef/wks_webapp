@@ -54,13 +54,13 @@
      <!-- entry material -->
      <v-layout justify-start row fill-height>
        <v-flex xs6>
-         <autocomp entity="Descriptor" filter="MATER" v-model="entry.material" label="Material" :multiple="true" @input="returnObject();"></autocomp>
+         <autocomp entity="Descriptor" filter="MATER" v-model="entry.material" label="Material" :multiple="true" @input="returnObject()"></autocomp>
       </v-flex>
     </v-layout>
     <!-- entry technique -->
     <v-layout justify-start row fill-height>
       <v-flex xs6>
-        <autocomp entity="Descriptor" filter="TECHN" v-model="entry.technique" label="Technique" :multiple="true" @input="returnObject();"></autocomp>
+        <autocomp entity="Descriptor" filter="TECHN" v-model="entry.technique" label="Technique" :multiple="true" @input="returnObject()"></autocomp>
       </v-flex>
     </v-layout>
     <!-- entry dimensions -->
@@ -101,11 +101,17 @@
             <v-flex xs2>
               <v-select :items="$store.state.api.schemas.entry.properties.relations.items.properties.kind.enum" label="Relation Type" v-model='props.newitem.kind'></v-select>
             </v-flex>
-              <v-flex x12>
-            <autocomp entity="Entry" v-model="props.newitem.target"  label="Entry" :multiple="false" :displayitemprops="autcompdisplayprops"></autocomp>
+            <v-flex x12>
+              <autocomp entity="Entry" v-model="props.newitem.target"  label="Entry" :multiple="false" :displayitemprops="autcompdisplayprops"></autocomp>
             </v-flex>
             </template>
           </formlistcomponent>
+      </v-flex>
+    </v-layout>
+    <!-- entry identified object -->
+    <v-layout justify-start row fill-height>
+      <v-flex xs12>
+        <simpleautocompwrapper entity="Object" v-model="entry.identification" v-bind:prop.sync="entry.identification" label="Identified Object" :displayitemprops="autcompdisplayprops"/>
       </v-flex>
     </v-layout>
     <!-- entry transaction -->
