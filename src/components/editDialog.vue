@@ -2,14 +2,14 @@
   <v-layout column justify-space-between>
     <v-dialog
       v-model="active"
-      @keydown.esc="active=false"
+      @keydown.esc="discard"
       fullscreen
       hide-overlay
       transition="dialog-bottom-transition"
     >
       <v-card>
         <v-toolbar dark color="primary">
-          <v-btn icon dark @click.native="active=false">
+          <v-btn icon dark @click.native="discard">
             <v-icon>close</v-icon>
           </v-btn>
           <v-toolbar-title>{{ title }}</v-toolbar-title>
@@ -23,7 +23,7 @@
             <slot name="form" :item="item"></slot>
             <v-layout justify-end row fill-height>
               <v-btn color="warning" @click="saveItem()">Save</v-btn>
-              <v-btn color="primary" flat @click.native="active=false">Discard</v-btn>
+              <v-btn color="primary" flat @click.native="discard">Discard</v-btn>
             </v-layout>
           </v-card>
         </v-container>
@@ -48,7 +48,7 @@ export default {
     data() {
       return {
         active: false,
-        item: null,
+        item: {},
         type: null,
       };
     },
@@ -86,6 +86,7 @@ export default {
       },
       discard() {
         // clear form component
+        this.item = {};
         this.active = false;
         this.$emit('close');
       },
