@@ -6,7 +6,9 @@
           <v-layout justify-center column fill-height>
             <v-flex xs12 v-if="$store.state.api.loggedin">
               <v-layout justify-end row fill-height>
-                <v-btn fab dark small color="warning" @click="$refs.createdialog.newItem('collect', {})">
+                <v-btn fab dark small
+                       color="warning"
+                       @click="$refs.createdialog.newItem('collect', {})">
                   <v-icon dark>add</v-icon>
                 </v-btn>
               </v-layout>
@@ -34,7 +36,6 @@
 import fundamentcard from './Fundament/FundamentCard';
 import list from './genericList/list';
 import filterlist from './genericList/filter';
-import collectionform from './Forms/collect_form';
 import editdialog from './editDialog';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
@@ -43,7 +44,6 @@ import editdialog from './editDialog';
 export default {
     components: {
       fundamentcard,
-      collectionform,
       list,
       filterlist,
       editdialog,
@@ -61,7 +61,7 @@ export default {
     },
     computed: {
       componentLoader() {
-        return () => import(/* webpackMode: "lazy-once" */ `./Forms/collect_form`);
+        return () => import(/* webpackMode: "lazy-once" */ './Forms/collect_form');
       },
     },
 };

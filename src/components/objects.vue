@@ -1,12 +1,12 @@
 <template>
   <div class="">
-    <v-container grid-list-md v-if="$store.state.api.loggedin">
+    <v-container grid-list-md>
       <fundamentcard caption="Objects">
         <div slot="content">
           <v-layout justify-center column fill-height>
             <v-flex xs12>
               <v-layout justify-end row fill-height>
-                <v-btn fab dark small color="warning" @click="objectdialog=true">
+                <v-btn fab dark small color="warning" @click="$refs.createdialog.newItem('object', {})">
                   <v-icon dark>add</v-icon>
                 </v-btn>
               </v-layout>
@@ -17,52 +17,20 @@
           </v-layout>
         </div>
       </fundamentcard>
-      <v-layout column justify-space-between>
-        <v-dialog
-          v-model="objectdialog"
-          @keydown.esc="objectdialog=false"
-          fullscreen
-          hide-overlay
-          transition="dialog-bottom-transition"
-          >
-          <v-card>
-            <v-toolbar dark color="primary">
-              <v-btn icon dark @click.native="objectdialog=false">
-                <v-icon>close</v-icon>
-              </v-btn>
-              <v-toolbar-title>Create Object</v-toolbar-title>
-              <v-spacer></v-spacer>
-              <v-toolbar-items>
-              </v-toolbar-items>
-              <v-btn color="warning" @click="addobject()">Save</v-btn>
-            </v-toolbar>
-            <v-container grid-list-md text-xs-center>
-            <v-card color="grey lighten-2" class="pa-4">
-                <objectform v-if="$store.state.api.schemas.object" :value="newobject" @input="newobject=$event"></objectform>
-                <v-layout justify-end row fill-height>
-                  <v-btn color="warning" @click="addobject()">Save</v-btn>
-                  <v-btn color="primary" flat @click.native="objectdialog=false">Discard</v-btn>
-                </v-layout>
-              </v-card>
-            </v-container>
-          </v-card>
-        </v-dialog>
-      </v-layout>
-    </v-container>
-    <v-container grid-list-md v-if="!$store.state.api.loggedin">
-      Bitte loggen Sie sich ein um die Datenbank zu benutzen.
+      <editdialog title="Create Object" ref="createdialog" @close="$refs.objectlist.getRecords()">
+        <template slot="form" slot-scope="props">
+          <component :is="componentLoader" :value="props.item" @input="props.item=$event"></component>
+        </template>
+      </editdialog>
     </v-container>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
-
 import HELPERS from '../helpers';
-
 import fundamentcard from './Fundament/FundamentCard';
 import list from './genericList/list';
-import objectform from './Forms/object_form';
+import editdialog from './editDialog';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 /* eslint no-console: ["error", { allow: ["log"] }] */
@@ -72,7 +40,7 @@ export default {
   components: {
     fundamentcard,
     list,
-    objectform,
+    editdialog,
   },
   data() {
     return {
@@ -87,26 +55,10 @@ export default {
       ],
     };
   },
-  methods: {
-    ...mapActions('api', [
-      'get',
-      'post',
-      'delete',
-    ]),
-    addobject() {
-      this.post({ type: 'object', body: this.newobject }).then((res) => {
-        this.newobject = {};
-        this.objectdialog = false;
-        this.$refs.objectlist.getRecords();
-      });
-    },
-  },
   computed: {
-    ...mapGetters('api', [
-      'apiloaded',
-    ]),
-  },
-  created() {
+    componentLoader() {
+      return () => import(/* webpackMode: "lazy-once" */ './Forms/object_form');
+    },
   },
 };
 </script>
