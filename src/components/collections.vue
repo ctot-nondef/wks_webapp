@@ -59,7 +59,7 @@ export default {
     },
     computed: {
       componentLoader() {
-        return () => import(/* webpackMode: "lazy-once" */ './Forms/collect_form');
+        return () => import('./Forms/collect_form');
       },
     },
 };

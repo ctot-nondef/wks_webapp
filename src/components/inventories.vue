@@ -32,8 +32,6 @@
 </template>
 
 <script>
-  /* eslint-disable no-underscore-dangle,no-param-reassign */
-
 import fundamentcard from './Fundament/FundamentCard';
 import list from './genericList/list';
 import filterlist from './genericList/filter';
@@ -62,7 +60,7 @@ export default {
   },
   computed: {
     componentLoader() {
-      return () => import(/* webpackMode: "lazy-once" */ './Forms/collect_form');
+      return () => import('./Forms/collect_form');
     },
   },
 };

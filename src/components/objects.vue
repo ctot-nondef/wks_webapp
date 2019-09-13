@@ -57,7 +57,7 @@ export default {
   },
   computed: {
     componentLoader() {
-      return () => import(/* webpackMode: "lazy-once" */ './Forms/object_form');
+      return () => import('./Forms/object_form');
     },
   },
 };

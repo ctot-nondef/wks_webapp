@@ -29,7 +29,7 @@
 </template>
 
 <script>
-  /* eslint-disable no-underscore-dangle,no-param-reassign */
+/* eslint-disable no-underscore-dangle,no-param-reassign */
 import HELPERS from '../helpers';
 import fundamentcard from './Fundament/FundamentCard';
 import list from './genericList/list';
@@ -56,7 +56,7 @@ export default {
   },
   computed: {
     componentLoader() {
-      return () => import(/* webpackMode: "lazy-once" */ './Forms/entry_form');
+      return () => import('./Forms/entry_form');
     },
   },
 };
