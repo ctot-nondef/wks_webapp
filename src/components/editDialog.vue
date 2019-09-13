@@ -16,13 +16,13 @@
           <v-spacer></v-spacer>
           <v-toolbar-items>
           </v-toolbar-items>
-          <v-btn color="warning" @click="saveItem()">Save</v-btn>
+          <v-btn color="warning" @click="saveItem">Save</v-btn>
         </v-toolbar>
         <v-container grid-list-md text-xs-center>
           <v-card color="grey lighten-2" class="pa-4">
             <slot name="form" :item="item"></slot>
             <v-layout justify-end row fill-height>
-              <v-btn color="warning" @click="saveItem()">Save</v-btn>
+              <v-btn color="warning" @click="saveItem">Save</v-btn>
               <v-btn color="primary" flat @click.native="discard">Discard</v-btn>
             </v-layout>
           </v-card>
@@ -76,9 +76,20 @@ export default {
           this.active = true;
         });
       },
+      newItem(type, defaultvalues) {
+        this.item = {};
+        this.type = type;
+        Object.assign(this.item, defaultvalues);
+        this.active = true;
+      },
       saveItem() {
         if (this.item._id) {
           this.post({ type: this.type, id: this.item._id, body: this.item }).then(() => {
+            this.active = false;
+            this.$emit('close');
+          });
+        } else {
+          this.post({ type: this.type, body: this.item }).then(() => {
             this.active = false;
             this.$emit('close');
           });
