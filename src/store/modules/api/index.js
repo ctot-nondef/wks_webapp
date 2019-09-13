@@ -170,7 +170,7 @@ const actions = {
       }).then((res) => {
         commit('setClasses', { type: 'Descriptor', classlist: res.data });
       }),
-      state.apilib.getUserCount().catch((err) => {
+      state.apilib.getUserCount({ $config }).catch((err) => {
         console.log('logon expired');
         commit('logoutMut');
       }),
