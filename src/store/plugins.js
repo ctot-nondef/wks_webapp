@@ -8,8 +8,8 @@ import {
 
 const triggerMutations = [
   'api/setToken',
-  'app/loginMut',
-  'app/logoutMut',
+  'api/loginMut',
+  'api/logoutMut',
   'api/setState',
   'app/setState',
 ];

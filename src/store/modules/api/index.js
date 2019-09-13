@@ -47,7 +47,7 @@ const state = {
   classes: {},
   page: 1,
   size: 50,
-  p: ['user', 'token'],
+  p: ['user', 'token', 'loggedin'],
 };
 
 const $config = {
