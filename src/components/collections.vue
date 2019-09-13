@@ -50,8 +50,6 @@ export default {
     },
     data() {
       return {
-        collectiondialog: false,
-        newcollection: {},
         listheaders: [
           { text: 'Name', value: 'name', path: 'name' },
           { text: 'Actions' },
