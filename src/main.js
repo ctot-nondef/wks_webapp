@@ -16,6 +16,7 @@ import vueLogger from 'vue-logger';
 import store from './store/index';
 import router from './router';
 import './components/Fundament/Fundament.css';
+import './style.css';
 
 Vue.use(vueLogger, {
   dev: process.env.NODE_ENV !== 'production',

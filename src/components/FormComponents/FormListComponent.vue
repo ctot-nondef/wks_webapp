@@ -68,7 +68,9 @@
     <!-- form slot -->
     <v-layout justify-end row fill-height>
       <v-flex xs10>
-        <slot name="form" :newitem="newitem"></slot>
+        <v-layout justify-start row fill-height wrap class="py-3">
+          <slot name="form" :newitem="newitem"></slot>
+        </v-layout>
       </v-flex>
       <v-flex xs2>
         <v-btn ref="addbutton" v-if="editingMode === false" center fab dark small color="warning" @click.native="addItem(newitem,items); clearItem()">
