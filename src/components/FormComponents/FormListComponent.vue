@@ -27,7 +27,7 @@
             <a :href="props.item[header.name].replace('api.', '')" target="_blank">link</a>
           </template>
           <!-- transaction refs -->
-          <template v-else-if="typeof props.item === 'object' && typeof props.item[header.name] === 'object' && header.name === 'ref'">
+          <template v-else-if="typeof props.item === 'object' && typeof props.item[header.name] === 'object' && props.item[header.name] !== null && header.name === 'ref'">
             {{ props.item[header.name]._id }}
           </template>
           <template v-else>
