@@ -31,10 +31,10 @@
         >
           <template slot="form" slot-scope="props">
             <v-flex xs6>
-              <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"></autocomp>
+              <autocomp entity="Actor" v-model="props.newitem.id" label="Creator" :multiple="false"></autocomp>
             </v-flex>
             <v-flex xs6>
-              <autocomp entity="Actor" v-model="props.newitem.id" label="Collector" :multiple="false"></autocomp>
+              <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"></autocomp>
             </v-flex>
             <v-flex xs12>
               <v-textarea  box height="70" v-model="props.newitem.note" label="Note" />

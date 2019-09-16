@@ -68,8 +68,11 @@
     <!-- form slot -->
     <v-layout justify-end row fill-height>
       <v-flex xs10>
-        <v-layout justify-start row fill-height wrap class="py-3">
+        <v-layout v-if="" justify-start row fill-height wrap class="py-3">
           <slot name="form" :newitem="newitem"></slot>
+        </v-layout>
+        <v-layout justify-start row fill-height wrap class="py-3">
+          <slot name="simpleform" :newitem="newitem"></slot>
         </v-layout>
       </v-flex>
       <v-flex xs2>
@@ -88,7 +91,6 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
 import HELPERS from '../../helpers';
 import formlistitem from './FormListItem';
 
@@ -115,7 +117,6 @@ export default {
   watch: {
   },
   methods: {
-    ...mapActions('api', ['get']),
     addItem(item, items) {
       if (!item.textval) {
         const newitem = Object.assign({}, item);
