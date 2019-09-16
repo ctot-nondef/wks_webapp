@@ -62,7 +62,12 @@
     <!-- entry dimensions -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
-        <formlistcomponent :items="entry.dimensions" :itemprops="$store.state.api.schemas.entry.properties.dimensions.items.properties" label="Dimensions" nodatamessage="No dimensions added">
+        <formlistcomponent
+          :items="entry.dimensions"
+          :itemprops="$store.state.api.schemas.entry.properties.dimensions.items.properties"
+          label="Dimensions"
+          nodatamessage="No dimensions added"
+          :simpleformavail="true">
           <template slot="form" slot-scope="props">
             <v-flex xs4>
               <v-text-field box v-model.number="props.newitem.amount" label="Amount"></v-text-field>

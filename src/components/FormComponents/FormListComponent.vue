@@ -1,7 +1,12 @@
 <template>
   <div class="formlist pa-3">
-    <v-layout justify-start row fill-height class="pt-3 pb-3">
-      <v-label>{{label}}</v-label>
+    <v-layout justify-space-between align-center row>
+      <v-flex xs1>
+          <v-label>{{label}}</v-label>
+      </v-flex>
+      <v-flex xs1>
+        <v-switch v-model="simpleform" :style="{visibility: !editingMode && simpleformavail ? 'visible' : 'hidden'}"></v-switch>
+      </v-flex>
     </v-layout>
     <!-- table view if array of objects -->
     <v-data-table v-if="itemprops"
@@ -68,15 +73,15 @@
     <!-- form slot -->
     <v-layout justify-end row fill-height>
       <v-flex xs10>
-        <v-layout v-if="" justify-start row fill-height wrap class="py-3">
+        <v-layout v-if="!simpleform" justify-start row fill-height wrap class="py-3">
           <slot name="form" :newitem="newitem"></slot>
         </v-layout>
-        <v-layout justify-start row fill-height wrap class="py-3">
+        <v-layout v-if="simpleform" justify-start row fill-height wrap class="py-3">
           <slot name="simpleform" :newitem="newitem"></slot>
         </v-layout>
       </v-flex>
       <v-flex xs2>
-        <v-btn ref="addbutton" v-if="editingMode === false" center fab dark small color="warning" @click.native="addItem(newitem,items); clearItem()">
+        <v-btn ref="addbutton" v-if="!editingMode" center fab dark small color="warning" @click.native="addItem(newitem,items); clearItem()">
           <v-icon dark>add</v-icon>
         </v-btn>
         <v-btn v-if="editingMode === true" center fab dark small color="warning" @click.native="saveItem(newitem,items)">
@@ -105,6 +110,7 @@ export default {
     'type',
     'items',
     'itemprops',
+    'simpleformavail',
   ],
   data() {
     return {
@@ -112,6 +118,7 @@ export default {
       editedItem: null,
       editingMode: false,
       editingItemIndex: 0,
+      simpleform: false,
     };
   },
   watch: {
@@ -198,6 +205,9 @@ export default {
       return false;
     },
   },
+  mounted() {
+    this.simpleform = this.simpleformavail;
+  }
 };
 </script>
 
