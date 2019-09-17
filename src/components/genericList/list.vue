@@ -127,13 +127,12 @@ export default {
       ]),
       getRecords() {
         this.loading = true;
-        const q = this.q;
         this.get({
           type: this.EntityType,
           sort: this.pagination.descending ? `-${this.pagination.sortBy}` : this.pagination.sortBy,
           limit: this.pagination.rowsPerPage,
           skip: (this.pagination.page - 1) * this.pagination.rowsPerPage,
-          query: q,
+          query: this.q,
         }).then((res) => {
           this.loading = false;
           this.data = res.data;
