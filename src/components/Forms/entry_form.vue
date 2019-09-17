@@ -176,7 +176,6 @@
             <v-flex xs6>
               <autocomp
                 entity="Descriptor"
-                filter="KEYWORD"
                 label="Kunstgattung"
                 :multiple="false"
                 @input="simpleprops.newitems[0] = {descriptor: $event, aspect: {name: 'Kunstgattung', _id: '5d5a5af4166362001326d66d'}, note: 'entered via quickform'}"
@@ -185,7 +184,6 @@
             <v-flex xs6>
               <autocomp
                 entity="Descriptor"
-                filter="KEYWORD"
                 label="Thema"
                 :multiple="false"
                 @input="simpleprops.newitems[1] = {descriptor: $event, aspect: {name: 'Thema', _id: '5d5a5c0e166362001326d670'}, note: 'entered via quickform'}"

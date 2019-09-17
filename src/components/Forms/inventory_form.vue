@@ -78,7 +78,13 @@
     <v-layout justify-start row fill-height>
       <v-flex xs12>
         <!-- inventory classifications -->
-        <formlistcomponent :items="inventory.classification" :itemprops="$store.state.api.schemas.inventory.properties.classification.items.properties" :listitemstyletypes="classificationitemstyletypes" label="Classification" nodatamessage="No classifications added">
+        <formlistcomponent
+          :items="inventory.classification"
+          :itemprops="$store.state.api.schemas.inventory.properties.classification.items.properties"
+          :listitemstyletypes="classificationitemstyletypes"
+          label="Classification"
+          nodatamessage="No classifications added"
+          :simpleformavail="true">
           <template slot="form" slot-scope="props">
             <v-layout justify-end row fill-height wrap>
               <v-flex xs6>
@@ -91,6 +97,44 @@
                 <v-textarea box v-model="props.newitem.note" label="Note" />
               </v-flex>
             </v-layout>
+          </template>
+          <template slot="simpleform" slot-scope="simpleprops">
+            <v-flex xs6>
+              <autocomp
+                entity="Descriptor"
+                filter="KEYWORD"
+                label="Quelle"
+                :multiple="false"
+                @input="simpleprops.newitems[0] = {descriptor: $event, aspect: {name: 'Quelle', _id: '5d1204ac8997750013ca6743'}, note: 'entered via quickform'}"
+              ></autocomp>
+            </v-flex>
+            <v-flex xs6>
+              <autocomp
+                entity="Descriptor"
+                filter="KEYWORD"
+                label="Sprache"
+                :multiple="false"
+                @input="simpleprops.newitems[1] = {descriptor: $event, aspect: {name: 'Sprache', _id: '5d1205ce8997750013ca6744'}, note: 'entered via quickform'}"
+              ></autocomp>
+            </v-flex>
+            <v-flex xs6>
+              <autocomp
+                entity="Descriptor"
+                filter="GEOKEYW"
+                label="Auktionsort"
+                :multiple="false"
+                @input="simpleprops.newitems[2] = {descriptor: $event, aspect: {name: 'Auktionsort', _id: '5d1208228997750013ca6748'}, note: 'entered via quickform'}"
+              ></autocomp>
+            </v-flex>
+            <v-flex xs6>
+              <autocomp
+                entity="Descriptor"
+                filter="KEYWORD"
+                label="Inhalt"
+                :multiple="false"
+                @input="simpleprops.newitems[3] = {descriptor: $event, aspect: {name: 'Inhalt', _id: '5d120a9c8997750013ca674a'}, note: 'entered via quickform'}"
+              ></autocomp>
+            </v-flex>
           </template>
         </formlistcomponent>
       </v-flex>
