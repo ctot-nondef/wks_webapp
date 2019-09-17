@@ -155,14 +155,42 @@
      <!-- entry classifications -->
     <v-layout justify-start row fill-height>
       <v-flex xs12 class="mt-3">
-        <formlistcomponent v-if="entry.classification" :items="entry.classification" :itemprops="$store.state.api.schemas.entry.properties.classification.items.properties" label="Classification" nodatamessage="No classifications added">
+        <formlistcomponent
+          :items="entry.classification"
+          :itemprops="$store.state.api.schemas.entry.properties.classification.items.properties"
+          label="Classification"
+          nodatamessage="No classifications added"
+          :simpleformavail="true">
           <template slot="form" slot-scope="props">
-          <v-flex xs5>
-            <autocomp entity="Descriptor" filter="KEYWORD" v-model="props.newitem.aspect" label="Aspect" :multiple="false"></autocomp>
-          </v-flex>
-          <v-flex xs5>
-            <autocomp entity="Descriptor" v-model="props.newitem.descriptor" label="Descriptor" :multiple="false"></autocomp>
-          </v-flex>
+            <v-flex xs6>
+              <autocomp entity="Descriptor" filter="KEYWORD" v-model="props.newitem.aspect" label="Aspect" :multiple="false"></autocomp>
+            </v-flex>
+            <v-flex xs6>
+              <autocomp entity="Descriptor" v-model="props.newitem.descriptor" label="Descriptor" :multiple="false"></autocomp>
+            </v-flex>
+            <v-flex xs12>
+              <v-textarea box v-model="props.newitem.note" label="Note" />
+            </v-flex>
+          </template>
+          <template slot="simpleform" slot-scope="simpleprops">
+            <v-flex xs6>
+              <autocomp
+                entity="Descriptor"
+                filter="KEYWORD"
+                label="Kunstgattung"
+                :multiple="false"
+                @input="simpleprops.newitems[0] = {descriptor: $event, aspect: {name: 'Kunstgattung', _id: '5d5a5af4166362001326d66d'}, note: 'entered via quickform'}"
+              ></autocomp>
+            </v-flex>
+            <v-flex xs6>
+              <autocomp
+                entity="Descriptor"
+                filter="KEYWORD"
+                label="Thema"
+                :multiple="false"
+                @input="simpleprops.newitems[1] = {descriptor: $event, aspect: {name: 'Thema', _id: '5d5a5c0e166362001326d670'}, note: 'entered via quickform'}"
+              ></autocomp>
+            </v-flex>
           </template>
         </formlistcomponent>
       </v-flex>

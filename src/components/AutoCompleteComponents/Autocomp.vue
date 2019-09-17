@@ -80,11 +80,21 @@ export default {
       },
       value(val) {
         if (this.multiple === true) {
-          this.select = val;
-          this.items = val;
+          if (Array.isArray(val)) {
+            this.select = val;
+            this.items = val;
+          } else {
+            this.select = [];
+            this.items = [];
+          }
         } else {
-          this.select = val;
-          this.items.push(val);
+          if (typeof val === 'object' && val !== null) {
+            this.select = val;
+            this.items.push(val);
+          } else {
+            this.select = {};
+            this.items = [];
+          }
         }
       },
     },
