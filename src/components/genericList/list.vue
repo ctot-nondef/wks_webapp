@@ -91,7 +91,6 @@ export default {
         loading: false,
         itemOptions: [10, 20, 50],
         totalHits: 0,
-        namefilter: '',
         pagination: {},
         q: {},
       };
@@ -129,13 +128,12 @@ export default {
       getRecords() {
         this.loading = true;
         const q = this.q;
-        if (this.namefilter !== '') q.name = { $regex: this.namefilter };
         this.get({
           type: this.EntityType,
           sort: this.pagination.descending ? `-${this.pagination.sortBy}` : this.pagination.sortBy,
           limit: this.pagination.rowsPerPage,
           skip: (this.pagination.page - 1) * this.pagination.rowsPerPage,
-          query: JSON.stringify(q),
+          query: q,
         }).then((res) => {
           this.loading = false;
           this.data = res.data;
@@ -162,10 +160,6 @@ export default {
         .catch((err) => {
           this.getRecords();
         });
-      },
-      clearNameFilter() {
-        this.namefilter = '';
-        this.getRecords();
       },
     },
     computed: {

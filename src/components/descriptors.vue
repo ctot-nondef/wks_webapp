@@ -100,7 +100,7 @@ export default {
           { text: 'Description', value: 'description', path: 'description' },
           { text: 'Actions' },
         ],
-        query: { name: { $regex: '' }, instanceOf: null },
+        query: { name: { $regex: '' }, instanceOf: null, description: { $regex: '' } },
       };
     },
     methods: {

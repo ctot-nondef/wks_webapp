@@ -38,13 +38,13 @@
         </formlistcomponent>
       </v-flex>
     </v-layout>
+    <!-- inventory begin of existence -->
+    <!-- inventory end of existence -->
     <v-layout justify-start row fill-height>
       <v-flex xs6>
-        <!-- inventory begin of existence -->
         <datecomponent v-bind:date.sync="inventory.beginOfExistence" label="Begin of Existence"/>
       </v-flex>
       <v-flex xs6>
-        <!-- inventory end of existence -->
         <datecomponent v-bind:date.sync="inventory.endOfExistence" label="End of Existence"/>
       </v-flex>
     </v-layout>
@@ -77,9 +77,9 @@
        <v-textarea v-model="inventory.transcription" label="Transcription"></v-textarea>
      </v-flex>
    </v-layout>
+    <!-- inventory classifications -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
-        <!-- inventory classifications -->
         <formlistcomponent
           :items="inventory.classification"
           :itemprops="$store.state.api.schemas.inventory.properties.classification.items.properties"

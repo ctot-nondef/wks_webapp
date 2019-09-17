@@ -34,6 +34,19 @@ function computeFieldType(field, name) {
   return field.type;
 }
 
+function cleanFilter(f) {
+  let cf = {}
+  Object.keys(f).forEach((key) => {
+    if(typeof f[key] === 'string' && f[key] !== '' && f[key] !== null) cf[key] = f[key];
+    if(typeof f[key] === 'object') {
+      ['$eq','$gt','$gte','$lt','$lte','$ne','$regex'].forEach((op) => {
+        if(f[key][op] && f[key][op] !== '' && f[key][op] !== null) cf[key] = f[key];
+      });
+    }
+  });
+  return JSON.stringify(cf);
+}
+
 const state = {
   apilib: {},
   init: false,
@@ -189,7 +202,7 @@ const actions = {
         p = state.apilib[`get${t}ById`]({ id, $config, populate });
       } else if (type && !id) {
         commit('setLoading', `Getting Queryset of ${type} from Database`);
-        p = state.apilib[`get${t}`]({ sort, skip, limit, query, populate, $config });
+        p = state.apilib[`get${t}`]({ sort, skip, limit, query: cleanFilter(query), populate, $config });
       } else reject('Invalid or Insufficient Parameters');
       p.then((res) => {
         commit('setLoadingFinished');
