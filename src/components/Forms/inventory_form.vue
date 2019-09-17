@@ -10,38 +10,40 @@
         <v-text-field v-model="inventory.name" label="Name" @input="returnObject()"></v-text-field>
       </v-flex>
     </v-layout>
+    <!-- inventory partOf -->
+    <!-- inventory place -->
+    <v-layout justify-start row fill-height>
+      <v-flex xs6>
+        <simpleautocompwrapper entity="Collect" v-model="inventory.partOf" v-bind:prop.sync="inventory.partOf" label="Part Of Collection"/>
+      </v-flex>
+      <v-flex xs6>
+        <simpleautocompwrapper entity="Descriptor" filter="GEOKEYW" v-model="inventory.place" v-bind:prop.sync="inventory.place" label="Place"/>
+      </v-flex>
+    </v-layout>
+    <!-- inventory creators -->
     <v-layout justify-end row fill-height>
       <v-flex xs12>
-        <!-- inventory creators -->
         <formlistcomponent :items="inventory.creator" :itemprops="$store.state.api.schemas.inventory.properties.creator.items.properties" :listitemstyletypes="creatoritemstyletypes" label="Creator" nodatamessage="No creators added">
           <template slot="form" slot-scope="props">
-          <v-flex xs5>
+          <v-flex xs6>
               <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"></autocomp>
           </v-flex>
-          <v-flex xs5>
+          <v-flex xs6>
             <autocomp entity="Actor" v-model="props.newitem.id" label="Creator" :multiple="false"></autocomp>
           </v-flex>
           <v-flex xs12>
-            <v-textarea  v-model="props.newitem.note" label="Note" />
+            <v-textarea box height="70"  v-model="props.newitem.note" label="Note" />
           </v-flex>
           </template>
         </formlistcomponent>
       </v-flex>
     </v-layout>
     <v-layout justify-start row fill-height>
-      <v-flex xs5>
-        <!-- inventory place -->
-        <simpleautocompwrapper entity="Descriptor" filter="GEOKEYW" v-model="inventory.place" v-bind:prop.sync="inventory.place" label="Place"/>
-      </v-flex>
-    </v-layout>
-    <v-layout justify-start row fill-height>
-      <v-flex xs5>
+      <v-flex xs6>
         <!-- inventory begin of existence -->
         <datecomponent v-bind:date.sync="inventory.beginOfExistence" label="Begin of Existence"/>
       </v-flex>
-    </v-layout>
-    <v-layout justify-start row fill-height>
-      <v-flex xs5>
+      <v-flex xs6>
         <!-- inventory end of existence -->
         <datecomponent v-bind:date.sync="inventory.endOfExistence" label="End of Existence"/>
       </v-flex>
@@ -138,12 +140,6 @@
         </formlistcomponent>
       </v-flex>
     </v-layout>
-    <!-- inventory partOf -->
-    <v-layout justify-start row fill-height>
-      <v-flex xs5>
-        <simpleautocompwrapper entity="Collect" v-model="inventory.partOf" v-bind:prop.sync="inventory.partOf" label="Part Of Collection"/>
-      </v-flex>
-     </v-layout>
      <!-- inventory comments -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
