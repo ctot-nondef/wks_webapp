@@ -79,6 +79,20 @@
               <autocomp entity="Descriptor" filter="DIM" v-model="props.newitem.aspect" label="Aspect" :multiple="false"></autocomp>
             </v-flex>
           </template>
+          <template slot="simpleform" slot-scope="simpleprops">
+            <v-flex xs6>
+              <v-text-field
+                box
+                label="Height in mm"
+                @input="simpleprops.newitems[0] = {amount: parseInt($event, 10), aspect: {name: 'Höhe', _id: '5c90a0119ca403074db61853'}, unit: {name: 'mm', _id: '5c90a0119ca403074db6197c'}}"/>
+            </v-flex>
+            <v-flex xs6>
+              <v-text-field
+                box
+                label="Width in mm"
+                @input="simpleprops.newitems[1] = {amount: parseInt($event, 10), aspect: {name: 'Breite', _id: '5c90a0119ca403074db61856'}, unit: {name: 'mm',_id: '5c90a0119ca403074db6197c'}}"/>
+            </v-flex>
+          </template>
         </formlistcomponent>
       </v-flex>
     </v-layout>

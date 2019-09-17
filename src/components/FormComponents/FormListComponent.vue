@@ -73,11 +73,11 @@
     <!-- form slot -->
     <v-layout justify-end row fill-height>
       <v-flex xs10>
-        <v-layout v-if="!simpleform" justify-start row fill-height wrap class="py-3">
+        <v-layout v-if="!simpleform || editingMode" justify-start row fill-height wrap class="py-3">
           <slot name="form" :newitem="newitem"></slot>
         </v-layout>
-        <v-layout v-if="simpleform" justify-start row fill-height wrap class="py-3">
-          <slot name="simpleform" :newitem="newitem"></slot>
+        <v-layout v-if="simpleform && !editingMode" justify-start row fill-height wrap class="py-3">
+          <slot name="simpleform" :newitems="newitems"></slot>
         </v-layout>
       </v-flex>
       <v-flex xs2>
@@ -125,9 +125,14 @@ export default {
   },
   methods: {
     addItem(item, items) {
-      if (!item.textval) {
+      if (!item.textval && !this.simpleform) {
         const newitem = Object.assign({}, item);
         items.push(newitem);
+      } else if (!item.textval && this.simpleform && Array.isArray(this.newitems)) {
+        this.newitems.forEach((i) => {
+          const newitem = Object.assign({}, i);
+          if (Object.keys(newitem).length > 0) items.push(newitem);
+        });
       } else {
         items.push(item.textval);
       }
@@ -196,6 +201,10 @@ export default {
       Object.keys(this.itemprops).forEach(key => this.$set(ni, key, null));
       return ni;
     },
+    newitems() {
+      if (!this.itemprops) return null;
+      return [{},{},{},{},{}];
+    },
     citems() {
       if (!Array.isArray(this.items)) return [];
       return this.items;
@@ -207,7 +216,7 @@ export default {
   },
   mounted() {
     this.simpleform = this.simpleformavail;
-  }
+  },
 };
 </script>
 
