@@ -67,9 +67,7 @@ export default {
         this.type = type;
         this.get({
           type,
-          query: JSON.stringify({
-            _id,
-          }),
+          query: {_id},
           populate: JSON.stringify(this.getPathsByName(type).map(path => ({ path }))),
         }).then((res) => {
           this.item = res.data[0];

@@ -140,8 +140,7 @@ export default {
           });
           requestparams.populate = JSON.stringify(populateprops);
         }
-
-        requestparams.query = JSON.stringify(queryparams);
+        requestparams.query = queryparams;
         this.get(requestparams)
         .then((res) => {
           if (Array.isArray(res.data)) this.items = res.data;

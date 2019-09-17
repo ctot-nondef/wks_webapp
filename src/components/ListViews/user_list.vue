@@ -130,7 +130,7 @@ export default {
           populate: JSON.stringify([
             { path: 'instanceOf' },
           ]),
-          query: JSON.stringify(q),
+          query: q,
         }).then((res) => {
           this.loading = false;
           this.data = res.data;
@@ -146,9 +146,7 @@ export default {
       edituser(_id) {
         this.get({
           type: 'user',
-          query: JSON.stringify({
-            _id,
-          }),
+          query: { _id },
         }).then((res) => {
           delete res.data[0].password;
           this.cedit = res.data[0];

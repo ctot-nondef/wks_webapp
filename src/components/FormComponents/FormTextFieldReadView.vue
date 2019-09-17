@@ -32,9 +32,7 @@ export default {
       if (refid && refid !== '') {
         this.get({
           type: this.reftype,
-          query: JSON.stringify({
-            _id: refid,
-          }),
+          query: { _id: refid },
         }).then((res) => {
           this.name = res.data[0].name;
         });

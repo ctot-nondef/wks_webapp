@@ -123,7 +123,7 @@ export default {
           name: 'query',
           params: {
             entity: a.type,
-            query: JSON.stringify(a.filter),
+            query: a.filter,
           },
         });
         this.parseQuery();

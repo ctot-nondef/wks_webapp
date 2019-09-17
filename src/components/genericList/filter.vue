@@ -25,6 +25,7 @@
             item-text="_labels[4].label"
             item-value="_id"
             label="Type"
+            box
             @input="updateFilter({ key: `${path}`, value: $event })"/>
           <!-- simple xref select -->
           <simpleautocompwrapper

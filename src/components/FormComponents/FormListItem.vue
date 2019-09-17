@@ -25,18 +25,5 @@ export default {
   methods: {
     ...mapActions('api', ['get']),
   },
- /* created() {
-    if (this.itemprop["x-ref"]) {
-    this.get({
-            type: this.itemprop["x-ref"],
-            query: JSON.stringify({
-              _id: this.refsto
-            })
-    }).then(res => {
-        console.log(res.data);
-        this.name = res.data[0].name;
-    });
-    }
-  },  */
 };
 </script>
