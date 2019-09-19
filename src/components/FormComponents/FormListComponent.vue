@@ -203,7 +203,7 @@ export default {
     },
     newitems() {
       if (!this.itemprops) return null;
-      return [{},{},{},{},{}];
+      return [{}, {}, {}, {}, {}];
     },
     citems() {
       if (!Array.isArray(this.items)) return [];

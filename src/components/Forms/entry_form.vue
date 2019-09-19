@@ -261,6 +261,7 @@
   </div>
 </template>
 <script>
+import axios from 'axios';
 import autocomp from '../AutoCompleteComponents/Autocomp';
 import simpleautocompwrapper from '../FormComponents/SimpleAutoCompleteWrapper';
 import formlistcomponent from '../FormComponents/FormListComponent';

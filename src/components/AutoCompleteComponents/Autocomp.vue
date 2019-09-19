@@ -87,14 +87,12 @@ export default {
             this.select = [];
             this.items = [];
           }
+        } else if (typeof val === 'object' && val !== null) {
+          this.select = val;
+          this.items.push(val);
         } else {
-          if (typeof val === 'object' && val !== null) {
-            this.select = val;
-            this.items.push(val);
-          } else {
-            this.select = {};
-            this.items = [];
-          }
+          this.select = {};
+          this.items = [];
         }
       },
     },
