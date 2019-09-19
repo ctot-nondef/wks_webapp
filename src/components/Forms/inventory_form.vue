@@ -5,9 +5,9 @@
       <chips :items="inventory.identifier"/>
     </v-layout>
     <v-layout justify-start row fill-height>
-      <v-flex xs6>
+      <v-flex xs10>
         <!-- inventory name -->
-        <v-text-field v-model="inventory.name" label="Name" @input="returnObject()"></v-text-field>
+        <v-text-field v-model="inventory.name" box class="nameinput" label="Name" @input="returnObject"></v-text-field>
       </v-flex>
     </v-layout>
     <!-- inventory partOf -->

@@ -6,8 +6,8 @@
     </v-layout>
     <!-- collection name -->
     <v-layout justify-start row fill-height>
-      <v-flex xs6>
-        <v-text-field v-model="collection.name" box label="Name" @input="returnObject()"></v-text-field>
+      <v-flex xs10>
+        <v-text-field v-model="collection.name" box label="Name" box class="nameinput" @input="returnObject"></v-text-field>
       </v-flex>
     </v-layout>
     <!-- collection creators -->
