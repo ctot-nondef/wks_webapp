@@ -64,9 +64,9 @@
         <autocomp entity="Descriptor" filter="TECHN" v-model="object.technique" label="Technique" :multiple="true" @input="returnObject"></autocomp>
       </v-flex>
     </v-layout>
+    <!-- object dimensions -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
-        <!-- object dimensions -->
         <formlistcomponent
           :items="object.dimensions"
           :itemprops="$store.state.api.schemas.object.properties.dimensions.items.properties"
@@ -102,9 +102,10 @@
         </formlistcomponent>
       </v-flex>
     </v-layout>
+    <!-- object classifications -->
     <v-layout justify-start row fill-height>
       <v-flex xs12 class="mt-3">
-        <!-- object classifications -->
+
         <formlistcomponent
           v-if="object.classification"
           :items="object.classification"
@@ -127,9 +128,9 @@
         </formlistcomponent>
       </v-flex>
     </v-layout>
+    <!-- object description -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
-        <!-- object description -->
         <v-textarea v-model="object.description" label="Description" @input="returnObject()"></v-textarea>
       </v-flex>
     </v-layout>

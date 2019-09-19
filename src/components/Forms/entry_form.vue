@@ -1,12 +1,12 @@
 <template>
   <div class="">
+    <!-- entry identifiers -->
     <v-layout justify-end row fill-height>
-      <!-- entry identifiers -->
       <chips :items="entry.identifier"/>
     </v-layout>
+    <!-- entry name -->
     <v-layout justify-start row fill-height>
       <v-flex xs10>
-      <!-- entry name -->
         <v-text-field v-model="entry.name" box label="Name" class="nameinput" @input="returnObject"></v-text-field>
       </v-flex>
     </v-layout>
@@ -125,6 +125,29 @@
     <v-layout justify-start row fill-height>
       <v-flex xs12>
         <simpleautocompwrapper entity="Object" v-model="entry.identification" v-bind:prop.sync="entry.identification" label="Identified Object" :displayitemprops="autcompdisplayprops"/>
+      </v-flex>
+    </v-layout>
+    <!-- entry images -->
+    <v-layout justify-end row fill-height>
+      <v-flex xs12>
+        <v-list two-line>
+          <template v-for="(item, index) in entry.images">
+            <v-list-tile :key="item._id" avatar :href="`${$store.state.api.url}/${item.reference.path}`" target="_blank">
+              <v-list-tile-avatar>
+                <img :src="`${$store.state.api.url}/asset/uploads/thumbs/${item.reference.name.split('.')[0]}_thumb.jpg`">
+              </v-list-tile-avatar>
+              <v-list-tile-content>
+                <v-list-tile-title v-html="item.reference.name"></v-list-tile-title>
+                <v-list-tile-sub-title v-html="item.reference.path"></v-list-tile-sub-title>
+              </v-list-tile-content>
+              <v-btn fab dark small color="error" @click="removeimage(index)">
+                <v-icon dark>delete</v-icon>
+              </v-btn>
+            </v-list-tile>
+          </template>
+        </v-list>
+        <v-text-field label="Select Image" box @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
+        <input type="file" style="display: none" ref="image" accept="image/jpeg" @change="onFilePicked">
       </v-flex>
     </v-layout>
     <!-- entry transaction -->
@@ -265,6 +288,9 @@ export default {
       comment: '',
       public: false,
       url: '',
+      imageName: '',
+      imageUrl: '',
+      imageFile: '',
       transactiondialog: false,
       autcompdisplayprops: {
         dimensions: [
@@ -294,6 +320,46 @@ export default {
     },
     parseDate(datestring) {
       return new Date(datestring);
+    },
+    pickFile() {
+      this.$refs.image.click();
+    },
+    onFilePicked(e) {
+      const files = e.target.files;
+      if (files[0] !== undefined) {
+        const fr = new FileReader();
+        this.imageName = files[0].name;
+        if (this.imageName.lastIndexOf('.') <= 0) {
+          return;
+        }
+        fr.readAsDataURL(files[0]);
+        fr.addEventListener('load', () => {
+          const formData = new FormData();
+          this.imageUrl = fr.result;
+          this.imageFile = files[0];
+          formData.append('file', this.imageFile);
+          axios.post(`${this.$store.state.api.url}/api/v1/upload/`, formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          }).then((res) => {
+            if (!this.object.images) this.object.images = [];
+            this.object.images.push({ reference: res.data });
+            this.returnObject();
+            this.imageName = '';
+            this.imageFile = '';
+            this.imageUrl = '';
+          });
+        });
+      } else {
+        this.imageName = '';
+        this.imageFile = '';
+        this.imageUrl = '';
+      }
+    },
+    removeimage(index) {
+      this.object.images.splice(index, 1);
+      this.returnObject();
     },
     initVals() {
       if (!this.entry.creator) {
