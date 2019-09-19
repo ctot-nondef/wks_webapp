@@ -60,7 +60,7 @@ export default {
   },
   computed: {
     componentLoader() {
-      return () => import('./Forms/collect_form');
+      return () => import('./Forms/inventory_form');
     },
   },
 };

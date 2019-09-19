@@ -83,14 +83,14 @@
             <v-flex xs6>
               <v-text-field
                 box
-                label="Height in mm"
-                @input="simpleprops.newitems[0] = {amount: parseInt($event, 10), aspect: {name: 'Höhe', _id: '5c90a0119ca403074db61853'}, unit: {name: 'mm', _id: '5c90a0119ca403074db6197c'}}"/>
+                label="Height in cm"
+                @input="simpleprops.newitems[0] = {amount: parseInt($event, 10), aspect: {name: 'Höhe', _id: '5c90a0119ca403074db61853'}, unit: {name: 'cm', _id: '5c90a0119ca403074db61857'}}"/>
             </v-flex>
             <v-flex xs6>
               <v-text-field
                 box
-                label="Width in mm"
-                @input="simpleprops.newitems[1] = {amount: parseInt($event, 10), aspect: {name: 'Breite', _id: '5c90a0119ca403074db61856'}, unit: {name: 'mm',_id: '5c90a0119ca403074db6197c'}}"/>
+                label="Width in cm"
+                @input="simpleprops.newitems[1] = {amount: parseInt($event, 10), aspect: {name: 'Breite', _id: '5c90a0119ca403074db61856'}, unit: {name: 'cm',_id: '5c90a0119ca403074db61857'}}"/>
             </v-flex>
           </template>
         </formlistcomponent>
@@ -187,6 +187,22 @@
                 label="Thema"
                 :multiple="false"
                 @input="simpleprops.newitems[1] = {descriptor: $event, aspect: {name: 'Thema', _id: '5d5a5c0e166362001326d670'}, note: 'entered via quickform'}"
+              ></autocomp>
+            </v-flex>
+            <v-flex xs6>
+              <autocomp
+                entity="Descriptor"
+                label="Datierung"
+                :multiple="false"
+                @input="simpleprops.newitems[2] = {descriptor: $event, aspect: {name: 'Datierung', _id: '5c90a0119ca403074db619f5'}, note: 'entered via quickform'}"
+              ></autocomp>
+            </v-flex>
+            <v-flex xs6>
+              <autocomp
+                entity="Descriptor"
+                label="Schule"
+                :multiple="false"
+                @input="simpleprops.newitems[3] = {descriptor: $event, aspect: {name: 'Schule', _id: '5d5a5c7f166362001326d673'}, note: 'entered via quickform'}"
               ></autocomp>
             </v-flex>
           </template>

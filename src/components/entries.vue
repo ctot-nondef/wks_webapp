@@ -4,7 +4,7 @@
       <fundamentcard caption="Entries">
         <div slot="content">
           <v-layout justify-center column fill-height>
-            <v-flex xs12>
+            <v-flex xs12 v-if="$store.state.api.loggedin">
               <v-layout justify-end row fill-height>
                 <v-btn fab dark small
                        color="warning"

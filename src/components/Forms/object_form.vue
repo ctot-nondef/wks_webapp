@@ -61,23 +61,43 @@
     <v-layout justify-start row fill-height>
       <v-flex xs6>
       <!-- object technique -->
-        <autocomp entity="Descriptor" filter="TECHN" v-model="object.technique" label="Technique" :multiple="true" @input="returnObject()"></autocomp>
+        <autocomp entity="Descriptor" filter="TECHN" v-model="object.technique" label="Technique" :multiple="true" @input="returnObject"></autocomp>
       </v-flex>
     </v-layout>
     <v-layout justify-start row fill-height>
       <v-flex xs12>
         <!-- object dimensions -->
-        <formlistcomponent :items="object.dimensions" :itemprops="$store.state.api.schemas.object.properties.dimensions.items.properties" :listitemstyletypes="dimensionsitemstyletypes" label="Dimensions" nodatamessage="No dimensions added">
+        <formlistcomponent
+          :items="object.dimensions"
+          :itemprops="$store.state.api.schemas.object.properties.dimensions.items.properties"
+          :listitemstyletypes="dimensionsitemstyletypes"
+          label="Dimensions"
+          nodatamessage="No dimensions added"
+          :simpleformavail="true">
           <template slot="form" slot-scope="props">
             <v-flex xs5>
               <v-text-field  v-model.number="props.newitem.amount" label="Amount"></v-text-field>
-          </v-flex>
-          <v-flex xs5>
-              <autocomp entity="Descriptor" filter="DIM" v-model="props.newitem.aspect" label="Aspect" :multiple="false"></autocomp>
-          </v-flex>
+            </v-flex>
             <v-flex xs5>
-              <autocomp entity="Descriptor" filter="UNIT" v-model="props.newitem.unit" label="Descriptor" :multiple="false"></autocomp>
-          </v-flex>
+                <autocomp entity="Descriptor" filter="DIM" v-model="props.newitem.aspect" label="Aspect" :multiple="false"></autocomp>
+            </v-flex>
+              <v-flex xs5>
+                <autocomp entity="Descriptor" filter="UNIT" v-model="props.newitem.unit" label="Descriptor" :multiple="false"></autocomp>
+            </v-flex>
+          </template>
+          <template slot="simpleform" slot-scope="simpleprops">
+            <v-flex xs6>
+              <v-text-field
+                box
+                label="Height in cm"
+                @input="simpleprops.newitems[0] = {amount: parseInt($event, 10), aspect: {name: 'Höhe', _id: '5c90a0119ca403074db61853'}, unit: {name: 'cm', _id: '5c90a0119ca403074db61857'}}"/>
+            </v-flex>
+            <v-flex xs6>
+              <v-text-field
+                box
+                label="Width in cm"
+                @input="simpleprops.newitems[1] = {amount: parseInt($event, 10), aspect: {name: 'Breite', _id: '5c90a0119ca403074db61856'}, unit: {name: 'cm',_id: '5c90a0119ca403074db61857'}}"/>
+            </v-flex>
           </template>
         </formlistcomponent>
       </v-flex>
