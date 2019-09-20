@@ -344,8 +344,8 @@ export default {
               'Content-Type': 'multipart/form-data',
             },
           }).then((res) => {
-            if (!this.object.images) this.object.images = [];
-            this.object.images.push({ reference: res.data });
+            if (!this.entry.images) this.entry.images = [];
+            this.entry.images.push({ reference: res.data });
             this.returnObject();
             this.imageName = '';
             this.imageFile = '';
