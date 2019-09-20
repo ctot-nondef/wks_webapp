@@ -66,7 +66,7 @@
 <script>
   /* eslint-disable no-underscore-dangle,no-param-reassign */
 
-  import { mapActions, mapGetters } from 'vuex';
+  import { mapActions } from 'vuex';
 
 import HELPERS from '../helpers';
 
@@ -124,11 +124,6 @@ export default {
           });
         }
       },
-    },
-    computed: {
-      ...mapGetters('api', [
-        'apiloaded',
-      ]),
     },
 };
 </script>

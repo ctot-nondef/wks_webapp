@@ -46,7 +46,7 @@
 </template>
 
 <script>
-  /* eslint-disable no-underscore-dangle,no-param-reassign */
+  /* eslint-disable no-underscore-dangle,no-param-reassign,arrow-body-style */
 import { mapGetters } from 'vuex';
 import fundamentcard from '../Fundament/FundamentCard';
 import simpleautocompwrapper from '../FormComponents/SimpleAutoCompleteWrapper';
@@ -79,13 +79,11 @@ export default {
     },
     methods: {
       updateFilter(f) {
-        console.log(this.filter);
         const nf = JSON.parse(
-          JSON.stringify(this.filter, function(k, v) {
+          JSON.stringify(this.filter, (k, v) => {
             return v === undefined ? null : v;
           }),
         );
-        console.log(nf);
         this._.set(nf, f.key, f.value);
         this.$emit('update', { type: this.entitytype, filter: nf });
       },
