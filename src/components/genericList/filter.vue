@@ -16,6 +16,8 @@
             :value="value['$regex']"
             box
             :label="path"
+            clearable
+            @click:clear="value['$regex'] = ''"
             @input="updateFilter({ key: `${path}.$regex`, value: $event })"/>
           <!-- descriptor/actor class select -->
           <v-select
@@ -25,6 +27,8 @@
             item-text="_labels[4].label"
             item-value="_id"
             label="Type"
+            clearable
+            @click:clear="value = {}"
             box
             @input="updateFilter({ key: `${path}`, value: $event })"/>
           <!-- simple xref select -->
@@ -32,6 +36,8 @@
             v-if="getFieldType({type: entitytype, name: path}) === 'collect'"
             entity="Collect" :value="value"
             label="Part Of"
+            clearable
+            @click:clear="value['$regex'] = null"
             @update:prop="updateFilter({ key: `${path}`, value: $event })"/>
         </v-flex>
       </v-layout>
@@ -73,7 +79,13 @@ export default {
     },
     methods: {
       updateFilter(f) {
-        const nf = JSON.parse(JSON.stringify(this.filter));
+        console.log(this.filter);
+        const nf = JSON.parse(
+          JSON.stringify(this.filter, function(k, v) {
+            return v === undefined ? null : v;
+          }),
+        );
+        console.log(nf);
         this._.set(nf, f.key, f.value);
         this.$emit('update', { type: this.entitytype, filter: nf });
       },

@@ -359,7 +359,7 @@ export default {
       }
     },
     removeimage(index) {
-      this.object.images.splice(index, 1);
+      this.entry.images.splice(index, 1);
       this.returnObject();
     },
     initVals() {
