@@ -1,13 +1,13 @@
 <template>
   <div class="">
+    <!-- object identifiers -->
     <v-layout justify-end row fill-height>
-      <!-- object identifiers -->
       <chips :items="object.identifier"/>
     </v-layout>
+    <!-- object name -->
     <v-layout justify-start row fill-height>
-      <v-flex xs6>
-      <!-- object name -->
-        <v-text-field v-model="object.name" label="Name" @input="returnObject()"></v-text-field>
+      <v-flex xs10>
+        <v-text-field v-model="object.name" box label="Name" class="nameinput" @input="returnObject"></v-text-field>
       </v-flex>
     </v-layout>
     <v-layout justify-start row fill-height>
@@ -111,7 +111,8 @@
           :items="object.classification"
           :itemprops="$store.state.api.schemas.object.properties.classification.items.properties"
           label="Classification"
-          nodatamessage="No classifications added">
+          nodatamessage="No classifications added"
+          :simpleformavail="true">
           <template slot="form" slot-scope="props">
             <v-layout justify-end row fill-height wrap>
               <v-flex xs6>
@@ -124,6 +125,40 @@
                 <v-textarea box v-model="props.newitem.note" label="Note" />
               </v-flex>
             </v-layout>
+          </template>
+          <template slot="simpleform" slot-scope="simpleprops">
+            <v-flex xs6>
+              <autocomp
+                entity="Descriptor"
+                label="Kunstgattung"
+                :multiple="false"
+                @input="simpleprops.newitems[0] = {descriptor: $event, aspect: {name: 'Kunstgattung', _id: '5d5a5af4166362001326d66d'}, note: 'entered via quickform'}"
+              ></autocomp>
+            </v-flex>
+            <v-flex xs6>
+              <autocomp
+                entity="Descriptor"
+                label="Thema"
+                :multiple="false"
+                @input="simpleprops.newitems[1] = {descriptor: $event, aspect: {name: 'Thema', _id: '5d5a5c0e166362001326d670'}, note: 'entered via quickform'}"
+              ></autocomp>
+            </v-flex>
+            <v-flex xs6>
+              <autocomp
+                entity="Descriptor"
+                label="Datierung"
+                :multiple="false"
+                @input="simpleprops.newitems[2] = {descriptor: $event, aspect: {name: 'Datierung', _id: '5c90a0119ca403074db619f5'}, note: 'entered via quickform'}"
+              ></autocomp>
+            </v-flex>
+            <v-flex xs6>
+              <autocomp
+                entity="Descriptor"
+                label="Schule"
+                :multiple="false"
+                @input="simpleprops.newitems[3] = {descriptor: $event, aspect: {name: 'Schule', _id: '5d5a5c7f166362001326d673'}, note: 'entered via quickform'}"
+              ></autocomp>
+            </v-flex>
           </template>
         </formlistcomponent>
       </v-flex>
@@ -158,9 +193,9 @@
       </v-flex>
     </v-layout>
     <!-- object references zotero?-->
+    <!-- object comments -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
-        <!-- object comments -->
         <formlistcomponent v-if="object.comments" :items="object.comments" :listitemstyletypes="['title']" label="Comments" nodatamessage="No comments added">
           <template slot="form" slot-scope="props">
           <v-flex xs5>
