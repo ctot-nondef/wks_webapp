@@ -23,17 +23,57 @@
     <!-- inventory creators -->
     <v-layout justify-end row fill-height>
       <v-flex xs12>
-        <formlistcomponent :items="inventory.creator" :itemprops="$store.state.api.schemas.inventory.properties.creator.items.properties" :listitemstyletypes="creatoritemstyletypes" label="Creator" nodatamessage="No creators added">
+        <formlistcomponent
+          :items="inventory.creator"
+          :itemprops="$store.state.api.schemas.inventory.properties.creator.items.properties"
+          :listitemstyletypes="creatoritemstyletypes"
+          label="Creator"
+          nodatamessage="No creators added"
+          :simpleformavail="true">
           <template slot="form" slot-scope="props">
-          <v-flex xs6>
-              <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"></autocomp>
-          </v-flex>
-          <v-flex xs6>
-            <autocomp entity="Actor" v-model="props.newitem.id" label="Creator" :multiple="false"></autocomp>
-          </v-flex>
-          <v-flex xs12>
-            <v-textarea box height="70"  v-model="props.newitem.note" label="Note" />
-          </v-flex>
+            <v-flex xs6>
+                <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"></autocomp>
+            </v-flex>
+            <v-flex xs6>
+              <autocomp entity="Actor" v-model="props.newitem.id" label="Creator" :multiple="false"></autocomp>
+            </v-flex>
+            <v-flex xs12>
+              <v-textarea box height="70"  v-model="props.newitem.note" label="Note" />
+            </v-flex>
+          </template>
+          <template slot="simpleform" slot-scope="simpleprops">
+            <v-flex xs6>
+              <autocomp
+                entity="Actor"
+                label="Sammler"
+                :multiple="false"
+                @input="simpleprops.newitems[0] = {descriptor: $event, aspect: {name: 'Sammler', _id: '5cd2922a1cbd4a00139b6e14'}, note: 'entered via quickform'}"
+              ></autocomp>
+            </v-flex>
+            <v-flex xs6>
+              <autocomp
+                entity="Actor"
+                label="Aktueller Eigentümer"
+                :multiple="false"
+                @input="simpleprops.newitems[1] = {descriptor: $event, aspect: {name: 'Aktueller Eigentümer', _id: '5d1201568997750013ca6740'}, note: 'entered via quickform'}"
+              ></autocomp>
+            </v-flex>
+            <v-flex xs6>
+              <autocomp
+                entity="Actor"
+                label="Verfasser"
+                :multiple="false"
+                @input="simpleprops.newitems[2] = {descriptor: $event, aspect: {name: 'Verfasser', _id: '5c90a0119ca403074db617f5'}, note: 'entered via quickform'}"
+              ></autocomp>
+            </v-flex>
+            <v-flex xs6>
+              <autocomp
+                entity="Actor"
+                label="Verleger"
+                :multiple="false"
+                @input="simpleprops.newitems[3] = {descriptor: $event, aspect: {name: 'Verleger', _id: '5c90a0119ca403074db617f0'}, note: 'entered via quickform'}"
+              ></autocomp>
+            </v-flex>
           </template>
         </formlistcomponent>
       </v-flex>
