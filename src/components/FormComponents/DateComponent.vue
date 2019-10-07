@@ -72,12 +72,12 @@ export default {
         dwot = dateval.replace('T00:00:00.000Z', '');
       }
       const [year, month, day] = dwot.split('-');
-      return `${month}/${day}/${year}`;
+      return `${year}/${month}/${day}`;
     },
     parseDate(dateval) {
       if (!dateval) return null;
 
-      const [month, day, year] = dateval.split('/');
+      const [year, month, day] = dateval.split('/');
       return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
     },
   },

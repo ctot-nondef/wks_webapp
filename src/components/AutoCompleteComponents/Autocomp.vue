@@ -47,7 +47,7 @@
 </template>
 
 <script>
-  /* eslint-disable no-underscore-dangle */
+  /* eslint-disable no-underscore-dangle,no-console */
 
   import { mapGetters, mapActions } from 'vuex';
 import HELPERS from '../../helpers';
@@ -159,6 +159,7 @@ export default {
           .find(item => item.name === descriptortype)._id;
       },
       remove(item) {
+        // TODO: fix to work with object
         const index = this.select.indexOf(item._id);
         if (index >= 0) this.select.splice(index, 1);
         this.$emit('input', this.select);
