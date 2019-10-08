@@ -159,8 +159,7 @@ export default {
           .find(item => item.name === descriptortype)._id;
       },
       remove(item) {
-        // TODO: fix to work with object
-        const index = this.select.indexOf(item._id);
+        const index = this.select.map(e => e._id).indexOf(item._id);
         if (index >= 0) this.select.splice(index, 1);
         this.$emit('input', this.select);
       },
