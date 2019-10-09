@@ -21,8 +21,6 @@
     <v-date-picker
       ref="picker"
       v-model="dateval"
-      :max="new Date().toISOString().substr(0, 10)"
-      min="1550-01-01"
       @change="save"
     ></v-date-picker>
   </v-menu>
@@ -45,8 +43,13 @@ export default {
     };
   },
   computed: {
-    computedDateFormatted() {
-      return this.formatDate(this.date);
+    computedDateFormatted:{
+      get() {
+        return this.formatDate(this.date);
+      },
+      set(newVal) {
+        this.parseDate(newVal);
+      },
     },
   },
   watch: {
@@ -60,6 +63,7 @@ export default {
   },
   methods: {
     save(dateval) {
+      console.log(dateval);
       this.$refs.datepickermenu.save(dateval);
       this.$emit('update:date', `${dateval}T00:00:00.000Z`);
     },
@@ -71,14 +75,14 @@ export default {
       } else {
         dwot = dateval.replace('T00:00:00.000Z', '');
       }
-      const [year, month, day] = dwot.split('-');
-      return `${year}/${month}/${day}`;
+      const a = dwot.split('-');
+      return a.join('/');
     },
     parseDate(dateval) {
       if (!dateval) return null;
-
-      const [year, month, day] = dateval.split('/');
-      return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+      const a = dateval.split('/');
+      this.save(a.join('-'));
+      return a.join('-');
     },
   },
 };

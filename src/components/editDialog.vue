@@ -16,7 +16,8 @@
           <v-spacer></v-spacer>
           <v-toolbar-items>
           </v-toolbar-items>
-          <v-btn color="warning" @click="saveItem">Save</v-btn>
+          <v-btn color="warning" @click="saveAsNewItem" :disabled="!nameEdited">Save as New</v-btn>
+          <v-btn color="warning" @click="saveItem" >Save</v-btn>
         </v-toolbar>
         <v-container grid-list-md text-xs-center>
           <v-card color="grey lighten-2" class="pa-4">
@@ -50,12 +51,22 @@ export default {
         active: false,
         item: {},
         type: null,
+        nameEdited: false,
       };
     },
     computed: {
       ...mapGetters('api', [
         'getPathsByName',
       ]),
+    },
+    watch: {
+      'item.name': {
+        handler(a, b) {
+          if (b !== undefined && b !== a) {
+            this.nameEdited = true;
+          }
+        },
+      },
     },
     methods: {
       ...mapActions('api', [
@@ -92,6 +103,14 @@ export default {
             this.$emit('close');
           });
         }
+      },
+      saveAsNewItem() {
+        delete this.item._id;
+        delete
+        this.post({ type: this.type, body: this.item }).then(() => {
+          this.active = false;
+          this.nameEdited = false;
+        });
       },
       discard() {
         // clear form component
