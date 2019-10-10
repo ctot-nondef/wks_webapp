@@ -106,9 +106,8 @@ export default {
       },
       saveAsNewItem() {
         delete this.item._id;
-        delete
+        delete this.item.identifier;
         this.post({ type: this.type, body: this.item }).then(() => {
-          this.active = false;
           this.nameEdited = false;
         });
       },

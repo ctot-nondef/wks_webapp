@@ -1,5 +1,5 @@
 <template>
-      <v-menu
+  <v-menu
     ref="datepickermenu"
     v-model="datepickermenu"
     :close-on-content-click="false"
@@ -8,29 +8,32 @@
     transition="scale-transition"
     offset-y
     full-width
-    min-width="290px"
-  >
-    <v-text-field
-      slot="activator"
-      v-model="computedDateFormatted"
-      :label="label"
-      prepend-icon="event"
-      @blur="dateval = parseDate(dateFormatted)"
-      box
-    ></v-text-field>
+    min-width="290px">
+    <template v-slot:activator="{ on }">
+      <v-text-field
+        slot="activator"
+        v-model="computedDateFormatted"
+        :label="label"
+        prepend-icon="event"
+        hint="YYYY\MM\DD format"
+        persistent-hint
+        @blur="dateval = parseDate(dateFormatted)"
+        v-on="on"
+        box>
+      </v-text-field>
+    </template>
     <v-date-picker
       ref="picker"
+      no-title
       v-model="dateval"
       @change="save"
-    ></v-date-picker>
+      min="1000-01-01"
+      :max="new Date().toISOString().substr(0, 10)">
+    </v-date-picker>
   </v-menu>
 </template>
 <script>
-import HELPERS from '../../helpers';
-
 export default {
-  mixins: [HELPERS],
-
   props: [
     'label',
     'date',
@@ -43,7 +46,7 @@ export default {
     };
   },
   computed: {
-    computedDateFormatted:{
+    computedDateFormatted: {
       get() {
         return this.formatDate(this.date);
       },
@@ -63,9 +66,10 @@ export default {
   },
   methods: {
     save(dateval) {
-      console.log(dateval);
-      this.$refs.datepickermenu.save(dateval);
-      this.$emit('update:date', `${dateval}T00:00:00.000Z`);
+      if(this.$refs.picker.activePicker === 'DATE') {
+        this.$refs.datepickermenu.save(dateval);
+        this.$emit('update:date', `${dateval}T00:00:00.000Z`);
+      }
     },
     formatDate(dateval) {
       let dwot = null;
