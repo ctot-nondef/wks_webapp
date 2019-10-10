@@ -40,7 +40,7 @@ export default {
   ],
   data() {
     return {
-      dateval: this.date,
+      dateval: null,
       datepickermenu: false,
       dateFormatted: this.formatDate(this.dateval),
     };
@@ -60,7 +60,8 @@ export default {
       // eslint-disable-next-line no-return-assign
       this.$nextTick(() => (this.$refs.picker.activePicker = 'YEAR'));
     },
-    date() {
+    date(newval) {
+      this.dateval = newval;
       this.dateFormatted = this.formatDate(this.dateval);
     },
   },
