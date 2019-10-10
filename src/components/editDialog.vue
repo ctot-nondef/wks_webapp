@@ -62,7 +62,8 @@ export default {
     watch: {
       'item.name': {
         handler(a, b) {
-          if (b !== undefined && b !== a) {
+          console.log(a,b);
+          if (b !== undefined && a !== undefined && b !== a) {
             this.nameEdited = true;
           }
         },
@@ -114,6 +115,7 @@ export default {
       discard() {
         // clear form component
         this.item = {};
+        this.nameEdited = false;
         this.active = false;
         this.$emit('close');
       },
