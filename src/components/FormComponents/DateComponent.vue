@@ -67,10 +67,10 @@ export default {
   },
   methods: {
     save(dateval) {
-      if(this.$refs.picker.activePicker === 'DATE') {
+      if (this.$refs.picker && this.$refs.picker.activePicker === 'DATE') {
         this.$refs.datepickermenu.save(dateval);
-        this.$emit('update:date', `${dateval}T00:00:00.000Z`);
       }
+      this.$emit('update:date', `${dateval}T00:00:00.000Z`);
     },
     formatDate(dateval) {
       let dwot = null;
