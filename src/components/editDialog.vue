@@ -62,7 +62,6 @@ export default {
     watch: {
       'item.name': {
         handler(a, b) {
-          console.log(a,b);
           if (b !== undefined && a !== undefined && b !== a) {
             this.nameEdited = true;
           }
