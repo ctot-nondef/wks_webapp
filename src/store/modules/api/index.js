@@ -61,6 +61,8 @@ const state = {
   page: 1,
   size: 50,
   p: ['user', 'token', 'loggedin'],
+  listheaders: {},
+  filters: {},
 };
 
 const $config = {
@@ -84,6 +86,8 @@ const getters = {
   types: s => Object.keys(s.schemas),
   getClassByName: s => ({ type, name }) => s.classes[type].find(item => item.name === name),
   getPathsByName: s => name => s.ppaths[name],
+  getListHeadersByName: s => name => s.listheaders[name],
+  getFiltersByName: s => name => s.listheaders[name],
   getFieldType: s => ({ type, name }) => computeFieldType(s.schemas[type].properties[name], name),
 };
 
@@ -139,6 +143,16 @@ const mutations = {
       s.ppaths[type] = paths;
     }
   },
+  setListHeaders(s, { type, headers }) {
+    if (type && headers) {
+      s.listheaders[type] = headers;
+    }
+  },
+  setFilters(s, { type, filters }) {
+    if (type && filters) {
+      s.filters[type] = filters;
+    }
+  },
   setClasses(s, { type, classlist }) {
     if (type && classlist) {
       s.classes[type] = classlist;
@@ -164,6 +178,8 @@ const actions = {
           for (let i = 0; i < sa.length; i += 1) {
             commit('setSchema', sa[i]);
             commit('setPopulateablePaths', { type: sa[i].type, paths: PopulateablePathsFromSchemaObject(sa[i].attributes, []) });
+            if (config.config.defaultlistheaders[sa[i].type]) commit('setListHeaders', { type: sa[i].type, headers: config.config.defaultlistheaders[sa[i].type] });
+            if (config.config.defaultfilters[sa[i].type]) commit('setFilters', { type: sa[i].type, filters: config.config.defaultfilters[sa[i].type] });
           }
         }
       }),

@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <v-data-table
-      :headers="Headers"
+      :headers="currentHeaders"
       :items="data"
       :loading="loading"
       :total-items="totalHits"
@@ -11,12 +11,12 @@
     >
       <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
       <template slot="items" slot-scope="props" >
-          <td v-for="column in Headers" v-if="column.path">{{ _.get(props.item, column.path) }}</td>
+          <td v-for="column in currentHeaders" v-if="column.path">{{ _.get(props.item, column.path) }}</td>
           <td v-if="$store.state.api.loggedin">
-            <v-btn fab dark small :to="{ name: `${EntityType}single`, params: { id:  props.item._id  }}" color="primary">
+            <v-btn fab dark small :to="{ name: `${entitytype}single`, params: { id:  props.item._id  }}" color="primary">
               <v-icon dark>collections_bookmark</v-icon>
             </v-btn>
-            <v-btn fab dark small color="warning" @click="$refs.editdialog.getItem(EntityType, props.item._id)">
+            <v-btn fab dark small color="warning" @click="$refs.editdialog.getItem(entitytype, props.item._id)">
               <v-icon dark>edit</v-icon>
             </v-btn>
             <v-btn fab dark small color="error" @click="deleteRequest(props.item)">
@@ -26,7 +26,7 @@
           <td v-if="!$store.state.api.loggedin"></td>
       </template>
     </v-data-table>
-    <editdialog :title="`Edit ${EntityType}`" ref="editdialog" @close="getRecords()">
+    <editdialog :title="`Edit ${entitytype}`" ref="editdialog" @close="getRecords()">
     </editdialog>
     <v-dialog v-model="deleteDialog.status" v-if="deleteDialog.rec" max-width="500px">
       <v-card>
@@ -51,7 +51,7 @@
 
 <script>
   /* eslint-disable no-underscore-dangle,no-param-reassign */
-import { mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 import fundamentcard from '../Fundament/FundamentCard';
 import editdialog from '../editDialog';
@@ -65,11 +65,11 @@ export default {
       editdialog,
     },
     props: {
-      EntityType: {
+      entitytype: {
         type: String,
         default: () => null,
       },
-      Headers: {
+      headers: {
         type: Array,
         default: () => null,
       },
@@ -110,7 +110,7 @@ export default {
         },
         deep: true,
       },
-      EntityType: {
+      entitytype: {
         handler() {
           this.getRecords();
         },
@@ -125,7 +125,7 @@ export default {
       getRecords() {
         this.loading = true;
         this.get({
-          type: this.EntityType,
+          type: this.entitytype,
           sort: this.pagination.descending ? `-${this.pagination.sortBy}` : this.pagination.sortBy,
           limit: this.pagination.rowsPerPage,
           skip: (this.pagination.page - 1) * this.pagination.rowsPerPage,
@@ -146,21 +146,26 @@ export default {
         this.deleteDialog.status = true;
       },
       deleteConfirm(_id) {
-        this.delete({ type: this.EntityType, id: _id }).then((res) => {
+        this.delete({ type: this.entitytype, id: _id }).then(() => {
           this.deleteDialog = {
             status: false,
             rec: null,
           };
           this.getRecords();
         })
-        .catch((err) => {
+        .catch(() => {
           this.getRecords();
         });
       },
     },
     computed: {
-      componentLoader() {
-        return () => import(/* webpackMode: "lazy-once" */ `../Forms/${this.EntityType}_form`);
+      ...mapGetters('api', [
+        'getListHeadersByName',
+        'getFiltersByName',
+      ]),
+      currentHeaders() {
+        if (this.headers) return this.headers;
+        return this.getListHeadersByName(this.entitytype);
       },
     },
 };

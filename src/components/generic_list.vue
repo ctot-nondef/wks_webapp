@@ -17,7 +17,7 @@
               <filterlist :entitytype="$route.params.entity" :filter="query" @update="updateParams($event)" :fixedtype="true"></filterlist>
             </v-flex>
             <v-flex xs12>
-              <list ref="genericlist" :EntityType="$route.params.entity" :filter="query" :headers="listheaders" ></list>
+              <list ref="genericlist" :entitytype="$route.params.entity" :filter="query" ></list>
             </v-flex>
           </v-layout>
         </div>
@@ -47,10 +47,6 @@
     },
     data() {
       return {
-        listheaders: [
-          { text: 'Name', value: 'name', path: 'name' },
-          { text: 'Actions' },
-        ],
         query: {},
         pagination: {},
       };
