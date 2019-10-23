@@ -71,8 +71,8 @@
 import HELPERS from '../helpers';
 
 import fundamentcard from './Fundament/FundamentCard';
-import list from './genericList/list';
-import filterlist from './genericList/filter';
+import list from './genericViews/table';
+import filterlist from './genericViews/filter';
 import actorform from './Forms/actor_form';
 import autocompgnd from './AutoCompleteComponents/AutocompGND';
 

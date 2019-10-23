@@ -3,19 +3,12 @@ import Router from 'vue-router';
 import App from '../components/App';
 import Start from '../components/Start';
 // import Import from '../components/Import';
-import collections from '../components/collections';
 import collectionsingle from '../components/SingleViews/collection_single';
 import inventorysingle from '../components/SingleViews/inventory_single';
 import transactionsingle from '../components/SingleViews/transaction_single';
 // import zoterosingle from '../components/SingleViews/zotero_single';
-import actors from '../components/actors';
-import descriptors from '../components/descriptors';
-import inventories from '../components/inventories';
-import objects from '../components/objects';
-import entries from '../components/entries';
-import transactions from '../components/transactions';
 import users from '../components/users';
-import query from '../components/generic_list';
+import query from '../components/filtered_list';
 
 Vue.use(Router);
 
@@ -55,9 +48,7 @@ export default new Router({
         {
           path: 'collections',
           name: 'collections',
-          components: {
-            Content: collections,
-          },
+          redirect: { name: 'query', params: { entity: 'collect', query: '{"name":{"$regex":null}}' } },
         },
         {
           path: 'collections/:id',
@@ -69,9 +60,7 @@ export default new Router({
         {
           path: 'inventories',
           name: 'inventories',
-          components: {
-            Content: inventories,
-          },
+          redirect: { name: 'query', params: { entity: 'inventory', query: '{"name":{"$regex":null}}' } },
         },
         {
           path: 'inventories/:id',
@@ -83,16 +72,12 @@ export default new Router({
         {
           path: 'entries',
           name: 'entries',
-          components: {
-            Content: entries,
-          },
+          redirect: { name: 'query', params: { entity: 'entry', query: '{"name":{"$regex":null}}' } },
         },
         {
           path: 'transactions',
           name: 'transactions',
-          components: {
-            Content: transactions,
-          },
+          redirect: { name: 'query', params: { entity: 'transaction', query: '{"name":{"$regex":null}}' } },
         },
         {
           path: 'transactions/:id',
@@ -104,9 +89,7 @@ export default new Router({
         {
           path: 'actors',
           name: 'actors',
-          components: {
-            Content: actors,
-          },
+          redirect: { name: 'query', params: { entity: 'actors', query: '{ "name": { "$regex": null }, "instanceOf": null, "identifier": { "$regex": null } }' } },
         },
         {
           path: 'users',
@@ -118,16 +101,12 @@ export default new Router({
         {
           path: 'objects',
           name: 'objects',
-          components: {
-            Content: objects,
-          },
+          redirect: { name: 'query', params: { entity: 'actors', query: '{"name":{"$regex":null}}' } },
         },
         {
           path: 'descriptors',
           name: 'descriptors',
-          components: {
-            Content: descriptors,
-          },
+          redirect: { name: 'query', params: { entity: 'actors', query: '{ "name": { "$regex": null }, "instanceOf": null, "identifier": { "$regex": null } }' } },
         },
         {
           path: '',

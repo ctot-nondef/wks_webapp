@@ -15,7 +15,7 @@
               </v-layout>
             </v-flex>
             <v-flex xs12>
-              <list ref="entrylist" EntityType="entry" :Headers="listheaders" :filter="{ partOf: this.$route.params.id }"></list>
+              <list ref="entrylist" entitytype="entry" :headers="listheaders" :filter="{ partOf: this.$route.params.id }"></list>
             </v-flex>
           </v-layout>
         </div>
@@ -33,7 +33,7 @@
 import { mapActions } from 'vuex';
 
 import fundamentcard from '../Fundament/FundamentCard';
-import list from '../genericList/list';
+import list from '../genericViews/table';
 import editdialog from '../editDialog';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */

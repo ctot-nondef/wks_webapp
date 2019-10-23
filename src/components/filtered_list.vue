@@ -31,8 +31,8 @@
 <script>
   /* eslint-disable no-param-reassign,no-underscore-dangle */
   import fundamentcard from './Fundament/FundamentCard';
-  import list from './genericList/list';
-  import filterlist from './genericList/filter';
+  import list from './genericViews/table';
+  import filterlist from './genericViews/filter';
   import editdialog from './editDialog';
 
   /* eslint no-unused-vars: ["error", {"args": "none"}] */
