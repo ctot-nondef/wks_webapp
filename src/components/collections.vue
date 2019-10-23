@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <v-container grid-list-md >
-      <fundamentcard caption="Collections">
+      <fundamentcard :caption="$route.params.entity">
         <div slot="content">
           <v-layout justify-center column fill-height>
             <v-flex xs12 v-if="$store.state.api.loggedin">
@@ -23,9 +23,6 @@
         </div>
       </fundamentcard>
       <editdialog title="Create Collection" ref="createdialog" @close="$refs.collectionlist.getRecords()">
-        <template slot="form" slot-scope="props">
-          <component :is="componentLoader" :value="props.item" @input="props.item=$event"></component>
-        </template>
       </editdialog>
     </v-container>
   </div>

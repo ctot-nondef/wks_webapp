@@ -26,9 +26,12 @@ export default {
       icon: 'collections',
       abstract: '',
       startpage: {
-        name: 'collections',
+        name: 'query',
         params: {
-          lang: 'en' },
+          lang: 'en',
+          entity: 'collect',
+          query: '{"name":{"$regex":null}}',
+        },
       },
       items: '',
     },
@@ -38,9 +41,12 @@ export default {
       icon: 'assignment',
       abstract: '',
       startpage: {
-        name: 'inventories',
+        name: 'query',
         params: {
-          lang: 'en' },
+          lang: 'en',
+          entity: 'inventory',
+          query: '{"name":{"$regex":null}}',
+        },
       },
       items: '',
     },
@@ -50,9 +56,12 @@ export default {
       icon: 'category',
       abstract: '',
       startpage: {
-        name: 'objects',
+        name: 'query',
         params: {
-          lang: 'en' },
+          lang: 'en',
+          entity: 'object',
+          query: '{"name":{"$regex":null}}',
+        },
       },
       items: '',
     },
@@ -62,9 +71,12 @@ export default {
       icon: 'person',
       abstract: '',
       startpage: {
-        name: 'actors',
+        name: 'query',
         params: {
-          lang: 'en' },
+          lang: 'en',
+          entity: 'actor',
+          query: '{ "name": { "$regex": null }, "instanceOf": null, "identifier": { "$regex": null } }',
+        },
       },
       items: '',
     },
@@ -74,9 +86,12 @@ export default {
       icon: 'device_hub',
       abstract: '',
       startpage: {
-        name: 'descriptors',
+        name: 'query',
         params: {
-          lang: 'en' },
+          lang: 'en',
+          entity: 'descriptor',
+          query: '{ "name": { "$regex": null }, "instanceOf": null, "identifier": { "$regex": null } }',
+        },
       },
       items: '',
     },

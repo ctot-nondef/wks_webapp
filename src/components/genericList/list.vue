@@ -27,9 +27,6 @@
       </template>
     </v-data-table>
     <editdialog :title="`Edit ${EntityType}`" ref="editdialog" @close="getRecords()">
-      <template slot="form" slot-scope="props">
-        <component :is="componentLoader" :value="props.item" @input="props.item=$event"></component>
-      </template>
     </editdialog>
     <v-dialog v-model="deleteDialog.status" v-if="deleteDialog.rec" max-width="500px">
       <v-card>

@@ -252,6 +252,7 @@
         fullscreen
         hide-overlay
         transition="dialog-bottom-transition"
+        lazy
       >
         <v-card>
           <transactionpopup @selectTransactionRef="pickTransactionRef($event)" @closeTransactionPopup="transactiondialog=false"></transactionpopup>

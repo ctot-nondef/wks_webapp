@@ -1,12 +1,15 @@
 <template>
   <div class="">
-    <v-container grid-list-md v-if="$store.state.api.loggedin">
+    <v-container grid-list-md>
       <fundamentcard :caption="view.name">
         <div slot="content">
           <v-layout justify-center column fill-height>
             <v-flex xs12>
               <v-layout justify-end row fill-height>
-                <v-btn fab dark small color="warning" @click="inventorydialog=true">
+                <v-btn fab dark small
+                       color="warning"
+                       @click="$refs.createdialog.newItem('inventory', { partOf: view })"
+                       v-if="$store.state.api.loggedin">
                   <v-icon dark>add</v-icon>
                 </v-btn>
               </v-layout>
@@ -17,50 +20,20 @@
           </v-layout>
         </div>
       </fundamentcard>
-      <v-layout column justify-space-between>
-        <v-dialog
-          v-model="inventorydialog"
-          @keydown.esc="inventorydialog=false"
-          fullscreen
-          hide-overlay
-          transition="dialog-bottom-transition"
-          >
-          <v-card>
-            <v-toolbar dark color="primary">
-              <v-btn icon dark @click.native="inventorydialog=false">
-                <v-icon>close</v-icon>
-              </v-btn>
-              <v-toolbar-title>Create Inventory</v-toolbar-title>
-              <v-spacer></v-spacer>
-              <v-toolbar-items>
-              </v-toolbar-items>
-              <v-btn color="warning" @click="addInventory()">Save</v-btn>
-            </v-toolbar>
-            <v-container grid-list-md text-xs-center>
-              <v-card color="grey lighten-2" class="pa-4">
-                <inventoryform v-if="$store.state.api.schemas.inventory" :value="newinventory" @input="newinventory=$event"></inventoryform>
-                <v-layout justify-end row fill-height>
-                  <v-btn color="warning" @click="addInventory()">Save</v-btn>
-                  <v-btn color="primary" flat @click.native="inventorydialog=false">Discard</v-btn>
-                </v-layout>
-              </v-card>
-            </v-container>
-          </v-card>
-        </v-dialog>
-      </v-layout>
-    </v-container>
-    <v-container grid-list-md v-if="!$store.state.api.loggedin">
-      Bitte loggen Sie sich ein um die Datenbank zu benutzen.
+      <editdialog title="Create Inventory" ref="createdialog" @close="$refs.inventorylist.getRecords()" v-if="$store.state.api.loggedin">
+        <template slot="form" slot-scope="props">
+          <component :is="componentLoader" :value="props.item" @input="props.item=$event"></component>
+        </template>
+      </editdialog>
     </v-container>
   </div>
 </template>
-
 <script>
 import { mapActions } from 'vuex';
 
 import fundamentcard from '../Fundament/FundamentCard';
 import list from '../genericList/list';
-import inventoryform from '../Forms/inventory_form';
+import editdialog from '../editDialog';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 /* eslint no-console: ["error", { allow: ["log"] }] */
@@ -69,7 +42,7 @@ export default {
   components: {
     fundamentcard,
     list,
-    inventoryform,
+    editdialog,
   },
   data() {
     return {
@@ -100,6 +73,9 @@ export default {
     },
   },
   computed: {
+    componentLoader() {
+      return () => import('../Forms/inventory_form');
+    },
   },
   created() {
     this.get({ type: 'Collect', id: this.$route.params.id }).then((res) => {

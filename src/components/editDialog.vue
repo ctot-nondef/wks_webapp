@@ -21,7 +21,7 @@
         </v-toolbar>
         <v-container grid-list-md text-xs-center>
           <v-card color="grey lighten-2" class="pa-4">
-            <slot name="form" :item="item"></slot>
+            <component :is="componentLoader" :value="item" @input="item=$event"></component>
             <v-layout justify-end row fill-height>
               <v-btn color="warning" @click="saveItem">Save</v-btn>
               <v-btn color="primary" flat @click.native="discard">Discard</v-btn>
@@ -35,13 +35,9 @@
 
 <script>
   /* eslint-disable no-underscore-dangle */
-
 import { mapActions, mapGetters } from 'vuex';
-import HELPERS from '../helpers';
-
 
 export default {
-    mixins: [HELPERS],
     props: {
       title: String,
       itemref: String,
@@ -58,6 +54,10 @@ export default {
       ...mapGetters('api', [
         'getPathsByName',
       ]),
+      componentLoader() {
+        if (this.type) return () => import(/* webpackMode: "eager" */ `./Forms/${this.type}_form`);
+        return null;
+      },
     },
     watch: {
       'item.name': {
@@ -86,21 +86,19 @@ export default {
         });
       },
       newItem(type, defaultvalues) {
-        this.item = {};
+        this.item = null;
+        this.item = defaultvalues;
         this.type = type;
-        Object.assign(this.item, defaultvalues);
         this.active = true;
       },
       saveItem() {
         if (this.item._id) {
           this.post({ type: this.type, id: this.item._id, body: this.item }).then(() => {
-            this.active = false;
-            this.$emit('close');
+            this.close();
           });
         } else {
           this.post({ type: this.type, body: this.item }).then(() => {
-            this.active = false;
-            this.$emit('close');
+            this.close();
           });
         }
       },
@@ -112,15 +110,16 @@ export default {
         });
       },
       discard() {
-        // clear form component
+        // TODO: confirmation dialog
+        this.close();
+      },
+      close() {
         this.item = {};
         this.nameEdited = false;
         this.active = false;
+        this.type = null;
         this.$emit('close');
       },
     },
 };
 </script>
-
-<style lang="css">
-</style>
