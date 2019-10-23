@@ -88,10 +88,9 @@
     watch: {
       '$route.params': {
         handler() { this.parseQuery(); },
+        immediate: true,
+        deep: true,
       },
-    },
-    mounted() {
-      this.parseQuery();
     },
   };
 </script>
