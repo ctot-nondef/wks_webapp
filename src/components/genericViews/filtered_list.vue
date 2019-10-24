@@ -30,10 +30,10 @@
 
 <script>
   /* eslint-disable no-param-reassign,no-underscore-dangle */
-  import fundamentcard from './Fundament/FundamentCard';
-  import list from './genericViews/table';
-  import filterlist from './genericViews/filter';
-  import editdialog from './editDialog';
+  import fundamentcard from '../Fundament/FundamentCard';
+  import list from './table';
+  import filterlist from './filter';
+  import editdialog from '../editDialog';
 
   /* eslint no-unused-vars: ["error", {"args": "none"}] */
   /* eslint no-console: ["error", { allow: ["log"] }] */

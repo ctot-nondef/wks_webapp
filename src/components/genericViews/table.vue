@@ -101,6 +101,7 @@ export default {
       },
       filter: {
         handler(f) {
+          console.log(f);
           if (f) {
             Object.keys(f).forEach((key) => {
               this.q[key] = f[key];

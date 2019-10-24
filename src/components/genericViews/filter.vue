@@ -34,7 +34,8 @@
           <!-- simple xref select -->
           <simpleautocompwrapper
             v-if="getFieldType({type: entitytype, name: path}) === 'collect'"
-            entity="Collect" :value="value"
+            entity="Collect"
+            :value="value"
             label="Part Of"
             clearable
             @click:clear="value['$regex'] = null"
@@ -84,8 +85,16 @@ export default {
             return v === undefined ? null : v;
           }),
         );
-        this._.set(nf, f.key, f.value);
-        this.$emit('update', { type: this.entitytype, filter: nf });
+        // eslint-disable-next-line max-len
+        this._.set(nf, f.key, f.value && f.value._id ? { _id: f.value._id, name: f.value.name } : f.value);
+        if ((!this.filter[f.key] || !f.value)) {
+          this.$emit('update', { type: this.entitytype, filter: nf });
+        } else if (this.filter[f.key]._id !== f.value._id) {
+          this.$emit('update', { type: this.entitytype, filter: nf });
+        } else if (typeof this.filter[f.key] === 'string') {
+          this.$emit('update', { type: this.entitytype, filter: nf });
+        }
+        return null;
       },
       clearFilter(f) {
         console.log(f);

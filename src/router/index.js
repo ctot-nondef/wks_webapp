@@ -8,7 +8,7 @@ import inventorysingle from '../components/SingleViews/inventory_single';
 import transactionsingle from '../components/SingleViews/transaction_single';
 // import zoterosingle from '../components/SingleViews/zotero_single';
 import users from '../components/users';
-import query from '../components/filtered_list';
+import query from '../components/genericViews/filtered_list';
 
 Vue.use(Router);
 
@@ -39,7 +39,7 @@ export default new Router({
           },
         },
         {
-          path: 'q/:entity/:query',
+          path: 'q/:entity/:query?',
           name: 'query',
           components: {
             Content: query,
@@ -60,7 +60,7 @@ export default new Router({
         {
           path: 'inventories',
           name: 'inventories',
-          redirect: { name: 'query', params: { entity: 'inventory', query: '{"name":{"$regex":null}}' } },
+          redirect: { name: 'query', params: { entity: 'inventory', query: '{"name":{"$regex":null}, "partOf":null}' } },
         },
         {
           path: 'inventories/:id',

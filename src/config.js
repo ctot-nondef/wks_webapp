@@ -45,7 +45,7 @@ export default {
         params: {
           lang: 'en',
           entity: 'inventory',
-          query: '{"name":{"$regex":null}}',
+          query: '{"name":{"$regex":null}, "partOf": null}',
         },
       },
       items: '',

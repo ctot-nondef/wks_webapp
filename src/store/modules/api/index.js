@@ -1,4 +1,4 @@
-/* eslint-disable no-shadow */
+/* eslint-disable no-shadow,no-underscore-dangle */
 import { get } from 'lodash';
 import * as api from './api';
 
@@ -42,6 +42,7 @@ function cleanFilter(f) {
       ['$eq', '$gt', '$gte', '$lt', '$lte', '$ne', '$regex'].forEach((op) => {
         if (f[key][op] && f[key][op] !== '' && f[key][op] !== null) cf[key] = f[key];
       });
+      if (f[key]._id) cf[key] = f[key];
     }
   });
   return JSON.stringify(cf);
