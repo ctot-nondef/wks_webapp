@@ -29,7 +29,7 @@ function PopulateablePathsFromSchemaObject(schema, path) {
 function computeFieldType(field, name) {
   if (name === 'instanceOf') return `class_${field['x-ref']}`;
   if (field.type === 'array') return computeFieldType(field.items);
-  if (field.type === 'string' && field['x-ref']) return field['x-ref'];
+  if (field.type === 'string' && field['x-ref']) return `xref_${field['x-ref']}`;
   if (field.type === 'string' && field.format) return field.format;
   return field.type;
 }

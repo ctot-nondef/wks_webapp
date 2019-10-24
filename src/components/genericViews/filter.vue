@@ -33,10 +33,10 @@
             @input="updateFilter({ key: `${path}`, value: $event })"/>
           <!-- simple xref select -->
           <simpleautocompwrapper
-            v-if="getFieldType({type: entitytype, name: path}) === 'collect'"
-            entity="Collect"
+            v-if="getFieldType({type: entitytype, name: path}).match(/xref_(.*)/)"
+            :entity="getFieldType({type: entitytype, name: path}).split('_')[1]"
             :value="value"
-            label="Part Of"
+            :label="path"
             clearable
             @click:clear="value['$regex'] = null"
             @update:prop="updateFilter({ key: `${path}`, value: $event })"/>
