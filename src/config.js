@@ -30,7 +30,7 @@ export default {
         params: {
           lang: 'en',
           entity: 'collect',
-          query: '{"name":{"$regex":null}}',
+          query: '{"name":{"$regex":null}, "partOf": null}',
         },
       },
       items: '',
@@ -60,7 +60,7 @@ export default {
         params: {
           lang: 'en',
           entity: 'object',
-          query: '{"name":{"$regex":null}}',
+          query: '{"name":{"$regex":null}, "currentOwner":null}',
         },
       },
       items: '',
