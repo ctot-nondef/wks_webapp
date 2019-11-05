@@ -48,7 +48,7 @@ export default new Router({
         {
           path: 'collections',
           name: 'collections',
-          redirect: { name: 'query', params: { entity: 'collect', query: '{"name":{"$regex":null}}' } },
+          redirect: { name: 'query', params: { lang: 'en', entity: 'collect', query: '{"name":{"$regex":null}}' } },
         },
         {
           path: 'collections/:id',
@@ -60,7 +60,7 @@ export default new Router({
         {
           path: 'inventories',
           name: 'inventories',
-          redirect: { name: 'query', params: { entity: 'inventory', query: '{"name":{"$regex":null}, "partOf":null}' } },
+          redirect: { name: 'query', params: { lang: 'en', entity: 'inventory', query: '{"name":{"$regex":null}, "partOf":null}' } },
         },
         {
           path: 'inventories/:id',
@@ -72,12 +72,12 @@ export default new Router({
         {
           path: 'entries',
           name: 'entries',
-          redirect: { name: 'query', params: { entity: 'entry', query: '{"name":{"$regex":null}}' } },
+          redirect: { name: 'query', params: { lang: 'en', entity: 'entry', query: '{"name":{"$regex":null}}' } },
         },
         {
           path: 'transactions',
           name: 'transactions',
-          redirect: { name: 'query', params: { entity: 'transaction', query: '{"name":{"$regex":null}}' } },
+          redirect: { name: 'query', params: { lang: 'en', entity: 'transaction', query: '{"name":{"$regex":null}}' } },
         },
         {
           path: 'transactions/:id',
@@ -89,7 +89,7 @@ export default new Router({
         {
           path: 'actors',
           name: 'actors',
-          redirect: { name: 'query', params: { entity: 'actors', query: '{ "name": { "$regex": null }, "instanceOf": null, "identifier": { "$regex": null } }' } },
+          redirect: { name: 'query', params: { lang: 'en', entity: 'actor', query: '{ "name": { "$regex": null }, "instanceOf": null, "identifier": { "$regex": null } }' } },
         },
         {
           path: 'users',
@@ -101,12 +101,12 @@ export default new Router({
         {
           path: 'objects',
           name: 'objects',
-          redirect: { name: 'query', params: { entity: 'actors', query: '{"name":{"$regex":null}}' } },
+          redirect: { name: 'query', params: { lang: 'en', entity: 'object', query: '{"name":{"$regex":null}, "currentOwner":null}' } },
         },
         {
           path: 'descriptors',
           name: 'descriptors',
-          redirect: { name: 'query', params: { entity: 'actors', query: '{ "name": { "$regex": null }, "instanceOf": null, "identifier": { "$regex": null } }' } },
+          redirect: { name: 'query', params: { lang: 'en', entity: 'descriptor', query: '{ "name": { "$regex": null }, "instanceOf": null, "identifier": { "$regex": null } }' } },
         },
         {
           path: '',

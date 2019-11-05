@@ -1,6 +1,6 @@
 export default {
   logo: '/static/fundament_logo.svg',
-  title: 'MetaDataEditor',
+  title: 'VCHC Project DB',
   color: 'primary',
   homestate: {
     name: 'start',
@@ -26,12 +26,7 @@ export default {
       icon: 'collections',
       abstract: '',
       startpage: {
-        name: 'query',
-        params: {
-          lang: 'en',
-          entity: 'collect',
-          query: '{"name":{"$regex":null}}',
-        },
+        name: 'collections',
       },
       items: '',
     },
@@ -41,12 +36,7 @@ export default {
       icon: 'assignment',
       abstract: '',
       startpage: {
-        name: 'query',
-        params: {
-          lang: 'en',
-          entity: 'inventory',
-          query: '{"name":{"$regex":null}, "partOf": null}',
-        },
+        name: 'inventories',
       },
       items: '',
     },
@@ -56,12 +46,7 @@ export default {
       icon: 'category',
       abstract: '',
       startpage: {
-        name: 'query',
-        params: {
-          lang: 'en',
-          entity: 'object',
-          query: '{"name":{"$regex":null}, "currentOwner":null}',
-        },
+        name: 'objects',
       },
       items: '',
     },
@@ -71,12 +56,7 @@ export default {
       icon: 'person',
       abstract: '',
       startpage: {
-        name: 'query',
-        params: {
-          lang: 'en',
-          entity: 'actor',
-          query: '{ "name": { "$regex": null }, "instanceOf": null, "identifier": { "$regex": null } }',
-        },
+        name: 'actors',
       },
       items: '',
     },
@@ -86,12 +66,7 @@ export default {
       icon: 'device_hub',
       abstract: '',
       startpage: {
-        name: 'query',
-        params: {
-          lang: 'en',
-          entity: 'descriptor',
-          query: '{ "name": { "$regex": null }, "instanceOf": null, "identifier": { "$regex": null } }',
-        },
+        name: 'descriptors',
       },
       items: '',
     },
