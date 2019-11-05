@@ -30,7 +30,7 @@ export default {
         params: {
           lang: 'en',
           entity: 'collect',
-          query: '{"name":{"$regex":null}, "partOf": null}',
+          query: '{"name":{"$regex":null}}',
         },
       },
       items: '',
