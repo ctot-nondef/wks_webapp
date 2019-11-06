@@ -62,6 +62,7 @@
         tabs: 'select',
         newtransaction: null,
         listheaders: [
+          { text: 'ref', value: '_id', path: '_id' },
           { text: 'Date', value: 'date', path: 'date' },
           { text: 'Actor', value: 'actor', path: 'actor[0].id.name' },
           { text: 'Actions' },
