@@ -364,6 +364,7 @@ export default {
       this.returnObject();
     },
     initVals() {
+      if (this.value) this.entry = Object.assign(this.value, this.entry);
       if (!this.entry.creator) {
         this.$set(this.entry, 'creator', []);
       }

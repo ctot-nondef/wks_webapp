@@ -214,9 +214,12 @@ export default {
     chips,
     simpleautocompwrapper,
   },
-  props: [
-    'value',
-  ],
+  props: {
+    value: {
+      type: Object,
+      default: null,
+    },
+  },
   data() {
     return {
       inventory: {},
@@ -243,10 +246,13 @@ export default {
     };
   },
   watch: {
-    value(val) {
-      this.inventory = val;
-      this.selectedcollection = val.partOf || {};
-      this.initVals();
+    value: {
+      deep: true,
+      handler(val) {
+        this.inventory = val;
+        this.selectedcollection = val.partOf || {};
+        this.initVals();
+      },
     },
   },
   methods: {
@@ -297,6 +303,7 @@ export default {
       this.returnObject();
     },
     initVals() {
+      if (this.value) this.inventory = Object.assign(this.value, this.inventory);
       if (!this.inventory.classification) {
         this.$set(this.inventory, 'classification', []);
       }

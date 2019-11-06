@@ -308,6 +308,7 @@ export default {
       this.returnObject();
     },
     initVals() {
+      if (this.value) this.object = Object.assign(this.value, this.object);
       if (!this.object.creator) {
         this.$set(this.object, 'creator', []);
       }

@@ -112,6 +112,7 @@ export default {
       this.$emit('input', this.actor);
     },
     initVals() {
+      if (this.value) this.actor = Object.assign(this.value, this.actor);
       if (!this.actor.relations) {
         this.$set(this.actor, 'relations', []);
       }

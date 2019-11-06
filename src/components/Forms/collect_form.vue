@@ -279,6 +279,7 @@ export default {
       this.zoterodialog = false;
     },
     initVals() {
+      if (this.value) this.collection = Object.assign(this.value, this.collection);
       if (!this.collection.classification) {
         this.$set(this.collection, 'classification', []);
       }

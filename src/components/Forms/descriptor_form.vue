@@ -96,6 +96,7 @@ export default {
       this.$emit('input', this.descriptor);
     },
     initVals() {
+      if (this.value) this.descriptor = Object.assign(this.value, this.descriptor);
       if (!this.descriptor.relations) {
         this.$set(this.descriptor, 'relations', []);
       }
