@@ -27,7 +27,7 @@
       <v-tabs-items v-model="tabs" class="white elevation-1">
         <v-tab-item key="1" value="select">
           <v-card>
-            <list ref="transactionlist" EntityType="transaction" :headers="listheaders" ></list>
+            <list ref="transactionlist" entitytype="transaction" :headers="listheaders" @select="selectTransactionRef($event)" ></list>
           </v-card>
         </v-tab-item>
         <v-tab-item key="2" value="create">
@@ -78,6 +78,7 @@
         'delete',
       ]),
       selectTransactionRef(e) {
+        console.log(e);
         this.$emit('selectTransactionRef', e);
       },
       createAndSelect() {

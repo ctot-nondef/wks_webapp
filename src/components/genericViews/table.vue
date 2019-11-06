@@ -13,7 +13,10 @@
       <template slot="items" slot-scope="props" >
           <td v-for="column in currentHeaders" v-if="column.path">{{ _.get(props.item, column.path) }}</td>
           <td v-if="$store.state.api.loggedin">
-            <v-btn fab dark small :to="{ name: `${entitytype}single`, params: { id:  props.item._id  }}" color="primary">
+            <v-btn v-if="entitytype !== 'transaction'" fab dark small :to="{ name: `${entitytype}single`, params: { id:  props.item._id  }}" color="primary">
+              <v-icon dark>collections_bookmark</v-icon>
+            </v-btn>
+            <v-btn v-if="entitytype === 'transaction'" fab dark small color="primary" @click="$emit('select', props.item)">
               <v-icon dark>collections_bookmark</v-icon>
             </v-btn>
             <v-btn fab dark small color="warning" @click="$refs.editdialog.getItem(entitytype, props.item._id)">
