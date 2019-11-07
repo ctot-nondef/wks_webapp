@@ -28,7 +28,7 @@
           :itemprops="$store.state.api.schemas.entry.properties.creator.items.properties"
           label="Creator"
           nodatamessage="No creators added"
-        >
+          :simpleformavail="true">
           <template slot="form" slot-scope="props">
             <v-flex xs6>
               <autocomp entity="Actor" v-model="props.newitem.id" label="Creator" :multiple="false"></autocomp>
@@ -38,6 +38,15 @@
             </v-flex>
             <v-flex xs12>
               <v-textarea  box height="70" v-model="props.newitem.note" label="Note" />
+            </v-flex>
+          </template>
+          <template slot="simpleform" slot-scope="simpleprops">
+            <v-flex xs6>
+              <autocomp
+                entity="Actor"
+                label="Künstler"
+                :multiple="false"
+                @input="simpleprops.newitems[0] = {id: $event, role: {name: 'Künstler', _id: '5c90a0119ca403074db617e5'}, note: 'entered via quickform'}" />
             </v-flex>
           </template>
         </formlistcomponent>
