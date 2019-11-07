@@ -182,6 +182,7 @@ export default {
           this.$set(child.$children[0], 'cachedItems', []);
         }
       });
+      this.simpleform = this.simpleformavail;
     },
   },
   computed: {
