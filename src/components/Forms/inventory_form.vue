@@ -47,7 +47,7 @@
                 entity="Actor"
                 label="Sammler"
                 :multiple="false"
-                @input="simpleprops.newitems[0] = {descriptor: $event, aspect: {name: 'Sammler', _id: '5cd2922a1cbd4a00139b6e14'}, note: 'entered via quickform'}"
+                @input="simpleprops.newitems[0] = {id: $event, role: {name: 'Sammler', _id: '5cd2922a1cbd4a00139b6e14'}, note: 'entered via quickform'}"
               ></autocomp>
             </v-flex>
             <v-flex xs6>
@@ -55,7 +55,7 @@
                 entity="Actor"
                 label="Aktueller Eigentümer"
                 :multiple="false"
-                @input="simpleprops.newitems[1] = {descriptor: $event, aspect: {name: 'Aktueller Eigentümer', _id: '5d1201568997750013ca6740'}, note: 'entered via quickform'}"
+                @input="simpleprops.newitems[1] = {id: $event, role: {name: 'Aktueller Eigentümer', _id: '5d1201568997750013ca6740'}, note: 'entered via quickform'}"
               ></autocomp>
             </v-flex>
             <v-flex xs6>
@@ -63,7 +63,7 @@
                 entity="Actor"
                 label="Verfasser"
                 :multiple="false"
-                @input="simpleprops.newitems[2] = {descriptor: $event, aspect: {name: 'Verfasser', _id: '5c90a0119ca403074db617f5'}, note: 'entered via quickform'}"
+                @input="simpleprops.newitems[2] = {id: $event, role: {name: 'Verfasser', _id: '5c90a0119ca403074db617f5'}, note: 'entered via quickform'}"
               ></autocomp>
             </v-flex>
             <v-flex xs6>
@@ -71,7 +71,7 @@
                 entity="Actor"
                 label="Verleger"
                 :multiple="false"
-                @input="simpleprops.newitems[3] = {descriptor: $event, aspect: {name: 'Verleger', _id: '5c90a0119ca403074db617f0'}, note: 'entered via quickform'}"
+                @input="simpleprops.newitems[3] = {id: $event, role: {name: 'Verleger', _id: '5c90a0119ca403074db617f0'}, note: 'entered via quickform'}"
               ></autocomp>
             </v-flex>
           </template>

@@ -52,6 +52,7 @@ export default {
       listheaders: [
         { text: 'Name', value: 'name', path: 'name' },
         { text: 'Original Title', value: 'originalTitle', path: 'originalTitle' },
+        { text: 'Artist', value: 'creator.id', path: 'creator[0].id.name' },
         { text: 'Actions' },
       ],
       entrydialog: false,

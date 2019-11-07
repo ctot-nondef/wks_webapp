@@ -133,6 +133,11 @@ export default {
           limit: this.pagination.rowsPerPage,
           skip: (this.pagination.page - 1) * this.pagination.rowsPerPage,
           query: this.q,
+          populate: JSON.stringify(
+            this.currentHeaders.filter(
+              (h) => this.getPathsByName(this.entitytype).indexOf(h.value) !== -1 ? h : null,
+            ).map((p) => ({ path: p.value })),
+          ),
         }).then((res) => {
           this.loading = false;
           this.data = res.data;
@@ -165,6 +170,7 @@ export default {
       ...mapGetters('api', [
         'getListHeadersByName',
         'getFiltersByName',
+        'getPathsByName',
       ]),
       currentHeaders() {
         if (this.headers) return this.headers;
