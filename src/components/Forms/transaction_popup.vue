@@ -79,7 +79,6 @@
         'delete',
       ]),
       selectTransactionRef(e) {
-        console.log(e);
         this.$emit('selectTransactionRef', e);
       },
       createAndSelect() {

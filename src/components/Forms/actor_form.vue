@@ -1,6 +1,11 @@
 <template>
   <div class="">
     <v-layout justify-end row fill-height>
+      <v-flex xs12>
+        <gndimporter @importentity="importentity($event)" :itypes="['Person','CorporateBody']" targettype="actor"></gndimporter>
+      </v-flex>
+    </v-layout>
+    <v-layout justify-end row fill-height>
       <!-- actor identifiers -->
       <v-flex xs12>
         <v-combobox
@@ -72,6 +77,7 @@ import autocomp from '../AutoCompleteComponents/Autocomp';
 import formlistcomponent from '../FormComponents/FormListComponent';
 import chips from '../FormComponents/Chips';
 import datecomponent from '../FormComponents/DateComponent';
+import gndimporter from '../FormComponents/GNDImporter';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 export default {
@@ -80,6 +86,7 @@ export default {
     formlistcomponent,
     datecomponent,
     chips,
+    gndimporter,
   },
   props: [
     'value',
@@ -116,6 +123,14 @@ export default {
       if (!this.actor.relations) {
         this.$set(this.actor, 'relations', []);
       }
+    },
+    importentity(e) {
+      // TODO: some keys probably shouldn't be completely overwritten
+      // ie all arrays should be pushed? typing validation here or in mapping?
+      Object.keys(e).forEach((key) => {
+        this.$set(this.actor, key, e[key]);
+      });
+      this.returnObject();
     },
   },
   mounted() {

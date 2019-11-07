@@ -39,8 +39,7 @@
 
 <script>
   /* eslint-disable no-underscore-dangle */
-
-  import { mapActions } from 'vuex';
+import { mapActions } from 'vuex';
 import HELPERS from '../../helpers';
 
 export default {
@@ -65,7 +64,7 @@ export default {
       },
       value(val) {
         this.select = val;
-        this.items = val;
+        this.items = [val];
       },
     },
     methods: {

@@ -1,10 +1,5 @@
 import axios from 'axios';
-// import exampleAPI from '../../static/example_api.json';
-// import exampleAPI from '../../static/newsletter.json';
 
-/* eslint no-console: ["error", { allow: ["log"] }] */
-/* eslint-disable spaced-comment */
-// this could go to an external file, to be excluded from commits etc
 const CONFIG = {
   VIAF: {
     BASEURL: 'https://www.viaf.org/viaf/',
@@ -44,36 +39,9 @@ const CONFIG = {
   },
 };
 
-//TODO: this should probably be a pair of arrays, to accomodate complex paths
-const IMPORT = {
-  GND: {
-    Person: {
-      preferredName: 'name',
-      dateOfBirth: 'beginOfExistence',
-      dateOfDeath: 'endOfExistence',
-      'biographicalOrHistoricalInformation[0]': 'description',
-    },
-    CorporateBody: {
-      preferredName: 'name',
-      dateOfEstablishment: 'beginOfExistence',
-      dateOfTermination: 'endOfExistence',
-    },
-    PlaceOrGeographicName: {
-      preferredName: 'name',
-      'biographicalOrHistoricalInformation[0]': 'description',
-      definition: 'description',
-    },
-    SubjectHeading: {
-      preferredName: 'name',
-      'definition[0]': 'description',
-    },
-  },
-};
-
 let APIS = {};
 
 function buildFetchers(extconf) {
-  // this.$info('Helpers', 'buildFetchers(extconf)', extconf);
   const fetchers = {};
   // let ep = [];
   if (extconf) Object.assign(CONFIG, extconf);
@@ -103,7 +71,6 @@ export default {
   data() {
     return {
       APIS,
-      IMPORT,
     };
   },
   methods: {
@@ -167,25 +134,6 @@ export default {
     clearCache() {
       this.deleteOldSessions();
       this.$router.go(this.$router.currentRoute);
-    },
-    /*
-    maps imported Object according to mapping in this.IMPORT
-    returns mapped object for DB
-    */
-    mapGNDImport(type, obj) {
-      const map = Object.keys(this.IMPORT.GND[type]);
-      let idx = map.length - 1;
-      const res = {};
-      while (idx + 1) {
-        res[this.IMPORT.GND[type][map[idx]]] = this._.get(obj, map[idx]);
-        idx -= 1;
-      }
-      res.identifier = [`GND:${obj.gndIdentifier}`];
-      res.labels = [{
-        lang: 'de',
-        label: obj.preferredName,
-      }];
-      return res;
     },
   },
   created() {
