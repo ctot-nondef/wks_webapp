@@ -135,8 +135,9 @@ export default {
           query: this.q,
           populate: JSON.stringify(
             this.currentHeaders.filter(
-              (h) => this.getPathsByName(this.entitytype).indexOf(h.value) !== -1 ? h : null,
-            ).map((p) => ({ path: p.value })),
+              // eslint-disable-next-line no-confusing-arrow
+              h => this.getPathsByName(this.entitytype).indexOf(h.value) !== -1 ? h : null,
+            ).map(p => ({ path: p.value })),
           ),
         }).then((res) => {
           this.loading = false;
