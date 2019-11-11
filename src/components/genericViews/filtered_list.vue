@@ -88,6 +88,9 @@
         deep: true,
       },
     },
+    mounted() {
+      this.parseQuery();
+    },
   };
 </script>
 
