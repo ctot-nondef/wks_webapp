@@ -2,30 +2,6 @@
 import { get } from 'lodash';
 import * as api from './api';
 
-
-function PopulateablePathsFromSchemaObject(schema, path) {
-  let p = [];
-  let t = '';
-  if (path.length > 0) t = get(schema, path).type;
-  else t = schema.type;
-  if (t === 'object') {
-    Object.keys(get(schema, path.concat(['properties']))).forEach((cp) => {
-      p = p.concat(PopulateablePathsFromSchemaObject(schema, path.concat(['properties', cp])));
-    });
-  } else if (t === 'array') {
-    if (get(schema, path.concat(['items'])).type === 'string' && get(schema, path.concat(['items']))['x-ref']) {
-      p.push(path.filter(a => (a !== 'properties' && a !== 'items')).join('.'));
-    } else if (get(schema, path.concat(['items'])).type === 'object') {
-      Object.keys(get(schema, path.concat(['items', 'properties']))).forEach((cp) => {
-        p = p.concat(PopulateablePathsFromSchemaObject(schema, path.concat(['items', 'properties', cp])));
-      });
-    }
-  } else if (t === 'string' && get(schema, path)['x-ref']) {
-    p.push(path.filter(a => (a !== 'properties' && a !== 'items')).join('.'));
-  }
-  return p;
-}
-
 function computeFieldType(field, name) {
   if (name === 'instanceOf') return `class_${field['x-ref']}`;
   if (field.type === 'array') return computeFieldType(field.items);
@@ -58,6 +34,7 @@ const state = {
   loadmsg: '',
   schemas: {},
   ppaths: {},
+  rpaths: {},
   classes: {},
   page: 1,
   size: 50,
@@ -87,6 +64,7 @@ const getters = {
   types: s => Object.keys(s.schemas),
   getClassByName: s => ({ type, name }) => s.classes[type].find(item => item.name === name),
   getPathsByName: s => name => s.ppaths[name],
+  getReversePathsByName: s => name => s.rpaths[name],
   getListHeadersByName: s => name => s.listheaders[name],
   getFiltersByName: s => name => s.listheaders[name],
   getFieldType: s => ({ type, name }) => computeFieldType(s.schemas[type].properties[name], name),
@@ -144,6 +122,11 @@ const mutations = {
       s.ppaths[type] = paths;
     }
   },
+  setReversePopulateablePaths(s, { type, paths }) {
+    if (type && paths) {
+      s.rpaths[type] = paths;
+    }
+  },
   setListHeaders(s, { type, headers }) {
     if (type && headers) {
       s.listheaders[type] = headers;
@@ -178,18 +161,21 @@ const actions = {
           const sa = res.data.data;
           for (let i = 0; i < sa.length; i += 1) {
             commit('setSchema', sa[i]);
-            commit('setPopulateablePaths', { type: sa[i].type, paths: PopulateablePathsFromSchemaObject(sa[i].attributes, []) });
+            commit('setPopulateablePaths', { type: sa[i].type, paths: sa[i].populateablePaths.map(p => p.path) });
+            commit('setReversePopulateablePaths', { type: sa[i].type, paths: sa[i].reversePaths });
             if (config.config.defaultlistheaders[sa[i].type]) commit('setListHeaders', { type: sa[i].type, headers: config.config.defaultlistheaders[sa[i].type] });
             if (config.config.defaultfilters[sa[i].type]) commit('setFilters', { type: sa[i].type, filters: config.config.defaultfilters[sa[i].type] });
           }
         }
       }),
+      // TODO: this should probably go to a separate store once the thesaurus is SKOS compatible
       state.apilib.getDescriptor({
         $config,
         query: JSON.stringify({ description: 'Class of Actor' }),
       }).then((res) => {
         commit('setClasses', { type: 'Actor', classlist: res.data });
       }),
+      // TODO: this should probably go to a separate store once the thesaurus is SKOS compatible
       state.apilib.getDescriptor({
         $config,
         query: JSON.stringify({ description: 'Class of Descriptor' }),
