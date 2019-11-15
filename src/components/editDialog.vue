@@ -53,6 +53,7 @@ export default {
     computed: {
       ...mapGetters('api', [
         'getPathsByName',
+        'getReversePathsByName',
       ]),
       componentLoader() {
         if (this.type) return () => import(/* webpackMode: "eager" */ `./Forms/${this.type}_form`);
@@ -79,7 +80,10 @@ export default {
         this.get({
           type,
           query: { _id },
-          populate: JSON.stringify(this.getPathsByName(type).map(path => ({ path }))),
+          populate: JSON.stringify(
+            this.getPathsByName(type).map(path => ({ path }))
+            .concat(this.getReversePathsByName(type).map(path => ({ path }))),
+          ),
         }).then((res) => {
           this.item = res.data[0];
           this.active = true;

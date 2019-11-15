@@ -1,5 +1,4 @@
 /* eslint-disable no-shadow,no-underscore-dangle */
-import { get } from 'lodash';
 import * as api from './api';
 
 function computeFieldType(field, name) {
@@ -22,6 +21,14 @@ function cleanFilter(f) {
     }
   });
   return JSON.stringify(cf);
+}
+
+function deleteProps(obj, props) {
+  const r = Object.assign({}, obj);
+  props.forEach((p) => {
+    if (r[p]) delete r[p];
+  });
+  return r;
 }
 
 const state = {
@@ -213,12 +220,12 @@ const actions = {
       });
     });
   },
-  post({ state, commit }, { type, id, body }) {
+  post({ state, commit, getters }, { type, id, body }) {
     let p = {};
     const params = {
       $config,
     };
-    params[type] = body;
+    params[type] = deleteProps(body, getters.getReversePathsByName(type));
     params.id = id;
     const t = type.charAt(0).toUpperCase() + type.slice(1);
     return new Promise((resolve, reject) => {
