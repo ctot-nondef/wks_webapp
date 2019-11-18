@@ -159,29 +159,50 @@
         <input type="file" style="display: none" ref="image" accept="image/jpeg" @change="onFilePicked">
       </v-flex>
     </v-layout>
-    <!-- entry transaction -->
-    <v-layout justify-end row fill-height>
+    <!-- entry Acquisition -->
+    <v-layout justify-start row fill-height>
       <v-flex xs12>
-        <formlistcomponent
-          :items="entry.transaction"
-          :itemprops="$store.state.api.schemas.entry.properties.transaction.items.properties"
-          label="Transactions"
-          nodatamessage="No transactions linked to this entry"
-        >
-          <template slot="form" slot-scope="props">
-            <v-layout justify-end row fill-height wrap>
-              <v-flex xs6 v-if="!props.newitem.ref || !props.newitem.ref._id">
-                <v-btn color="warning" @click='transactiondialog=true'>Add or link Transaction</v-btn>
-              </v-flex>
-              <v-flex v-if="props.newitem.ref && props.newitem.ref._id" xs6 >
-                <v-btn color="warning" :to="{ name: 'transactionsingle', params: { id:  props.newitem.ref._id, edit: true  }}">Edit linked Transaction</v-btn>
-              </v-flex>
-              <v-flex xs6>
-                <autocomp entity="Descriptor" v-model="props.newitem.type" label="Type" :multiple="false"></autocomp>
-              </v-flex>
-            </v-layout>
-          </template>
-        </formlistcomponent>
+        <div class="formlist pa-3">
+          <v-layout justify-space-between align-center row>
+            <v-flex xs1>
+              <v-label>Acquisition</v-label>
+            </v-flex>
+          </v-layout>
+          <v-layout justify-start row fill-height wrap>
+            <v-flex xs6>
+              <autocomp entity="Descriptor" v-model="entry.acquisition_type" label="Type" :multiple="false"></autocomp>
+            </v-flex>
+            <v-flex xs6>
+              <v-btn color="warning" @click="$refs.transactionpopup.openPopup('acquisition')">Add or link Transaction</v-btn>
+            </v-flex>
+            <v-flex xs12>
+              <transactiondetails v-if="entry.acquisition_ref" :id="entry.acquisition_ref"></transactiondetails>
+            </v-flex>
+          </v-layout>
+        </div>
+      </v-flex>
+    </v-layout>
+    <!-- entry Destitution -->
+    <v-layout justify-start row fill-height>
+      <v-flex xs12>
+        <div class="formlist pa-3">
+          <v-layout justify-space-between align-center row>
+            <v-flex xs1>
+              <v-label>Destitution</v-label>
+            </v-flex>
+          </v-layout>
+          <v-layout justify-start row fill-height wrap>
+            <v-flex xs6>
+              <autocomp entity="Descriptor" v-model="entry.destitution_type" label="Type" :multiple="false"></autocomp>
+            </v-flex>
+            <v-flex xs6>
+              <v-btn color="warning" @click="$refs.transactionpopup.openPopup('destitution')">Add or link Transaction</v-btn>
+            </v-flex>
+            <v-flex xs12>
+              <transactiondetails v-if="entry.destitution_ref" :id="entry.destitution_ref"></transactiondetails>
+            </v-flex>
+          </v-layout>
+        </div>
       </v-flex>
     </v-layout>
      <!-- entry classifications -->
@@ -254,20 +275,7 @@
       </v-flex>
     </v-layout>
     <!-- transaction selection popup -->
-    <v-layout column justify-space-between>
-      <v-dialog
-        v-model="transactiondialog"
-        @keydown.esc="transactiondialog=false"
-        fullscreen
-        hide-overlay
-        transition="dialog-bottom-transition"
-        lazy
-      >
-        <v-card>
-          <transactionpopup @selectTransactionRef="pickTransactionRef($event)" @closeTransactionPopup="transactiondialog=false"></transactionpopup>
-        </v-card>
-      </v-dialog>
-    </v-layout>
+    <transactionpopup @selectTransactionRef="pickTransactionRef($event)" ref="transactionpopup"></transactionpopup>
   </div>
 </template>
 <script>
@@ -277,6 +285,7 @@ import simpleautocompwrapper from '../FormComponents/SimpleAutoCompleteWrapper';
 import formlistcomponent from '../FormComponents/FormListComponent';
 import chips from '../FormComponents/Chips';
 import datecomponent from '../FormComponents/DateComponent';
+import transactiondetails from '../DetailViews/transaction_details';
 import transactionpopup from '../Forms/transaction_popup';
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 export default {
@@ -287,6 +296,7 @@ export default {
     datecomponent,
     chips,
     transactionpopup,
+    transactiondetails,
   },
   props: [
     'value',
@@ -302,7 +312,6 @@ export default {
       imageName: '',
       imageUrl: '',
       imageFile: '',
-      transactiondialog: false,
       autcompdisplayprops: {
         dimensions: [
           { path: 'dimensions.amount', populate: false },
@@ -391,11 +400,8 @@ export default {
       }
     },
     pickTransactionRef(e) {
-      this.entry.transaction.push({ ref: e });
-      this.transactiondialog = false;
-    },
-    editTransaction(a) {
-
+      this.$set(this.entry, `${e.target}_ref`, e.ref);
+      this.returnObject();
     },
   },
   mounted() {
