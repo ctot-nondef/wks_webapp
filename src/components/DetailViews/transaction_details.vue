@@ -49,6 +49,8 @@
     </v-layout>
 </template>
 <script>
+  /* eslint-disable no-underscore-dangle */
+
   import { mapActions, mapGetters } from 'vuex';
 
   export default {
@@ -85,7 +87,7 @@
       ]),
     },
     watch: {
-      'id': {
+      id: {
         immediate: true,
         handler(a) {
           let _id = null;

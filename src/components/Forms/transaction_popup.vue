@@ -92,7 +92,7 @@
         'delete',
       ]),
       openPopup(type) {
-        if(type) this.type = type;
+        if (type) this.type = type;
         this.transactiondialog = true;
       },
       selectTransactionRef(e) {
