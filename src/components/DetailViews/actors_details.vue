@@ -1,15 +1,7 @@
 <template>
     <v-layout row wrap>
-      <v-flex xs3>{{ item.date.split('T')[0] }}</v-flex>
-      <v-flex xs2>
-        <span v-for="a in item.entry_acquisition_ref" class="body-2">{{ a.name }}</span>
-        <span v-if="item.entry_acquisition_ref.length === 0" class="body-2">source undefined</span>
-      </v-flex>
-      <v-flex xs1><v-icon>arrow_right_alt</v-icon></v-flex>
-      <v-flex xs2>
-        <span v-for="a in item.entry_destitution_ref" class="body-2">{{ a.name }}</span>
-        <span v-if="item.entry_destitution_ref.length === 0" class="body-2">destination undefined</span>
-      </v-flex>
+      <v-flex xs6>{{ item.date.split('T')[0] }}</v-flex>
+      <v-flex xs6>{{ `${item.entry_acquisition_ref[0].name || 'source undefined'} => ${item.entry_destitution_ref[0].name || 'destination undefined'}` }}</v-flex>
       <v-flex xs6>
           <v-list two-line subheader>
             <v-subheader inset>Actors</v-subheader>
