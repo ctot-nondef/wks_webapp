@@ -1,6 +1,6 @@
 <template>
     <v-layout row wrap>
-      <v-flex xs3>{{ item.date.split('T')[0] }}</v-flex>
+      <v-flex xs3>{{ item.date | formatDate }}</v-flex>
       <v-flex xs2>
         <span v-for="a in item.entry_acquisition_ref" class="body-2">{{ a.name }}</span>
         <span v-if="item.entry_acquisition_ref.length === 0" class="body-2">source undefined</span>
@@ -11,22 +11,25 @@
         <span v-if="item.entry_destitution_ref.length === 0" class="body-2">destination undefined</span>
       </v-flex>
       <v-flex xs6>
-          <v-list two-line subheader>
-            <v-subheader inset>Actors</v-subheader>
-            <v-list-tile
-              v-for="a in item.actor"
-              avatar
-              @click=""
-            >
-              <v-list-tile-avatar>
-                <v-icon>person</v-icon>
-              </v-list-tile-avatar>
+        <v-card>
+          <v-list>
+            <v-list-tile>
               <v-list-tile-content>
-                <v-list-tile-title>{{ a.id.name }}</v-list-tile-title>
-                <v-list-tile-sub-title>{{ a.role.name }}</v-list-tile-sub-title>
+                <v-icon>person</v-icon>
+              </v-list-tile-content>
+              <v-list-tile-content>
+                <h4>Actors</h4>
               </v-list-tile-content>
             </v-list-tile>
           </v-list>
+          <v-divider></v-divider>
+          <v-list v-if="actorsexpanded" dense>
+            <v-list-tile v-for="a in item.actor">
+              <v-list-tile-content>{{ a.role.name }} :</v-list-tile-content>
+              <v-list-tile-content class="align-end">{{ a.id.name }}</v-list-tile-content>
+            </v-list-tile>
+          </v-list>
+        </v-card>
       </v-flex>
       <v-flex xs6>
           <v-list two-line subheader>
@@ -35,6 +38,7 @@
                 v-for="p in item.price"
                 avatar
                 @click=""
+                ripple
               >
                 <v-list-tile-avatar>
                   <v-icon>attach_money</v-icon>
@@ -52,14 +56,17 @@
   /* eslint-disable no-underscore-dangle */
 
   import { mapActions, mapGetters } from 'vuex';
+  import filters from '../../helpers/filters';
 
   export default {
     props: [
       'id',
     ],
+    mixins: [filters],
     data() {
       return {
         item: {},
+        actorsexpanded: true,
       };
     },
     methods: {

@@ -8,6 +8,7 @@
             <v-list-tile
               v-for="a in item.actor"
               avatar
+              ripple
               @click=""
             >
               <v-list-tile-avatar>
