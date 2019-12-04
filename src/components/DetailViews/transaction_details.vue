@@ -1,4 +1,10 @@
 <template>
+  <div>
+    <v-layout>
+      <v-flex xs12>
+        <v-btn icon ripple><v-icon>{{ intexpanded ? "expand_less" : "expand_more"  }}</v-icon></v-btn>
+      </v-flex>
+    </v-layout>
     <v-layout row wrap>
       <v-flex xs4>
         <singleview
@@ -58,6 +64,7 @@
         />
       </v-flex>
     </v-layout>
+  </div>
 </template>
 <script>
   /* eslint-disable no-underscore-dangle */
