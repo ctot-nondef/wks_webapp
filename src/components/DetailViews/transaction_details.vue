@@ -11,25 +11,29 @@
         <span v-if="item.entry_destitution_ref.length === 0" class="body-2">destination undefined</span>
       </v-flex>
       <v-flex xs6>
-        <v-card>
-          <v-list>
+          <v-list dense>
             <v-list-tile>
+              <v-list-tile-avatar>
+                    <v-icon>person</v-icon>
+              </v-list-tile-avatar>
               <v-list-tile-content>
-                <v-icon>person</v-icon>
+                <span class="title font-weight-thin">Actors</span>
               </v-list-tile-content>
-              <v-list-tile-content>
-                <h4>Actors</h4>
-              </v-list-tile-content>
+              <v-list-tile-action>
+                <v-icon>expand_less</v-icon>
+              </v-list-tile-action>
             </v-list-tile>
           </v-list>
           <v-divider></v-divider>
-          <v-list v-if="actorsexpanded" dense>
+          <v-list v-if="actorsexpanded">
             <v-list-tile v-for="a in item.actor">
-              <v-list-tile-content>{{ a.role.name }} :</v-list-tile-content>
+              <v-list-tile-content>
+                <v-list-tile-title>{{ a.role.name }} :</v-list-tile-title>
+                <v-list-tile-sub-title>{{ a.note }}</v-list-tile-sub-title>
+              </v-list-tile-content>
               <v-list-tile-content class="align-end">{{ a.id.name }}</v-list-tile-content>
             </v-list-tile>
           </v-list>
-        </v-card>
       </v-flex>
       <v-flex xs6>
           <v-list two-line subheader>
