@@ -23,7 +23,6 @@
         <template v-if="multiple">
           <v-chip :input-value="data.selected" close class="chip--select-multi" @click:close="remove(data.item)" color="white">
             {{ data.item.name }}
-            {{ data.item.name }}
           </v-chip>
         </template>
         <template v-else>
