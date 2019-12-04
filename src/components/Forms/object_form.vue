@@ -7,7 +7,7 @@
     <!-- object name -->
     <v-layout justify-start row fill-height>
       <v-flex xs10>
-        <v-text-field v-model="object.name" box label="Name" class="nameinput" @input="returnObject"></v-text-field>
+        <v-text-field v-model="object.name" filled label="Name" class="nameinput" @input="returnObject"></v-text-field>
       </v-flex>
     </v-layout>
     <v-layout justify-start row fill-height>
@@ -19,7 +19,7 @@
     <v-layout justify-start row fill-height>
       <v-flex xs12>
         <!-- object creators -->
-        <formlistcomponent :items="object.creator" :itemprops="$store.state.api.schemas.object.properties.creator.items.properties" :listitemstyletypes="creatoritemstyletypes" label="Creator" nodatamessage="No creators added">
+        <formlistcomponent :items.sync="object.creator" :itemprops="$store.state.api.schemas.object.properties.creator.items.properties" :listitemstyletypes="creatoritemstyletypes" label="Creator" nodatamessage="No creators added">
           <template slot="form" slot-scope="props">
           <v-flex xs5>
               <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"></autocomp>
@@ -68,7 +68,7 @@
     <v-layout justify-start row fill-height>
       <v-flex xs12>
         <formlistcomponent
-          :items="object.dimensions"
+          :items.sync="object.dimensions"
           :itemprops="$store.state.api.schemas.object.properties.dimensions.items.properties"
           :listitemstyletypes="dimensionsitemstyletypes"
           label="Dimensions"
@@ -88,13 +88,13 @@
           <template slot="simpleform" slot-scope="simpleprops">
             <v-flex xs6>
               <v-text-field
-                box
+                filled
                 label="Height in cm"
                 @input="simpleprops.newitems[0] = {amount: parseFloat($event), aspect: {name: 'Höhe', _id: '5c90a0119ca403074db61853'}, unit: {name: 'cm', _id: '5c90a0119ca403074db61857'}}"/>
             </v-flex>
             <v-flex xs6>
               <v-text-field
-                box
+                filled
                 label="Width in cm"
                 @input="simpleprops.newitems[1] = {amount: parseFloat($event), aspect: {name: 'Breite', _id: '5c90a0119ca403074db61856'}, unit: {name: 'cm',_id: '5c90a0119ca403074db61857'}}"/>
             </v-flex>
@@ -108,7 +108,7 @@
 
         <formlistcomponent
           v-if="object.classification"
-          :items="object.classification"
+          :items.sync="object.classification"
           :itemprops="$store.state.api.schemas.object.properties.classification.items.properties"
           label="Classification"
           nodatamessage="No classifications added"
@@ -122,7 +122,7 @@
                 <autocomp entity="Descriptor" v-model="props.newitem.descriptor" label="Descriptor" :multiple="false"></autocomp>
               </v-flex>
               <v-flex xs12>
-                <v-textarea box v-model="props.newitem.note" label="Note" />
+                <v-textarea filled v-model="props.newitem.note" label="Note" />
               </v-flex>
             </v-layout>
           </template>
@@ -174,21 +174,21 @@
       <v-flex xs12>
         <v-list two-line>
           <template v-for="(item, index) in object.images">
-            <v-list-tile :key="item._id" avatar :href="`${$store.state.api.url}/${item.reference.path}`" target="_blank">
-              <v-list-tile-avatar>
+            <v-list-item :key="item._id" :href="`${$store.state.api.url}/${item.reference.path}`" target="_blank">
+              <v-list-item-avatar>
                 <img :src="`${$store.state.api.url}/asset/uploads/thumbs/${item.reference.name.split('.')[0]}_thumb.jpg`">
-              </v-list-tile-avatar>
-              <v-list-tile-content>
-                <v-list-tile-title v-html="item.reference.name"></v-list-tile-title>
-                <v-list-tile-sub-title v-html="item.reference.path"></v-list-tile-sub-title>
-              </v-list-tile-content>
+              </v-list-item-avatar>
+              <v-list-item-content>
+                <v-list-item-title v-html="item.reference.name"></v-list-item-title>
+                <v-list-item-subtitle v-html="item.reference.path"></v-list-item-subtitle>
+              </v-list-item-content>
               <v-btn fab dark small color="error" @click="removeimage(index)">
                 <v-icon dark>delete</v-icon>
               </v-btn>
-            </v-list-tile>
+            </v-list-item>
           </template>
         </v-list>
-        <v-text-field label="Select Image" box @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
+        <v-text-field label="Select Image" filled @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
         <input type="file" style="display: none" ref="image" accept="image/jpeg" @change="onFilePicked">
       </v-flex>
     </v-layout>
@@ -196,7 +196,7 @@
     <!-- object comments -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
-        <formlistcomponent v-if="object.comments" :items="object.comments" :listitemstyletypes="['title']" label="Comments" nodatamessage="No comments added">
+        <formlistcomponent v-if="object.comments" :items.sync="object.comments" :listitemstyletypes="['title']" label="Comments" nodatamessage="No comments added">
           <template slot="form" slot-scope="props">
           <v-flex xs5>
               <v-textarea v-model="props.newitem.textval" label="New Comment"></v-textarea>

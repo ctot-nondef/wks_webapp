@@ -14,7 +14,7 @@
           <v-text-field
             v-if="getFieldType({type: entitytype, name: path}) === 'string'"
             :value="value['$regex']"
-            box
+            filled
             :label="path"
             clearable
             @click:clear="value['$regex'] = ''"
@@ -29,7 +29,7 @@
             label="Type"
             clearable
             @click:clear="value = {}"
-            box
+            filled
             @input="updateFilter({ key: `${path}`, value: $event })"/>
           <!-- simple xref select -->
           <simpleautocompwrapper
@@ -49,7 +49,6 @@
 <script>
   /* eslint-disable no-underscore-dangle,no-param-reassign,arrow-body-style */
 import { mapGetters } from 'vuex';
-import fundamentcard from '../Fundament/FundamentCard';
 import simpleautocompwrapper from '../FormComponents/SimpleAutoCompleteWrapper';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
@@ -57,7 +56,6 @@ import simpleautocompwrapper from '../FormComponents/SimpleAutoCompleteWrapper';
 
 export default {
     components: {
-      fundamentcard,
       simpleautocompwrapper,
     },
     props: {

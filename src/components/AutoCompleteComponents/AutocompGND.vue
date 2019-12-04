@@ -14,7 +14,7 @@
       >
       <template slot="selection" slot-scope="data">
         <template v-if="multiple">
-          <v-chip :selected="data.selected" close class="chip--select-multi" color="white">
+          <v-chip :input-value="data.selected" close class="chip--select-multi" color="white">
             {{ data.item.label }}
           </v-chip>
         </template>
@@ -24,14 +24,14 @@
       </template>
       <template slot="item" slot-scope="data">
         <template>
-            <v-list-tile-avatar>
+            <v-list-item-avatar>
                  <img v-if="data.item.image" :src="data.item.image">
                  <v-icon v-if="!data.item.image">person</v-icon>
-               </v-list-tile-avatar>
-            <v-list-tile-content>
-            <v-list-tile-title v-html="data.item.label"></v-list-tile-title>
-            <v-list-tile-sub-title v-html="data.item.category"></v-list-tile-sub-title>
-          </v-list-tile-content>
+               </v-list-item-avatar>
+            <v-list-item-content>
+            <v-list-item-title v-html="data.item.label"></v-list-item-title>
+            <v-list-item-subtitle v-html="data.item.category"></v-list-item-subtitle>
+          </v-list-item-content>
         </template>
       </template>
     </v-autocomplete>

@@ -1,27 +1,27 @@
 <template>
   <div>
     <v-list dense>
-      <v-list-tile>
-        <v-list-tile-avatar>
+      <v-list-item>
+        <v-list-item-avatar>
               <v-icon>{{ icon }}</v-icon>
-        </v-list-tile-avatar>
-        <v-list-tile-content>
+        </v-list-item-avatar>
+        <v-list-item-content>
           <span class="title font-weight-thin">{{ title }}</span>
-        </v-list-tile-content>
-        <v-list-tile-action>
+        </v-list-item-content>
+        <v-list-item-action>
           <v-icon>expand_less</v-icon>
-        </v-list-tile-action>
-      </v-list-tile>
+        </v-list-item-action>
+      </v-list-item>
     </v-list>
     <v-divider></v-divider>
     <v-list v-if="actorsexpanded">
-      <v-list-tile v-for="a in items">
-        <v-list-tile-content>
-          <v-list-tile-title>{{ a.role.name }} :</v-list-tile-title>
-          <v-list-tile-sub-title>{{ a.id.name }}</v-list-tile-sub-title>
-        </v-list-tile-content>
-        <v-list-tile-content class="align-end">{{ a.id.name }}</v-list-tile-content>
-      </v-list-tile>
+      <v-list-item v-for="a in items">
+        <v-list-item-content>
+          <v-list-item-title>{{ a.role.name }} :</v-list-item-title>
+          <v-list-item-subtitle>{{ a.id.name }}</v-list-item-subtitle>
+        </v-list-item-content>
+        <v-list-item-content class="align-end">{{ a.id.name }}</v-list-item-content>
+      </v-list-item>
     </v-list>
   </div>
 </template>

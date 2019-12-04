@@ -4,7 +4,7 @@
     <autocompgnd :value="ientity" :type="itype" :multiple="false" @input="ientity=$event"></autocompgnd>
     <v-layout justify-end row fill-height>
       <v-btn color="warning" @click="importentity()">Import</v-btn>
-      <v-btn color="primary" flat @click.native="ientity=[]">Clear</v-btn>
+      <v-btn color="primary" text @click.native="ientity=[]">Clear</v-btn>
     </v-layout>
   </v-card>
 </template>

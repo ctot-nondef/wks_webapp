@@ -6,7 +6,7 @@
           <v-layout justify-center column fill-height>
             <v-flex xs12>
               <v-layout justify-end row fill-height>
-                <v-btn fab dark small color="warning" @click="">
+                <v-btn fab dark small color="warning">
                   <v-icon dark>add</v-icon>
                 </v-btn>
               </v-layout>

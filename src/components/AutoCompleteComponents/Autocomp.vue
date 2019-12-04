@@ -17,11 +17,12 @@
       @click:append-outer="runfunc"
       hide-selected
       hide-no-data
-      box
+      filled
       >
     <template slot="selection" slot-scope="data">
         <template v-if="multiple">
-          <v-chip :selected="data.selected" close class="chip--select-multi" @input="remove(data.item)" color="white">
+          <v-chip :input-value="data.selected" close class="chip--select-multi" @click:close="remove(data.item)" color="white">
+            {{ data.item.name }}
             {{ data.item.name }}
           </v-chip>
         </template>
@@ -31,15 +32,15 @@
       </template>
       <template slot="item" slot-scope="data">
         <template v-if="typeof data.item !== 'object'">
-          <v-list-tile-content v-text="data.item"></v-list-tile-content>
+          <v-list-item-content v-text="data.item"></v-list-item-content>
         </template>
         <template v-else>
-          <v-list-tile-content class="listcontent">
-            <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
-            <v-list-tile-sub-title class="subpropwrapper" v-for="(prop,propname) in displayitemprops" :key="propname" v-if="displayitemprops" >
+          <v-list-item-content class="listcontent">
+            <v-list-item-title v-html="data.item.name"></v-list-item-title>
+            <v-list-item-subtitle class="subpropwrapper" v-for="(prop,propname) in displayitemprops" :key="propname" >
               <span class="subprop" v-for="(subprop,index) in prop" :key="index">{{getItemPropFromPath(data.item,index,subprop['path']) | renderProps}}</span>
-            </v-list-tile-sub-title>
-          </v-list-tile-content>
+            </v-list-item-subtitle>
+          </v-list-item-content>
         </template>
       </template>
     </v-autocomplete>

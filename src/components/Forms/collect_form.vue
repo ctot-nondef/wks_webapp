@@ -7,14 +7,14 @@
     <!-- collection name -->
     <v-layout justify-start row fill-height>
       <v-flex xs10>
-        <v-text-field v-model="collection.name" box label="Name" box class="nameinput" @input="returnObject"></v-text-field>
+        <v-text-field v-model="collection.name" label="Name" filled class="nameinput" @input="returnObject"></v-text-field>
       </v-flex>
     </v-layout>
     <!-- collection creators -->
     <v-layout justify-end row fill-height>
       <v-flex xs12>
         <formlistcomponent
-          :items="collection.creator"
+          :items.sync="collection.creator"
           :itemprops="$store.state.api.schemas.collect.properties.creator.items.properties"
           label="Creator"
           nodatamessage="No creators added"
@@ -28,7 +28,7 @@
                 <autocomp entity="Actor" v-model="props.newitem.id" label="Collector" :multiple="false"></autocomp>
               </v-flex>
               <v-flex xs12>
-                <v-textarea v-model="props.newitem.note" box label="Note" />
+                <v-textarea v-model="props.newitem.note" filled label="Note" />
               </v-flex>
             </v-layout>
           </template>
@@ -47,7 +47,7 @@
     <!-- collection description -->
     <v-layout justify-end row fill-height>
       <v-flex xs12>
-        <v-textarea v-model="collection.description" box label="Description" @input="returnObject()"></v-textarea>
+        <v-textarea v-model="collection.description" filled label="Description" @input="returnObject()"></v-textarea>
       </v-flex>
     </v-layout>
     <!-- collection documents -->
@@ -55,21 +55,21 @@
       <v-flex xs12>
         <v-list two-line>
           <template v-for="(item, index) in collection.documents">
-            <v-list-tile :key="item._id" avatar :href="`${$store.state.api.url}/${item.ref.path}`" target="_blank">
-              <v-list-tile-avatar>
+            <v-list-item :key="item._id" :href="`${$store.state.api.url}/${item.ref.path}`" target="_blank">
+              <v-list-item-avatar>
                 <img :src="`${$store.state.api.url}/asset/uploads/thumbs/${item.ref.name.split('.')[0]}_thumb.jpg`">
-              </v-list-tile-avatar>
-              <v-list-tile-content>
-                <v-list-tile-title v-html="item.ref.name"></v-list-tile-title>
-                <v-list-tile-sub-title v-html="item.ref.path"></v-list-tile-sub-title>
-              </v-list-tile-content>
+              </v-list-item-avatar>
+              <v-list-item-content>
+                <v-list-item-title v-html="item.ref.name"></v-list-item-title>
+                <v-list-item-subtitle v-html="item.ref.path"></v-list-item-subtitle>
+              </v-list-item-content>
               <v-btn fab dark small color="error" @click="removeimage(index)">
                 <v-icon dark>delete</v-icon>
               </v-btn>
-            </v-list-tile>
+            </v-list-item>
           </template>
         </v-list>
-        <v-text-field label="Select PDF Document" box @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
+        <v-text-field label="Select PDF Document" filled @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
         <input type="file" style="display: none" ref="image" accept="application/pdf" @change="onFilePicked">
       </v-flex>
     </v-layout>
@@ -77,7 +77,7 @@
     <v-layout justify-end row fill-height>
       <v-flex xs12>
         <formlistcomponent
-          :items="collection.classification"
+          :items.sync="collection.classification"
           :itemprops="$store.state.api.schemas.collect.properties.classification.items.properties"
           label="Classification"
           nodatamessage="No classifications added">
@@ -90,7 +90,7 @@
               <autocomp entity="Descriptor" v-model="props.newitem.descriptor" label="Descriptor" :multiple="false"></autocomp>
             </v-flex>
             <v-flex xs12>
-              <v-textarea box v-model="props.newitem.note" label="Note" />
+              <v-textarea filled v-model="props.newitem.note" label="Note" />
             </v-flex>
           </v-layout>
           </template>
@@ -109,14 +109,14 @@
     <!-- collection destitution -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
-        <v-textarea box v-model="collection.destitution" label="Destitution" @input="returnObject()"></v-textarea>
+        <v-textarea filled v-model="collection.destitution" label="Destitution" @input="returnObject()"></v-textarea>
       </v-flex>
     </v-layout>
     <!-- collection references zotero -->
     <v-layout justify-end row fill-height>
       <v-flex xs12>
         <formlistcomponent
-          :items="collection.references"
+          :items.sync="collection.references"
           :itemprops="$store.state.api.schemas.collect.properties.references.items.properties"
           label="Bibliograpic References"
           nodatamessage="No Bibliograpic References added"
@@ -124,13 +124,13 @@
           <template slot="form" slot-scope="props">
             <v-layout justify-end row fill-height wrap>
               <v-flex xs6>
-                  <v-text-field box label="Zotero Reference URI" @click='zoterodialog=true' v-model='props.newitem.ref' prepend-icon='attach_file'></v-text-field>
+                  <v-text-field filled label="Zotero Reference URI" @click='zoterodialog=true' v-model='props.newitem.ref' prepend-icon='attach_file'></v-text-field>
               </v-flex>
               <v-flex xs6>
-                  <v-text-field box v-model="props.newitem.pageno" label="Page Number/Range" type="number"></v-text-field>
+                  <v-text-field filled v-model="props.newitem.pageno" label="Page Number/Range" type="number"></v-text-field>
               </v-flex>
               <v-flex xs12>
-                <v-textarea box v-model="props.newitem.note" label="Note" />
+                <v-textarea filled v-model="props.newitem.note" label="Note" />
               </v-flex>
             </v-layout>
           </template>
@@ -141,12 +141,12 @@
     <v-layout justify-start row fill-height>
       <v-flex xs12>
         <formlistcomponent
-          :items="collection.comments"
+          :items.sync="collection.comments"
           label="Comments"
           nodatamessage="No comments added">
           <template slot="form" slot-scope="props">
           <v-flex xs12>
-              <v-textarea box v-model="props.newitem.textval" label="New Comment"></v-textarea>
+              <v-textarea filled v-model="props.newitem.textval" label="New Comment"></v-textarea>
           </v-flex>
           </template>
         </formlistcomponent>
@@ -170,6 +170,11 @@
             <v-spacer></v-spacer>
             <v-toolbar-items>
             </v-toolbar-items>
+            <v-menu bottom right offset-y>
+              <v-btn dark icon>
+                <v-icon>more_vert</v-icon>
+              </v-btn>
+            </v-menu>
           </v-toolbar>
           <v-container grid-list-md text-xs-center>
             <zoterolist @selectref="pickZoteroRef($event)"></zoterolist>

@@ -1,7 +1,7 @@
 <template>
   <div class="">
       <fundamentjumbo
-        src="/static/intro_bg.jpg"
+        :src="require('../assets/intro_bg.jpg')"
         caption="VCHC Projekt Datenbank"
         subtitle=""
       >

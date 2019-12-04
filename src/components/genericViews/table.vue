@@ -4,29 +4,48 @@
       :headers="currentHeaders"
       :items="data"
       :loading="loading"
-      :total-items="totalHits"
-      :pagination.sync="pagination"
-      :rows-per-page-items="itemOptions"
+      :server-items-length="totalHits"
+      :options.sync="pagination"
+      :footer-props="{
+        showFirstLastPage: true,
+        firstIcon: 'mdi-arrow-collapse-left',
+        lastIcon: 'mdi-arrow-collapse-right',
+        prevIcon: 'mdi-minus',
+        nextIcon: 'mdi-plus',
+        'items-per-page-options': [10, 20, 50, 100, 250],
+      }"
       class="elevation-1"
+      loading-text="Loading... Please wait"
     >
-      <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
-      <template slot="items" slot-scope="props" >
-          <td v-for="column in currentHeaders" v-if="column.path">{{ _.get(props.item, column.path) }}</td>
-          <td v-if="$store.state.api.loggedin">
-            <v-btn v-if="entitytype !== 'transaction'" fab dark small :to="{ name: `${entitytype}single`, params: { id:  props.item._id  }}" color="primary">
-              <v-icon dark>collections_bookmark</v-icon>
-            </v-btn>
-            <v-btn v-if="entitytype === 'transaction'" fab dark small color="primary" @click="$emit('select', props.item)">
-              <v-icon dark>collections_bookmark</v-icon>
-            </v-btn>
-            <v-btn fab dark small color="warning" @click="$refs.editdialog.getItem(entitytype, props.item._id)">
-              <v-icon dark>edit</v-icon>
-            </v-btn>
-            <v-btn fab dark small color="error" @click="deleteRequest(props.item)">
-              <v-icon dark>delete</v-icon>
-            </v-btn>
+      <template v-slot:body="{ items }">
+        <tbody>
+        <tr v-for="item in items" :key="item.name">
+          <td v-for="column in currentHeaders" :key="column.path">
+            <span v-if="_.get(item, column.path)">
+              {{ _.get(item, column.path) }}
+            </span>
+            <span v-else-if="column.text === 'Actions'">
+              <v-btn v-if="entitytype !== 'transaction'" fab dark small :to="{ name: `${entitytype}single`, params: { id:  item._id  }}" color="primary">
+                <v-icon dark>collections_bookmark</v-icon>
+              </v-btn>
+              <span>
+                <v-btn v-if="entitytype === 'transaction'" fab dark small color="primary" @click="$emit('select', item)">
+                  <v-icon dark>collections_bookmark</v-icon>
+                </v-btn>
+                <v-btn fab dark small color="warning" @click="$refs.editdialog.getItem(entitytype, item._id)">
+                  <v-icon dark>edit</v-icon>
+                </v-btn>
+                <v-btn fab dark small color="error" @click="deleteRequest(item)">
+                  <v-icon dark>delete</v-icon>
+                </v-btn>
+              </span>
+            </span>
+            <span v-else-if="!_.get(item, column.path)">
+              n/a
+            </span>
           </td>
-          <td v-if="!$store.state.api.loggedin"></td>
+        </tr>
+        </tbody>
       </template>
     </v-data-table>
     <editdialog :title="`Edit ${entitytype}`" ref="editdialog" @close="getRecords()">
@@ -56,7 +75,6 @@
   /* eslint-disable no-underscore-dangle,no-param-reassign */
 import { mapGetters, mapActions } from 'vuex';
 
-import fundamentcard from '../Fundament/FundamentCard';
 import editdialog from '../editDialog';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
@@ -64,7 +82,6 @@ import editdialog from '../editDialog';
 
 export default {
     components: {
-      fundamentcard,
       editdialog,
     },
     props: {
@@ -105,6 +122,7 @@ export default {
       filter: {
         handler(f) {
           if (f) {
+            this.q = {};
             Object.keys(f).forEach((key) => {
               this.q[key] = f[key];
             });
@@ -129,9 +147,9 @@ export default {
         this.loading = true;
         this.get({
           type: this.entitytype,
-          sort: this.pagination.descending ? `-${this.pagination.sortBy}` : this.pagination.sortBy,
-          limit: this.pagination.rowsPerPage,
-          skip: (this.pagination.page - 1) * this.pagination.rowsPerPage,
+          sort: this.pagination.sortDesc[0] ? `-${this.pagination.sortBy[0]}` : this.pagination.sortBy[0],
+          limit: this.pagination.itemsPerPage,
+          skip: (this.pagination.page - 1) * this.pagination.itemsPerPage,
           query: this.q,
           populate: JSON.stringify(
             this.currentHeaders.filter(

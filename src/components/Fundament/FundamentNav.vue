@@ -16,49 +16,49 @@
         >
           <v-layout column justify-space-between>
             <v-list>
-              <v-list-tile>
+              <v-list-item>
                 <!-- <v-btn icon @click.stop="toggleAppMode()">
                   <v-icon>view_day</v-icon>
                 </v-btn> -->
                 <v-btn icon @click.stop="toggleNavDrawerClipped()">
                   <v-icon v-html="$store.state.app.drawerclipped?'first_page':'last_page'" v-if="!$store.state.app.miniVariant"></v-icon>
                 </v-btn>
-              </v-list-tile>
+              </v-list-item>
             </v-list>
-            <v-list>
-              <v-list-tile
+            <v-list dense>
+              <v-list-item
                 value="true"
                 v-for="(item, i) in $store.state.app.config.menu"
                 :key="i"
                 :to="item.startpage"
                 class="navtile"
                 >
-                  <v-list-tile-avatar>
+                  <v-list-item-content>
                     <v-icon>{{ item.icon }}</v-icon>
-                  </v-list-tile-avatar>
-                  <v-list-tile-content >
-                    <v-list-tile-title class="toolbarcaption">{{item.caption}}</v-list-tile-title>
-                  </v-list-tile-content>
-              </v-list-tile>
-              <v-list-tile value="true" @click.stop="openDialog('loginDialog')" v-if="!$store.state.api.loggedin" class="navtile">
-                  <v-list-tile-avatar>
+                  </v-list-item-content>
+                  <v-list-item-content >
+                    <v-list-item-title class="toolbarcaption">{{item.caption}}</v-list-item-title>
+                  </v-list-item-content>
+              </v-list-item>
+              <v-list-item value="true" @click.stop="openDialog('loginDialog')" v-if="!$store.state.api.loggedin" class="navtile">
+                  <v-list-item-content>
                     <v-icon>input</v-icon>
-                  </v-list-tile-avatar>
-                  <v-list-tile-content >
-                    <v-list-tile-title class="toolbarcaption">LOGIN</v-list-tile-title>
-                  </v-list-tile-content>
-              </v-list-tile>
-              <v-list-tile value="true" @click.stop="openDialog('logoutDialog')" v-if="$store.state.api.loggedin" class="navtile">
-                  <v-list-tile-avatar>
+                  </v-list-item-content>
+                  <v-list-item-content >
+                    <v-list-item-title class="toolbarcaption">LOGIN</v-list-item-title>
+                  </v-list-item-content>
+              </v-list-item>
+              <v-list-item value="true" @click.stop="openDialog('logoutDialog')" v-if="$store.state.api.loggedin" class="navtile">
+                  <v-list-item-content>
                     <v-icon>power_settings_new</v-icon>
-                  </v-list-tile-avatar>
-                  <v-list-tile-content >
-                    <v-list-tile-title class="toolbarcaption">LOGOUT</v-list-tile-title>
-                  </v-list-tile-content>
-              </v-list-tile>
+                  </v-list-item-content>
+                  <v-list-item-content >
+                    <v-list-item-title class="toolbarcaption">LOGOUT</v-list-item-title>
+                  </v-list-item-content>
+              </v-list-item>
             </v-list>
-            <v-list>
-              <v-list-tile>
+            <v-list dense>
+              <v-list-item>
                 <router-link :to="{ name: 'start' }">
                   <div class="logo">
                     <h5 style="font-weight: 200; padding: 0px; margin: 0px;letter-spacing: 3px!important; line-height:25px;text-decoration-line: none!important;">VC</h5>
@@ -66,7 +66,7 @@
                   </div>
                   Database
                 </router-link>
-              </v-list-tile>
+              </v-list-item>
             </v-list>
           </v-layout>
         </v-container>

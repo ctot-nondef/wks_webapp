@@ -7,7 +7,7 @@
     <v-layout justify-start row fill-height>
       <v-flex xs10>
         <!-- inventory name -->
-        <v-text-field v-model="inventory.name" box class="nameinput" label="Name" @input="returnObject"></v-text-field>
+        <v-text-field v-model="inventory.name" filled class="nameinput" label="Name" @input="returnObject"></v-text-field>
       </v-flex>
     </v-layout>
     <!-- inventory partOf -->
@@ -24,7 +24,7 @@
     <v-layout justify-end row fill-height>
       <v-flex xs12>
         <formlistcomponent
-          :items="inventory.creator"
+          :items.sync="inventory.creator"
           :itemprops="$store.state.api.schemas.inventory.properties.creator.items.properties"
           :listitemstyletypes="creatoritemstyletypes"
           label="Creator"
@@ -38,7 +38,7 @@
               <autocomp entity="Actor" v-model="props.newitem.id" label="Creator" :multiple="false"></autocomp>
             </v-flex>
             <v-flex xs12>
-              <v-textarea box height="70"  v-model="props.newitem.note" label="Note" />
+              <v-textarea filled height="70"  v-model="props.newitem.note" label="Note" />
             </v-flex>
           </template>
           <template slot="simpleform" slot-scope="simpleprops">
@@ -93,21 +93,21 @@
       <v-flex xs12>
         <v-list two-line>
           <template v-for="(item, index) in inventory.documents">
-            <v-list-tile :key="item._id" avatar :href="`${$store.state.api.url}/${item.ref.path}`" target="_blank">
-              <v-list-tile-avatar>
+            <v-list-item :key="item._id" :href="`${$store.state.api.url}/${item.ref.path}`" target="_blank">
+              <v-list-item-avatar>
                 <img :src="`${$store.state.api.url}/asset/uploads/thumbs/${item.ref.name.split('.')[0]}_thumb.jpg`">
-              </v-list-tile-avatar>
-              <v-list-tile-content>
-                <v-list-tile-title v-html="item.ref.name"></v-list-tile-title>
-                <v-list-tile-sub-title v-html="item.ref.path"></v-list-tile-sub-title>
-              </v-list-tile-content>
+              </v-list-item-avatar>
+              <v-list-item-content>
+                <v-list-item-title v-html="item.ref.name"></v-list-item-title>
+                <v-list-item-subtitle v-html="item.ref.path"></v-list-item-subtitle>
+              </v-list-item-content>
               <v-btn fab dark small color="error" @click="removeimage(index)">
                 <v-icon dark>delete</v-icon>
               </v-btn>
-            </v-list-tile>
+            </v-list-item>
           </template>
         </v-list>
-        <v-text-field label="Select PDF Document" box @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
+        <v-text-field label="Select PDF Document" filled @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
         <input type="file" style="display: none" ref="image" accept="application/pdf" @change="onFilePicked">
       </v-flex>
     </v-layout>
@@ -121,7 +121,7 @@
     <v-layout justify-start row fill-height>
       <v-flex xs12>
         <formlistcomponent
-          :items="inventory.classification"
+          :items.sync="inventory.classification"
           :itemprops="$store.state.api.schemas.inventory.properties.classification.items.properties"
           :listitemstyletypes="classificationitemstyletypes"
           label="Classification"
@@ -136,7 +136,7 @@
                 <autocomp entity="Descriptor" v-model="props.newitem.descriptor" label="Descriptor" :multiple="false"></autocomp>
               </v-flex>
               <v-flex xs12>
-                <v-textarea box v-model="props.newitem.note" label="Note" />
+                <v-textarea filled v-model="props.newitem.note" label="Note" />
               </v-flex>
             </v-layout>
           </template>
@@ -183,7 +183,7 @@
      <!-- inventory comments -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
-        <formlistcomponent v-if="inventory.comments" :items="inventory.comments" :listitemstyletypes="['title']" label="Comments" nodatamessage="No comments added">
+        <formlistcomponent v-if="inventory.comments" :items.sync="inventory.comments" :listitemstyletypes="['title']" label="Comments" nodatamessage="No comments added">
           <template slot="form" slot-scope="props">
           <v-flex xs5>
               <v-textarea v-model="props.newitem.textval" label="New Comment"></v-textarea>
@@ -199,7 +199,6 @@ import axios from 'axios';
 import autocomp from '../AutoCompleteComponents/Autocomp';
 import datecomponent from '../FormComponents/DateComponent';
 import formlistcomponent from '../FormComponents/FormListComponent';
-import formtfreadview from '../FormComponents/FormTextFieldReadView';
 import simpleautocompwrapper from '../FormComponents/SimpleAutoCompleteWrapper';
 import chips from '../FormComponents/Chips';
 
@@ -210,7 +209,6 @@ export default {
     autocomp,
     formlistcomponent,
     datecomponent,
-    formtfreadview,
     chips,
     simpleautocompwrapper,
   },

@@ -4,14 +4,11 @@
     v-model="datepickermenu"
     :close-on-content-click="false"
     :nudge-right="40"
-    lazy
     transition="scale-transition"
     offset-y
-    full-width
     min-width="290px">
     <template v-slot:activator="{ on }">
       <v-text-field
-        slot="activator"
         v-model="computedDateFormatted"
         :label="label"
         prepend-icon="event"
@@ -19,7 +16,7 @@
         persistent-hint
         @blur="dateval = parseDate(dateFormatted)"
         v-on="on"
-        box>
+        filled>
       </v-text-field>
     </template>
     <v-date-picker

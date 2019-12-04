@@ -7,24 +7,24 @@
     <!-- entry name -->
     <v-layout justify-start row fill-height>
       <v-flex xs10>
-        <v-text-field v-model="entry.name" box label="Name" class="nameinput" @input="returnObject"></v-text-field>
+        <v-text-field v-model="entry.name" filled label="Name" class="nameinput" @input="returnObject"></v-text-field>
       </v-flex>
     </v-layout>
     <!-- entry partOf -->
     <!-- entry original title -->
     <v-layout justify-start row fill-height>
       <v-flex xs6>
-        <v-text-field v-model="entry.originalTitle" box label="Original Title" @input="returnObject"></v-text-field>
+        <v-text-field v-model="entry.originalTitle" filled label="Original Title" @input="returnObject"></v-text-field>
       </v-flex>
       <v-flex xs6>
-        <simpleautocompwrapper entity="inventory" box v-model="entry.partOf" v-bind:prop.sync="entry.partOf" label="Part Of Inventory"/>
+        <simpleautocompwrapper entity="inventory" filled v-model="entry.partOf" v-bind:prop.sync="entry.partOf" label="Part Of Inventory"/>
       </v-flex>
     </v-layout>
     <!-- entry creators -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
         <formlistcomponent
-          :items="entry.creator"
+          :items.sync="entry.creator"
           :itemprops="$store.state.api.schemas.entry.properties.creator.items.properties"
           label="Creator"
           nodatamessage="No creators added"
@@ -37,7 +37,7 @@
               <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"></autocomp>
             </v-flex>
             <v-flex xs12>
-              <v-textarea  box height="70" v-model="props.newitem.note" label="Note" />
+              <v-textarea  filled height="70" v-model="props.newitem.note" label="Note" />
             </v-flex>
           </template>
           <template slot="simpleform" slot-scope="simpleprops">
@@ -55,7 +55,7 @@
     <!-- entry transscription -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
-        <v-textarea v-model="entry.transscription" label="Transscription" @input="returnObject" box></v-textarea>
+        <v-textarea v-model="entry.transscription" label="Transscription" @input="returnObject" filled></v-textarea>
       </v-flex>
     </v-layout>
      <!-- entry material -->
@@ -72,14 +72,14 @@
     <v-layout justify-start row fill-height>
       <v-flex xs12>
         <formlistcomponent
-          :items="entry.dimensions"
+          :items.sync="entry.dimensions"
           :itemprops="$store.state.api.schemas.entry.properties.dimensions.items.properties"
           label="Dimensions"
           nodatamessage="No dimensions added"
           :simpleformavail="true">
           <template slot="form" slot-scope="props">
             <v-flex xs4>
-              <v-text-field box v-model.number="props.newitem.amount" label="Amount"></v-text-field>
+              <v-text-field filled v-model.number="props.newitem.amount" label="Amount"></v-text-field>
             </v-flex>
             <v-flex xs4>
               <autocomp entity="Descriptor" filter="UNIT" v-model="props.newitem.unit" label="Unit" :multiple="false"></autocomp>
@@ -91,13 +91,13 @@
           <template slot="simpleform" slot-scope="simpleprops">
             <v-flex xs6>
               <v-text-field
-                box
+                filled
                 label="Height in cm"
                 @input="simpleprops.newitems[0] = {amount: parseFloat($event), aspect: {name: 'Höhe', _id: '5c90a0119ca403074db61853'}, unit: {name: 'cm', _id: '5c90a0119ca403074db61857'}}"/>
             </v-flex>
             <v-flex xs6>
               <v-text-field
-                box
+                filled
                 label="Width in cm"
                 @input="simpleprops.newitems[1] = {amount: parseFloat($event), aspect: {name: 'Breite', _id: '5c90a0119ca403074db61856'}, unit: {name: 'cm',_id: '5c90a0119ca403074db61857'}}"/>
             </v-flex>
@@ -118,10 +118,10 @@
     <!-- entry related entries -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
-        <formlistcomponent  :items="entry.relations" :itemprops="$store.state.api.schemas.entry.properties.relations.items.properties" label="Related Entries" nodatamessage="No relations added">
+        <formlistcomponent  :items.sync="entry.relations" :itemprops="$store.state.api.schemas.entry.properties.relations.items.properties" label="Related Entries" nodatamessage="No relations added">
           <template slot="form" slot-scope="props">
             <v-flex xs2>
-              <v-select box :items="$store.state.api.schemas.entry.properties.relations.items.properties.kind.enum" label="Relation Type" v-model='props.newitem.kind'></v-select>
+              <v-select filled :items="$store.state.api.schemas.entry.properties.relations.items.properties.kind.enum" label="Relation Type" v-model='props.newitem.kind'></v-select>
             </v-flex>
             <v-flex x12>
               <autocomp entity="Entry" v-model="props.newitem.target"  label="Entry" :multiple="false" :displayitemprops="autcompdisplayprops"></autocomp>
@@ -141,21 +141,21 @@
       <v-flex xs12>
         <v-list two-line>
           <template v-for="(item, index) in entry.images">
-            <v-list-tile :key="item._id" avatar :href="`${$store.state.api.url}/${item.reference.path}`" target="_blank">
-              <v-list-tile-avatar>
+            <v-list-item :key="item._id" :href="`${$store.state.api.url}/${item.reference.path}`" target="_blank">
+              <v-list-item-avatar>
                 <img :src="`${$store.state.api.url}/asset/uploads/thumbs/${item.reference.name.split('.')[0]}_thumb.jpg`">
-              </v-list-tile-avatar>
-              <v-list-tile-content>
-                <v-list-tile-title v-html="item.reference.name"></v-list-tile-title>
-                <v-list-tile-sub-title v-html="item.reference.path"></v-list-tile-sub-title>
-              </v-list-tile-content>
+              </v-list-item-avatar>
+              <v-list-item-content>
+                <v-list-item-title v-html="item.reference.name"></v-list-item-title>
+                <v-list-item-subtitle v-html="item.reference.path"></v-list-item-subtitle>
+              </v-list-item-content>
               <v-btn fab dark small color="error" @click="removeimage(index)">
                 <v-icon dark>delete</v-icon>
               </v-btn>
-            </v-list-tile>
+            </v-list-item>
           </template>
         </v-list>
-        <v-text-field label="Select Image" box @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
+        <v-text-field label="Select Image" filled @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
         <input type="file" style="display: none" ref="image" accept="image/jpeg" @change="onFilePicked">
       </v-flex>
     </v-layout>
@@ -209,7 +209,7 @@
     <v-layout justify-start row fill-height>
       <v-flex xs12 class="mt-3">
         <formlistcomponent
-          :items="entry.classification"
+          :items.sync="entry.classification"
           :itemprops="$store.state.api.schemas.entry.properties.classification.items.properties"
           label="Classification"
           nodatamessage="No classifications added"
@@ -222,7 +222,7 @@
               <autocomp entity="Descriptor" v-model="props.newitem.descriptor" label="Descriptor" :multiple="false"></autocomp>
             </v-flex>
             <v-flex xs12>
-              <v-textarea box v-model="props.newitem.note" label="Note" />
+              <v-textarea filled v-model="props.newitem.note" label="Note" />
             </v-flex>
           </template>
           <template slot="simpleform" slot-scope="simpleprops">
@@ -265,10 +265,10 @@
      <!-- entry comments -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
-        <formlistcomponent v-if="entry.comments" :items="entry.comments" label="Comments" nodatamessage="No comments added">
+        <formlistcomponent v-if="entry.comments" :items.sync="entry.comments" label="Comments" nodatamessage="No comments added">
           <template slot="form" slot-scope="props">
           <v-flex xs12>
-              <v-textarea v-model="props.newitem.textval" box label="New Comment"></v-textarea>
+              <v-textarea v-model="props.newitem.textval" filled label="New Comment"></v-textarea>
           </v-flex>
           </template>
         </formlistcomponent>

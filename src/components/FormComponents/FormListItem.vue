@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-list-tile-title v-if="styletype==='title'" v-text="name || refsto" ></v-list-tile-title>
-    <v-list-tile-sub-title v-if="styletype==='subtitle'" v-text="name || refsto"></v-list-tile-sub-title>
+    <v-list-item-title v-if="styletype==='title'" v-text="name || refsto" ></v-list-item-title>
+    <v-list-item-subtitle v-if="styletype==='subtitle'" v-text="name || refsto"></v-list-item-subtitle>
   </div>
 </template>
 

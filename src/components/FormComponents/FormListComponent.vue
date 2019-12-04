@@ -13,62 +13,68 @@
         :headers="headers"
         :items="citems"
         class="elevation-1"
-        disable-initial-sort
+        hide-default-header
       >
-    <template slot="headers" slot-scope="props">
-      <th  v-for="header in props.headers">
-        {{ header.name }}
-      </th>
-      <th>Actions</th>
+    <template v-slot:header="{ props: { headers } }">
+      <thead>
+      <tr>
+        <th  v-for="header in headers" :key="header.name">
+          {{ header.name }}
+        </th>
+        <th>Actions</th>
+      </tr>
+      </thead>
     </template>
-    <template slot="items" slot-scope="props">
-     <tr>
-        <td v-for="header in headers">
-          <template v-if="typeof props.item === 'object' && props.item[header.name] && props.item[header.name].name">
-             {{props.item[header.name].name}}
+    <template v-slot:body="{ items }">
+      <tbody>
+      <tr v-for="(item, index) in items" :key="item.name">
+        <td v-for="header in headers" :key="header.name">
+          <template v-if="typeof item === 'object' && item[header.name] && item[header.name].name">
+            {{item[header.name].name}}
           </template>
           <!-- zotero refs for link parsing -->
-          <template v-else-if="typeof props.item === 'object' && typeof props.item[header.name] === 'string' && header.name === 'ref'">
-            <a :href="props.item[header.name].replace('api.', '')" target="_blank">link</a>
+          <template v-else-if="typeof item === 'object' && typeof item[header.name] === 'string' && header.name === 'ref'">
+            <a :href="item[header.name].replace('api.', '')" target="_blank">link</a>
           </template>
           <!-- transaction refs -->
-          <template v-else-if="typeof props.item === 'object' && typeof props.item[header.name] === 'object' && props.item[header.name] !== null && header.name === 'ref'">
-            {{ props.item[header.name]._id }}
+          <template v-else-if="typeof item === 'object' && typeof item[header.name] === 'object' && item[header.name] !== null && header.name === 'ref'">
+            {{ item[header.name]._id }}
           </template>
           <template v-else>
-            {{props.item[header.name]}}
+            {{item[header.name]}}
           </template>
-       </td>
-       <td class="justify-center layout px-0">
-        <v-icon
-          small
-          class="mr-2"
-          @click="editItem(props.index)"
-          :disabled="editingMode"
-        >
-          edit
-        </v-icon>
-        <v-icon
-          small
-          :disabled="editingMode"
-          @click="removeItem(props.index,items)"
-        >
-          delete
-        </v-icon>
-      </td>
+        </td>
+        <td class="justify-center layout px-0">
+          <v-icon
+                  small
+                  class="mr-2"
+                  @click="editItem(index)"
+                  :disabled="editingMode"
+          >
+            edit
+          </v-icon>
+          <v-icon
+                  small
+                  :disabled="editingMode"
+                  @click="removeItem(index,items)"
+          >
+            delete
+          </v-icon>
+        </td>
       </tr>
+      </tbody>
     </template>
     </v-data-table>
     <!-- list display if array of strings -->
     <v-list two-line v-if="!itemprops && citems.length >= 1">
-      <v-list-tile v-for="(item, index) in items" v-bind:key="index">
-        <v-list-tile-content>
-          <v-list-tile-title v-if="typeof item === 'string'" v-text="item"></v-list-tile-title>
-        </v-list-tile-content>
+      <v-list-item v-for="(item, index) in items" v-bind:key="index">
+        <v-list-item-content>
+          <v-list-item-title v-if="typeof item === 'string'" v-text="item"></v-list-item-title>
+        </v-list-item-content>
         <v-btn fab dark small color="error" @click="removeItem(index,items)">
           <v-icon dark>delete</v-icon>
         </v-btn>
-      </v-list-tile>
+      </v-list-item>
     </v-list>
     <!-- form slot -->
     <v-layout justify-end row fill-height>
@@ -97,11 +103,9 @@
 
 <script>
 import HELPERS from '../../helpers';
-import formlistitem from './FormListItem';
 
 export default {
   components: {
-    formlistitem,
   },
   mixins: [HELPERS],
   props: [
@@ -125,20 +129,24 @@ export default {
   },
   methods: {
     addItem(item, items) {
+      let a = items.slice();
       if (!item.textval && !this.simpleform) {
         const newitem = Object.assign({}, item);
-        items.push(newitem);
+        a.push(newitem);
       } else if (!item.textval && this.simpleform && Array.isArray(this.newitems)) {
         this.newitems.forEach((i) => {
           const newitem = Object.assign({}, i);
-          if (Object.keys(newitem).length > 0) items.push(newitem);
+          if (Object.keys(newitem).length > 0) a.push(newitem);
         });
       } else {
-        items.push(item.textval);
+        a.push(item.textval);
       }
+      this.$emit('update:items', a);
     },
     removeItem(index, items) {
-      items.splice(index, 1);
+      let a = items.slice();
+      a.splice(index, 1);
+      this.$emit('update:items', a);
     },
     editItem(index) {
       this.editingMode = true;
@@ -160,6 +168,7 @@ export default {
           this.$set(this.items[this.editingItemIndex], key, this.newitem[key]);
         }
       });
+      this.$emit('update:items', this.items);
       this.editingMode = false;
       this.clearItem();
     },
@@ -174,15 +183,18 @@ export default {
         }
       });
       this.$children.forEach((child) => {
-        if (Object.prototype.hasOwnProperty.call(child, 'form')) {
+        if (Object.prototype.hasOwnProperty.call(child, 'reset')) {
           child.reset();
         }
-        if (Object.prototype.hasOwnProperty.call(child, 'select')) {
+        if (Object.prototype.hasOwnProperty.call(child, 'clear')) {
           child.clear();
           this.$set(child.$children[0], 'cachedItems', []);
         }
       });
       this.simpleform = this.simpleformavail;
+    },
+    update() {
+
     },
   },
   computed: {

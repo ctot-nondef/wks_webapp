@@ -11,7 +11,7 @@
         <v-combobox
           v-model="actor.identifier"
           chips
-          box
+          filled
           multiple
           label="Identifiers"
         ></v-combobox>
@@ -55,7 +55,7 @@
     <v-layout justify-start row fill-height>
       <v-flex xs12>
         <!-- actor related actors -->
-        <formlistcomponent  :items="actor.relations" :itemprops="$store.state.api.schemas.actor.properties.relations.items.properties" :listitemstyletypes="relationitemstyletypes" label="Related Actors" nodatamessage="No relations added">
+        <formlistcomponent  :items.sync="actor.relations" :itemprops="$store.state.api.schemas.actor.properties.relations.items.properties" :listitemstyletypes="relationitemstyletypes" label="Related Actors" nodatamessage="No relations added">
             <template slot="form" slot-scope="props">
             <v-flex xs2>
               <v-select :items="$store.state.api.schemas.actor.properties.relations.items.properties.kind.enum" label="Relation Type" v-model='props.newitem.kind'></v-select>
@@ -75,7 +75,6 @@
 <script>
 import autocomp from '../AutoCompleteComponents/Autocomp';
 import formlistcomponent from '../FormComponents/FormListComponent';
-import chips from '../FormComponents/Chips';
 import datecomponent from '../FormComponents/DateComponent';
 import gndimporter from '../FormComponents/GNDImporter';
 
@@ -85,7 +84,6 @@ export default {
     autocomp,
     formlistcomponent,
     datecomponent,
-    chips,
     gndimporter,
   },
   props: [

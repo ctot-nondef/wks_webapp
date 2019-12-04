@@ -36,7 +36,7 @@
               <v-toolbar-items>
               </v-toolbar-items>
               <v-menu bottom right offset-y>
-                <v-btn slot="activator" dark icon>
+                <v-btn dark icon>
                   <v-icon>more_vert</v-icon>
                 </v-btn>
               </v-menu>
@@ -46,7 +46,7 @@
                 <userform :value="newuser" @input="newuser=$event"></userform>
                 <v-layout justify-end row fill-height>
                   <v-btn color="warning" @click="adduser()">Save</v-btn>
-                  <v-btn color="primary" flat @click.native="userdialog=false">Discard</v-btn>
+                  <v-btn color="primary" text @click.native="userdialog=false">Discard</v-btn>
                 </v-layout>
               </v-card>
             </v-container>
@@ -68,7 +68,6 @@ import HELPERS from '../helpers';
 import fundamentcard from './Fundament/FundamentCard';
 import userlist from './ListViews/user_list';
 import userform from './Forms/user_form';
-import autocompgnd from './AutoCompleteComponents/AutocompGND';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 /* eslint no-console: ["error", { allow: ["log"] }] */
@@ -79,7 +78,6 @@ export default {
     fundamentcard,
     userlist,
     userform,
-    autocompgnd,
   },
   data() {
     return {

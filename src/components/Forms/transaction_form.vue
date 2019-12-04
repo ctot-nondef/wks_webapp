@@ -10,14 +10,14 @@
     <v-layout justify-end row fill-height>
       <v-flex xs12>
         <formlistcomponent
-          :items="transaction.price"
+          :items.sync="transaction.price"
           :itemprops="$store.state.api.schemas.transaction.properties.price.items.properties"
           label="Price"
           nodatamessage="No price values added">
           <template slot="form" slot-scope="props">
             <v-layout justify-end row fill-height wrap>
               <v-flex xs6>
-                <v-text-field box v-model="props.newitem.amount" label="Numerical Amount" type="number"></v-text-field>
+                <v-text-field filled v-model="props.newitem.amount" label="Numerical Amount" type="number"></v-text-field>
               </v-flex>
               <v-flex xs6>
                 <autocomp entity="Descriptor" v-model="props.newitem.currency" label="Currency" :multiple="false"></autocomp>
@@ -31,7 +31,7 @@
     <v-layout justify-end row fill-height>
       <v-flex xs12>
         <formlistcomponent
-          :items="transaction.actor"
+          :items.sync="transaction.actor"
           :itemprops="$store.state.api.schemas.transaction.properties.actor.items.properties"
           label="Actor"
           nodatamessage="No actors specified added"
@@ -45,7 +45,7 @@
                 <autocomp entity="Actor" v-model="props.newitem.id" label="Actor" :multiple="false"></autocomp>
               </v-flex>
               <v-flex xs12>
-                <v-textarea v-model="props.newitem.note" box label="Note" />
+                <v-textarea v-model="props.newitem.note" filled label="Note" />
               </v-flex>
             </v-layout>
           </template>
@@ -55,7 +55,7 @@
     <!-- transaction comments -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
-        <formlistcomponent :items="transaction.comments" label="Comments" nodatamessage="No comments added">
+        <formlistcomponent :items.sync="transaction.comments" label="Comments" nodatamessage="No comments added">
           <template slot="form" slot-scope="props">
           <v-flex xs5>
               <v-textarea v-model="props.newitem.textval" label="New Comment"></v-textarea>
@@ -68,18 +68,14 @@
 </template>
 <script>
 import autocomp from '../AutoCompleteComponents/Autocomp';
-import simpleautocompwrapper from '../FormComponents/SimpleAutoCompleteWrapper';
 import formlistcomponent from '../FormComponents/FormListComponent';
-import chips from '../FormComponents/Chips';
 import datecomponent from '../FormComponents/DateComponent';
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 export default {
   components: {
     autocomp,
-    simpleautocompwrapper,
     formlistcomponent,
     datecomponent,
-    chips,
   },
   props: [
     'value',

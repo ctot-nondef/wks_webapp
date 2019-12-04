@@ -7,38 +7,38 @@
           <h2 class="headline">{{ ItemData.title }}</h2>
           <div justify-center >
             <v-list two-line class="elevation-1">
-              <v-list-tile v-for="(Author, index) in ItemData.creators" avatar :key="index" >
-                <v-list-tile-avatar>
+              <v-list-item v-for="(Author, index) in ItemData.creators" :key="index" >
+                <v-list-item-avatar>
                   <v-icon class="grey lighten-1 white--text">person</v-icon>
-                </v-list-tile-avatar>
-                <v-list-tile-content>
-                  <v-list-tile-title>{{ Author.creatorType }}</v-list-tile-title>
-                  <v-list-tile-sub-title>{{ Author.firstName }} {{ Author.lastName }}</v-list-tile-sub-title>
-                </v-list-tile-content>
-              </v-list-tile>
-              <v-list-tile avatar>
-                <v-list-tile-avatar>
+                </v-list-item-avatar>
+                <v-list-item-content>
+                  <v-list-item-title>{{ Author.creatorType }}</v-list-item-title>
+                  <v-list-item-subtitle>{{ Author.firstName }} {{ Author.lastName }}</v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item avatar>
+                <v-list-item-avatar>
                   <v-icon class="grey lighten-1 white--text">access_time</v-icon>
-                </v-list-tile-avatar>
-                <v-list-tile-content>
-                  <v-list-tile-title>Erschienen</v-list-tile-title>
-                  <v-list-tile-sub-title>{{ ItemData.date }} {{ ItemData.place }}</v-list-tile-sub-title>
-                </v-list-tile-content>
-              </v-list-tile>
-              <v-list-tile avatar v-if="ItemData.itemType != 'book'">
-                <v-list-tile-avatar>
+                </v-list-item-avatar>
+                <v-list-item-content>
+                  <v-list-item-title>Erschienen</v-list-item-title>
+                  <v-list-item-subtitle>{{ ItemData.date }} {{ ItemData.place }}</v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-itemv-if="ItemData.itemType != 'book'">
+                <v-list-item-avatar>
                   <v-icon class="grey lighten-1 white--text">book</v-icon>
-                </v-list-tile-avatar>
-                <v-list-tile-content>
-                  <v-list-tile-title>Enthalten in</v-list-tile-title>
-                  <v-list-tile-sub-title v-if="ItemData.itemType == 'journalArticle'">{{ ItemData.publicationTitle }}, {{ ItemData.pages }}</v-list-tile-sub-title>
-                  <v-list-tile-sub-title v-if="ItemData.itemType == 'bookSection'">{{ ItemData.bookTitle }}, {{ ItemData.volume }} ,{{ ItemData.pages }}</v-list-tile-sub-title>
-                </v-list-tile-content>
-              </v-list-tile>
+                </v-list-item-avatar>
+                <v-list-item-content>
+                  <v-list-item-title>Enthalten in</v-list-item-title>
+                  <v-list-item-subtitle v-if="ItemData.itemType == 'journalArticle'">{{ ItemData.publicationTitle }}, {{ ItemData.pages }}</v-list-item-subtitle>
+                  <v-list-item-subtitle v-if="ItemData.itemType == 'bookSection'">{{ ItemData.bookTitle }}, {{ ItemData.volume }} ,{{ ItemData.pages }}</v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
             </v-list>
-            <v-btn dark class="accent" flat :href="`https://api.zotero.org/groups/2083331/items/${ItemData.key}?format=bib`" target="_blank">Zitation</v-btn>
-            <v-btn dark class="accent" flat :href="`https://api.zotero.org/groups/2083331/items/${ItemData.key}?format=ris`" target="_blank">Export(RIS)</v-btn>
-            <v-btn dark class="accent" flat :href="`https://api.zotero.org/groups/2083331/items/${ItemData.key}?format=bibtex`" target="_blank">Export(BibTeX)</v-btn>
+            <v-btn dark class="accent" text :href="`https://api.zotero.org/groups/2083331/items/${ItemData.key}?format=bib`" target="_blank">Zitation</v-btn>
+            <v-btn dark class="accent" text :href="`https://api.zotero.org/groups/2083331/items/${ItemData.key}?format=ris`" target="_blank">Export(RIS)</v-btn>
+            <v-btn dark class="accent" text :href="`https://api.zotero.org/groups/2083331/items/${ItemData.key}?format=bibtex`" target="_blank">Export(BibTeX)</v-btn>
           </div>
         </v-flex>
         <v-flex xs0 md12 lg1 hidden-sm-and-down></v-flex>

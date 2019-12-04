@@ -14,7 +14,7 @@
       </div>
       <v-card-actions v-if="link">
         <v-btn
-          flat
+          text
           class="primary"
           :to="link"
           >

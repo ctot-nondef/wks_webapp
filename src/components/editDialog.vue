@@ -24,7 +24,7 @@
             <component :is="componentLoader" :value="item" @input="item = Object.assign(item, $event)"></component>
             <v-layout justify-end row fill-height>
               <v-btn color="warning" @click="saveItem">Save</v-btn>
-              <v-btn color="primary" flat @click.native="discard">Discard</v-btn>
+              <v-btn color="primary" text @click.native="discard">Discard</v-btn>
             </v-layout>
           </v-card>
         </v-container>

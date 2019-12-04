@@ -7,7 +7,7 @@
         </v-flex>
         <v-flex xs12 sm2 md1 class="mr-4">
           <a href="https://www.oeaw.ac.at/acdh/acdh-home/" target="_blank" rel="noopener" aria-label="ACDH">
-            <img src="/static/acdh_logo.png" alt="ACDH" title="Austrian Center for Digital Humanities">
+            <img :src="require('../../assets/acdh_logo.png')" alt="ACDH" title="Austrian Center for Digital Humanities">
           </a>
         </v-flex>
         <v-flex xs12 sm3>

@@ -2,56 +2,56 @@
     <v-layout row wrap>
       <v-flex xs3>{{ item.date | formatDate }}</v-flex>
       <v-flex xs2>
-        <span v-for="a in item.entry_acquisition_ref" class="body-2">{{ a.name }}</span>
+        <span v-for="a in item.entry_acquisition_ref" :key="a.name" class="body-2">{{ a.name }}</span>
         <span v-if="item.entry_acquisition_ref.length === 0" class="body-2">source undefined</span>
       </v-flex>
       <v-flex xs1><v-icon>arrow_right_alt</v-icon></v-flex>
       <v-flex xs2>
-        <span v-for="a in item.entry_destitution_ref" class="body-2">{{ a.name }}</span>
+        <span v-for="a in item.entry_destitution_ref" :key="a.name" class="body-2">{{ a.name }}</span>
         <span v-if="item.entry_destitution_ref.length === 0" class="body-2">destination undefined</span>
       </v-flex>
       <v-flex xs6>
           <v-list dense>
-            <v-list-tile>
-              <v-list-tile-avatar>
+            <v-list-item>
+              <v-list-item-avatar>
                     <v-icon>person</v-icon>
-              </v-list-tile-avatar>
-              <v-list-tile-content>
+              </v-list-item-avatar>
+              <v-list-item-content>
                 <span class="title font-weight-thin">Actors</span>
-              </v-list-tile-content>
-              <v-list-tile-action>
+              </v-list-item-content>
+              <v-list-item-action>
                 <v-icon>expand_less</v-icon>
-              </v-list-tile-action>
-            </v-list-tile>
+              </v-list-item-action>
+            </v-list-item>
           </v-list>
           <v-divider></v-divider>
           <v-list v-if="actorsexpanded">
-            <v-list-tile v-for="a in item.actor">
-              <v-list-tile-content>
-                <v-list-tile-title>{{ a.role.name }} :</v-list-tile-title>
-                <v-list-tile-sub-title>{{ a.note }}</v-list-tile-sub-title>
-              </v-list-tile-content>
-              <v-list-tile-content class="align-end">{{ a.id.name }}</v-list-tile-content>
-            </v-list-tile>
+            <v-list-item v-for="a in item.actor" :key="a.id.name">
+              <v-list-item-content>
+                <v-list-item-title>{{ a.role.name }} :</v-list-item-title>
+                <v-list-item-subtitle>{{ a.note }}</v-list-item-subtitle>
+              </v-list-item-content>
+              <v-list-item-content class="align-end">{{ a.id.name }}</v-list-item-content>
+            </v-list-item>
           </v-list>
       </v-flex>
       <v-flex xs6>
           <v-list two-line subheader>
             <v-subheader inset>Price</v-subheader>
-              <v-list-tile
+              <v-list-item
                 v-for="p in item.price"
+                :key="p.currency.name"
                 avatar
-                @click=""
                 ripple
               >
-                <v-list-tile-avatar>
+                <v-list-item-avatar>
                   <v-icon>attach_money</v-icon>
-                </v-list-tile-avatar>
-                <v-list-tile-content>
-                  <v-list-tile-title>{{ p.amount }}</v-list-tile-title>
-                  <v-list-tile-sub-title>{{ p.currency.name }}</v-list-tile-sub-title>
-                </v-list-tile-content>
-              </v-list-tile>
+                </v-list-item-avatar>
+                <v-list-item-content>
+                  <v-list-item-title>{{ p.amount }}</v-list-item-title>
+                  <v-list-item-subtitle>{{ p.currency.name }}</v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
           </v-list>
       </v-flex>
     </v-layout>

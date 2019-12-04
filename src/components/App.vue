@@ -1,12 +1,12 @@
 <template>
-  <v-app>
-    <fundamentnav></fundamentnav>
-    <v-content v-if="$store.state.api.init" >
-      <router-view name="Content"></router-view>
-      <fundamentfooter></fundamentfooter>
-    </v-content>
-    <dialogs></dialogs>
-  </v-app>
+    <div>
+      <fundamentnav></fundamentnav>
+      <v-content v-if="$store.state.api.init" >
+        <router-view name="Content"/>
+        <fundamentfooter></fundamentfooter>
+      </v-content>
+      <dialogs></dialogs>
+    </div>
 </template>
 
 <script>

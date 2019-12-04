@@ -6,7 +6,6 @@
       fullscreen
       hide-overlay
       transition="dialog-bottom-transition"
-      lazy
     >
       <v-card>
         <v-toolbar tabs dark color="primary" >
@@ -44,7 +43,7 @@
                 <transactionform v-if="$store.state.api.schemas.transaction" :value="newtransaction" @input="newtransaction=$event" ></transactionform>
                 <v-layout justify-end row fill-height>
                   <v-btn color="warning" @click="createAndSelect()">Save & Select</v-btn>
-                  <v-btn color="primary" flat @click.native="newtransaction={}">Clear Form</v-btn>
+                  <v-btn color="primary" text @click.native="newtransaction={}">Clear Form</v-btn>
                 </v-layout>
               </v-card>
             </v-tab-item>

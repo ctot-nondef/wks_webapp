@@ -45,7 +45,7 @@
             <v-toolbar-items>
             </v-toolbar-items>
             <v-menu bottom right offset-y>
-              <v-btn slot="activator" dark icon>
+              <v-btn dark icon>
                 <v-icon>more_vert</v-icon>
               </v-btn>
             </v-menu>
@@ -55,7 +55,7 @@
               <userform :value="cedit" @input="cedits=$event"></userform>
               <v-layout justify-end row fill-height>
                 <v-btn color="warning" @click="saveuser()">Save</v-btn>
-                <v-btn color="primary" flat @click.native="userdialog=false">Discard</v-btn>
+                <v-btn color="primary" text @click.native="userdialog=false">Discard</v-btn>
               </v-layout>
             </v-card>
           </v-container>
@@ -68,8 +68,6 @@
 <script>
   /* eslint-disable no-param-reassign,no-underscore-dangle */
 import { mapMutations, mapActions } from 'vuex';
-
-import fundamentcard from '../Fundament/FundamentCard';
 import userform from '../Forms/user_form';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
@@ -77,7 +75,6 @@ import userform from '../Forms/user_form';
 
 export default {
     components: {
-      fundamentcard,
       userform,
     },
     data() {

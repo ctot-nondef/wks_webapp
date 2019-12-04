@@ -45,14 +45,14 @@
                 <autocompgnd :value="iactor" :type="itype" :multiple="false" @input="iactor=$event"></autocompgnd>
                 <v-layout justify-end row fill-height>
                   <v-btn color="warning" @click="importactor()">Import</v-btn>
-                  <v-btn color="primary" flat @click.native="iactor=[]">Clear</v-btn>
+                  <v-btn color="primary" text @click.native="iactor=[]">Clear</v-btn>
                 </v-layout>
               </v-card>
               <v-card color="grey lighten-2" class="pa-4">
                 <actorform v-if="$store.state.api.schemas.actor" :value="newactor" @input="newactor=$event"></actorform>
                 <v-layout justify-end row fill-height>
                   <v-btn color="warning" @click="addactor()">Save</v-btn>
-                  <v-btn color="primary" flat @click.native="actordialog=false">Discard</v-btn>
+                  <v-btn color="primary" text @click.native="actordialog=false">Discard</v-btn>
                 </v-layout>
               </v-card>
             </v-container>
@@ -119,7 +119,6 @@ export default {
         if (this.iactor.id) {
           const id = this.iactor.id.split('/').slice(-1)[0];
           this.APIS.GND.DIRECT.get(id).then((res) => {
-            console.log(res.data);
             this.newactor = this.mapGNDImport(this.itype, res.data);
           });
         }

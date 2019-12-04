@@ -156,7 +156,7 @@ const mutations = {
 
 const actions = {
   // eslint-disable-next-line no-shadow
-  init({ state, commit, getters }, config) {
+  init({ state, commit }, config) {
     commit('setApiLib', api);
     commit('setApiURL', `${config.config.api}`);
     if (config.pstate !== null && config.pstate.pState.api) commit('setState', config.pstate.pState.api);
