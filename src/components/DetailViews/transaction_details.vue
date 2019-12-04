@@ -1,5 +1,5 @@
 <template>
-    <v-layout row fill-height wrap>
+    <v-layout row wrap>
       <v-flex xs4>
         <singleview
           icon="calendar_today"
@@ -9,55 +9,53 @@
       </v-flex>
       <v-flex xs4>
         <listview
-                icon="assignment"
-                title="Source"
-                :items="item.entry_acquisition_ref"
-                :paths="{
-                  itemtitle: 'name',
-                  itemsubtitle: 'originalTitle',
-                  collapsed: 'name',
-                }"
-        ></listview>
+          icon="assignment"
+          title="Source"
+          :items="item.entry_acquisition_ref"
+          :paths="{
+            itemtitle: 'name',
+            itemsubtitle: 'originalTitle',
+            collapsed: 'name',
+          }"
+        />
       </v-flex>
       <v-flex xs4>
         <listview
-                icon="assignment"
-                title="Target"
-                :items="item.entry_destitution_ref"
-                :paths="{
-                  itemtitle: 'name',
-                  itemsubtitle: 'originalTitle',
-                  collapsed: 'name',
-                }"
-        ></listview>
+          icon="assignment"
+          title="Target"
+          :items="item.entry_destitution_ref"
+          :paths="{
+            itemtitle: 'name',
+            itemsubtitle: 'originalTitle',
+            collapsed: 'name',
+          }"
+        />
       </v-flex>
       <v-flex xs6>
         <listview
-            icon="person"
-            title="Actors"
-            :items="item.actor"
-            :paths="{
-              itemtitle: 'role.name',
-              itemsubtitle: 'note',
-              itemcontent: 'id.name',
-              collapsed: 'id.name',
-            }"
-            :expanded="false"
-            :expandable="true"
-        ></listview>
+          icon="person"
+          title="Actors"
+          :items="item.actor"
+          :paths="{
+            itemtitle: 'role.name',
+            itemsubtitle: 'note',
+            itemcontent: 'id.name',
+            collapsed: 'id.name',
+          }"
+        />
       </v-flex>
       <v-flex xs6>
         <listview
-            icon="attach_money"
-            title="Price"
-            :items="item.price"
-            :paths="{
-              itemtitle: 'currency.name',
-              itemcontent: 'amount',
-            }"
-            :expanded="false"
-            :expandable="true"
-        ></listview>
+          icon="attach_money"
+          title="Price"
+          :items="item.price"
+          :paths="{
+            itemtitle: 'currency.name',
+            itemcontent: 'amount',
+          }"
+          :expanded="false"
+          :expandable="true"
+        />
       </v-flex>
     </v-layout>
 </template>

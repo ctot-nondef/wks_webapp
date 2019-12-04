@@ -11,17 +11,17 @@
         <v-list-item-content>
           <span class="body-2 font-weight-light">{{ title }}</span>
         </v-list-item-content>
-        <v-list-item-content v-if="!expanded">
+        <v-list-item-content v-if="!intexpanded">
           <span class="body-2">{{ _.get( items[0], paths.collapsed ) || "n/a" }}</span>
         </v-list-item-content>
-        <v-list-item-action @click="expanded = !expanded" v-if="expandable">
-          <v-btn icon ripple><v-icon>{{ expanded ? "expand_less" : "expand_more"  }}</v-icon></v-btn>
+        <v-list-item-action @click="intexpanded = !intexpanded" v-if="expandable">
+          <v-btn icon ripple><v-icon>{{ intexpanded ? "expand_less" : "expand_more"  }}</v-icon></v-btn>
         </v-list-item-action>
       </v-list-item>
     </v-list>
     <v-divider></v-divider>
     <v-list
-      v-if="expanded"
+      v-if="intexpanded"
       dense
       class="elevation-1"
     >
@@ -62,6 +62,16 @@
         type: Boolean,
         default: () => true,
       },
+    },
+    data() {
+      return {
+        intexpanded: false,
+      }
+    },
+    watch: {
+      expanded: (v) => {
+        this.intexpanded = v;
+      }
     },
   };
 </script>
