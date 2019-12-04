@@ -13,7 +13,9 @@
                 title="Source"
                 :items="item.entry_acquisition_ref"
                 :paths="{
-                  itemcontent: 'name',
+                  itemtitle: 'name',
+                  itemsubtitle: 'originalTitle',
+                  collapsed: 'name',
                 }"
         ></listview>
       </v-flex>
@@ -23,7 +25,9 @@
                 title="Target"
                 :items="item.entry_destitution_ref"
                 :paths="{
-                  itemcontent: 'name',
+                  itemtitle: 'name',
+                  itemsubtitle: 'originalTitle',
+                  collapsed: 'name',
                 }"
         ></listview>
       </v-flex>

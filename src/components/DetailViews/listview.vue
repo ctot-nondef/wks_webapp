@@ -12,7 +12,7 @@
           <span class="body-2 font-weight-light">{{ title }}</span>
         </v-list-item-content>
         <v-list-item-content v-if="!expanded">
-          <span class="body-2">{{ _.get( items[0], paths.itemcontent ) || "n/a" }}</span>
+          <span class="body-2">{{ _.get( items[0], paths.collapsed ) || "n/a" }}</span>
         </v-list-item-content>
         <v-list-item-action @click="expanded = !expanded" v-if="expandable">
           <v-btn icon ripple><v-icon>{{ expanded ? "expand_less" : "expand_more"  }}</v-icon></v-btn>

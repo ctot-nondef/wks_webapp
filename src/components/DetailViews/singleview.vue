@@ -17,10 +17,19 @@
 </template>
 <script>
   export default {
-    props: [
-      'icon',
-      'title',
-      'item',
-    ],
+    props: {
+      icon: {
+        type: String,
+        default: () => "code",
+      },
+      title: {
+        type: String,
+        default: () => "",
+      },
+      item: {
+        type: String,
+        default: () => "",
+      },
+    },
   };
 </script>
