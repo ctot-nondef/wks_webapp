@@ -11,48 +11,30 @@
         <span v-if="item.entry_destitution_ref.length === 0" class="body-2">destination undefined</span>
       </v-flex>
       <v-flex xs6>
-          <v-list dense>
-            <v-list-item>
-              <v-list-item-avatar>
-                    <v-icon>person</v-icon>
-              </v-list-item-avatar>
-              <v-list-item-content>
-                <span class="title font-weight-thin">Actors</span>
-              </v-list-item-content>
-              <v-list-item-action>
-                <v-icon>expand_less</v-icon>
-              </v-list-item-action>
-            </v-list-item>
-          </v-list>
-          <v-divider></v-divider>
-          <v-list v-if="actorsexpanded">
-            <v-list-item v-for="a in item.actor" :key="a.id.name">
-              <v-list-item-content>
-                <v-list-item-title>{{ a.role.name }} :</v-list-item-title>
-                <v-list-item-subtitle>{{ a.note }}</v-list-item-subtitle>
-              </v-list-item-content>
-              <v-list-item-content class="align-end">{{ a.id.name }}</v-list-item-content>
-            </v-list-item>
-          </v-list>
+        <listview
+            icon="person"
+            title="Actors"
+            :items="item.actor"
+            :paths="{
+              itemtitle: 'role.name',
+              itemsubtitle: 'note',
+              itemcontent: 'id.name',
+              collapsed: 'id.name',
+            }"
+                :expanded="true"
+        ></listview>
       </v-flex>
       <v-flex xs6>
-          <v-list two-line subheader>
-            <v-subheader inset>Price</v-subheader>
-              <v-list-item
-                v-for="p in item.price"
-                :key="p.currency.name"
-                avatar
-                ripple
-              >
-                <v-list-item-avatar>
-                  <v-icon>attach_money</v-icon>
-                </v-list-item-avatar>
-                <v-list-item-content>
-                  <v-list-item-title>{{ p.amount }}</v-list-item-title>
-                  <v-list-item-subtitle>{{ p.currency.name }}</v-list-item-subtitle>
-                </v-list-item-content>
-              </v-list-item>
-          </v-list>
+        <listview
+            icon="attach_money"
+            title="Price"
+            :items="item.price"
+            :paths="{
+              itemtitle: 'currency.name',
+              itemcontent: 'amount',
+            }"
+                :expanded="true"
+        ></listview>
       </v-flex>
     </v-layout>
 </template>
@@ -61,8 +43,12 @@
 
   import { mapActions, mapGetters } from 'vuex';
   import filters from '../../helpers/filters';
+  import listview from './listview';
 
   export default {
+    components: {
+      listview,
+    },
     props: [
       'id',
     ],
@@ -70,6 +56,7 @@
     data() {
       return {
         item: {},
+        loading: {},
         actorsexpanded: true,
       };
     },
@@ -112,3 +99,7 @@
 
   };
 </script>
+
+<style>
+
+</style>

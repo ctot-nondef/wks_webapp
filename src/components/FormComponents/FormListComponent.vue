@@ -234,7 +234,7 @@ export default {
 </script>
 
 <style>
-.formlist {
-  background: #f1f1f1;
-}
+  .formlist {
+    background: #f1f1f1;
+  }
 </style>
