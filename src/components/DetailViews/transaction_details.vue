@@ -1,14 +1,31 @@
 <template>
-    <v-layout row wrap>
-      <v-flex xs3>{{ item.date | formatDate }}</v-flex>
-      <v-flex xs2>
-        <span v-for="a in item.entry_acquisition_ref" :key="a.name" class="body-2">{{ a.name }}</span>
-        <span v-if="item.entry_acquisition_ref.length === 0" class="body-2">source undefined</span>
+    <v-layout row fill-height wrap>
+      <v-flex xs4>
+        <singleview
+          icon="calendar_today"
+          title="Date"
+          :item="item.date | formatDate"
+        />
       </v-flex>
-      <v-flex xs1><v-icon>arrow_right_alt</v-icon></v-flex>
-      <v-flex xs2>
-        <span v-for="a in item.entry_destitution_ref" :key="a.name" class="body-2">{{ a.name }}</span>
-        <span v-if="item.entry_destitution_ref.length === 0" class="body-2">destination undefined</span>
+      <v-flex xs4>
+        <listview
+                icon="assignment"
+                title="Source"
+                :items="item.entry_acquisition_ref"
+                :paths="{
+                  itemcontent: 'name',
+                }"
+        ></listview>
+      </v-flex>
+      <v-flex xs4>
+        <listview
+                icon="assignment"
+                title="Target"
+                :items="item.entry_destitution_ref"
+                :paths="{
+                  itemcontent: 'name',
+                }"
+        ></listview>
       </v-flex>
       <v-flex xs6>
         <listview
@@ -21,7 +38,8 @@
               itemcontent: 'id.name',
               collapsed: 'id.name',
             }"
-                :expanded="true"
+            :expanded="false"
+            :expandable="true"
         ></listview>
       </v-flex>
       <v-flex xs6>
@@ -33,7 +51,8 @@
               itemtitle: 'currency.name',
               itemcontent: 'amount',
             }"
-                :expanded="true"
+            :expanded="false"
+            :expandable="true"
         ></listview>
       </v-flex>
     </v-layout>
@@ -44,20 +63,22 @@
   import { mapActions, mapGetters } from 'vuex';
   import filters from '../../helpers/filters';
   import listview from './listview';
+  import singleview from './singleview';
 
   export default {
     components: {
       listview,
+      singleview,
     },
     props: [
       'id',
+      'expanded',
     ],
     mixins: [filters],
     data() {
       return {
         item: {},
         loading: {},
-        actorsexpanded: true,
       };
     },
     methods: {

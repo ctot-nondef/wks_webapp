@@ -4,7 +4,7 @@ export default {
   filters: {
     formatDate(value) {
       if (value) {
-        return moment(String(value)).format('YYYY MM  DD');
+        return moment(String(value)).format('DD. MM. YYYY');
       }
       return value;
     },

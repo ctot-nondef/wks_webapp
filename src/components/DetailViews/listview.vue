@@ -2,18 +2,19 @@
   <div>
     <v-list
       class="elevation-1"
+      height="70"
     >
       <v-list-item>
         <v-list-item-avatar>
               <v-icon>{{ icon }}</v-icon>
         </v-list-item-avatar>
         <v-list-item-content>
-          <span class="title font-weight-light">{{ title }}</span>
+          <span class="body-2 font-weight-light">{{ title }}</span>
         </v-list-item-content>
         <v-list-item-content v-if="!expanded">
-          <span class="body-2">{{ _.get( items[0], paths.itemcontent ) }}</span>
+          <span class="body-2">{{ _.get( items[0], paths.itemcontent ) || "n/a" }}</span>
         </v-list-item-content>
-        <v-list-item-action @click="expanded = !expanded">
+        <v-list-item-action @click="expanded = !expanded" v-if="expandable">
           <v-btn icon ripple><v-icon>{{ expanded ? "expand_less" : "expand_more"  }}</v-icon></v-btn>
         </v-list-item-action>
       </v-list-item>
@@ -35,25 +36,32 @@
   </div>
 </template>
 <script>
-  /* eslint-disable no-underscore-dangle */
-import filters from '../../helpers/filters';
-
   export default {
-    props: [
-      'icon',
-      'title',
-      'items',
-      'paths',
-      'expanded',
-    ],
-    mixins: [filters],
-    data() {
-      return {
-      };
-    },
-    methods: {
-    },
-    watch: {
+    props: {
+      icon: {
+        type: String,
+        default: () => "code",
+      },
+      title: {
+        type: String,
+        default: () => "",
+      },
+      items: {
+        type: Array,
+        default: () => [],
+      },
+      paths: {
+        type: Object,
+        default: () => {},
+      },
+      expanded: {
+        type: Boolean,
+        default: () => false,
+      },
+      expandable: {
+        type: Boolean,
+        default: () => true,
+      },
     },
   };
 </script>

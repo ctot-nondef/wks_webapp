@@ -176,7 +176,7 @@
               <v-btn color="warning" @click="$refs.transactionpopup.openPopup('acquisition')">Add or link Transaction</v-btn>
             </v-flex>
             <v-flex xs12>
-              <transactiondetails v-if="entry.acquisition_ref" :id="entry.acquisition_ref"></transactiondetails>
+              <transactiondetails v-if="entry.acquisition_ref" :id="entry.acquisition_ref" expanded="false"></transactiondetails>
             </v-flex>
           </v-layout>
         </div>
