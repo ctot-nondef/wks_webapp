@@ -31,7 +31,7 @@
 <script>
   /* eslint-disable no-param-reassign,no-underscore-dangle */
   import fundamentcard from '../Fundament/FundamentCard';
-  import list from './table';
+  import list from './list';
   import filterlist from './filter';
   import editdialog from '../editDialog';
 

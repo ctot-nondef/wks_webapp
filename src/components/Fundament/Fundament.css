@@ -22,3 +22,5 @@ h1:after, h3:after {
 h1:after {
   margin-left: calc(50% - 30px);
 }
+
+.overflow-y-hidden{overflow-y:hidden}

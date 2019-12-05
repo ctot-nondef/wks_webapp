@@ -33,7 +33,7 @@
 import { mapActions } from 'vuex';
 
 import fundamentcard from '../Fundament/FundamentCard';
-import list from '../genericViews/table';
+import list from '../genericViews/list';
 import editdialog from '../editDialog';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */

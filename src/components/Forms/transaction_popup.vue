@@ -59,7 +59,7 @@
 
   import { mapActions } from 'vuex';
   import transactionform from '../Forms/transaction_form';
-  import list from '../genericViews/table';
+  import list from '../genericViews/list';
 
   export default {
     name: 'transaction_popup',

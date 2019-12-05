@@ -168,7 +168,7 @@
               <v-label>Acquisition</v-label>
             </v-flex>
           </v-layout>
-          <v-layout justify-start row fill-height wrap>
+          <v-layout row wrap>
             <v-flex xs6>
               <autocomp entity="Descriptor" v-model="entry.acquisition_type" label="Type" :multiple="false"></autocomp>
             </v-flex>
