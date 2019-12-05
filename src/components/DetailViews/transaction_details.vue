@@ -1,10 +1,10 @@
 <template>
   <div>
-    <v-layout>
-      <v-flex xs12>
-        <v-btn icon ripple><v-icon>{{ intexpanded ? "expand_less" : "expand_more"  }}</v-icon></v-btn>
-      </v-flex>
-    </v-layout>
+    <v-col cols="12">
+      <v-row justify="end">
+        <v-btn icon ripple @click="intexpanded = !intexpanded" ><v-icon>{{ intexpanded ? "expand_less" : "expand_more"  }}</v-icon></v-btn>
+      </v-row>
+    </v-col>
     <v-layout row wrap>
       <v-flex xs4>
         <singleview
@@ -23,6 +23,7 @@
             itemsubtitle: 'originalTitle',
             collapsed: 'name',
           }"
+          :expanded="intexpanded"
         />
       </v-flex>
       <v-flex xs4>
@@ -35,6 +36,7 @@
             itemsubtitle: 'originalTitle',
             collapsed: 'name',
           }"
+          :expanded="intexpanded"
         />
       </v-flex>
       <v-flex xs6>
@@ -48,6 +50,7 @@
             itemcontent: 'id.name',
             collapsed: 'id.name',
           }"
+          :expanded="intexpanded"
         />
       </v-flex>
       <v-flex xs6>
@@ -59,8 +62,7 @@
             itemtitle: 'currency.name',
             itemcontent: 'amount',
           }"
-          :expanded="false"
-          :expandable="true"
+          :expanded="intexpanded"
         />
       </v-flex>
     </v-layout>
@@ -79,15 +81,22 @@
       listview,
       singleview,
     },
-    props: [
-      'id',
-      'expanded',
-    ],
+    props: {
+      id: {
+        type: String,
+        default: () => "",
+      },
+      expanded: {
+        type: Boolean,
+        default: () => true,
+      },
+    },
     mixins: [filters],
     data() {
       return {
         item: {},
         loading: {},
+        intexpanded: true,
       };
     },
     methods: {
@@ -125,8 +134,13 @@
         },
         deep: true,
       },
+      expanded: {
+        immediate: true,
+        handler(a) {
+          this.intexpanded = a;
+        },
+      },
     },
-
   };
 </script>
 

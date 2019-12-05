@@ -14,14 +14,14 @@
         <v-list-item-content v-if="!intexpanded">
           <span class="body-2">{{ _.get( items[0], paths.collapsed ) || "n/a" }}</span>
         </v-list-item-content>
-        <v-list-item-action @click="intexpanded = !intexpanded" v-if="expandable">
-          <v-btn icon ripple><v-icon>{{ intexpanded ? "expand_less" : "expand_more"  }}</v-icon></v-btn>
+        <v-list-item-action v-if="expandable">
+          <v-btn icon :disabled="items.length <= 0"  @click="intexpanded = !intexpanded"><v-icon>{{ intexpanded ? "expand_less" : "expand_more"  }}</v-icon></v-btn>
         </v-list-item-action>
       </v-list-item>
     </v-list>
     <v-divider></v-divider>
     <v-list
-      v-if="intexpanded"
+      v-if="intexpanded && (items.length > 0)"
       dense
       class="elevation-1"
     >
@@ -69,9 +69,12 @@
       }
     },
     watch: {
-      expanded: (v) => {
-        this.intexpanded = v;
-      }
+      expanded: {
+        immediate: true,
+        handler(a) {
+          this.intexpanded = a;
+        },
+      },
     },
   };
 </script>
