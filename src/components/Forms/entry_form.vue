@@ -174,11 +174,11 @@
             </v-flex>
             <v-flex xs6>
               <v-btn color="warning" @click="$refs.transactionpopup.openPopup('acquisition')" ><v-icon dark>add</v-icon> Add or link</v-btn>
-              <v-btn color="error" @click="entry.acquisition_ref = null" :disabled="!entry.acquisition_ref"><v-icon dark>link_off</v-icon> Unlink</v-btn>
-              <v-btn color="warning" @click="$refs.editdialog.getItem('transaction', entry.acquisition_ref._id)" :disabled="!entry.acquisition_ref" ><v-icon dark>edit</v-icon> Edit</v-btn>
+              <v-btn color="error" class="ml-1" @click="entry.acquisition_ref = null" :disabled="!entry.acquisition_ref"><v-icon dark>link_off</v-icon> Unlink</v-btn>
+              <v-btn color="warning" class="ml-1" @click="$refs.editdialog.getItem('transaction', entry.acquisition_ref._id)" :disabled="!entry.acquisition_ref" ><v-icon dark>edit</v-icon> Edit</v-btn>
             </v-flex>
             <v-flex xs12>
-              <transactiondetails v-if="entry.acquisition_ref" :id="entry.acquisition_ref" :expanded="false"></transactiondetails>
+              <transactiondetails v-if="entry.acquisition_ref" :id="entry.acquisition_ref" :expanded="false" ref="acqdetails"></transactiondetails>
             </v-flex>
           </v-layout>
         </div>
@@ -199,11 +199,11 @@
             </v-flex>
             <v-flex xs6>
               <v-btn color="warning" @click="$refs.transactionpopup.openPopup('destitution')" ><v-icon dark>add</v-icon> Add or link</v-btn>
-              <v-btn color="error" @click="entry.destitution_ref = null" :disabled="!entry.destitution_ref"><v-icon dark>link_off</v-icon> Unlink</v-btn>
-              <v-btn color="warning" @click="$refs.editdialog.getItem('transaction', entry.destitution_ref._id)" :disabled="!entry.destitution_ref" ><v-icon dark>edit</v-icon> Edit</v-btn>
+              <v-btn color="error" class="ml-1" @click="entry.destitution_ref = null" :disabled="!entry.destitution_ref"><v-icon dark>link_off</v-icon> Unlink</v-btn>
+              <v-btn color="warning" class="ml-1" @click="$refs.editdialog.getItem('transaction', entry.destitution_ref._id)" :disabled="!entry.destitution_ref" ><v-icon dark>edit</v-icon> Edit</v-btn>
             </v-flex>
             <v-flex xs12>
-              <transactiondetails v-if="entry.destitution_ref" :id="entry.destitution_ref" :expanded="false"></transactiondetails>
+              <transactiondetails v-if="entry.destitution_ref" :id="entry.destitution_ref" :expanded="false" ref="destdetails"></transactiondetails>
             </v-flex>
           </v-layout>
         </div>
@@ -280,7 +280,7 @@
     </v-layout>
     <!-- transaction selection popup -->
     <transactionpopup @selectTransactionRef="pickTransactionRef($event)" ref="transactionpopup"></transactionpopup>
-    <editdialog :title="`Edit Transaction`" ref="editdialog" />
+    <editdialog :title="`Edit Transaction`" ref="editdialog" @close="refreshdetails" />
   </div>
 </template>
 <script>
@@ -410,6 +410,10 @@ export default {
       this.$set(this.entry, `${e.target}_ref`, e.ref);
       this.returnObject();
     },
+    refreshdetails() {
+      this.$refs.acqdetails.refresh();
+      this.$refs.destdetails.refresh();
+    }
   },
   mounted() {
     this.initVals();

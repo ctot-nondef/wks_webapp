@@ -32,10 +32,10 @@
                 <v-btn v-if="entitytype === 'transaction'" fab dark small color="primary" @click="$emit('select', item)">
                   <v-icon dark>collections_bookmark</v-icon>
                 </v-btn>
-                <v-btn fab dark small color="warning" @click="$refs.editdialog.getItem(entitytype, item._id)">
+                <v-btn fab dark small color="warning" class="ml-1"  @click="$refs.editdialog.getItem(entitytype, item._id)">
                   <v-icon dark>edit</v-icon>
                 </v-btn>
-                <v-btn fab dark small color="error" @click="deleteRequest(item)">
+                <v-btn fab dark small color="error" class="ml-1"  @click="deleteRequest(item)">
                   <v-icon dark>delete</v-icon>
                 </v-btn>
               </span>
@@ -154,7 +154,7 @@ export default {
           populate: JSON.stringify(
             this.currentHeaders.filter(
               // eslint-disable-next-line no-confusing-arrow
-              h => this.getPathsByName(this.entitytype).indexOf(h.value) !== -1 ? h : null,
+              h => this.getPathsByName(this.entitytype).concat(this.getReversePathsByName(this.entitytype)).indexOf(h.value) !== -1 ? h : null,
             ).map(p => ({ path: p.value })),
           ),
         }).then((res) => {
@@ -190,6 +190,7 @@ export default {
         'getListHeadersByName',
         'getFiltersByName',
         'getPathsByName',
+        'getReversePathsByName',
       ]),
       currentHeaders() {
         if (this.headers) return this.headers;

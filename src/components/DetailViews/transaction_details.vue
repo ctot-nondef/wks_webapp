@@ -61,6 +61,7 @@
           :paths="{
             itemtitle: 'currency.name',
             itemcontent: 'amount',
+            collapsed: 'amount',
           }"
           :expanded="intexpanded"
         />
@@ -116,6 +117,9 @@
           this.item = res.data[0];
         });
       },
+      refresh() {
+        if(this.item._id) this.getItem(this.item._id);
+      }
     },
     computed: {
       ...mapGetters('api', [
