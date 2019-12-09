@@ -78,21 +78,25 @@ export default {
           this.querySelections(newval);
         }
       },
-      value(val) {
-        if (this.multiple === true) {
-          if (Array.isArray(val)) {
+      value: {
+        deep: true,
+        immediate: true,
+        handler(val) {
+          if (this.multiple === true) {
+            if (Array.isArray(val)) {
+              this.select = val;
+              this.items = val;
+            } else {
+              this.select = [];
+              this.items = [];
+            }
+          } else if (typeof val === 'object' && val !== null) {
             this.select = val;
-            this.items = val;
+            this.items.push(val);
           } else {
-            this.select = [];
+            this.select = {};
             this.items = [];
           }
-        } else if (typeof val === 'object' && val !== null) {
-          this.select = val;
-          this.items.push(val);
-        } else {
-          this.select = {};
-          this.items = [];
         }
       },
     },

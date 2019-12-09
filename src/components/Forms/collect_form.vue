@@ -22,7 +22,7 @@
           <template slot="form" slot-scope="props">
             <v-layout justify-end row fill-height wrap>
               <v-flex xs6>
-                  <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"></autocomp>
+                <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"></autocomp>
               </v-flex>
               <v-flex xs6>
                 <autocomp entity="Actor" v-model="props.newitem.id" label="Collector" :multiple="false"></autocomp>

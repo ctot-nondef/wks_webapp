@@ -82,7 +82,7 @@
         <v-layout v-if="!simpleform || editingMode" justify-start row fill-height wrap class="py-3">
           <slot name="form" :newitem="newitem"></slot>
         </v-layout>
-        <v-layout v-if="simpleform && !editingMode" justify-start row fill-height wrap class="py-3">
+        <v-layout v-else-if="simpleform && !editingMode" justify-start row fill-height wrap class="py-3">
           <slot name="simpleform" :newitems="newitems"></slot>
         </v-layout>
       </v-flex>
@@ -149,7 +149,6 @@ export default {
       this.$emit('update:items', a);
     },
     editItem(index) {
-      this.editingMode = true;
       this.editingItemIndex = index;
       this.editedItem = this.items[index];
       Object.keys(this.itemprops).forEach((key) => {
@@ -157,6 +156,7 @@ export default {
           this.$set(this.newitem, key, this.editedItem[key] || '');
         }
       });
+      this.editingMode = true;
     },
     cancelEditing() {
       this.editingMode = false;
