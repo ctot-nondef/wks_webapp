@@ -8,10 +8,6 @@
       :options.sync="pagination"
       :footer-props="{
         showFirstLastPage: true,
-        firstIcon: 'mdi-arrow-collapse-left',
-        lastIcon: 'mdi-arrow-collapse-right',
-        prevIcon: 'mdi-minus',
-        nextIcon: 'mdi-plus',
         'items-per-page-options': [10, 20, 50, 100, 250],
       }"
       class="elevation-1"

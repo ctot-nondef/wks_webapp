@@ -1,12 +1,12 @@
 <template>
   <div class="">
+    <!-- inventory identifiers -->
     <v-layout justify-end row fill-height>
-      <!-- inventory identifiers -->
       <chips :items="inventory.identifier"/>
     </v-layout>
+    <!-- inventory name -->
     <v-layout justify-start row fill-height>
       <v-flex xs10>
-        <!-- inventory name -->
         <v-text-field v-model="inventory.name" filled class="nameinput" label="Name" @input="returnObject"></v-text-field>
       </v-flex>
     </v-layout>
@@ -202,7 +202,6 @@ import formlistcomponent from '../FormComponents/FormListComponent';
 import simpleautocompwrapper from '../FormComponents/SimpleAutoCompleteWrapper';
 import chips from '../FormComponents/Chips';
 
-
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 export default {
   components: {
@@ -254,9 +253,6 @@ export default {
     },
   },
   methods: {
-    setEditingToRead(prop) {
-      this.$set(this, prop, true);
-    },
     returnObject() {
       this.$emit('input', this.inventory);
     },
