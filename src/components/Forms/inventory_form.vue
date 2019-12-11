@@ -7,7 +7,7 @@
     <!-- inventory name -->
     <v-layout justify-start row fill-height>
       <v-flex xs10>
-        <v-text-field v-model="inventory.name" filled class="nameinput" label="Name" @input="returnObject"></v-text-field>
+        <v-text-field v-model="inventory.name" filled class="nameinput" label="Name" />
       </v-flex>
     </v-layout>
     <!-- inventory partOf -->
@@ -32,10 +32,10 @@
           :simpleformavail="true">
           <template slot="form" slot-scope="props">
             <v-flex xs6>
-                <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"></autocomp>
+                <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"/>
             </v-flex>
             <v-flex xs6>
-              <autocomp entity="Actor" v-model="props.newitem.id" label="Creator" :multiple="false"></autocomp>
+              <autocomp entity="Actor" v-model="props.newitem.id" label="Creator" :multiple="false"/>
             </v-flex>
             <v-flex xs12>
               <v-textarea filled height="70"  v-model="props.newitem.note" label="Note" />
@@ -48,7 +48,7 @@
                 label="Sammler"
                 :multiple="false"
                 @input="simpleprops.newitems[0] = {id: $event, role: {name: 'Sammler', _id: '5cd2922a1cbd4a00139b6e14'}, note: 'entered via quickform'}"
-              ></autocomp>
+              />
             </v-flex>
             <v-flex xs6>
               <autocomp
@@ -56,7 +56,7 @@
                 label="Aktueller Eigentümer"
                 :multiple="false"
                 @input="simpleprops.newitems[1] = {id: $event, role: {name: 'Aktueller Eigentümer', _id: '5d1201568997750013ca6740'}, note: 'entered via quickform'}"
-              ></autocomp>
+              />
             </v-flex>
             <v-flex xs6>
               <autocomp
@@ -64,7 +64,7 @@
                 label="Verfasser"
                 :multiple="false"
                 @input="simpleprops.newitems[2] = {id: $event, role: {name: 'Verfasser', _id: '5c90a0119ca403074db617f5'}, note: 'entered via quickform'}"
-              ></autocomp>
+              />
             </v-flex>
             <v-flex xs6>
               <autocomp
@@ -72,7 +72,7 @@
                 label="Verleger"
                 :multiple="false"
                 @input="simpleprops.newitems[3] = {id: $event, role: {name: 'Verleger', _id: '5c90a0119ca403074db617f0'}, note: 'entered via quickform'}"
-              ></autocomp>
+              />
             </v-flex>
           </template>
         </formlistcomponent>
@@ -98,8 +98,8 @@
                 <img :src="`${$store.state.api.url}/asset/uploads/thumbs/${item.ref.name.split('.')[0]}_thumb.jpg`">
               </v-list-item-avatar>
               <v-list-item-content>
-                <v-list-item-title v-html="item.ref.name"></v-list-item-title>
-                <v-list-item-subtitle v-html="item.ref.path"></v-list-item-subtitle>
+                <v-list-item-title v-html="item.ref.name"/>
+                <v-list-item-subtitle v-html="item.ref.path"/>
               </v-list-item-content>
               <v-btn fab dark small color="error" @click="removeimage(index)">
                 <v-icon dark>delete</v-icon>
@@ -107,14 +107,14 @@
             </v-list-item>
           </template>
         </v-list>
-        <v-text-field label="Select PDF Document" filled @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
+        <v-text-field label="Select PDF Document" filled @click='pickFile' v-model='imageName' prepend-icon='attach_file'/>
         <input type="file" style="display: none" ref="image" accept="application/pdf" @change="onFilePicked">
       </v-flex>
     </v-layout>
     <!-- inventory transcription -->
    <v-layout justify-start row fill-height>
      <v-flex xs12>
-       <v-textarea v-model="inventory.transcription" label="Transcription"></v-textarea>
+       <v-textarea v-model="inventory.transcription" label="Transcription"/>
      </v-flex>
    </v-layout>
     <!-- inventory classifications -->
@@ -130,10 +130,10 @@
           <template slot="form" slot-scope="props">
             <v-layout justify-end row fill-height wrap>
               <v-flex xs6>
-                <autocomp entity="Descriptor" filter="KEYWORD" v-model="props.newitem.aspect" label="Aspect" :multiple="false"></autocomp>
+                <autocomp entity="Descriptor" filter="KEYWORD" v-model="props.newitem.aspect" label="Aspect" :multiple="false"/>
               </v-flex>
               <v-flex xs6>
-                <autocomp entity="Descriptor" v-model="props.newitem.descriptor" label="Descriptor" :multiple="false"></autocomp>
+                <autocomp entity="Descriptor" v-model="props.newitem.descriptor" label="Descriptor" :multiple="false"/>
               </v-flex>
               <v-flex xs12>
                 <v-textarea filled v-model="props.newitem.note" label="Note" />
@@ -148,7 +148,7 @@
                 label="Quelle"
                 :multiple="false"
                 @input="simpleprops.newitems[0] = {descriptor: $event, aspect: {name: 'Quelle', _id: '5d1204ac8997750013ca6743'}, note: 'entered via quickform'}"
-              ></autocomp>
+              />
             </v-flex>
             <v-flex xs6>
               <autocomp
@@ -156,7 +156,7 @@
                 label="Sprache"
                 :multiple="false"
                 @input="simpleprops.newitems[1] = {descriptor: $event, aspect: {name: 'Sprache', _id: '5d1205ce8997750013ca6744'}, note: 'entered via quickform'}"
-              ></autocomp>
+              />
             </v-flex>
             <v-flex xs6>
               <autocomp
@@ -165,7 +165,7 @@
                 label="Auktionsort"
                 :multiple="false"
                 @input="simpleprops.newitems[2] = {descriptor: $event, aspect: {name: 'Auktionsort', _id: '5d1208228997750013ca6748'}, note: 'entered via quickform'}"
-              ></autocomp>
+              />
             </v-flex>
             <v-flex xs6>
               <autocomp
@@ -174,7 +174,7 @@
                 label="Inhalt"
                 :multiple="false"
                 @input="simpleprops.newitems[3] = {descriptor: $event, aspect: {name: 'Inhalt', _id: '5d120a9c8997750013ca674a'}, note: 'entered via quickform'}"
-              ></autocomp>
+              />
             </v-flex>
           </template>
         </formlistcomponent>
@@ -186,7 +186,7 @@
         <formlistcomponent v-if="inventory.comments" :items.sync="inventory.comments" :listitemstyletypes="['title']" label="Comments" nodatamessage="No comments added">
           <template slot="form" slot-scope="props">
           <v-flex xs5>
-              <v-textarea v-model="props.newitem.textval" label="New Comment"></v-textarea>
+              <v-textarea v-model="props.newitem.textval" label="New Comment"/>
           </v-flex>
           </template>
         </formlistcomponent>
@@ -228,7 +228,6 @@ export default {
       imageName: '',
       imageUrl: '',
       imageFile: '',
-      selectedcollection: {},
       creatoritemstyletypes: [
         'title',
         'subtitle',
@@ -245,10 +244,17 @@ export default {
   watch: {
     value: {
       deep: true,
+      immediate: true,
       handler(val) {
         this.inventory = val;
-        this.selectedcollection = val.partOf || {};
         this.initVals();
+      },
+    },
+    inventory: {
+      deep: true,
+      immediate: true,
+      handler() {
+        this.returnObject();
       },
     },
   },

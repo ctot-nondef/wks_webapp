@@ -7,14 +7,14 @@
     <!-- entry name -->
     <v-layout justify-start row fill-height>
       <v-flex xs10>
-        <v-text-field v-model="entry.name" filled label="Name" class="nameinput" @input="returnObject"></v-text-field>
+        <v-text-field v-model="entry.name" filled label="Name" class="nameinput" />
       </v-flex>
     </v-layout>
     <!-- entry partOf -->
     <!-- entry original title -->
     <v-layout justify-start row fill-height>
       <v-flex xs6>
-        <v-text-field v-model="entry.originalTitle" filled label="Original Title" @input="returnObject"></v-text-field>
+        <v-text-field v-model="entry.originalTitle" filled label="Original Title" />
       </v-flex>
       <v-flex xs6>
         <simpleautocompwrapper entity="inventory" filled v-model="entry.partOf" label="Part Of Inventory"/>
@@ -31,10 +31,10 @@
           :simpleformavail="true">
           <template slot="form" slot-scope="props">
             <v-flex xs6>
-              <autocomp entity="Actor" v-model="props.newitem.id" label="Creator" :multiple="false"></autocomp>
+              <autocomp entity="Actor" v-model="props.newitem.id" label="Creator" :multiple="false"/>
             </v-flex>
             <v-flex xs6>
-              <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"></autocomp>
+              <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"/>
             </v-flex>
             <v-flex xs12>
               <v-textarea  filled height="70" v-model="props.newitem.note" label="Note" />
@@ -55,17 +55,17 @@
     <!-- entry transscription -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
-        <v-textarea v-model="entry.transscription" label="Transscription" @input="returnObject" filled></v-textarea>
+        <v-textarea v-model="entry.transscription" label="Transscription"  filled/>
       </v-flex>
     </v-layout>
      <!-- entry material -->
     <!-- entry technique -->
      <v-layout justify-start row fill-height>
        <v-flex xs6>
-         <autocomp entity="Descriptor" filter="MATER" v-model="entry.material" label="Material" :multiple="true" @input="returnObject()"></autocomp>
+         <autocomp entity="Descriptor" filter="MATER" v-model="entry.material" label="Material" :multiple="true" />
       </v-flex>
      <v-flex xs6>
-       <autocomp entity="Descriptor" filter="TECHN" v-model="entry.technique" label="Technique" :multiple="true" @input="returnObject()"></autocomp>
+       <autocomp entity="Descriptor" filter="TECHN" v-model="entry.technique" label="Technique" :multiple="true" />
      </v-flex>
     </v-layout>
     <!-- entry dimensions -->
@@ -79,13 +79,13 @@
           :simpleformavail="true">
           <template slot="form" slot-scope="props">
             <v-flex xs4>
-              <v-text-field filled v-model.number="props.newitem.amount" label="Amount"></v-text-field>
+              <v-text-field filled v-model.number="props.newitem.amount" label="Amount"/>
             </v-flex>
             <v-flex xs4>
-              <autocomp entity="Descriptor" filter="UNIT" v-model="props.newitem.unit" label="Unit" :multiple="false"></autocomp>
+              <autocomp entity="Descriptor" filter="UNIT" v-model="props.newitem.unit" label="Unit" :multiple="false"/>
             </v-flex>
             <v-flex xs4>
-              <autocomp entity="Descriptor" filter="DIM" v-model="props.newitem.aspect" label="Aspect" :multiple="false"></autocomp>
+              <autocomp entity="Descriptor" filter="DIM" v-model="props.newitem.aspect" label="Aspect" :multiple="false"/>
             </v-flex>
           </template>
           <template slot="simpleform" slot-scope="simpleprops">
@@ -121,10 +121,10 @@
         <formlistcomponent  :items.sync="entry.relations" :itemprops="$store.state.api.schemas.entry.properties.relations.items.properties" label="Related Entries" nodatamessage="No relations added">
           <template slot="form" slot-scope="props">
             <v-flex xs2>
-              <v-select filled :items="$store.state.api.schemas.entry.properties.relations.items.properties.kind.enum" label="Relation Type" v-model='props.newitem.kind'></v-select>
+              <v-select filled :items="$store.state.api.schemas.entry.properties.relations.items.properties.kind.enum" label="Relation Type" v-model='props.newitem.kind'/>
             </v-flex>
             <v-flex x12>
-              <autocomp entity="Entry" v-model="props.newitem.target"  label="Entry" :multiple="false" :displayitemprops="autcompdisplayprops"></autocomp>
+              <autocomp entity="Entry" v-model="props.newitem.target"  label="Entry" :multiple="false" :displayitemprops="autcompdisplayprops"/>
             </v-flex>
           </template>
         </formlistcomponent>
@@ -155,7 +155,7 @@
             </v-list-item>
           </template>
         </v-list>
-        <v-text-field label="Select Image" filled @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
+        <v-text-field label="Select Image" filled @click='pickFile' v-model='imageName' prepend-icon='attach_file'/>
         <input type="file" style="display: none" ref="image" accept="image/jpeg" @change="onFilePicked">
       </v-flex>
     </v-layout>
@@ -170,7 +170,7 @@
           </v-layout>
           <v-layout row wrap>
             <v-flex xs6>
-              <autocomp entity="Descriptor" v-model="entry.acquisition_type" label="Type" :multiple="false"></autocomp>
+              <autocomp entity="Descriptor" v-model="entry.acquisition_type" label="Type" :multiple="false"/>
             </v-flex>
             <v-flex xs6>
               <v-btn color="warning" @click="$refs.transactionpopup.openPopup('acquisition')" ><v-icon dark>add</v-icon> Add or link</v-btn>
@@ -178,7 +178,7 @@
               <v-btn color="warning" class="ml-1" @click="$refs.editdialog.getItem('transaction', entry.acquisition_ref._id)" :disabled="!entry.acquisition_ref" ><v-icon dark>edit</v-icon> Edit</v-btn>
             </v-flex>
             <v-flex xs12>
-              <transactiondetails v-if="entry.acquisition_ref" :id="entry.acquisition_ref" :expanded="false" ref="acqdetails"></transactiondetails>
+              <transactiondetails v-if="entry.acquisition_ref" :id="entry.acquisition_ref" :expanded="false" ref="acqdetails"/>
             </v-flex>
           </v-layout>
         </div>
@@ -195,7 +195,7 @@
           </v-layout>
           <v-layout justify-start row fill-height wrap>
             <v-flex xs6>
-              <autocomp entity="Descriptor" v-model="entry.destitution_type" label="Type" :multiple="false"></autocomp>
+              <autocomp entity="Descriptor" v-model="entry.destitution_type" label="Type" :multiple="false"/>
             </v-flex>
             <v-flex xs6>
               <v-btn color="warning" @click="$refs.transactionpopup.openPopup('destitution')" ><v-icon dark>add</v-icon> Add or link</v-btn>
@@ -203,7 +203,7 @@
               <v-btn color="warning" class="ml-1" @click="$refs.editdialog.getItem('transaction', entry.destitution_ref._id)" :disabled="!entry.destitution_ref" ><v-icon dark>edit</v-icon> Edit</v-btn>
             </v-flex>
             <v-flex xs12>
-              <transactiondetails v-if="entry.destitution_ref" :id="entry.destitution_ref" :expanded="false" ref="destdetails"></transactiondetails>
+              <transactiondetails v-if="entry.destitution_ref" :id="entry.destitution_ref" :expanded="false" ref="destdetails"/>
             </v-flex>
           </v-layout>
         </div>
@@ -220,10 +220,10 @@
           :simpleformavail="true">
           <template slot="form" slot-scope="props">
             <v-flex xs6>
-              <autocomp entity="Descriptor" filter="KEYWORD" v-model="props.newitem.aspect" label="Aspect" :multiple="false"></autocomp>
+              <autocomp entity="Descriptor" filter="KEYWORD" v-model="props.newitem.aspect" label="Aspect" :multiple="false"/>
             </v-flex>
             <v-flex xs6>
-              <autocomp entity="Descriptor" v-model="props.newitem.descriptor" label="Descriptor" :multiple="false"></autocomp>
+              <autocomp entity="Descriptor" v-model="props.newitem.descriptor" label="Descriptor" :multiple="false"/>
             </v-flex>
             <v-flex xs12>
               <v-textarea filled v-model="props.newitem.note" label="Note" />
@@ -236,7 +236,7 @@
                 label="Kunstgattung"
                 :multiple="false"
                 @input="simpleprops.newitems[0] = {descriptor: $event, aspect: {name: 'Kunstgattung', _id: '5d5a5af4166362001326d66d'}, note: 'entered via quickform'}"
-              ></autocomp>
+              />
             </v-flex>
             <v-flex xs6>
               <autocomp
@@ -244,7 +244,7 @@
                 label="Thema"
                 :multiple="false"
                 @input="simpleprops.newitems[1] = {descriptor: $event, aspect: {name: 'Thema', _id: '5d5a5c0e166362001326d670'}, note: 'entered via quickform'}"
-              ></autocomp>
+              />
             </v-flex>
             <v-flex xs6>
               <autocomp
@@ -252,7 +252,7 @@
                 label="Datierung"
                 :multiple="false"
                 @input="simpleprops.newitems[2] = {descriptor: $event, aspect: {name: 'Datierung', _id: '5c90a0119ca403074db619f5'}, note: 'entered via quickform'}"
-              ></autocomp>
+              />
             </v-flex>
             <v-flex xs6>
               <autocomp
@@ -260,7 +260,7 @@
                 label="Schule"
                 :multiple="false"
                 @input="simpleprops.newitems[3] = {descriptor: $event, aspect: {name: 'Schule', _id: '5d5a5c7f166362001326d673'}, note: 'entered via quickform'}"
-              ></autocomp>
+              />
             </v-flex>
           </template>
         </formlistcomponent>
@@ -272,14 +272,14 @@
         <formlistcomponent v-if="entry.comments" :items.sync="entry.comments" label="Comments" nodatamessage="No comments added">
           <template slot="form" slot-scope="props">
           <v-flex xs12>
-              <v-textarea v-model="props.newitem.textval" filled label="New Comment"></v-textarea>
+              <v-textarea v-model="props.newitem.textval" filled label="New Comment"/>
           </v-flex>
           </template>
         </formlistcomponent>
       </v-flex>
     </v-layout>
     <!-- transaction selection popup -->
-    <transactionpopup @selectTransactionRef="pickTransactionRef($event)" ref="transactionpopup"></transactionpopup>
+    <transactionpopup @selectTransactionRef="pickTransactionRef($event)" ref="transactionpopup"/>
     <editdialog :title="`Edit Transaction`" ref="editdialog" @close="refreshdetails" />
   </div>
 </template>
@@ -336,9 +336,20 @@ export default {
     };
   },
   watch: {
-    value(val) {
-      this.entry = val;
-      this.initVals();
+    value: {
+      deep: true,
+      immediate: true,
+      handler(val) {
+        this.entry = val;
+        this.initVals();
+      },
+    },
+    entry: {
+      deep: true,
+      immediate: true,
+      handler() {
+        this.returnObject();
+      },
     },
   },
   methods: {

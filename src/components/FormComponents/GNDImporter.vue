@@ -1,7 +1,7 @@
 <template>
   <v-card color="white lighten-2" class="pa-4 mb-4">
-    <v-select v-model="itype" :items="itypes" label="Type"></v-select>
-    <autocompgnd :value="ientity" :type="itype" :multiple="false" @input="ientity=$event"></autocompgnd>
+    <v-select v-model="itype" :items="itypes" label="Type"/>
+    <autocompgnd :value="ientity" :type="itype" :multiple="false" @input="ientity=$event"/>
     <v-layout justify-end row fill-height>
       <v-btn color="warning" @click="importentity()">Import</v-btn>
       <v-btn color="primary" text @click.native="ientity=[]">Clear</v-btn>

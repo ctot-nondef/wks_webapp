@@ -5,7 +5,7 @@
     :items="states"
     @input.native="loadStates"
     autocomplete
-  ></v-select>
+  />
 </template>
 
 <script>

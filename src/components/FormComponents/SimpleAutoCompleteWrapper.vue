@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-text-field  append-outer-icon="edit" @click:append-outer="isEditing = true" @click:clear="model={}" v-if="isEditing===false"  v-model="model.name" clearable readonly :label="label"></v-text-field>
+    <v-text-field  append-outer-icon="edit" @click:append-outer="isEditing = true" @click:clear="model={}" v-if="isEditing===false"  v-model="model.name" clearable readonly :label="label"/>
     <autocomp :entity="entity" :filter="filter" v-if="isEditing===true" icon="check" v-model="model" :clickevent="setEditingToRead" :label="label" :multiple="false" :displayitemprops="displayitemprops">
     </autocomp>
   </div>

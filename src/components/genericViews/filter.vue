@@ -7,7 +7,7 @@
         :items="types"
         label="Type"
         @input="$emit('update', { type: $event, filter: filter })"
-      ></v-select>
+      />
       <v-layout justify-start row wrap fill-height>
         <v-flex xs6 v-for="(value, path, index) in filter" :key="index">
           <!-- text field for regex query -->

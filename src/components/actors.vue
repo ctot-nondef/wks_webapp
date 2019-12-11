@@ -12,10 +12,10 @@
               </v-layout>
             </v-flex>
             <v-flex xs12>
-              <filterlist entitytype="actor" :filter="query" @update="query = $event.filter" :fixedtype="true"></filterlist>
+              <filterlist entitytype="actor" :filter="query" @update="query = $event.filter" :fixedtype="true"/>
             </v-flex>
             <v-flex xs12>
-              <list ref="actorlist" EntityType="actor" :filter="query"  :headers="listheaders" ></list>
+              <list ref="actorlist" EntityType="actor" :filter="query"  :headers="listheaders" />
             </v-flex>
           </v-layout>
         </div>
@@ -34,22 +34,22 @@
                 <v-icon>close</v-icon>
               </v-btn>
               <v-toolbar-title>Create Actor</v-toolbar-title>
-              <v-spacer></v-spacer>
+              <v-spacer/>
               <v-toolbar-items>
               </v-toolbar-items>
               <v-btn color="warning" @click="addactor()">Save</v-btn>
             </v-toolbar>
             <v-container grid-list-md text-xs-center>
               <v-card color="grey lighten-2" class="pa-4 mb-4">
-                <v-select v-model="itype" :items="['Person','CorporateBody']" label="Type"></v-select>
-                <autocompgnd :value="iactor" :type="itype" :multiple="false" @input="iactor=$event"></autocompgnd>
+                <v-select v-model="itype" :items="['Person','CorporateBody']" label="Type"/>
+                <autocompgnd :value="iactor" :type="itype" :multiple="false" @input="iactor=$event"/>
                 <v-layout justify-end row fill-height>
                   <v-btn color="warning" @click="importactor()">Import</v-btn>
                   <v-btn color="primary" text @click.native="iactor=[]">Clear</v-btn>
                 </v-layout>
               </v-card>
               <v-card color="grey lighten-2" class="pa-4">
-                <actorform v-if="$store.state.api.schemas.actor" :value="newactor" @input="newactor=$event"></actorform>
+                <actorform v-if="$store.state.api.schemas.actor" :value="newactor" @input="newactor=$event"/>
                 <v-layout justify-end row fill-height>
                   <v-btn color="warning" @click="addactor()">Save</v-btn>
                   <v-btn color="primary" text @click.native="actordialog=false">Discard</v-btn>

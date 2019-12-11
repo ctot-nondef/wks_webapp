@@ -3,7 +3,7 @@
     <!-- transaction date -->
     <v-layout justify-start row fill-height>
       <v-flex xs5>
-        <datecomponent v-bind:date.sync="transaction.date" label="Created Start" @input="returnObject()"/>
+        <datecomponent v-bind:date.sync="transaction.date" label="Created Start" />
       </v-flex>
     </v-layout>
     <!-- transaction price -->
@@ -17,10 +17,10 @@
           <template slot="form" slot-scope="props">
             <v-layout justify-end row fill-height wrap>
               <v-flex xs6>
-                <v-text-field filled v-model="props.newitem.amount" label="Numerical Amount" type="number"></v-text-field>
+                <v-text-field filled v-model="props.newitem.amount" label="Numerical Amount" type="number"/>
               </v-flex>
               <v-flex xs6>
-                <autocomp entity="Descriptor" v-model="props.newitem.currency" label="Currency" :multiple="false"></autocomp>
+                <autocomp entity="Descriptor" v-model="props.newitem.currency" label="Currency" :multiple="false"/>
               </v-flex>
             </v-layout>
           </template>
@@ -39,10 +39,10 @@
           <template slot="form" slot-scope="props">
             <v-layout justify-end row fill-height wrap>
               <v-flex xs6>
-                <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"></autocomp>
+                <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"/>
               </v-flex>
               <v-flex xs6>
-                <autocomp entity="Actor" v-model="props.newitem.id" label="Actor" :multiple="false"></autocomp>
+                <autocomp entity="Actor" v-model="props.newitem.id" label="Actor" :multiple="false"/>
               </v-flex>
               <v-flex xs12>
                 <v-textarea v-model="props.newitem.note" filled label="Note" />
@@ -58,7 +58,7 @@
         <formlistcomponent :items.sync="transaction.comments" label="Comments" nodatamessage="No comments added">
           <template slot="form" slot-scope="props">
           <v-flex xs5>
-              <v-textarea v-model="props.newitem.textval" label="New Comment"></v-textarea>
+              <v-textarea v-model="props.newitem.textval" label="New Comment"/>
           </v-flex>
           </template>
         </formlistcomponent>
@@ -91,9 +91,20 @@ export default {
     };
   },
   watch: {
-    value(val) {
-      this.transaction = val;
-      this.initVals();
+    value: {
+      deep: true,
+      immediate: true,
+      handler(val) {
+        this.transaction = val;
+        this.initVals();
+      },
+    },
+    transaction: {
+      deep: true,
+      immediate: true,
+      handler() {
+        this.returnObject();
+      },
     },
   },
   methods: {

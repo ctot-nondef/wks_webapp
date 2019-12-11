@@ -2,7 +2,7 @@
   <div class="">
     <v-layout justify-end row fill-height>
       <v-flex xs12>
-        <gndimporter @importentity="importentity($event)" :itypes="['Person','CorporateBody']" targettype="actor"></gndimporter>
+        <gndimporter @importentity="importentity($event)" :itypes="['Person','CorporateBody']" targettype="actor"/>
       </v-flex>
     </v-layout>
     <v-layout justify-end row fill-height>
@@ -14,13 +14,13 @@
           filled
           multiple
           label="Identifiers"
-        ></v-combobox>
+        />
       </v-flex>
     </v-layout>
     <v-layout justify-start row fill-height>
       <v-flex xs6>
         <!-- actor name -->
-        <v-text-field v-model="actor.name" label="Name" @input="returnObject()"></v-text-field>
+        <v-text-field v-model="actor.name" label="Name" />
       </v-flex>
       <v-flex xs6>
         <!-- actor instanceOf -->
@@ -31,37 +31,42 @@
           item-value="_id"
           label="Type"
           @input="returnObject()"
-        ></v-select>
+        />
       </v-flex>
     </v-layout>
     <v-layout justify-start row fill-height>
       <v-flex xs5>
         <!-- actor begin of existence -->
-        <datecomponent v-bind:date.sync="actor.beginOfExistence" label="Begin of Existence"/>
+        <datecomponent :date.sync="actor.beginOfExistence" label="Begin of Existence"/>
       </v-flex>
     </v-layout>
     <v-layout justify-start row fill-height>
       <v-flex xs5>
         <!-- actor end of existence -->
-        <datecomponent v-bind:date.sync="actor.endOfExistence" label="End of Existence"/>
+        <datecomponent :date.sync="actor.endOfExistence" label="End of Existence"/>
       </v-flex>
     </v-layout>
     <v-layout justify-start row fill-height>
       <v-flex xs12>
         <!-- actor description -->
-        <v-textarea v-model="actor.description" label="Description" @input="returnObject()"></v-textarea>
+        <v-textarea v-model="actor.description" label="Description" />
       </v-flex>
     </v-layout>
     <v-layout justify-start row fill-height>
       <v-flex xs12>
         <!-- actor related actors -->
-        <formlistcomponent  :items.sync="actor.relations" :itemprops="$store.state.api.schemas.actor.properties.relations.items.properties" :listitemstyletypes="relationitemstyletypes" label="Related Actors" nodatamessage="No relations added">
+        <formlistcomponent
+                :items.sync="actor.relations"
+                :itemprops="$store.state.api.schemas.actor.properties.relations.items.properties"
+                :listitemstyletypes="relationitemstyletypes"
+                label="Related Actors"
+                nodatamessage="No relations added">
             <template slot="form" slot-scope="props">
             <v-flex xs2>
-              <v-select :items="$store.state.api.schemas.actor.properties.relations.items.properties.kind.enum" label="Relation Type" v-model='props.newitem.kind'></v-select>
+              <v-select :items="$store.state.api.schemas.actor.properties.relations.items.properties.kind.enum" label="Relation Type" v-model='props.newitem.kind'/>
             </v-flex>
-              <v-flex x12>
-            <autocomp entity="Actor" v-model="props.newitem.target"  label="Actor" :multiple="false"></autocomp>
+            <v-flex x12>
+              <autocomp entity="Actor" v-model="props.newitem.target"  label="Actor" :multiple="false"/>
             </v-flex>
             <v-flex xs10>
               <v-textarea v-model="props.newitem.annotation" label="Annotation" />
@@ -107,9 +112,20 @@ export default {
     };
   },
   watch: {
-    value(val) {
-      this.actor = val;
-      this.initVals();
+    value: {
+      deep: true,
+      immediate: true,
+      handler(val) {
+        this.actor = val;
+        this.initVals();
+      },
+    },
+    actor: {
+      deep: true,
+      immediate: true,
+      handler() {
+        this.returnObject();
+      },
     },
   },
   methods: {

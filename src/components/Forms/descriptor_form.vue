@@ -2,7 +2,7 @@
   <div class="">
     <v-layout justify-end row fill-height>
       <v-flex xs12>
-        <gndimporter @importentity="importentity($event)" :itypes="['PlaceOrGeographicName','SubjectHeading']" targettype="actor"></gndimporter>
+        <gndimporter @importentity="importentity($event)" :itypes="['PlaceOrGeographicName','SubjectHeading']" targettype="actor"/>
       </v-flex>
     </v-layout>
     <v-layout justify-end row fill-height>
@@ -14,13 +14,13 @@
           filled
           multiple
           label="Identifiers"
-        ></v-combobox>
+        />
       </v-flex>
     </v-layout>
     <v-layout justify-end row fill-height>
       <v-flex xs6>
          <!-- Descriptor name -->
-        <v-text-field v-model="descriptor.name" label="Name" @input="returnObject()"></v-text-field>
+        <v-text-field v-model="descriptor.name" label="Name" />
       </v-flex>
       <v-flex xs6>
         <!-- descriptor instanceOf -->
@@ -30,14 +30,13 @@
           item-text="_labels[4].label"
           item-value="_id"
           label="Type"
-          @input="returnObject()"
-        ></v-select>
+        />
       </v-flex>
     </v-layout>
     <v-layout justify-end row fill-height>
       <v-flex xs12>
         <!-- descriptor description -->
-        <v-textarea v-model="descriptor.description" label="Description" @input="returnObject()"></v-textarea>
+        <v-textarea v-model="descriptor.description" label="Description"/>
       </v-flex>
     </v-layout>
     <v-layout justify-end row fill-height>
@@ -46,10 +45,10 @@
         <formlistcomponent :items.sync="descriptor.relations" :itemprops="$store.state.api.schemas.descriptor.properties.relations.items.properties" :listitemstyletypes="relationitemstyletypes" label="Related Descriptors" nodatamessage="No relations added">
           <template slot="form" slot-scope="props">
           <v-flex xs2>
-            <v-select :items="$store.state.api.schemas.actor.properties.relations.items.properties.kind.enum" label="Relation Type" v-model='props.newitem.kind'></v-select>
+            <v-select :items="$store.state.api.schemas.actor.properties.relations.items.properties.kind.enum" label="Relation Type" v-model='props.newitem.kind'/>
           </v-flex>
             <v-flex x12>
-          <autocomp entity="Descriptor" v-model="props.newitem.target"  label="Descriptor" :multiple="false"></autocomp>
+          <autocomp entity="Descriptor" v-model="props.newitem.target"  label="Descriptor" :multiple="false"/>
           </v-flex>
           <v-flex xs10>
             <v-textarea v-model="props.newitem.annotation" label="Annotation" />
@@ -91,9 +90,20 @@ export default {
     };
   },
   watch: {
-    value(val) {
-      this.descriptor = val;
-      this.initVals();
+    value: {
+      deep: true,
+      immediate: true,
+      handler(val) {
+        this.descriptor = val;
+        this.initVals();
+      },
+    },
+    descriptor: {
+      deep: true,
+      immediate: true,
+      handler() {
+        this.returnObject();
+      },
     },
   },
   methods: {

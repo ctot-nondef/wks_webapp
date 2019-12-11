@@ -2,15 +2,15 @@
   <div class="">
     <v-layout justify-start row fill-height>
       <v-flex xs6>
-        <v-text-field v-model="user.firstName" label="First Name" @input="returnObject()"></v-text-field>
+        <v-text-field v-model="user.firstName" label="First Name" @input="returnObject()"/>
       </v-flex>
       <v-flex xs6>
-        <v-text-field v-model="user.lastName" label="Last Name" @input="returnObject()"></v-text-field>
+        <v-text-field v-model="user.lastName" label="Last Name" @input="returnObject()"/>
       </v-flex>
     </v-layout>
     <v-layout justify-start row fill-height>
       <v-flex xs6>
-        <v-text-field v-model="user.email" label="Email" @input="returnObject()"></v-text-field>
+        <v-text-field v-model="user.email" label="Email" @input="returnObject()"/>
       </v-flex>
       <v-flex xs6>
         <v-text-field
@@ -23,7 +23,7 @@
           hint="At least 8 characters"
           counter
           @click:append="showPwd = !showPwd"
-        ></v-text-field>
+        />
       </v-flex>
     </v-layout>
   </div>

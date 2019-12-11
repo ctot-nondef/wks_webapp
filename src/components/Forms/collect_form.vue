@@ -7,7 +7,7 @@
     <!-- collection name -->
     <v-layout justify-start row fill-height>
       <v-flex xs10>
-        <v-text-field v-model="collection.name" label="Name" filled class="nameinput" ></v-text-field>
+        <v-text-field v-model="collection.name" label="Name" filled class="nameinput" />
       </v-flex>
     </v-layout>
     <!-- collection creators -->
@@ -22,10 +22,10 @@
           <template slot="form" slot-scope="props">
             <v-layout justify-end row fill-height wrap>
               <v-flex xs6>
-                <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"></autocomp>
+                <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"/>
               </v-flex>
               <v-flex xs6>
-                <autocomp entity="Actor" v-model="props.newitem.id" label="Collector" :multiple="false"></autocomp>
+                <autocomp entity="Actor" v-model="props.newitem.id" label="Collector" :multiple="false"/>
               </v-flex>
               <v-flex xs12>
                 <v-textarea v-model="props.newitem.note" filled label="Note" />
@@ -38,16 +38,16 @@
     <!-- collection places, times -->
     <v-layout justify-end row fill-height>
       <v-flex xs6>
-        <autocomp entity="Descriptor" filter="GEOKEYW" v-model="collection.place" label="Place" :multiple="true" ></autocomp>
+        <autocomp entity="Descriptor" filter="GEOKEYW" v-model="collection.place" label="Place" :multiple="true" />
       </v-flex>
       <v-flex xs6>
-        <autocomp entity="Descriptor" filter="PERIOD" v-model="collection.time" label="Time" :multiple="true" ></autocomp>
+        <autocomp entity="Descriptor" filter="PERIOD" v-model="collection.time" label="Time" :multiple="true" />
       </v-flex>
     </v-layout>
     <!-- collection description -->
     <v-layout justify-end row fill-height>
       <v-flex xs12>
-        <v-textarea v-model="collection.description" filled label="Description" ></v-textarea>
+        <v-textarea v-model="collection.description" filled label="Description" />
       </v-flex>
     </v-layout>
     <!-- collection documents -->
@@ -60,8 +60,8 @@
                 <img :src="`${$store.state.api.url}/asset/uploads/thumbs/${item.ref.name.split('.')[0]}_thumb.jpg`">
               </v-list-item-avatar>
               <v-list-item-content>
-                <v-list-item-title v-html="item.ref.name"></v-list-item-title>
-                <v-list-item-subtitle v-html="item.ref.path"></v-list-item-subtitle>
+                <v-list-item-title v-html="item.ref.name"/>
+                <v-list-item-subtitle v-html="item.ref.path"/>
               </v-list-item-content>
               <v-btn fab dark small color="error" @click="removeimage(index)">
                 <v-icon dark>delete</v-icon>
@@ -69,7 +69,7 @@
             </v-list-item>
           </template>
         </v-list>
-        <v-text-field label="Select PDF Document" filled @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
+        <v-text-field label="Select PDF Document" filled @click='pickFile' v-model='imageName' prepend-icon='attach_file'/>
         <input type="file" style="display: none" ref="image" accept="application/pdf" @change="onFilePicked">
       </v-flex>
     </v-layout>
@@ -84,10 +84,10 @@
           <template slot="form" slot-scope="props">
           <v-layout justify-end row fill-height wrap>
             <v-flex xs6>
-                <autocomp entity="Descriptor" filter="KEYWORD" v-model="props.newitem.aspect" label="Aspect" :multiple="false"></autocomp>
+                <autocomp entity="Descriptor" filter="KEYWORD" v-model="props.newitem.aspect" label="Aspect" :multiple="false"/>
             </v-flex>
             <v-flex xs6>
-              <autocomp entity="Descriptor" v-model="props.newitem.descriptor" label="Descriptor" :multiple="false"></autocomp>
+              <autocomp entity="Descriptor" v-model="props.newitem.descriptor" label="Descriptor" :multiple="false"/>
             </v-flex>
             <v-flex xs12>
               <v-textarea filled v-model="props.newitem.note" label="Note" />
@@ -109,7 +109,7 @@
     <!-- collection destitution -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
-        <v-textarea filled v-model="collection.destitution" label="Destitution" ></v-textarea>
+        <v-textarea filled v-model="collection.destitution" label="Destitution" />
       </v-flex>
     </v-layout>
     <!-- collection references zotero -->
@@ -124,10 +124,10 @@
           <template slot="form" slot-scope="props">
             <v-layout justify-end row fill-height wrap>
               <v-flex xs6>
-                  <v-text-field filled label="Zotero Reference URI" @click='zoterodialog=true' v-model='props.newitem.ref' prepend-icon='attach_file'></v-text-field>
+                  <v-text-field filled label="Zotero Reference URI" @click='zoterodialog=true' v-model='props.newitem.ref' prepend-icon='attach_file'/>
               </v-flex>
               <v-flex xs6>
-                  <v-text-field filled v-model="props.newitem.pageno" label="Page Number/Range" type="number"></v-text-field>
+                  <v-text-field filled v-model="props.newitem.pageno" label="Page Number/Range" type="number"/>
               </v-flex>
               <v-flex xs12>
                 <v-textarea filled v-model="props.newitem.note" label="Note" />
@@ -146,7 +146,7 @@
           nodatamessage="No comments added">
           <template slot="form" slot-scope="props">
           <v-flex xs12>
-              <v-textarea filled v-model="props.newitem.textval" label="New Comment"></v-textarea>
+              <v-textarea filled v-model="props.newitem.textval" label="New Comment"/>
           </v-flex>
           </template>
         </formlistcomponent>
@@ -167,7 +167,7 @@
               <v-icon>close</v-icon>
             </v-btn>
             <v-toolbar-title>Select Zotero Reference</v-toolbar-title>
-            <v-spacer></v-spacer>
+            <v-spacer/>
             <v-toolbar-items>
             </v-toolbar-items>
             <v-menu bottom right offset-y>
@@ -177,7 +177,7 @@
             </v-menu>
           </v-toolbar>
           <v-container grid-list-md text-xs-center>
-            <zoterolist @selectref="pickZoteroRef($event)"></zoterolist>
+            <zoterolist @selectref="pickZoteroRef($event)"/>
           </v-container>
         </v-card>
       </v-dialog>

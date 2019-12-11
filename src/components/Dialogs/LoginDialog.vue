@@ -5,8 +5,8 @@
           VCHC DATABASE LOGIN
         </v-card-title>
         <v-card-text>
-          <v-text-field v-model="username" type="text" label="Username"></v-text-field>
-          <v-text-field v-model="password" type="password" label="Password"></v-text-field>
+          <v-text-field v-model="username" type="text" label="Username"/>
+          <v-text-field v-model="password" type="password" label="Password"/>
         </v-card-text>
         <v-card-actions>
         <v-btn @click="login" large color="primary">
