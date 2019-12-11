@@ -7,7 +7,7 @@
     <!-- collection name -->
     <v-layout justify-start row fill-height>
       <v-flex xs10>
-        <v-text-field v-model="collection.name" label="Name" filled class="nameinput" @input="returnObject"></v-text-field>
+        <v-text-field v-model="collection.name" label="Name" filled class="nameinput" ></v-text-field>
       </v-flex>
     </v-layout>
     <!-- collection creators -->
@@ -38,16 +38,16 @@
     <!-- collection places, times -->
     <v-layout justify-end row fill-height>
       <v-flex xs6>
-        <autocomp entity="Descriptor" filter="GEOKEYW" v-model="collection.place" label="Place" :multiple="true" @input="returnObject()"></autocomp>
+        <autocomp entity="Descriptor" filter="GEOKEYW" v-model="collection.place" label="Place" :multiple="true" ></autocomp>
       </v-flex>
       <v-flex xs6>
-        <autocomp entity="Descriptor" filter="PERIOD" v-model="collection.time" label="Time" :multiple="true" @input="returnObject()"></autocomp>
+        <autocomp entity="Descriptor" filter="PERIOD" v-model="collection.time" label="Time" :multiple="true" ></autocomp>
       </v-flex>
     </v-layout>
     <!-- collection description -->
     <v-layout justify-end row fill-height>
       <v-flex xs12>
-        <v-textarea v-model="collection.description" filled label="Description" @input="returnObject()"></v-textarea>
+        <v-textarea v-model="collection.description" filled label="Description" ></v-textarea>
       </v-flex>
     </v-layout>
     <!-- collection documents -->
@@ -109,7 +109,7 @@
     <!-- collection destitution -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
-        <v-textarea filled v-model="collection.destitution" label="Destitution" @input="returnObject()"></v-textarea>
+        <v-textarea filled v-model="collection.destitution" label="Destitution" ></v-textarea>
       </v-flex>
     </v-layout>
     <!-- collection references zotero -->
@@ -224,9 +224,20 @@ export default {
     };
   },
   watch: {
-    value(val) {
-      this.collection = val;
-      this.initVals();
+    value: {
+      deep: true,
+      immediate: true,
+      handler(val) {
+        this.collection = val;
+        this.initVals();
+      },
+    },
+    collection: {
+      deep: true,
+      immediate: true,
+      handler() {
+        this.returnObject();
+      },
     },
   },
   methods: {

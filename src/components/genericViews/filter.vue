@@ -39,7 +39,7 @@
             :label="path"
             clearable
             @click:clear="value['$regex'] = null"
-            @update:prop="updateFilter({ key: `${path}`, value: $event })"/>
+            @input="updateFilter({ key: `${path}`, value: $event })"/>
         </v-flex>
       </v-layout>
     </v-card>

@@ -14,10 +14,10 @@
     <!-- inventory place -->
     <v-layout justify-start row fill-height>
       <v-flex xs6>
-        <simpleautocompwrapper entity="Collect" v-model="inventory.partOf" v-bind:prop.sync="inventory.partOf" label="Part Of Collection"/>
+        <simpleautocompwrapper entity="Collect" v-model="inventory.partOf" label="Part Of Collection"/>
       </v-flex>
       <v-flex xs6>
-        <simpleautocompwrapper entity="Descriptor" filter="GEOKEYW" v-model="inventory.place" v-bind:prop.sync="inventory.place" label="Place"/>
+        <simpleautocompwrapper entity="Descriptor" filter="GEOKEYW" v-model="inventory.place" label="Place"/>
       </v-flex>
     </v-layout>
     <!-- inventory creators -->

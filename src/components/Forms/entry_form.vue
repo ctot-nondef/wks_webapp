@@ -17,7 +17,7 @@
         <v-text-field v-model="entry.originalTitle" filled label="Original Title" @input="returnObject"></v-text-field>
       </v-flex>
       <v-flex xs6>
-        <simpleautocompwrapper entity="inventory" filled v-model="entry.partOf" v-bind:prop.sync="entry.partOf" label="Part Of Inventory"/>
+        <simpleautocompwrapper entity="inventory" filled v-model="entry.partOf" label="Part Of Inventory"/>
       </v-flex>
     </v-layout>
     <!-- entry creators -->
@@ -133,7 +133,7 @@
     <!-- entry identified object -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
-        <simpleautocompwrapper entity="Object" v-model="entry.identification" v-bind:prop.sync="entry.identification" label="Identified Object" :displayitemprops="autcompdisplayprops"/>
+        <simpleautocompwrapper entity="Object" v-model="entry.identification" label="Identified Object" :displayitemprops="autcompdisplayprops"/>
       </v-flex>
     </v-layout>
     <!-- entry images -->
