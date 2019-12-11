@@ -17,7 +17,7 @@
         <listview
           icon="assignment"
           title="Source"
-          :items="item.entry_acquisition_ref"
+          :items="item.entry_destitution_ref"
           :paths="{
             itemtitle: 'name',
             itemsubtitle: 'originalTitle',
@@ -30,7 +30,7 @@
         <listview
           icon="assignment"
           title="Target"
-          :items="item.entry_destitution_ref"
+          :items="item.entry_acquisition_ref"
           :paths="{
             itemtitle: 'name',
             itemsubtitle: 'originalTitle',

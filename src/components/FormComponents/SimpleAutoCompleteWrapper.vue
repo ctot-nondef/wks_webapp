@@ -43,7 +43,7 @@ export default {
       this.isEditing = false;
     },
     updateval(val) {
-      this.$emit('update:prop', val);
+      this.$emit('input', val);
     },
   },
 };

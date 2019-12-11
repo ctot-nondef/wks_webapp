@@ -73,8 +73,8 @@
         listheaders: [
           { text: 'Date', value: 'date', path: 'date' },
           { text: 'Actor', value: 'actor.id', path: 'actor[0].id.name' },
-          { text: 'Source', value: 'entry_acquisition_ref', path: 'entry_acquisition_ref[0].name' },
-          { text: 'Target', value: 'entry_destitution_ref', path: 'entry_destitution_ref[0].name' },
+          { text: 'Source', value: 'entry_destitution_ref', path: 'entry_destitution_ref[0].name' },
+          { text: 'Target', value: 'entry_acquisition_ref', path: 'entry_acquisition_ref[0].name' },
           { text: 'Actions' },
         ],
         type: '',
