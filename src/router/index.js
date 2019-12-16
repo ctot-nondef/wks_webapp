@@ -3,9 +3,10 @@ import Router from 'vue-router';
 import App from '../components/App';
 import Start from '../components/Start';
 // import Import from '../components/Import';
-import collectionsingle from '../components/SingleViews/collection_single';
+// import collectionsingle from '../components/SingleViews/collection_single';
 import inventorysingle from '../components/SingleViews/inventory_single';
 import transactionsingle from '../components/SingleViews/transaction_single';
+import single from '../components/genericViews/single';
 // import zoterosingle from '../components/SingleViews/zotero_single';
 import users from '../components/users';
 import query from '../components/genericViews/filtered_list';
@@ -51,10 +52,10 @@ export default new Router({
           redirect: { name: 'query', params: { lang: 'en', entity: 'collect', query: '{"name":{"$regex":null}}' } },
         },
         {
-          path: 'collections/:id',
-          name: 'collectsingle',
+          path: ':type/:id',
+          name: 'single',
           components: {
-            Content: collectionsingle,
+            Content: single,
           },
         },
         {

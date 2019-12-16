@@ -2,7 +2,10 @@
     <div class="">
         <v-container grid-list-md>
             <fundamentcard :caption="view.name">
-                <div slot="content">
+                <v-flex xs12>
+                    <component :is="detailLoader" :value="view"></component>
+                </v-flex>
+                <div slot="content" >
                     <v-layout justify-center column fill-height>
                         <v-flex xs12>
                             <v-layout justify-end row fill-height>
@@ -13,9 +16,6 @@
                                     <v-icon dark>add</v-icon>
                                 </v-btn>
                             </v-layout>
-                        </v-flex>
-                        <v-flex xs12>
-                            <component :is="detailLoader" :value="props.item" @input="props.item=$event"></component>
                         </v-flex>
                     </v-layout>
                 </div>
@@ -86,12 +86,12 @@
       formLoader() {
         return () => import('../Forms/inventory_form');
       },
-      viewLoader() {
+      detailLoader() {
         return () => import('../Forms/inventory_form');
       },
     },
     created() {
-      this.get({ type: $route.params.type, id: this.$route.params.id }).then((res) => {
+      this.get({ type: this.$route.params.type, id: this.$route.params.id }).then((res) => {
         this.view = res.data;
         this.newinventory = {
           partOf: res.data,
