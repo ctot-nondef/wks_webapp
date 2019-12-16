@@ -10,15 +10,19 @@
         <v-text-field v-model="object.name" filled label="Name" class="nameinput" />
       </v-flex>
     </v-layout>
+    <!-- object original title -->
+    <!-- object currenOwner -->
     <v-layout justify-start row fill-height>
       <v-flex xs6>
-          <!-- object currenOwner -->
         <autocomp entity="Actor" v-model="object.currentOwner" :parententity="object._id" label="Current Owners" :multiple="true"/>
       </v-flex>
+      <v-flex xs6>
+        <v-text-field filled v-model="object.originalTitle" label="Original Title"/>
+      </v-flex>
     </v-layout>
+    <!-- object creators -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
-        <!-- object creators -->
         <formlistcomponent :items.sync="object.creator" :itemprops="$store.state.api.schemas.object.properties.creator.items.properties" :listitemstyletypes="creatoritemstyletypes" label="Creator" nodatamessage="No creators added">
           <template slot="form" slot-scope="props">
           <v-flex xs5>
@@ -34,33 +38,23 @@
         </formlistcomponent>
       </v-flex>
     </v-layout>
+    <!-- object created start -->
+    <!-- object created end -->
     <v-layout justify-start row fill-height>
-      <v-flex xs5>
-        <!-- object created start -->
+      <v-flex xs6>
         <datecomponent v-bind:date.sync="object.created_start" label="Created Start"/>
       </v-flex>
-    </v-layout>
-    <v-layout justify-start row fill-height>
-      <v-flex xs5>
-        <!-- object created end -->
+      <v-flex xs6>
         <datecomponent v-bind:date.sync="object.created_end" label="Created End"/>
       </v-flex>
     </v-layout>
-    <!-- object original title -->
+    <!-- object material -->
+    <!-- object technique -->
     <v-layout justify-start row fill-height>
       <v-flex xs6>
-        <v-text-field v-model="object.originalTitle" label="Original Title" @input="returnObject()"/>
-      </v-flex>
-    </v-layout>
-    <v-layout justify-start row fill-height>
-      <v-flex xs6>
-        <!-- object material -->
         <autocomp entity="Descriptor" filter="MATER" v-model="object.material" label="Material" :multiple="true" />
       </v-flex>
-    </v-layout>
-    <v-layout justify-start row fill-height>
       <v-flex xs6>
-      <!-- object technique -->
         <autocomp entity="Descriptor" filter="TECHN" v-model="object.technique" label="Technique" :multiple="true" />
       </v-flex>
     </v-layout>
