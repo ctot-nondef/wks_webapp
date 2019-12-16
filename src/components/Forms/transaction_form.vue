@@ -116,6 +116,7 @@ export default {
     },
     initVals() {
       if (this.value) this.transaction = Object.assign(this.value, this.transaction);
+      else this.transaction = {};
       if (!this.transaction.price) {
         this.$set(this.transaction, 'price', []);
       }

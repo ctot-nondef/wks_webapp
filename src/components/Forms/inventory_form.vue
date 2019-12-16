@@ -170,7 +170,6 @@
             <v-flex xs6>
               <autocomp
                 entity="Descriptor"
-                filter="KEYWORD"
                 label="Inhalt"
                 :multiple="false"
                 @input="simpleprops.newitems[3] = {descriptor: $event, aspect: {name: 'Inhalt', _id: '5d120a9c8997750013ca674a'}, note: 'entered via quickform'}"

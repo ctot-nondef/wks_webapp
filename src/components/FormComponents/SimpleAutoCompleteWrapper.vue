@@ -28,13 +28,16 @@ export default {
     };
   },
   watch: {
-    value(val) {
-      if (val && typeof val === 'object') this.model = val;
-      else this.model = {};
+    value: {
+      deep: true,
+      immediate: true,
+      handler(val) {
+        if (val && typeof val === 'object') this.model = val;
+        else this.model = {};
+      },
     },
     model: {
       deep: true,
-      immediate: true,
       handler(val) {
         if (!val._id) this.$emit('input', null);
         else this.$emit('input', val);

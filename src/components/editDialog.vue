@@ -21,7 +21,7 @@
         </v-toolbar>
         <v-container grid-list-md text-xs-center>
           <v-card color="grey lighten-2" class="pa-4">
-            <component :is="componentLoader" :value="item" @input="item = Object.assign(item, $event)"></component>
+            <component :is="componentLoader" :value="item" @input="item = Object.assign(item, $event)"/>
             <v-layout justify-end row fill-height>
               <v-btn color="warning" @click="saveItem">Save</v-btn>
               <v-btn color="primary" text @click.native="discard">Discard</v-btn>
@@ -91,9 +91,9 @@ export default {
       },
       newItem(type, defaultvalues) {
         this.active = true;
+        this.type = type;
         this.item = null;
         this.item = defaultvalues;
-        this.type = type;
       },
       saveItem() {
         if (this.item._id) {
