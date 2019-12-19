@@ -16,7 +16,9 @@
         persistent-hint
         @blur="dateval = parseDate(dateFormatted)"
         v-on="on"
-        filled>
+        filled
+        clearable
+        @click:clear="save(null)">
       </v-text-field>
     </template>
     <v-date-picker
@@ -67,7 +69,8 @@ export default {
       if (this.$refs.picker && this.$refs.picker.activePicker === 'DATE') {
         this.$refs.datepickermenu.save(dateval);
       }
-      this.$emit('update:date', `${dateval}T00:00:00.000Z`);
+      if(dateval != null) this.$emit('update:date', `${dateval}T00:00:00.000Z`);
+      else this.$emit('update:date', null);
     },
     formatDate(dateval) {
       let dwot = null;

@@ -21,17 +21,17 @@
               {{ _.get(item, column.path) }}
             </span>
             <span v-else-if="column.text === 'Actions'">
-              <v-btn v-if="entitytype !== 'transaction'" fab dark small :to="{ name: `${entitytype}single`, params: { id:  item._id  }}" color="primary">
+              <v-btn v-if="entitytype !== 'transaction'" fab dark small :to="{ name: 'single', params: { type: entitytype, id:  item._id  }}" color="primary">
                 <v-icon dark>collections_bookmark</v-icon>
               </v-btn>
               <span>
                 <v-btn v-if="entitytype === 'transaction'" fab dark small color="primary" @click="$emit('select', item)">
                   <v-icon dark>collections_bookmark</v-icon>
                 </v-btn>
-                <v-btn fab dark small color="warning" class="ml-1"  @click="$refs.editdialog.getItem(entitytype, item._id)">
+                <v-btn fab dark small color="warning" class="ml-1"  @click="$refs.editdialog.getItem(entitytype, item._id)" v-if="$store.state.api.loggedin">
                   <v-icon dark>edit</v-icon>
                 </v-btn>
-                <v-btn fab dark small color="error" class="ml-1"  @click="deleteRequest(item)">
+                <v-btn fab dark small color="error" class="ml-1"  @click="deleteRequest(item)" v-if="$store.state.api.loggedin">
                   <v-icon dark>delete</v-icon>
                 </v-btn>
               </span>
