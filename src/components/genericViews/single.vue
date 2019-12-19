@@ -29,10 +29,10 @@
     </div>
 </template>
 <script>
-  import { mapActions } from 'vuex';
+  import { mapGetters } from 'vuex';
 
   import fundamentcard from '../Fundament/FundamentCard';
-  import list from '../genericViews/list';
+  import list from './list';
   import editdialog from '../editDialog';
 
   /* eslint no-unused-vars: ["error", {"args": "none"}] */
@@ -61,14 +61,16 @@
       };
     },
     methods: {
-
+      ...mapGetters('api', [
+        'get',
+      ]),
     },
     computed: {
       formLoader() {
-        return () => import(/* webpackMode: "eager" */ `./Forms/${this.type}_form`);
+        return () => import(/* webpackMode: "eager" */ `../Forms/${this.type}_form`);
       },
       detailLoader() {
-        return () => import(/* webpackMode: "eager" */ `./DetailViews/${this.type}_detail`);
+        return () => import(/* webpackMode: "eager" */ `../DetailViews/${this.type}_detail`);
       },
     },
     created() {
