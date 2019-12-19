@@ -55,6 +55,7 @@ export default {
     },
   },
   watch: {
+    // TODO: this should be rewritten with some regex validation
     datepickermenu() {
       // eslint-disable-next-line no-return-assign
       this.$nextTick(() => (this.$refs.picker.activePicker = 'YEAR'));
