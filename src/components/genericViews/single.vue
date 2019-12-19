@@ -58,44 +58,22 @@
     data() {
       return {
         view: {},
-        listheaders: [
-          { text: 'Name', value: 'name', path: 'name' },
-          { text: 'Actions' },
-        ],
-        inventorydialog: false,
-        newinventory: {},
       };
     },
     methods: {
-      ...mapActions('api', [
-        'get',
-        'post',
-        'delete',
-      ]),
-      addInventory() {
-        this.post({ type: 'inventory', body: this.newinventory }).then((res) => {
-          this.newinventory = {
-            partOf: this.view,
-          };
-          this.inventorydialog = false;
-          this.$refs.inventorylist.getRecords();
-        });
-      },
+
     },
     computed: {
       formLoader() {
-        return () => import('../Forms/inventory_form');
+        return () => import(/* webpackMode: "eager" */ `./Forms/${this.type}_form`);
       },
       detailLoader() {
-        return () => import('../Forms/inventory_form');
+        return () => import(/* webpackMode: "eager" */ `./DetailViews/${this.type}_detail`);
       },
     },
     created() {
       this.get({ type: this.$route.params.type, id: this.$route.params.id }).then((res) => {
         this.view = res.data;
-        this.newinventory = {
-          partOf: res.data,
-        };
       });
     },
   };
