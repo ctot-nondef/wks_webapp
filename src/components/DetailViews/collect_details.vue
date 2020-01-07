@@ -78,6 +78,7 @@
           :expanded="intexpanded"
         />
       </v-col>
+      <!-- collect inventories attached -->
       <v-col cols="12">
         <v-row justify="end">
           <v-btn fab dark small
@@ -87,6 +88,9 @@
             <v-icon dark>add</v-icon>
           </v-btn>
         </v-row>
+      </v-col>
+      <v-col cols="12">
+        <list ref="inventorylist" entitytype="inventory" :headers="listheaders" :filter="{ partOf: this.$route.params.id }"></list>
       </v-col>
     </v-row>
     <editdialog title="Create Inventory" ref="createdialog" @close="refresh" v-if="$store.state.api.loggedin">
@@ -137,6 +141,10 @@
         loading: false,
         intexpanded: true,
         inteditable: false,
+        listheaders: [
+          { text: 'Name', value: 'name', path: 'name' },
+          { text: 'Actions' },
+        ],
       };
     },
     methods: {
@@ -144,7 +152,6 @@
         'get',
       ]),
       getItem(_id) {
-        console.log(_id);
         this.item = {};
         this.loading = true;
         this.get({
