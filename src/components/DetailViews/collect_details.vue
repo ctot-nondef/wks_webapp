@@ -4,6 +4,12 @@
       <v-col cols="12">
         <v-row justify="end">
           <v-btn icon ripple @click="intexpanded = !intexpanded" ><v-icon>{{ intexpanded ? "expand_less" : "expand_more"  }}</v-icon></v-btn>
+          <v-btn fab dark small
+                 color="warning"
+                 @click="$refs.createdialog.getItem( type , item._id)"
+                 v-if="$store.state.api.loggedin">
+            <v-icon dark>edit</v-icon>
+          </v-btn>
         </v-row>
       </v-col>
       <!-- collect creator -->
@@ -52,6 +58,7 @@
           :item="item.place"
         />
       </v-col>
+      <!-- collect assets -->
       <v-col cols="4">
         <assetlistview
           icon="attach_file"
@@ -60,29 +67,22 @@
           :expanded="intexpanded"
         />
       </v-col>
+      <v-col cols="12">
+        <v-row justify="end">
+          <v-btn fab dark small
+                 color="warning"
+                 @click="$refs.createdialog.newItem( 'inventory', { partOf: item })"
+                 v-if="$store.state.api.loggedin">
+            <v-icon dark>add</v-icon>
+          </v-btn>
+        </v-row>
+      </v-col>
     </v-row>
-    <div>
-      <v-layout row wrap>
-        <v-flex xs4>
-
-        </v-flex>
-        <v-flex xs12>
-          <v-layout justify-end row fill-height>
-            <v-btn fab dark small
-                   color="warning"
-                   @click="$refs.createdialog.newItem( 'inventory', { partOf: item })"
-                   v-if="$store.state.api.loggedin">
-              <v-icon dark>add</v-icon>
-            </v-btn>
-          </v-layout>
-        </v-flex>
-        <editdialog title="Create Inventory" ref="createdialog" @close="refresh" v-if="$store.state.api.loggedin">
-          <template slot="form" slot-scope="props">
-            <component :is="formLoader" :value="props.item" @input="props.item=$event"></component>
-          </template>
-        </editdialog>
-      </v-layout>
-    </div>
+    <editdialog title="Create Inventory" ref="createdialog" @close="refresh" v-if="$store.state.api.loggedin">
+      <template slot="form" slot-scope="props">
+        <component :is="formLoader" :value="props.item" @input="props.item=$event"></component>
+      </template>
+    </editdialog>
   </v-container>
 </template>
 <script>
