@@ -5,12 +5,13 @@
       </v-card-media>
       <v-card-title primary-title>
         <div>
-          <h3 class="headline mb-0" v-text="caption"></h3>
-          <slot name="caption"></slot>
+          <h3 class="headline" v-text="caption">
+            <slot name="caption"/>
+          </h3>
         </div>
       </v-card-title>
       <div class="content">
-        <slot name="content"></slot>
+        <slot name="content"/>
       </div>
       <v-card-actions v-if="link">
         <v-btn
@@ -42,7 +43,7 @@
 <style scoped>
 
 .content {
-  padding: 16px;
+  padding: 0 16px 16px 16px;
 }
 
 </style>

@@ -1,12 +1,13 @@
 <template>
-  <div>
-    <v-col cols="12">
-      <v-row justify="end">
-        <v-btn icon ripple @click="intexpanded = !intexpanded" ><v-icon>{{ intexpanded ? "expand_less" : "expand_more"  }}</v-icon></v-btn>
-      </v-row>
-    </v-col>
-    <v-layout row wrap>
-      <v-flex xs6>
+  <v-container fluid>
+    <v-row dense>
+      <v-col cols="12">
+        <v-row justify="end">
+          <v-btn icon ripple @click="intexpanded = !intexpanded" ><v-icon>{{ intexpanded ? "expand_less" : "expand_more"  }}</v-icon></v-btn>
+        </v-row>
+      </v-col>
+      <!-- collect creator -->
+      <v-col cols="6">
         <listview
           icon="person"
           title="Actors"
@@ -19,37 +20,70 @@
           }"
           :expanded="intexpanded"
         />
-      </v-flex>
-      <v-flex xs6>
+      </v-col>
+      <!-- collect classification -->
+      <v-col cols="6">
         <listview
-          icon="attach_money"
-          title="Price"
-          :items="item.price"
+          icon="device_hub"
+          title="Classification"
+          :items="item.classification"
           :paths="{
-            itemtitle: 'currency.name',
-            itemcontent: 'amount',
-            collapsed: 'amount',
+            itemtitle: 'aspect.name',
+            itemsubtitle: 'note',
+            itemcontent: 'descriptor.name',
+            collapsed: 'descriptor.name',
           }"
           :expanded="intexpanded"
         />
-      </v-flex>
-      <v-flex xs12>
-        <v-layout justify-end row fill-height>
-          <v-btn fab dark small
-                 color="warning"
-                 @click="$refs.createdialog.newItem( 'inventory', { partOf: item })"
-                 v-if="$store.state.api.loggedin">
-            <v-icon dark>add</v-icon>
-          </v-btn>
-        </v-layout>
-      </v-flex>
-      <editdialog title="Create Inventory" ref="createdialog" @close="refresh" v-if="$store.state.api.loggedin">
-        <template slot="form" slot-scope="props">
-          <component :is="formLoader" :value="props.item" @input="props.item=$event"></component>
-        </template>
-      </editdialog>
-    </v-layout>
-  </div>
+      </v-col>
+      <!-- collect time -->
+      <v-col cols="4">
+        <singleview
+          icon="calendar_today"
+          title="Time"
+          :item="item.time"
+        />
+      </v-col>
+      <!-- collect place -->
+      <v-col cols="4">
+        <singleview
+          icon="pin_drop"
+          title="Place"
+          :item="item.place"
+        />
+      </v-col>
+      <v-col cols="4">
+        <assetlistview
+          icon="attach_file"
+          title="Documents"
+          :items="item.documents"
+          :expanded="intexpanded"
+        />
+      </v-col>
+    </v-row>
+    <div>
+      <v-layout row wrap>
+        <v-flex xs4>
+
+        </v-flex>
+        <v-flex xs12>
+          <v-layout justify-end row fill-height>
+            <v-btn fab dark small
+                   color="warning"
+                   @click="$refs.createdialog.newItem( 'inventory', { partOf: item })"
+                   v-if="$store.state.api.loggedin">
+              <v-icon dark>add</v-icon>
+            </v-btn>
+          </v-layout>
+        </v-flex>
+        <editdialog title="Create Inventory" ref="createdialog" @close="refresh" v-if="$store.state.api.loggedin">
+          <template slot="form" slot-scope="props">
+            <component :is="formLoader" :value="props.item" @input="props.item=$event"></component>
+          </template>
+        </editdialog>
+      </v-layout>
+    </div>
+  </v-container>
 </template>
 <script>
   /* eslint-disable no-underscore-dangle,no-console */
@@ -58,6 +92,7 @@
   import filters from '../../helpers/filters';
   import listview from '../genericViews/listpropview';
   import singleview from '../genericViews/singlepropview';
+  import assetlistview from '../genericViews/assetlistview';
   import list from '../genericViews/list';
   import editdialog from '../editDialog';
 
@@ -65,6 +100,7 @@
     components: {
       listview,
       singleview,
+      assetlistview,
       list,
       editdialog,
     },
@@ -154,5 +190,4 @@
 </script>
 
 <style>
-
 </style>

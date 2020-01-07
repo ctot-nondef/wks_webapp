@@ -9,7 +9,7 @@
           <span class="body-2 font-weight-light">{{ title }}</span>
         </v-list-item-content>
         <v-list-item-content >
-          <span class="body-2">{{ item }}</span>
+          <span class="body-2">{{ intitem }}</span>
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -27,8 +27,23 @@
         default: () => "",
       },
       item: {
-        type: String,
         default: () => "",
+      },
+    },
+    data() {
+      return {
+        intitem: "",
+      };
+    },
+    watch: {
+      item: {
+        immediate: true,
+        handler(a) {
+          if (typeof a === 'string') this.intitem = a;
+          else if (a && a.name) this.intitem = a.name;
+          else if (a && a[0]) this.intitem = a[0].name;
+        },
+        deep: true,
       },
     },
   };
