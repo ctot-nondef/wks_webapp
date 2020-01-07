@@ -2,58 +2,25 @@
     <div class="">
         <v-container grid-list-md>
             <fundamentcard :caption="view.name">
-                <v-flex xs12>
-                    <component :is="detailLoader" :value="view"></component>
-                </v-flex>
                 <div slot="content" >
                     <v-layout justify-center column fill-height>
                         <v-flex xs12>
-                            <v-layout justify-end row fill-height>
-                                <v-btn fab dark small
-                                       color="warning"
-                                       @click="$refs.createdialog.newItem( type, { partOf: view })"
-                                       v-if="$store.state.api.loggedin">
-                                    <v-icon dark>add</v-icon>
-                                </v-btn>
-                            </v-layout>
+                            <component :is="detailLoader" :id="$route.params.id"></component>
                         </v-flex>
                     </v-layout>
                 </div>
             </fundamentcard>
-            <editdialog title="Create Inventory" ref="createdialog" @close="$refs.inventorylist.getRecords()" v-if="$store.state.api.loggedin">
-                <template slot="form" slot-scope="props">
-                    <component :is="formLoader" :value="props.item" @input="props.item=$event"></component>
-                </template>
-            </editdialog>
         </v-container>
     </div>
 </template>
 <script>
-  import { mapGetters } from 'vuex';
+  import { mapActions } from 'vuex';
 
   import fundamentcard from '../Fundament/FundamentCard';
-  import list from './list';
-  import editdialog from '../editDialog';
-
-  /* eslint no-unused-vars: ["error", {"args": "none"}] */
-  /* eslint no-console: ["error", { allow: ["log"] }] */
 
   export default {
-    props: {
-      type: {
-        type: String,
-        default: () => "",
-      },
-      id: {
-        type: String,
-        default: () => "",
-      },
-
-    },
     components: {
       fundamentcard,
-      list,
-      editdialog,
     },
     data() {
       return {
@@ -61,16 +28,13 @@
       };
     },
     methods: {
-      ...mapGetters('api', [
+      ...mapActions('api', [
         'get',
       ]),
     },
     computed: {
-      formLoader() {
-        return () => import(/* webpackMode: "eager" */ `../Forms/${this.type}_form`);
-      },
       detailLoader() {
-        return () => import(/* webpackMode: "eager" */ `../DetailViews/${this.type}_detail`);
+        return () => import(/* webpackMode: "eager" */ `../DetailViews/${this.$route.params.type}_details`);
       },
     },
     created() {
@@ -80,7 +44,6 @@
     },
   };
 </script>
-
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 </style>
