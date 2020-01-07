@@ -1,6 +1,7 @@
 <template>
   <v-container fluid>
     <v-row dense>
+      <!-- toolbar -->
       <v-col cols="12">
         <v-row justify="end">
           <v-btn icon ripple @click="intexpanded = !intexpanded" ><v-icon>{{ intexpanded ? "expand_less" : "expand_more"  }}</v-icon></v-btn>
@@ -44,18 +45,28 @@
       </v-col>
       <!-- collect time -->
       <v-col cols="4">
-        <singleview
+        <listview
           icon="calendar_today"
-          title="Time"
-          :item="item.time"
+          title="Timespans"
+          :items="item.time"
+          :paths="{
+            itemcontent: 'name',
+            collapsed: 'name',
+          }"
+          :expanded="intexpanded"
         />
       </v-col>
       <!-- collect place -->
       <v-col cols="4">
-        <singleview
+        <listview
           icon="pin_drop"
-          title="Place"
-          :item="item.place"
+          title="Places"
+          :items="item.place"
+          :paths="{
+            itemcontent: 'name',
+            collapsed: 'name',
+          }"
+          :expanded="intexpanded"
         />
       </v-col>
       <!-- collect assets -->
