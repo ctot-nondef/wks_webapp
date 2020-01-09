@@ -292,7 +292,7 @@ import chips from '../FormComponents/Chips';
 import datecomponent from '../FormComponents/DateComponent';
 import transactiondetails from '../DetailViews/transaction_details';
 import transactionpopup from '../Forms/transaction_popup';
-import editdialog from '../editDialog';
+import editdialog from '../Dialogs/editDialog';
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 export default {
   components: {

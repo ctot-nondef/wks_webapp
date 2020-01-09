@@ -136,7 +136,7 @@
     mixins: [filters],
     data() {
       return {
-        type: 'collect',
+        type: 'inventory',
         item: {},
         loading: false,
         intexpanded: true,

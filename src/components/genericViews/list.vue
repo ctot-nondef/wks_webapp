@@ -71,7 +71,7 @@
   /* eslint-disable no-underscore-dangle,no-param-reassign */
 import { mapGetters, mapActions } from 'vuex';
 
-import editdialog from '../editDialog';
+import editdialog from '../Dialogs/editDialog';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 /* eslint no-console: ["error", { allow: ["log"] }] */

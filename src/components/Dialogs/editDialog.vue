@@ -56,7 +56,7 @@ export default {
         'getReversePathsByName',
       ]),
       componentLoader() {
-        if (this.type) return () => import(/* webpackMode: "eager" */ `./Forms/${this.type}_form`);
+        if (this.type) return () => import(/* webpackMode: "eager" */ `../Forms/${this.type}_form`);
         return null;
       },
     },

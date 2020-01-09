@@ -6,10 +6,10 @@ import Start from '../components/Start';
 // import collectionsingle from '../components/SingleViews/collection_single';
 import inventorysingle from '../components/SingleViews/inventory_single';
 import transactionsingle from '../components/SingleViews/transaction_single';
-import single from '../components/genericViews/single';
+import single from '../components/single';
 // import zoterosingle from '../components/SingleViews/zotero_single';
 import users from '../components/users';
-import query from '../components/genericViews/filtered_list';
+import query from '../components/filtered_list';
 
 Vue.use(Router);
 
