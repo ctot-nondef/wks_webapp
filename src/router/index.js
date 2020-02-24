@@ -73,7 +73,7 @@ export default new Router({
         {
           path: 'entries',
           name: 'entries',
-          redirect: { name: 'query', params: { lang: 'en', entity: 'entry', query: '{"name":{"$regex":null}}' } },
+          redirect: { name: 'query', params: { lang: 'en', entity: 'entry', query: '{"name":{"$regex":null}, "originalTitle":{"$regex":null}}' } },
         },
         {
           path: 'transactions',

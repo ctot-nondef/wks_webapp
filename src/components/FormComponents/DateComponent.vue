@@ -21,14 +21,6 @@
         @click:clear="save(null)">
       </v-text-field>
     </template>
-    <v-date-picker
-      ref="picker"
-      no-title
-      v-model="dateval"
-      @change="save"
-      min="1000-01-01"
-      :max="new Date().toISOString().substr(0, 10)">
-    </v-date-picker>
   </v-menu>
 </template>
 <script>

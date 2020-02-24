@@ -1,14 +1,22 @@
 <template>
   <div class="">
-    <v-card color="grey lighten-2" class="pa-4 mb-3">
-    </v-card>
+    <v-flex xs12>
+      <v-layout justify-end row fill-height>
+        <v-btn fab dark small color="warning" @click="edituser($store.state.api.user.username)" :disabled="true">
+          <v-icon dark>edit</v-icon>
+        </v-btn>
+      </v-layout>
+    </v-flex>
     <v-data-table
       :headers="headers"
       :items="data"
       :loading="loading"
-      :total-items="totalHits"
-      :pagination.sync="pagination"
-      :rows-per-page-items="itemOptions"
+      :server-items-length="totalHits"
+      :options.sync="pagination"
+      :footer-props="{
+        showFirstLastPage: true,
+        'items-per-page-options': [10, 20, 50, 100, 250],
+      }"
       class="elevation-1"
     >
       <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
@@ -17,12 +25,14 @@
           <td>{{ props.item.firstName }}</td>
           <td>{{ props.item.lastName }}</td>
           <td>
-            <v-btn fab dark small color="warning" @click="edituser(props.item._id)" :disabled="usercheck(props.item.username)">
-              <v-icon dark>edit</v-icon>
-            </v-btn>
-            <v-btn fab dark small color="error" @click="deleteuser(props.item._id)" :disabled="usercheck(props.item.username)">
-              <v-icon dark>delete</v-icon>
-            </v-btn>
+            <span>
+              <v-btn fab dark small color="warning" @click="edituser(props.item._id)">
+                <v-icon dark>edit</v-icon>
+              </v-btn>
+              <v-btn fab dark small color="error" @click="deleteuser(props.item._id)">
+                <v-icon dark>delete</v-icon>
+              </v-btn>
+            </span>
           </td>
       </template>
     </v-data-table>
@@ -41,14 +51,6 @@
               <v-icon>close</v-icon>
             </v-btn>
             <v-toolbar-title>Edit user</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-toolbar-items>
-            </v-toolbar-items>
-            <v-menu bottom right offset-y>
-              <v-btn dark icon>
-                <v-icon>more_vert</v-icon>
-              </v-btn>
-            </v-menu>
           </v-toolbar>
           <v-container grid-list-md text-xs-center>
             <v-card color="grey lighten-2" class="pa-4">
@@ -143,7 +145,7 @@ export default {
       edituser(_id) {
         this.get({
           type: 'user',
-          query: { _id },
+          query: { 'username': _id },
         }).then((res) => {
           delete res.data[0].password;
           this.cedit = res.data[0];
@@ -186,6 +188,7 @@ export default {
         this.getRecords();
       },
       usercheck(username) {
+        console.log(username, this.$store.state.api.user.username);
         if (username === this.$store.state.api.user.username) return false;
         else if (this.$store.state.api.user.admin) return false;
         return true;

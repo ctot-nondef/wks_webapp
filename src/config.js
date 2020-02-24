@@ -41,6 +41,16 @@ export default {
       items: '',
     },
     {
+      caption: 'Entries',
+      arialabel: '',
+      icon: 'assignment',
+      abstract: '',
+      startpage: {
+        name: 'entries',
+      },
+      items: '',
+    },
+    {
       caption: 'Objects',
       arialabel: '',
       icon: 'category',
@@ -128,5 +138,5 @@ export default {
     descriptor: { name: { $regex: '' }, instanceOf: null, identifier: { $regex: '' } },
   },
   repo: '',
-  api: 'https://wks.acdh-dev.oeaw.ac.at',
+  api: 'https://easy.hephaistos.arz.oeaw.ac.at',
 };

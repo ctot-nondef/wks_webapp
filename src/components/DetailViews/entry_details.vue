@@ -13,6 +13,22 @@
           </v-btn>
         </v-row>
       </v-col>
+      <!-- entry Original Title -->
+      <v-col cols="6">
+        <singleview
+         icon="code"
+         title="Orginal Title"
+         :item="item.originalTitle"
+        />
+      </v-col>
+      <!-- entry part of -->
+      <v-col cols="6">
+        <singleview
+         icon="account_tree"
+         title="Part Of"
+         :item="item.partOf.name"
+        />
+      </v-col>
       <!-- collect creator -->
       <v-col cols="6">
         <listview
@@ -45,57 +61,45 @@
       </v-col>
       <!-- collect time -->
       <v-col cols="4">
-        <listview
-          icon="calendar_today"
-          title="Timespans"
-          :items="item.time"
-          :paths="{
-            itemcontent: 'name',
-            collapsed: 'name',
-          }"
-          :expanded="intexpanded"
+
+        <singleview
+         icon="calendar_today"
+         title="Creation Date Start"
+         :item="item.created_start | formatDate"
         />
       </v-col>
       <!-- collect place -->
       <v-col cols="4">
-        <listview
-          icon="pin_drop"
-          title="Places"
-          :items="item.place"
-          :paths="{
-            itemcontent: 'name',
-            collapsed: 'name',
-          }"
-          :expanded="intexpanded"
+        <singleview
+         icon="calendar_today"
+         title="Creation Date End"
+         :item="item.created_end | formatDate"
         />
       </v-col>
-      <!-- collect assets -->
+      <!-- entry dimensions -->
       <v-col cols="4">
-        <assetlistview
-          icon="attach_file"
-          title="Documents"
-          :items="item.documents"
-          :expanded="intexpanded"
+        <listview
+         icon="height"
+         title="Dimensions"
+         :items="item.dimensions"
+         :paths="{
+            itemtitle: 'aspect.name',
+            itemsubtitle: 'unit.name',
+            itemcontent: 'amount',
+            collapsed: 'aspect.name',
+          }"
+         :expanded="intexpanded"
         />
       </v-col>
-      <!-- collect inventories attached -->
+      <!-- entry acquisition -->
+      <v-label>Acquisition</v-label>
       <v-col cols="12">
-        <v-row justify="end">
-<!--          <v-btn fab dark small
-                 color="primary"
-                 :to="{ name: 'query', params: { lang: 'en', entity: 'entry', query: '{name:{ $regex: null}}'}} ">
-          <v-icon dark>add</v-icon>
-          </v-btn>-->
-          <v-btn fab dark small
-                 color="warning"
-                 @click="$refs.createdialog.newItem( 'inventory', { partOf: item })"
-                 v-if="$store.state.api.loggedin">
-            <v-icon dark>add</v-icon>
-          </v-btn>
-        </v-row>
+        <transactiondetails v-if="item.acquisition_ref" :id="item.acquisition_ref" :expanded="intexpanded" />
       </v-col>
+      <!-- entry destitution -->
+      <v-label>Destitution</v-label>
       <v-col cols="12">
-        <list ref="entrylist" entitytype="entry" :headers="listheaders" :filter="{ partOf: this.$route.params.id }"></list>
+        <transactiondetails v-if="item.destitution_ref" :id="item.destitution_ref" :expanded="intexpanded" />
       </v-col>
     </v-row>
     <editdialog title="Create Inventory" ref="createdialog" @close="refresh" v-if="$store.state.api.loggedin">
@@ -113,11 +117,13 @@
   import listview from '../genericViews/listpropview';
   import singleview from '../genericViews/singlepropview';
   import assetlistview from '../genericViews/assetlistview';
+  import transactiondetails from "./transaction_details";
   import list from '../genericViews/list';
   import editdialog from '../Dialogs/editDialog';
 
   export default {
     components: {
+      transactiondetails,
       listview,
       singleview,
       assetlistview,
@@ -141,7 +147,7 @@
     mixins: [filters],
     data() {
       return {
-        type: 'inventory',
+        type: 'entry',
         item: {},
         loading: false,
         intexpanded: true,
@@ -150,7 +156,6 @@
           { text: 'Name', value: 'name', path: 'name' },
           { text: 'Original Title', value: 'originalTitle', path: 'originalTitle' },
           { text: 'Artist', value: 'creator.id', path: 'creator[0].id.name' },
-          { text: 'Acquisition', value: 'acquisition_type', path: 'acquisition_type.name' },
           { text: 'Actions' },
         ],
       };

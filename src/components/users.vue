@@ -5,13 +5,6 @@
         <div slot="content">
           <v-layout justify-center column fill-height>
             <v-flex xs12>
-              <v-layout justify-end row fill-height>
-                <v-btn fab dark small color="warning" @click="userdialog=true">
-                  <v-icon dark>add</v-icon>
-                </v-btn>
-              </v-layout>
-            </v-flex>
-            <v-flex xs12>
               <userlist ref="userlist"></userlist>
             </v-flex>
           </v-layout>

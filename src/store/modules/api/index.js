@@ -201,6 +201,8 @@ const actions = {
   },
   get({ state, commit }, { type, id, sort, skip, limit, query, populate }) {
     let p = {};
+    // eslint-disable-next-line no-param-reassign
+    if(!sort) sort = 'name';
     const t = type.charAt(0).toUpperCase() + type.slice(1);
     return new Promise((resolve, reject) => {
       if (type && id) {
