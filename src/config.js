@@ -138,5 +138,5 @@ export default {
     descriptor: { name: { $regex: '' }, instanceOf: null, identifier: { $regex: '' } },
   },
   repo: '',
-  api: 'https://easy.hephaistos.arz.oeaw.ac.at',
+  api: 'https://wks.acdh.oeaw.ac.at',
 };
