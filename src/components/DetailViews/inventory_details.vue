@@ -88,7 +88,7 @@
           </v-btn>-->
           <v-btn fab dark small
                  color="warning"
-                 @click="$refs.createdialog.newItem( 'entry', { partOf: item })"
+                 @click="$refs.createdialog.newItem( 'entry', { partOf: {_id: item._id, name: item.name } })"
                  v-if="$store.state.api.loggedin">
             <v-icon dark>add</v-icon>
           </v-btn>
