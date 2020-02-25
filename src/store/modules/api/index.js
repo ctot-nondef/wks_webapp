@@ -170,8 +170,8 @@ const actions = {
             commit('setSchema', sa[i]);
             commit('setPopulateablePaths', { type: sa[i].type, paths: sa[i].populateablePaths.map(p => p.path) });
             commit('setReversePopulateablePaths', { type: sa[i].type, paths: sa[i].reversePaths });
-            if (config.config.defaultlistheaders[sa[i].type]) commit('setListHeaders', { type: sa[i].type, headers: config.config.defaultlistheaders[sa[i].type] });
-            if (config.config.defaultfilters[sa[i].type]) commit('setFilters', { type: sa[i].type, filters: config.config.defaultfilters[sa[i].type] });
+            if (config.config.headers[sa[i].type]) commit('setListHeaders', { type: sa[i].type, headers: config.config.headers[sa[i].type] });
+            if (config.config.filters[sa[i].type]) commit('setFilters', { type: sa[i].type, filters: config.config.filters[sa[i].type] });
           }
         }
       }),

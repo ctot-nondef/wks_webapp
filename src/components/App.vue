@@ -18,7 +18,7 @@ import dialogs from './Dialogs/Dialogs';
 /* eslint no-return-assign: "off" */
 
 import HELPERS from '../helpers';
-import config from '../config';
+import config from '../config/config';
 
 export default {
   mixins: [HELPERS],
