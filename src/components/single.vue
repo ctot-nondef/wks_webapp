@@ -2,7 +2,7 @@
   <detailswrapper :id="$route.params.id"  :type="$route.params.type" :key="componentKey"></detailswrapper>
 </template>
 <script>
-  import detailswrapper from "./genericViews/detailswrapper";
+  import detailswrapper from "./ViewComponents/detailswrapper";
 
   export default {
     components: {

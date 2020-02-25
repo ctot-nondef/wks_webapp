@@ -114,11 +114,11 @@
 
   import { mapActions, mapGetters } from 'vuex';
   import filters from '../../helpers/filters';
-  import listview from '../genericViews/listpropview';
-  import singleview from '../genericViews/singlepropview';
-  import assetlistview from '../genericViews/assetlistview';
+  import listview from '../ViewComponents/listpropview';
+  import singleview from '../ViewComponents/singlepropview';
+  import assetlistview from '../ViewComponents/assetlistview';
   import transactiondetails from "./transaction_details";
-  import list from '../genericViews/list';
+  import list from '../ViewComponents/list';
   import editdialog from '../Dialogs/editDialog';
 
   export default {

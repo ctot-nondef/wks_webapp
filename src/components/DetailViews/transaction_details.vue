@@ -74,8 +74,8 @@
 
   import { mapActions, mapGetters } from 'vuex';
   import filters from '../../helpers/filters';
-  import listview from '../genericViews/listpropview';
-  import singleview from '../genericViews/singlepropview';
+  import listview from '../ViewComponents/listpropview';
+  import singleview from '../ViewComponents/singlepropview';
 
   export default {
     components: {
