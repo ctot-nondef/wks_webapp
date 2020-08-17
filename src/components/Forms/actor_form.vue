@@ -49,7 +49,7 @@
     <v-layout justify-start row fill-height>
       <v-flex xs12>
         <!-- actor description -->
-        <v-textarea v-model="actor.description" label="Description" />
+        <v-textarea height="200" v-model="actor.description" label="Description" />
       </v-flex>
     </v-layout>
     <v-layout justify-start row fill-height>
@@ -69,7 +69,7 @@
               <autocomp entity="Actor" v-model="props.newitem.target"  label="Actor" :multiple="false"/>
             </v-flex>
             <v-flex xs10>
-              <v-textarea v-model="props.newitem.annotation" label="Annotation" />
+              <v-textarea height="200" v-model="props.newitem.annotation" label="Annotation" />
             </v-flex>
             </template>
           </formlistcomponent>

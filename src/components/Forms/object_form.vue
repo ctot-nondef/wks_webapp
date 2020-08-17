@@ -32,7 +32,7 @@
               <autocomp entity="Actor" v-model="props.newitem.id" label="Collector" :multiple="false"/>
           </v-flex>
           <v-flex xs12>
-          <v-textarea  v-model="props.newitem.note" label="Note" />
+          <v-textarea height="200" v-model="props.newitem.note" label="Note" />
           </v-flex>
           </template>
         </formlistcomponent>
@@ -116,7 +116,7 @@
                 <autocomp entity="Descriptor" v-model="props.newitem.descriptor" label="Descriptor" :multiple="false"/>
               </v-flex>
               <v-flex xs12>
-                <v-textarea filled v-model="props.newitem.note" label="Note" />
+                <v-textarea height="200" filled v-model="props.newitem.note" label="Note" />
               </v-flex>
             </v-layout>
           </template>
@@ -160,7 +160,7 @@
     <!-- object description -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
-        <v-textarea v-model="object.description" label="Description" />
+        <v-textarea height="200" v-model="object.description" label="Description" />
       </v-flex>
     </v-layout>
     <!-- object images -->
@@ -193,7 +193,7 @@
         <formlistcomponent v-if="object.comments" :items.sync="object.comments" :listitemstyletypes="['title']" label="Comments" nodatamessage="No comments added">
           <template slot="form" slot-scope="props">
           <v-flex xs5>
-              <v-textarea v-model="props.newitem.textval" label="New Comment"/>
+              <v-textarea height="200" v-model="props.newitem.textval" label="New Comment"/>
           </v-flex>
           </template>
         </formlistcomponent>

@@ -45,7 +45,7 @@
                 <autocomp entity="Actor" v-model="props.newitem.id" label="Actor" :multiple="false"/>
               </v-flex>
               <v-flex xs12>
-                <v-textarea v-model="props.newitem.note" filled label="Note" />
+                <v-textarea height="200" v-model="props.newitem.note" filled label="Note" />
               </v-flex>
             </v-layout>
           </template>
@@ -58,7 +58,7 @@
         <formlistcomponent :items.sync="transaction.comments" label="Comments" nodatamessage="No comments added">
           <template slot="form" slot-scope="props">
           <v-flex xs5>
-              <v-textarea v-model="props.newitem.textval" label="New Comment"/>
+              <v-textarea height="200" v-model="props.newitem.textval" label="New Comment"/>
           </v-flex>
           </template>
         </formlistcomponent>

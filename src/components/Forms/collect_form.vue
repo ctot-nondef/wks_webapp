@@ -28,7 +28,7 @@
                 <autocomp entity="Actor" v-model="props.newitem.id" label="Collector" :multiple="false"/>
               </v-flex>
               <v-flex xs12>
-                <v-textarea v-model="props.newitem.note" filled label="Note" />
+                <v-textarea height="200" v-model="props.newitem.note" filled label="Note" />
               </v-flex>
             </v-layout>
           </template>
@@ -47,7 +47,7 @@
     <!-- collection description -->
     <v-layout justify-end row fill-height>
       <v-flex xs12>
-        <v-textarea v-model="collection.description" filled label="Description" />
+        <v-textarea height="200" v-model="collection.description" filled label="Description" />
       </v-flex>
     </v-layout>
     <!-- collection documents -->
@@ -90,7 +90,7 @@
               <autocomp entity="Descriptor" v-model="props.newitem.descriptor" label="Descriptor" :multiple="false"/>
             </v-flex>
             <v-flex xs12>
-              <v-textarea filled v-model="props.newitem.note" label="Note" />
+              <v-textarea height="200" filled v-model="props.newitem.note" label="Note" />
             </v-flex>
           </v-layout>
           </template>
@@ -109,7 +109,7 @@
     <!-- collection destitution -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
-        <v-textarea filled v-model="collection.destitution" label="Destitution" />
+        <v-textarea height="200" filled v-model="collection.destitution" label="Destitution" />
       </v-flex>
     </v-layout>
     <!-- collection references zotero -->
@@ -130,7 +130,7 @@
                   <v-text-field filled v-model="props.newitem.pageno" label="Page Number/Range" type="number"/>
               </v-flex>
               <v-flex xs12>
-                <v-textarea filled v-model="props.newitem.note" label="Note" />
+                <v-textarea height="200" filled v-model="props.newitem.note" label="Note" />
               </v-flex>
             </v-layout>
           </template>
@@ -146,7 +146,7 @@
           nodatamessage="No comments added">
           <template slot="form" slot-scope="props">
           <v-flex xs12>
-              <v-textarea filled v-model="props.newitem.textval" label="New Comment"/>
+              <v-textarea height="200" filled v-model="props.newitem.textval" label="New Comment"/>
           </v-flex>
           </template>
         </formlistcomponent>

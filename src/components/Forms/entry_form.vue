@@ -37,7 +37,7 @@
               <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"/>
             </v-flex>
             <v-flex xs12>
-              <v-textarea  filled height="70" v-model="props.newitem.note" label="Note" />
+              <v-textarea filled height="70" v-model="props.newitem.note" label="Note" />
             </v-flex>
           </template>
           <template slot="simpleform" slot-scope="simpleprops">
@@ -55,7 +55,7 @@
     <!-- entry transscription -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
-        <v-textarea v-model="entry.transscription" label="Transscription"  filled/>
+        <v-textarea height="200" v-model="entry.transscription" label="Transscription"  filled/>
       </v-flex>
     </v-layout>
      <!-- entry material -->
@@ -226,7 +226,7 @@
               <autocomp entity="Descriptor" v-model="props.newitem.descriptor" label="Descriptor" :multiple="false"/>
             </v-flex>
             <v-flex xs12>
-              <v-textarea filled v-model="props.newitem.note" label="Note" />
+              <v-textarea height="200" filled v-model="props.newitem.note" label="Note" />
             </v-flex>
           </template>
           <template slot="simpleform" slot-scope="simpleprops">
@@ -272,7 +272,7 @@
         <formlistcomponent v-if="entry.comments" :items.sync="entry.comments" label="Comments" nodatamessage="No comments added">
           <template slot="form" slot-scope="props">
           <v-flex xs12>
-              <v-textarea v-model="props.newitem.textval" filled label="New Comment"/>
+              <v-textarea height="200" v-model="props.newitem.textval" filled label="New Comment"/>
           </v-flex>
           </template>
         </formlistcomponent>

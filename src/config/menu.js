@@ -14,7 +14,7 @@ export default [
     items: '',
   },
   {
-    caption: 'Query Collections',
+    caption: 'Search & Query',
     arialabel: '',
     icon: 'search',
     abstract: '',

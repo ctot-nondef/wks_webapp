@@ -114,7 +114,7 @@
     <!-- inventory transcription -->
    <v-layout justify-start row fill-height>
      <v-flex xs12>
-       <v-textarea v-model="inventory.transcription" label="Transcription"/>
+       <v-textarea height="200" v-model="inventory.transcription" label="Transcription"/>
      </v-flex>
    </v-layout>
     <!-- inventory classifications -->
@@ -136,7 +136,7 @@
                 <autocomp entity="Descriptor" v-model="props.newitem.descriptor" label="Descriptor" :multiple="false"/>
               </v-flex>
               <v-flex xs12>
-                <v-textarea filled v-model="props.newitem.note" label="Note" />
+                <v-textarea height="200" filled v-model="props.newitem.note" label="Note" />
               </v-flex>
             </v-layout>
           </template>
@@ -185,7 +185,7 @@
         <formlistcomponent v-if="inventory.comments" :items.sync="inventory.comments" :listitemstyletypes="['title']" label="Comments" nodatamessage="No comments added">
           <template slot="form" slot-scope="props">
           <v-flex xs5>
-              <v-textarea v-model="props.newitem.textval" label="New Comment"/>
+              <v-textarea height="200" v-model="props.newitem.textval" label="New Comment"/>
           </v-flex>
           </template>
         </formlistcomponent>

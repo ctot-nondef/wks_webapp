@@ -36,7 +36,7 @@
     <v-layout justify-end row fill-height>
       <v-flex xs12>
         <!-- descriptor description -->
-        <v-textarea v-model="descriptor.description" label="Description"/>
+        <v-textarea height="200" v-model="descriptor.description" label="Description"/>
       </v-flex>
     </v-layout>
     <v-layout justify-end row fill-height>
@@ -51,7 +51,7 @@
           <autocomp entity="Descriptor" v-model="props.newitem.target"  label="Descriptor" :multiple="false"/>
           </v-flex>
           <v-flex xs10>
-            <v-textarea v-model="props.newitem.annotation" label="Annotation" />
+            <v-textarea height="200" v-model="props.newitem.annotation" label="Annotation" />
           </v-flex>
           </template>
         </formlistcomponent>

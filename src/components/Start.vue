@@ -15,7 +15,6 @@
               :link="{ name: 'collections', params: { lang: 'en' }}"
             >
               <template v-slot:content>
-                <h1>Here might be a page title</h1>
               </template>
             </fundamentcard>
           </v-flex>
