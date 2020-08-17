@@ -13,6 +13,13 @@
       class="elevation-1"
       loading-text="Loading... Please wait"
     >
+      <template v-slot:top="{ pagination, options, updateOptions }">
+        <v-data-footer
+            :pagination="pagination"
+            :options="options"
+            @update:options="updateOptions"
+            items-per-page-text="$vuetify.dataTable.itemsPerPageText"/>
+      </template>
       <template v-slot:body="{ items }">
         <tbody>
         <tr v-for="item in items" :key="item.name">
