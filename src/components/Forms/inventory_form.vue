@@ -35,7 +35,7 @@
                 <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"/>
             </v-flex>
             <v-flex xs6>
-              <autocomp entity="Actor" v-model="props.newitem.id" label="Creator" :multiple="false"/>
+              <autocomp entity="Actor" v-model="props.newitem.id" label="Creator" :multiple="false" :displayitemprops="autcompdisplayprops"/>
             </v-flex>
             <v-flex xs12>
               <v-textarea filled height="70"  v-model="props.newitem.note" label="Note" />
@@ -46,6 +46,7 @@
               <autocomp
                 entity="Actor"
                 label="Sammler"
+                :displayitemprops="autcompdisplayprops"
                 :multiple="false"
                 @input="simpleprops.newitems[0] = {id: $event, role: {name: 'Sammler', _id: '5cd2922a1cbd4a00139b6e14'}, note: 'entered via quickform'}"
               />
@@ -54,6 +55,7 @@
               <autocomp
                 entity="Actor"
                 label="Aktueller Eigentümer"
+                :displayitemprops="autcompdisplayprops"
                 :multiple="false"
                 @input="simpleprops.newitems[1] = {id: $event, role: {name: 'Aktueller Eigentümer', _id: '5d1201568997750013ca6740'}, note: 'entered via quickform'}"
               />
@@ -62,6 +64,7 @@
               <autocomp
                 entity="Actor"
                 label="Verfasser"
+                :displayitemprops="autcompdisplayprops"
                 :multiple="false"
                 @input="simpleprops.newitems[2] = {id: $event, role: {name: 'Verfasser', _id: '5c90a0119ca403074db617f5'}, note: 'entered via quickform'}"
               />
@@ -70,6 +73,7 @@
               <autocomp
                 entity="Actor"
                 label="Verleger"
+                :displayitemprops="autcompdisplayprops"
                 :multiple="false"
                 @input="simpleprops.newitems[3] = {id: $event, role: {name: 'Verleger', _id: '5c90a0119ca403074db617f0'}, note: 'entered via quickform'}"
               />
@@ -238,6 +242,12 @@ export default {
       ],
       isEditingPlace: false,
       isEditingPartOf: false,
+      autcompdisplayprops: {
+        dimensions: [
+          { path: 'beginOfExistence', populate: false },
+          { path: 'endOfExistence', populate: false },
+        ],
+      },
     };
   },
   watch: {

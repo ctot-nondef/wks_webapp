@@ -31,7 +31,7 @@
           :simpleformavail="true">
           <template slot="form" slot-scope="props">
             <v-flex xs6>
-              <autocomp entity="Actor" v-model="props.newitem.id" label="Creator" :multiple="false"/>
+              <autocomp entity="Actor" v-model="props.newitem.id" label="Creator" :multiple="false" :displayitemprops="autcompdisplayprops_actor" />
             </v-flex>
             <v-flex xs6>
               <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"/>
@@ -45,6 +45,7 @@
               <autocomp
                 entity="Actor"
                 label="Künstler"
+                :displayitemprops="autcompdisplayprops_actor"
                 :multiple="false"
                 @input="simpleprops.newitems[0] = {id: $event, role: {name: 'Künstler', _id: '5c90a0119ca403074db617e5'}, note: 'entered via quickform'}" />
             </v-flex>
@@ -331,6 +332,12 @@ export default {
         ],
         transscription: [
           { path: 'transscription' },
+        ],
+      },
+      autcompdisplayprops_actor: {
+        dimensions: [
+          { path: 'beginOfExistence', populate: false },
+          { path: 'endOfExistence', populate: false },
         ],
       },
     };

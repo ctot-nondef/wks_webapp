@@ -25,7 +25,7 @@
                 <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"/>
               </v-flex>
               <v-flex xs6>
-                <autocomp entity="Actor" v-model="props.newitem.id" label="Collector" :multiple="false"/>
+                <autocomp entity="Actor" v-model="props.newitem.id" label="Collector" :multiple="false" :displayitemprops="autcompdisplayprops" />
               </v-flex>
               <v-flex xs12>
                 <v-textarea height="200" v-model="props.newitem.note" filled label="Note" />
@@ -221,6 +221,12 @@ export default {
       beginofexistencemenu: false,
       endofexistencemenu: false,
       newcomment: '',
+      autcompdisplayprops: {
+        dimensions: [
+          { path: 'beginOfExistence', populate: false },
+          { path: 'endOfExistence', populate: false },
+        ],
+      },
     };
   },
   watch: {
