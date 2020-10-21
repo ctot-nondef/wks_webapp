@@ -15,6 +15,7 @@
     "lodash": "^4.17.15",
     "material-design-icons-iconfont": "^5.0.1",
     "moment": "^2.24.0",
+    "swagger-client": "^3.11.1",
     "vue": "^2.6.10",
     "vue-lodash": "^2.0.2",
     "vue-logger": "^0.0.3",

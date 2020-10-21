@@ -184,6 +184,28 @@
           </v-layout>
         </div>
       </v-flex>
+      <!-- entry Acquisition estimate -->
+      <v-flex xs12>
+        <formlistcomponent
+            :items.sync="entry.acquisition_est"
+            :itemprops="$store.state.api.schemas.entry.properties.acquisition_est.items.properties"
+            label="Acquisition Estimate"
+            nodatamessage="No price values added">
+          <template slot="form" slot-scope="props">
+            <v-layout justify-end row fill-height wrap>
+              <v-flex xs4>
+                <autocomp entity="Descriptor" v-model="props.newitem.type" label="Price Type" :multiple="false"/>
+              </v-flex>
+              <v-flex xs4>
+                <v-text-field filled v-model="props.newitem.amount" label="Numerical Amount" type="number"/>
+              </v-flex>
+              <v-flex xs4>
+                <autocomp entity="Descriptor" v-model="props.newitem.currency" label="Currency" :multiple="false"/>
+              </v-flex>
+            </v-layout>
+          </template>
+        </formlistcomponent>
+      </v-flex>
     </v-layout>
     <!-- entry Destitution -->
     <v-layout justify-start row fill-height>
@@ -208,6 +230,28 @@
             </v-flex>
           </v-layout>
         </div>
+      </v-flex>
+      <!-- entry Destitution estimate -->
+      <v-flex xs12>
+        <formlistcomponent
+            :items.sync="entry.destitution_est"
+            :itemprops="$store.state.api.schemas.entry.properties.destitution_est.items.properties"
+            label="Destitution Estimate"
+            nodatamessage="No price values added">
+          <template slot="form" slot-scope="props">
+            <v-layout justify-end row fill-height wrap>
+              <v-flex xs4>
+                <autocomp entity="Descriptor" v-model="props.newitem.type" label="Price Type" :multiple="false"/>
+              </v-flex>
+              <v-flex xs4>
+                <v-text-field filled v-model="props.newitem.amount" label="Numerical Amount" type="number"/>
+              </v-flex>
+              <v-flex xs4>
+                <autocomp entity="Descriptor" v-model="props.newitem.currency" label="Currency" :multiple="false"/>
+              </v-flex>
+            </v-layout>
+          </template>
+        </formlistcomponent>
       </v-flex>
     </v-layout>
      <!-- entry classifications -->
@@ -422,6 +466,12 @@ export default {
       }
       if (!this.entry.transaction) {
         this.$set(this.entry, 'transaction', []);
+      }
+      if (!this.entry.acquisition_est) {
+        this.$set(this.entry, 'acquisition_est', []);
+      }
+      if (!this.entry.destitution_est) {
+        this.$set(this.entry, 'destitution_est', []);
       }
     },
     pickTransactionRef(e) {
