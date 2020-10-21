@@ -254,10 +254,10 @@
         </formlistcomponent>
       </v-flex>
     </v-layout>
-    <!-- entry provinience -->
+    <!-- entry provenance -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
-        <v-textarea height="200" v-model="entry.provinience" label="Provinience"  filled/>
+        <v-textarea height="200" v-model="entry.provinience" label="Provenance"  filled/>
       </v-flex>
     </v-layout>
      <!-- entry classifications -->
