@@ -18,6 +18,7 @@ function cleanFilter(f) {
         if (f[key][op] && f[key][op] !== '' && f[key][op] !== null) cf[key] = f[key];
       });
       if (f[key]._id) cf[key] = f[key];
+      if (key.match(/^(\$and|\$or|\$not|\$nor)$/) && f[key].length > 0) cf[key] = f[key];
     }
   });
   return JSON.stringify(cf);

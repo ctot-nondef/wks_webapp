@@ -10,9 +10,41 @@
       />
       <v-layout justify-start row wrap fill-height>
         <v-flex xs6 v-for="(value, path, index) in filter" :key="index">
+          <simpleautocompwrapper
+              v-if="entitytype === 'entry' && path === 'Kunstgattung'"
+              entity="descriptor"
+              :value="value"
+              :label="path"
+              clearable
+              @click:clear="value['$regex'] = null"
+              @input="updateFilter({ key: `${path}`, value: $event })"/>
+          <simpleautocompwrapper
+              v-else-if="entitytype === 'entry' && path === 'Thema'"
+              entity="descriptor"
+              :value="value"
+              :label="path"
+              clearable
+              @click:clear="value['$regex'] = null"
+              @input="updateFilter({ key: `${path}`, value: $event })"/>
+          <simpleautocompwrapper
+              v-else-if="entitytype === 'entry' && path === 'Datierung'"
+              entity="descriptor"
+              :value="value"
+              :label="path"
+              clearable
+              @click:clear="value['$regex'] = null"
+              @input="updateFilter({ key: `${path}`, value: $event })"/>
+          <simpleautocompwrapper
+              v-else-if="entitytype === 'entry' && path === 'Schule'"
+              entity="descriptor"
+              :value="value"
+              :label="path"
+              clearable
+              @click:clear="value['$regex'] = null"
+              @input="updateFilter({ key: `${path}`, value: $event })"/>
           <!-- text field for regex query -->
           <v-text-field
-            v-if="getFieldType({type: entitytype, name: path}) === 'string'"
+            v-else-if="getFieldType({type: entitytype, name: path}) === 'string'"
             :value="value['$regex']"
             filled
             :label="path"
@@ -21,7 +53,7 @@
             @input="updateFilter({ key: `${path}.$regex`, value: $event })"/>
           <!-- descriptor/actor class select -->
           <v-select
-            v-if="getFieldType({type: entitytype, name: path}) === 'class_descriptor'"
+            v-else-if="getFieldType({type: entitytype, name: path}) === 'class_descriptor'"
             :value="value"
             :items="$store.state.api.classes[entitytype.charAt(0).toUpperCase() + entitytype.slice(1)]"
             item-text="_labels[4].label"
@@ -33,7 +65,7 @@
             @input="updateFilter({ key: `${path}`, value: $event })"/>
           <!-- simple xref select -->
           <simpleautocompwrapper
-            v-if="getFieldType({type: entitytype, name: path}).match(/xref_(.*)/)"
+            v-else-if="getFieldType({type: entitytype, name: path}).match(/xref_(.*)/)"
             :entity="getFieldType({type: entitytype, name: path}).split('_')[1]"
             :value="value"
             :label="path"

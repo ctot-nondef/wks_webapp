@@ -10,7 +10,6 @@
         <v-text-field v-model="entry.name" filled label="Name" class="nameinput" />
       </v-flex>
     </v-layout>
-    <!-- entry partOf -->
     <!-- entry original title -->
     <v-layout justify-start row fill-height>
       <v-flex xs6>

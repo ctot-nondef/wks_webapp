@@ -22,6 +22,20 @@ export default [
       name: 'query',
       params: {
         lang: 'en',
+        entity: 'entry',
+        query: JSON.stringify({ Kunstgattung: null, Thema: null, Datierung: null, Schule: null, partOf: null })
+      }},
+    items: '',
+  },
+  {
+    caption: 'Browse',
+    arialabel: '',
+    icon: 'list',
+    abstract: '',
+    startpage: {
+      name: 'query',
+      params: {
+        lang: 'en',
         entity: 'collect',
         query: JSON.stringify(filters.collect)
       }},

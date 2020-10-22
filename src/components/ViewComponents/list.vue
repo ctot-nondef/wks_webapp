@@ -127,9 +127,10 @@ export default {
       filter: {
         handler(f) {
           if (f) {
-            this.q = {};
+            this.q = {'$and': []};
             Object.keys(f).forEach((key) => {
-              this.q[key] = f[key];
+              if(key.match(/^(Kunstgattung|Thema|Datierung|Schule)$/) && f[key]) this.q['$and'].push({'classification.descriptor': f[key]._id})
+              else this.q[key] = f[key];
             });
           }
           this.getRecords();
