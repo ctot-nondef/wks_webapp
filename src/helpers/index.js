@@ -77,7 +77,7 @@ export default {
     // Store Functions
     /*
     gets the latest session out of the local storage.
-    // TODO: since we currently obly store one session, this function coud be much shorter.
+    // TODO: since we currently only store one session, this function could be much shorter.
     */
     getLatestSession() {
       let localStorage;

@@ -1,5 +1,6 @@
 /* eslint-disable no-shadow,no-underscore-dangle */
 import * as api from './api';
+import Swagger from 'swagger-client';
 
 function computeFieldType(field, name) {
   if (name === 'instanceOf') return `class_${field['x-ref']}`;
@@ -34,6 +35,7 @@ function deleteProps(obj, props) {
 
 const state = {
   apilib: {},
+  apiclient: {},
   init: false,
   url: '',
   loggedin: false,
@@ -84,6 +86,9 @@ const mutations = {
   },
   setApiLib(s, lib) {
     s.apilib = lib;
+  },
+  setApiClient(s, client) {
+    s.apiclient = client;
   },
   setApiURL(s, url) {
     if (s.apilib.setDomain) {
@@ -157,14 +162,16 @@ const mutations = {
 
 const actions = {
   // eslint-disable-next-line no-shadow
-  init({ state, commit }, config) {
+  async init({ state, commit }, config) {
+    const APIClient = await Swagger(`${config.config.api}/api/v1/swagger-json`);
+    commit('setApiClient', APIClient);
     commit('setApiLib', api);
     commit('setApiURL', `${config.config.api}`);
     if (config.pstate !== null && config.pstate.pState.api) commit('setState', config.pstate.pState.api);
     commit('setLoading', 'Loading Database Configuration.');
     const p = [];
     p.push(
-      state.apilib.get({ $config }).then((res) => {
+      state.apiclient.apis.Root.SchemasController_apiroot({ $config }).then((res) => {
         if (res.data.data && res.data.data.length > 0) {
           const sa = res.data.data;
           for (let i = 0; i < sa.length; i += 1) {
@@ -177,14 +184,14 @@ const actions = {
         }
       }),
       // TODO: this should probably go to a separate store once the thesaurus is SKOS compatible
-      state.apilib.getDescriptor({
+        state.apiclient.apis.descriptor.get_api_v1_descriptor({
         $config,
         query: JSON.stringify({ description: 'Class of Actor' }),
       }).then((res) => {
         commit('setClasses', { type: 'Actor', classlist: res.data });
       }),
       // TODO: this should probably go to a separate store once the thesaurus is SKOS compatible
-      state.apilib.getDescriptor({
+        state.apiclient.apis.descriptor.get_api_v1_descriptor({
         $config,
         query: JSON.stringify({ description: 'Class of Descriptor' }),
       }).then((res) => {
