@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueLodash from 'vue-lodash';
+import lodash from 'lodash';
 import { sync } from 'vuex-router-sync';
 import vueLogger from 'vue-logger';
 
@@ -19,7 +20,7 @@ Vue.use(vueLogger, {
   levels: ['log', 'warn', 'debug', 'error', 'dir', 'info'],
 });
 
-Vue.use(VueLodash);
+Vue.use(VueLodash, {lodash: lodash});
 sync(store, router);
 
 new Vue({

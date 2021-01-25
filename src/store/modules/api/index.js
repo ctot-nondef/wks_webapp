@@ -41,6 +41,7 @@ const state = {
   loggedin: false,
   user: {},
   token: null,
+  refreshtoken: null,
   loadmsg: '',
   schemas: {},
   ppaths: {},
@@ -101,8 +102,9 @@ const mutations = {
       if (pstate[key] !== undefined && s[key] !== undefined) s[key] = pstate[key];
     });
   },
-  loginMut(s, { token, user }) {
+  loginMut(s, { token, refreshtoken, user }) {
     s.token = token;
+    s.refreshtoken = refreshtoken;
     s.user = user;
     s.loggedin = true;
   },
@@ -164,6 +166,7 @@ const actions = {
   // eslint-disable-next-line no-shadow
   async init({ state, commit }, config) {
     const APIClient = await Swagger(`${config.config.api}/api/v1/swagger-json`);
+    console.log(APIClient);
     commit('setApiClient', APIClient);
     commit('setApiLib', api);
     commit('setApiURL', `${config.config.api}`);
@@ -172,8 +175,8 @@ const actions = {
     const p = [];
     p.push(
       state.apiclient.apis.Root.SchemasController_apiroot({ $config }).then((res) => {
-        if (res.data.data && res.data.data.length > 0) {
-          const sa = res.data.data;
+        if (res.body.data && res.body.data.length > 0) {
+          const sa = res.body.data;
           for (let i = 0; i < sa.length; i += 1) {
             commit('setSchema', sa[i]);
             commit('setPopulateablePaths', { type: sa[i].type, paths: sa[i].populateablePaths.map(p => p.path) });
@@ -188,14 +191,14 @@ const actions = {
         $config,
         query: JSON.stringify({ description: 'Class of Actor' }),
       }).then((res) => {
-        commit('setClasses', { type: 'Actor', classlist: res.data });
+        commit('setClasses', { type: 'Actor', classlist: res.body });
       }),
       // TODO: this should probably go to a separate store once the thesaurus is SKOS compatible
         state.apiclient.apis.descriptor.get_api_v1_descriptor({
         $config,
         query: JSON.stringify({ description: 'Class of Descriptor' }),
       }).then((res) => {
-        commit('setClasses', { type: 'Descriptor', classlist: res.data });
+        commit('setClasses', { type: 'Descriptor', classlist: res.body });
       }),
       state.apilib.getUserCount({ $config }).catch(() => {
         console.log('logon expired');

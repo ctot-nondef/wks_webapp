@@ -55,16 +55,16 @@ export default {
       this.closeDialog('loginDialog');
     },
     login() {
-      this.f('postLogin')({
-        user: {
-          username: this.username,
-          password: this.password,
-        },
-        $config: {
-          withCredentials: true,
-        },
-      }).then((res) => {
-        this.loginMut({ token: res.data.session, user: res.data.user });
+      this.$store.state.api.apiclient.apis.User.UserController_login(
+      null,
+      { // Options object
+        requestBody: {
+          email: this.username,
+          password: this.password
+        }
+      }
+      ).then((res) => {
+        this.loginMut({ token: res.body.accessToken, refreshtoken: res.body.refreshToken, user: res.body.email });
         this.closeDialog('loginDialog');
       });
     },
