@@ -49,7 +49,7 @@ const state = {
   classes: {},
   page: 1,
   size: 50,
-  p: ['user', 'token', 'loggedin'],
+  p: ['user', 'token', 'loggedin', 'refreshtoken'],
   listheaders: {},
   filters: {},
 };
@@ -107,6 +107,9 @@ const mutations = {
     s.refreshtoken = refreshtoken;
     s.user = user;
     s.loggedin = true;
+  },
+  updateToken(s, t) {
+    s.token = t;
   },
   logoutMut(s) {
     s.token = null;
@@ -187,20 +190,29 @@ const actions = {
         }
       }),
       // TODO: this should probably go to a separate store once the thesaurus is SKOS compatible
-        state.apiclient.apis.descriptor.get_api_v1_descriptor({
+      state.apiclient.apis.descriptor.get_api_v1_descriptor({
         $config,
         query: JSON.stringify({ description: 'Class of Actor' }),
       }).then((res) => {
         commit('setClasses', { type: 'Actor', classlist: res.body });
       }),
       // TODO: this should probably go to a separate store once the thesaurus is SKOS compatible
-        state.apiclient.apis.descriptor.get_api_v1_descriptor({
+      state.apiclient.apis.descriptor.get_api_v1_descriptor({
         $config,
         query: JSON.stringify({ description: 'Class of Descriptor' }),
       }).then((res) => {
         commit('setClasses', { type: 'Descriptor', classlist: res.body });
       }),
-      state.apilib.getUserCount({ $config }).catch(() => {
+      state.apiclient.apis.User.UserController_refreshAccessToken(
+          null,
+          {
+            requestBody: {
+              "refreshToken": state.refreshtoken
+            }
+          }
+      ).then((res) => {
+        commit('updateToken', res.body.accessToken);
+      }).catch(() => {
         console.log('logon expired');
         commit('logoutMut');
       }),
