@@ -14,7 +14,7 @@ export default [
     items: '',
   },
   {
-    caption: 'Search & Query',
+    caption: 'Search',
     arialabel: '',
     icon: 'search',
     abstract: '',
@@ -81,18 +81,6 @@ export default [
         entity: 'descriptor',
         query: JSON.stringify(filters.descriptor),
       }},
-    items: '',
-  },
-  {
-    caption: 'User Settings',
-    arialabel: '',
-    icon: 'people_outline',
-    abstract: '',
-    startpage: {
-      name: 'users',
-      params: {
-        lang: 'en' },
-    },
     items: '',
   },
 ]

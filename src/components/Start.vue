@@ -2,23 +2,41 @@
   <div class="">
       <fundamentjumbo
         :src="require('../assets/intro_bg.jpg')"
-        caption="VCHC Projekt Datenbank"
-        subtitle=""
+        caption="Vienna Center for the History of Collecting"
+        subtitle="Sammler, Sammlungen und Sammlungskulturen in Wien und Mitteleuropa"
       >
       </fundamentjumbo>
       <v-container grid-list-md v-if="$store.state.api.loggedin">
         <v-layout justify-space-around row wrap>
           <fundamentsectiondiv icon="description" caption="Sammlungsdaten"></fundamentsectiondiv>
-          <v-flex xs12 sm6>
+          <v-flex xs12 sm3>
             <fundamentcard
-              caption="Collections & Inventories"
-              :link="{ name: 'collections', params: { lang: 'en' }}"
+              caption="Search"
+              :link="{ name: 'entries', params: { lang: 'en' }}"
             >
               <template v-slot:content>
               </template>
             </fundamentcard>
           </v-flex>
-          <v-flex xs12 sm6>
+          <v-flex xs12 sm3>
+            <fundamentcard
+                caption="Collections"
+                :link="{ name: 'collections', params: { lang: 'en' }}"
+            >
+              <template v-slot:content>
+              </template>
+            </fundamentcard>
+          </v-flex>
+          <v-flex xs12 sm3>
+            <fundamentcard
+                caption="Entries"
+                :link="{ name: 'entries', params: { lang: 'en' }}"
+            >
+              <template v-slot:content>
+              </template>
+            </fundamentcard>
+          </v-flex>
+          <v-flex xs12 sm3>
             <fundamentcard
               caption="Identified Objects"
               :link="{ name: 'objects', params: { lang: 'en' }}"
@@ -26,23 +44,39 @@
               <p class="card-text"></p>
             </fundamentcard>
           </v-flex>
-          <fundamentsectiondiv icon="device_hub" caption="Normdaten"></fundamentsectiondiv>
-          <v-flex xs12 sm6>
+          <v-flex xs12 sm3>
             <fundamentcard
-              caption="Thesaurus"
-              :link="{ name: 'descriptors', params: { lang: 'en' }}"
+                caption="Actors"
+                :link="{ name: 'actors', params: { lang: 'en' }}"
             >
               <p class="card-text"></p>
             </fundamentcard>
           </v-flex>
-          <v-flex xs12 sm6>
+          <v-flex xs12 sm3>
             <fundamentcard
-              caption="Actors"
-              :link="{ name: 'actors', params: { lang: 'en' }}"
+                caption="Transactions"
+                link=""
             >
               <p class="card-text"></p>
             </fundamentcard>
           </v-flex>
+          <v-flex xs12 sm3>
+            <fundamentcard
+                caption="Inventories & Catalogs"
+                link=""
+            >
+              <p class="card-text"></p>
+            </fundamentcard>
+          </v-flex>
+          <v-flex xs12 sm3>
+            <fundamentcard
+                caption="Filter"
+                link=""
+            >
+              <p class="card-text"></p>
+            </fundamentcard>
+          </v-flex>
+
         </v-layout>
       </v-container>
       <v-container grid-list-md v-if="!$store.state.api.loggedin">
