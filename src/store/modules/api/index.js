@@ -230,7 +230,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       if (type && id) {
         commit('setLoading', `Getting ${type} ${id} from Database`);
-        p = state.apilib[`get${t}ById`]({ id, $config, populate });
+        p = state.apiclient.apis[type][`get_api_v1_${type}`]({ id, $config, populate });
       } else if (type && !id) {
         commit('setLoading', `Getting Queryset of ${type} from Database`);
         p = state.apilib[`get${t}`]({ sort, skip, limit, query: cleanFilter(query), populate, $config });
