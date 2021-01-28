@@ -114,7 +114,7 @@
               .concat(this.getReversePathsByName('transaction').map(path => ({ path }))),
           ),
         }).then((res) => {
-          this.item = res.data[0];
+          this.item = res.body[0];
         });
       },
       refresh() {

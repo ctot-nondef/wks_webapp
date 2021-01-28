@@ -100,7 +100,7 @@
       createAndSelect() {
         this.post({ type: 'transaction', body: this.newtransaction }).then((res) => {
           this.newtransaction = {};
-          this.selectTransactionRef(res.data);
+          this.selectTransactionRef(res.body);
         });
       },
     },

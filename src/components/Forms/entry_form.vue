@@ -438,7 +438,7 @@ export default {
             },
           }).then((res) => {
             if (!this.entry.images) this.entry.images = [];
-            this.entry.images.push({ reference: res.data });
+            this.entry.images.push({ reference: res.body });
             this.returnObject();
             this.imageName = '';
             this.imageFile = '';

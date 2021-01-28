@@ -165,7 +165,7 @@ export default {
           ),
         }).then((res) => {
           this.loading = false;
-          this.data = res.data;
+          this.data = res.body;
           this.totalHits = parseInt(res.headers['x-total-count'], 10);
         }).catch((err) => {
           if (err.response.data && err.response.data.detail === 'Invalid page.') {

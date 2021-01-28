@@ -273,7 +273,7 @@ export default {
             },
           }).then((res) => {
             if (!this.collection.documents) this.collection.documents = [];
-            this.collection.documents.push({ ref: res.data });
+            this.collection.documents.push({ ref: res.body });
             this.returnObject();
             this.imageName = '';
             this.imageFile = '';

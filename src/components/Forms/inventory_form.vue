@@ -294,7 +294,7 @@ export default {
             },
           }).then((res) => {
             if (!this.inventory.documents) this.inventory.documents = [];
-            this.inventory.documents.push({ ref: res.data });
+            this.inventory.documents.push({ ref: res.body });
             this.returnObject();
             this.imageName = '';
             this.imageFile = '';

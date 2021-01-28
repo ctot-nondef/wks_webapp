@@ -295,7 +295,7 @@ export default {
             },
           }).then((res) => {
             if (!this.object.images) this.object.images = [];
-            this.object.images.push({ reference: res.data });
+            this.object.images.push({ reference: res.body });
             this.returnObject();
             this.imageName = '';
             this.imageFile = '';

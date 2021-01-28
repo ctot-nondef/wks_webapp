@@ -162,7 +162,7 @@
               .concat(this.getReversePathsByName(this.type).map(path => ({ path }))),
           ),
         }).then((res) => {
-          this.item = res.data[0];
+          this.item = res.body[0];
           this.loading = false;
         }).catch((err) => {
           console.log(err);

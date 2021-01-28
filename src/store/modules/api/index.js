@@ -226,14 +226,13 @@ const actions = {
     let p = {};
     // eslint-disable-next-line no-param-reassign
     if(!sort) sort = 'name';
-    const t = type.charAt(0).toUpperCase() + type.slice(1);
     return new Promise((resolve, reject) => {
       if (type && id) {
         commit('setLoading', `Getting ${type} ${id} from Database`);
         p = state.apiclient.apis[type][`get_api_v1_${type}`]({ id, $config, populate });
       } else if (type && !id) {
         commit('setLoading', `Getting Queryset of ${type} from Database`);
-        p = state.apilib[`get${t}`]({ sort, skip, limit, query: cleanFilter(query), populate, $config });
+        p = state.apiclient.apis[type][`get_api_v1_${type}`]({ sort, skip, limit, query: cleanFilter(query), populate, $config });
       } else reject('Invalid or Insufficient Parameters');
       p.then((res) => {
         commit('setLoadingFinished');

@@ -85,7 +85,7 @@ export default {
             .concat(this.getReversePathsByName(type).map(path => ({ path }))),
           ),
         }).then((res) => {
-          this.item = res.data[0];
+          this.item = res.body[0];
           this.active = true;
         });
       },
