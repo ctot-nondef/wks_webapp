@@ -1,5 +1,4 @@
 /* eslint-disable no-shadow,no-underscore-dangle */
-import * as api from './api';
 import Swagger from 'swagger-client';
 
 function computeFieldType(field, name) {
@@ -107,9 +106,11 @@ const mutations = {
     s.refreshtoken = refreshtoken;
     s.user = user;
     s.loggedin = true;
+    s.apiclient.authorizations.bearer = token;
   },
   updateToken(s, t) {
     s.token = t;
+    s.apiclient.authorizations.bearer = t;
   },
   logoutMut(s) {
     s.token = null;
@@ -167,13 +168,15 @@ const mutations = {
 
 const actions = {
   // eslint-disable-next-line no-shadow
-  async init({ state, commit }, config) {
-    const APIClient = await Swagger(`${config.config.api}/api/v1/swagger-json`);
-    console.log(APIClient);
+  async init({ state, commit, dispatch }, config) {
+    const APIClient = await Swagger(
+        `${config.config.api}/api/v1/swagger-json`,
+        {
+          authorizations: { bearer: state.token },
+        });
     commit('setApiClient', APIClient);
-    commit('setApiLib', api);
-    commit('setApiURL', `${config.config.api}`);
     if (config.pstate !== null && config.pstate.pState.api) commit('setState', config.pstate.pState.api);
+    await dispatch('refreshtoken');
     commit('setLoading', 'Loading Database Configuration.');
     const p = [];
     p.push(
@@ -203,26 +206,31 @@ const actions = {
       }).then((res) => {
         commit('setClasses', { type: 'Descriptor', classlist: res.body });
       }),
-      state.apiclient.apis.User.UserController_refreshAccessToken(
-          null,
-          {
-            requestBody: {
-              "refreshToken": state.refreshtoken
-            }
-          }
-      ).then((res) => {
-        commit('updateToken', res.body.accessToken);
-      }).catch(() => {
-        console.log('logon expired');
-        commit('logoutMut');
-      }),
     );
     return Promise.all(p).then(() => {
       commit('setLoadingFinished');
       commit('setInit');
     });
   },
-  get({ state, commit }, { type, id, sort, skip, limit, query, populate }) {
+  refreshtoken({ state, commit }) {
+    state.apiclient.apis.User.UserController_refreshAccessToken(
+        null,
+        {
+          requestBody: {
+            "refreshToken": state.refreshtoken
+          }
+        }
+    ).then((res) => {
+      commit('updateToken', res.body.accessToken);
+      return res.body.accessToken;
+    }).catch(() => {
+      console.log('logon expired');
+      commit('logoutMut');
+      return false;
+    });
+  },
+  async get({ state, commit, dispatch }, { type, id, sort, skip, limit, query, populate }) {
+    await dispatch('refreshtoken');
     let p = {};
     // eslint-disable-next-line no-param-reassign
     if(!sort) sort = 'name';
@@ -244,21 +252,27 @@ const actions = {
       });
     });
   },
-  post({ state, commit, getters }, { type, id, body }) {
+  async post({ state, commit, dispatch, getters }, { type, id, body }) {
+    await dispatch('refreshtoken');
     let p = {};
     const params = {
       $config,
     };
     params[type] = deleteProps(body, getters.getReversePathsByName(type));
     params.id = id;
-    const t = type.charAt(0).toUpperCase() + type.slice(1);
     return new Promise((resolve, reject) => {
       if (type && id) {
         commit('setLoading', `Updating ${type} ${id} to Database`);
-        p = state.apilib[`post${t}ById`](params);
+        p = state.apiclient.apis[type][`post_api_v1_${type}__id_`](
+            { id },
+            { requestBody: params[type] },
+        );
       } else if (type && !id) {
         commit('setLoading', `Creating a ${type} in Database`);
-        p = state.apilib[`post${t}`](params);
+        p = state.apiclient.apis[type][`post_api_v1_${type}`](
+            null,
+            { requestBody: params[type] },
+        );
       } else reject('Invalid or Insufficient Parameters');
       p.then((res) => {
         commit('setLoadingFinished');
@@ -270,39 +284,15 @@ const actions = {
       });
     });
   },
-  patch({ state, commit }, { type, id, body }) {
+  async delete({ state, commit, dispatch }, { type, id }) {
+    await dispatch('refreshtoken');
     let p = {};
-    const params = {
-      $config,
-    };
-    params[type] = body;
-    params.id = id;
-    const t = type.charAt(0).toUpperCase() + type.slice(1);
-    return new Promise((resolve, reject) => {
-      if (type && id) {
-        commit('setLoading', `Updating ${type} ${id} to Database`);
-        p = state.apilib[`post${t}ById`](params);
-      } else if (type && !id) {
-        commit('setLoading', `Creating a ${type} in Database`);
-        p = state.apilib[`post${t}`](params);
-      } else reject('Invalid or Insufficient Parameters');
-      p.then((res) => {
-        commit('setLoadingFinished');
-        resolve(res);
-      })
-      .catch((error) => {
-        commit('setLoadingFinished');
-        reject(error);
-      });
-    });
-  },
-  delete({ state, commit }, { type, id }) {
-    let p = {};
-    const t = type.charAt(0).toUpperCase() + type.slice(1);
     return new Promise((resolve, reject) => {
       if (type && id) {
         commit('setLoading', `Deleting ${type} ${id} in Database`);
-        p = state.apilib[`delete${t}ById`]({ id, $config });
+        p = state.apiclient.apis[type][`delete_api_v1_${type}__id_`](
+            { id },
+        );
       } else reject('Invalid or Insufficient Parameters');
       p.then((res) => {
         commit('setLoadingFinished');
