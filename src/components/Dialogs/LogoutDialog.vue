@@ -48,14 +48,8 @@ export default {
       this.closeDialog('logoutDialog');
     },
     logout() {
-      this.f('getLogout')({
-        $config: {
-          withCredentials: true,
-        },
-      }).then(() => {
-        this.logoutMut();
-        this.closeDialog('logoutDialog');
-      });
+      this.logoutMut();
+      this.closeDialog('logoutDialog');
     },
   },
 };
