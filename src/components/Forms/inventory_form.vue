@@ -198,7 +198,6 @@
   </div>
 </template>
 <script>
-import axios from 'axios';
 import autocomp from '../AutoCompleteComponents/Autocomp';
 import datecomponent from '../FormComponents/DateComponent';
 import formlistcomponent from '../FormComponents/FormListComponent';
@@ -284,15 +283,18 @@ export default {
         }
         fr.readAsDataURL(files[0]);
         fr.addEventListener('load', () => {
-          const formData = new FormData();
-          this.imageUrl = fr.result;
           this.imageFile = files[0];
-          formData.append('file', this.imageFile);
-          axios.post(`${this.$store.state.api.url}/api/v1/upload/`, formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          }).then((res) => {
+          this.$store.state.api.apiclient.apis.Assetrefs.AssetsController_uploadFile(
+              null,
+              {
+                requestBody: {
+                  name: this.imageName,
+                  identifier: "identifier",
+                  source: "source",
+                  file: this.imageFile,
+                },
+              },
+          ).then((res) => {
             if (!this.inventory.documents) this.inventory.documents = [];
             this.inventory.documents.push({ ref: res.body });
             this.returnObject();
