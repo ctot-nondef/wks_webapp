@@ -99,7 +99,7 @@
           <template v-for="(item, index) in inventory.documents">
             <v-list-item :key="item._id" :href="`${$store.state.api.url}/assets/thumb/${item.ref.name}.pdf`" target="_blank">
               <v-list-item-avatar>
-                <img :src="`${$store.state.api.url}/assets/thumb/${item.ref.name.split('.')[0]}.jpg`">
+                <img :src="`${$store.state.api.url}/assetrefs/thumb/${item.ref.name.split('.')[0]}.jpg`">
               </v-list-item-avatar>
               <v-list-item-content>
                 <v-list-item-title v-html="item.ref.name"/>
