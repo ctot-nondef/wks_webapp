@@ -168,9 +168,9 @@
       <v-flex xs12>
         <v-list two-line>
           <template v-for="(item, index) in object.images">
-            <v-list-item :key="item._id" :href="`${$store.state.api.url}/${item.reference.path}`" target="_blank">
+            <v-list-item :key="item._id" :href="`${$store.state.api.url}/assets/full/${item.reference.name.split('.')[0]}.jpg`" target="_blank">
               <v-list-item-avatar>
-                <img :src="`${$store.state.api.url}/asset/uploads/thumbs/${item.reference.name.split('.')[0]}_thumb.jpg`">
+                <img :src="`${$store.state.api.url}/assets/thumb/${item.reference.name.split('.')[0]}.jpg`">
               </v-list-item-avatar>
               <v-list-item-content>
                 <v-list-item-title v-html="item.reference.name"/>
@@ -289,7 +289,7 @@ export default {
           this.imageUrl = fr.result;
           this.imageFile = files[0];
           formData.append('file', this.imageFile);
-          axios.post(`${this.$store.state.api.url}/api/v1/upload/`, formData, {
+          axios.post(`${this.$store.state.api.url}/api/v1/assets/upload/`, formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
             },
@@ -301,6 +301,7 @@ export default {
             this.imageFile = '';
             this.imageUrl = '';
           });
+
         });
       } else {
         this.imageName = '';

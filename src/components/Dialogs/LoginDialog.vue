@@ -37,7 +37,6 @@ export default {
       'loginDialog',
     ]),
     ...mapGetters('api', [
-      'f',
       'init',
     ]),
   },

@@ -91,10 +91,7 @@ const mutations = {
     s.apiclient = client;
   },
   setApiURL(s, url) {
-    if (s.apilib.setDomain) {
-      s.apilib.setDomain(`${url}/api/v1`);
-      s.url = url;
-    }
+    s.url = `${url}/api/v1`;
   },
   setState(s, pstate) {
     Object.keys(pstate).forEach((key) => {
@@ -175,6 +172,7 @@ const actions = {
           authorizations: { bearer: state.token },
         });
     commit('setApiClient', APIClient);
+    commit('setApiURL', config.config.api);
     if (config.pstate !== null && config.pstate.pState.api) commit('setState', config.pstate.pState.api);
     await dispatch('refreshtoken');
     commit('setLoading', 'Loading Database Configuration.');
