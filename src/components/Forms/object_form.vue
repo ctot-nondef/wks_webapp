@@ -168,9 +168,9 @@
       <v-flex xs12>
         <v-list two-line>
           <template v-for="(item, index) in object.images">
-            <v-list-item :key="item._id" :href="`${$store.state.api.url}/assets/full/${item.reference.name.split('.')[0]}.jpg`" target="_blank">
+            <v-list-item :key="item._id" :href="`${$store.state.api.url}/assetrefs/full/${item.reference.name.split('.')[0]}.jpg`" target="_blank">
               <v-list-item-avatar>
-                <img :src="`${$store.state.api.url}/assets/thumb/${item.reference.name.split('.')[0]}.jpg`">
+                <img :src="`${$store.state.api.url}/assetrefs/thumb/${item.reference.name.split('.')[0]}.jpg`">
               </v-list-item-avatar>
               <v-list-item-content>
                 <v-list-item-title v-html="item.reference.name"/>
