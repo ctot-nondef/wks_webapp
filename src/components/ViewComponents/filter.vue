@@ -42,6 +42,32 @@
               clearable
               @click:clear="value['$regex'] = null"
               @input="updateFilter({ key: `${path}`, value: $event })"/>
+          <!-- text field for fulltext search -->
+          <v-text-field
+              v-else-if="$route.name =='search' && path == 'ftsearch'"
+              :value="value"
+              filled
+              label="Searchterms"
+              clearable
+              @click:clear="value = ''"
+              @keydown.enter="updateFilter({ key: `${path}`, value: $event.srcElement.value })"/>
+          <!-- operator for fulltext search -->
+          <v-radio-group
+              :value="value"
+              v-else-if="$route.name =='search' && path == 'operator'"
+              @change="updateFilter({ key: `${path}`, value: $event })"
+          >
+            <v-radio
+                key="and"
+                label="and"
+                value="$and"
+            ></v-radio>
+            <v-radio
+                key="or"
+                label="or"
+                value="$or"
+            ></v-radio>
+          </v-radio-group>
           <!-- text field for regex query -->
           <v-text-field
             v-else-if="getFieldType({type: entitytype, name: path}) === 'string'"

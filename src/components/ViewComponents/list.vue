@@ -148,10 +148,14 @@ export default {
         'get',
         'post',
         'delete',
+        'search'
       ]),
       getRecords() {
         this.loading = true;
-        this.get({
+        let action = "";
+        if(this.$route.name == 'query') action = "get";
+        if(this.$route.name == 'search') action = "search";
+        this[action]({
           type: this.entitytype,
           sort: this.pagination.sortDesc[0] ? `-${this.pagination.sortBy[0]}` : this.pagination.sortBy[0],
           limit: this.pagination.itemsPerPage,

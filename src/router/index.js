@@ -5,6 +5,7 @@ import Start from '../components/Start';
 import single from '../components/single';
 import users from '../components/users';
 import query from '../components/filtered_list';
+import search from '../components/search_list';
 
 Vue.use(Router);
 
@@ -39,6 +40,13 @@ export default new Router({
           name: 'query',
           components: {
             Content: query,
+          },
+        },
+        {
+          path: 's/:entity/:query?',
+          name: 'search',
+          components: {
+            Content: search,
           },
         },
         {

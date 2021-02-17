@@ -19,11 +19,11 @@ export default [
     icon: 'search',
     abstract: '',
     startpage: {
-      name: 'query',
+      name: 'search',
       params: {
         lang: 'en',
         entity: 'entry',
-        query: JSON.stringify({ Kunstgattung: null, Thema: null, Datierung: null, Schule: null, partOf: null })
+        query: JSON.stringify({ ftsearch: '', operator: '$or'}),
       }},
     items: '',
   },

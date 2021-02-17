@@ -2,11 +2,14 @@
 import Swagger from 'swagger-client';
 
 function computeFieldType(field, name) {
-  if (name === 'instanceOf') return `class_${field['x-ref']}`;
-  if (field.type === 'array') return computeFieldType(field.items);
-  if (field.type === 'string' && field['x-ref']) return `xref_${field['x-ref']}`;
-  if (field.type === 'string' && field.format) return field.format;
-  return field.type;
+  if(field) {
+    if (name === 'instanceOf') return `class_${field['x-ref']}`;
+    if (field.type === 'array') return computeFieldType(field.items);
+    if (field.type === 'string' && field['x-ref']) return `xref_${field['x-ref']}`;
+    if (field.type === 'string' && field.format) return field.format;
+    return field.type;
+  }
+  return '';
 }
 
 function cleanFilter(f) {
@@ -291,6 +294,27 @@ const actions = {
         p = state.apiclient.apis[type][`delete_api_v1_${type}__id_`](
             { id },
         );
+      } else reject('Invalid or Insufficient Parameters');
+      p.then((res) => {
+        commit('setLoadingFinished');
+        resolve(res);
+      })
+      .catch((error) => {
+        commit('setLoadingFinished');
+        reject(error);
+      });
+    });
+  },
+  async search({ state, commit, dispatch }, { type, sort, skip, limit, query }) {
+    console.log(type);
+    await dispatch('refreshtoken');
+    let p = {};
+    // eslint-disable-next-line no-param-reassign
+    if(!sort) sort = 'name';
+    return new Promise((resolve, reject) => {
+      if (type && query) {
+        commit('setLoading', `Searching ${type} with ${query} from Database`);
+        p = state.apiclient.apis.Root.SchemasController_search({ type, $config, sort, skip, limit, query: query.ftsearch, operator: query.operator });
       } else reject('Invalid or Insufficient Parameters');
       p.then((res) => {
         commit('setLoadingFinished');
