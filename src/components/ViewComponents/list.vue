@@ -24,7 +24,7 @@
       </template>
       <template v-slot:body="{ items }">
         <tbody>
-        <tr v-for="item in items" :key="item.name">
+        <tr v-for="(item, index) in items" :key="index">
           <td v-for="column in currentHeaders" :key="column.path">
             <span v-if="_.get(item, column.path)">
               {{ _.get(item, column.path) }}
@@ -172,7 +172,7 @@ export default {
           this.data = res.body;
           this.totalHits = parseInt(res.headers['x-total-count'], 10);
         }).catch((err) => {
-          if (err.response.data && err.response.data.detail === 'Invalid page.') {
+          if (err.response && err.response.data && err.response.data.detail === 'Invalid page.') {
             this.pagination.page -= 1;
             this.getRecords();
           }

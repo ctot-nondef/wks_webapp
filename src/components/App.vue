@@ -1,10 +1,10 @@
 <template>
     <div>
       <fundamentnav></fundamentnav>
-      <v-content v-if="$store.state.api.init" >
+      <v-main v-if="$store.state.api.init" >
         <router-view name="Content"/>
         <fundamentfooter></fundamentfooter>
-      </v-content>
+      </v-main>
       <dialogs></dialogs>
     </div>
 </template>
