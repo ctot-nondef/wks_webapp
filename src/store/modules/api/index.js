@@ -72,7 +72,7 @@ const $config = {
 /* eslint no-console: ["error", { allow: ["log"] }] */
 /* eslint-disable no-underscore-dangle */
 const getters = {
-  f: s => name => s.apilib[name],
+  getClient: s => s.apiclient.apis,
   schema: s => name => s.schemas[name],
   types: s => Object.keys(s.schemas),
   getClassByName: s => ({ type, name }) => s.classes[type].find(item => item.name === name),

@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import App from '../components/App';
 import Start from '../components/Start';
-import ForgotPassword from '../components/ForgotPassword';
+import ResetPassword from '../components/ResetPassword';
 import single from '../components/single';
 import users from '../components/users';
 import query from '../components/filtered_list';
@@ -51,24 +51,24 @@ export default new Router({
           },
         },
         {
-          path: ':type/:id',
-          name: 'single',
-          components: {
-            Content: single,
-          },
-        },
-        {
-          path: 'users',
+          path: 'u/list',
           name: 'users',
           components: {
             Content: users,
           },
         },
         {
-          path: 'forgotpassword',
-          name: 'forgotpassword',
+          path: 'u/resetpassword/:token',
+          name: 'resetpassword',
           components: {
-            Content: ForgotPassword,
+            Content: ResetPassword,
+          },
+        },
+        {
+          path: ':type/:id',
+          name: 'single',
+          components: {
+            Content: single,
           },
         },
         {

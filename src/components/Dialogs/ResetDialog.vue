@@ -6,7 +6,7 @@
         </v-card-title>
         <v-card-text>
           You will be sent a link allowing you to reset your password.
-          <v-text-field v-model="username" type="text" label="Email"/>
+          <v-text-field v-model="email" type="text" label="Email"/>
         </v-card-text>
         <v-card-actions>
         <v-btn @click="login" large color="primary">
@@ -54,7 +54,7 @@ export default {
       null,
       { // Options object
         requestBody: {
-          email: this.username,
+          email: this.email,
         }
       }
       ).then(() => {
