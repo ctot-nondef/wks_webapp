@@ -1,16 +1,16 @@
 <template lang="html">
-    <v-dialog v-model="loginDialog.status" id="askForStore" max-width="500px">
+    <v-dialog v-model="resetDialog.status" id="askForStore" max-width="500px">
       <v-card>
         <v-card-title>
-          VCHC DATABASE LOGIN
+          PASSWORD RESET REQUEST
         </v-card-title>
         <v-card-text>
+          You will be sent a link allowing you to reset your password.
           <v-text-field v-model="username" type="text" label="Email"/>
-          <v-text-field v-model="password" type="password" label="Password"/>
         </v-card-text>
         <v-card-actions>
         <v-btn @click="login" large color="primary">
-          LOGIN
+          REQUEST
         </v-btn>
         <v-btn @click="discard" large color="secondary">
           CANCEL
@@ -28,13 +28,12 @@ export default {
   mixins: [HELPERS],
   data() {
     return {
-      username: '',
-      password: '',
+      email: '',
     };
   },
   computed: {
     ...mapState('dialogs', [
-      'loginDialog',
+      'resetDialog',
     ]),
     ...mapGetters('api', [
       'init',
@@ -44,27 +43,25 @@ export default {
     ...mapActions('api', {
       dbInit: 'init',
     }),
-    ...mapMutations('api', [
-      'loginMut',
-    ]),
     ...mapMutations('dialogs', [
       'closeDialog',
     ]),
     discard() {
-      this.closeDialog('loginDialog');
+      this.closeDialog('resetDialog');
     },
     login() {
-      this.$store.state.api.apiclient.apis.User.UserController_login(
+      this.$store.state.api.apiclient.apis.User.UserController_forgotPassword(
       null,
       { // Options object
         requestBody: {
           email: this.username,
-          password: this.password
         }
       }
-      ).then((res) => {
-        this.loginMut({ token: res.body.accessToken, refreshtoken: res.body.refreshToken, user: res.body.email });
-        this.closeDialog('loginDialog');
+      ).then(() => {
+        this.closeDialog('resetDialog');
+      })
+      .catch(() => {
+        this.closeDialog('resetDialog');
       });
     },
   },

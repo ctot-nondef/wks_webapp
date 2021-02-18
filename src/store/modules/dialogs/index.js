@@ -5,6 +5,7 @@ const state = {
   loginDialog: { status: false },
   logoutDialog: { status: false },
   createDialog: { status: false, type: '' },
+  resetDialog: { status: false },
 };
 
 const getters = {

@@ -17,9 +17,6 @@
           <v-layout column justify-space-between>
             <v-list>
               <v-list-item>
-                <!-- <v-btn icon @click.stop="toggleAppMode()">
-                  <v-icon>view_day</v-icon>
-                </v-btn> -->
                 <v-btn icon @click.stop="toggleNavDrawerClipped()">
                   <v-icon v-html="$store.state.app.drawerclipped?'first_page':'last_page'" v-if="!$store.state.app.miniVariant"></v-icon>
                 </v-btn>
@@ -72,61 +69,6 @@
         </v-container>
       </v-navigation-drawer>
     </transition>
-    <transition :duration="200" name="slideRight" mode="out-in">
-      <v-toolbar
-        v-if="!$store.state.app.drawer"
-        app
-        height="90"
-        class="border-bottom"
-        >
-        <!-- <v-btn icon @click.stop="toggleAppMode()">
-          <v-icon>view_quilt</v-icon>
-        </v-btn> -->
-        <v-container row >
-          <v-layout row class="compensation">
-            <v-flex xs3 >
-              <v-layout column justify-center fill-height>
-                <v-toolbar-title>
-                  <router-link :to="{ name: 'start' }">
-                    <div class="logo">
-                      <h5 style="font-weight: 200; padding: 0px; margin: 0px;letter-spacing: 3px!important; line-height:25px;">VC</h5>
-                      <h5 style="font-weight: 800; padding: 0px; margin: 0px;letter-spacing: 2px!important; line-height:25px;">HC</h5>
-                    </div>
-                    Database
-                  </router-link>
-                </v-toolbar-title>
-              </v-layout>
-            </v-flex>
-            <v-flex >
-              <v-tabs icons-and-text color="grey lighten-4">
-                <v-tabs-slider color="teal lighten-3"></v-tabs-slider>
-                <v-tab
-                  v-for="(item, i) in $store.state.app.config.menu"
-                  :key="i"
-                  :to="item.startpage"
-                  >
-                  {{item.caption}}
-                  <v-icon>{{item.icon}}</v-icon>
-                </v-tab>
-              </v-tabs>
-            </v-flex>
-            <v-spacer></v-spacer>
-          </v-layout>
-        </v-container>
-        <v-btn icon @click.stop="rightDrawer = !rightDrawer">
-          <v-icon>menu</v-icon>
-        </v-btn>
-      </v-toolbar>
-    </transition>
-    <v-navigation-drawer
-      :right="true"
-      v-model="$store.state.app.rightDrawer"
-      enable-resize-watcher
-      app
-      >
-      <router-view name="rightdrawertop"></router-view>
-      <router-view name="rightdrawerbottom"></router-view>
-    </v-navigation-drawer>
   </div>
 </template>
 
