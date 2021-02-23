@@ -36,7 +36,6 @@ function deleteProps(obj, props) {
 }
 
 const state = {
-  apilib: {},
   apiclient: {},
   init: false,
   url: '',
@@ -86,9 +85,6 @@ const getters = {
 const mutations = {
   setConfig(s, config) {
     s.config = config;
-  },
-  setApiLib(s, lib) {
-    s.apilib = lib;
   },
   setApiClient(s, client) {
     s.apiclient = client;
@@ -312,8 +308,8 @@ const actions = {
     // eslint-disable-next-line no-param-reassign
     if(!sort) sort = 'name';
     return new Promise((resolve, reject) => {
-      if (type && query) {
-        commit('setLoading', `Searching ${type} with ${query} from Database`);
+      if (type && query && query.ftsearch) {
+        commit('setLoading', `Searching ${type} with ${query.ftsearch} from Database`);
         p = state.apiclient.apis.Root.SchemasController_search({ type, $config, sort, skip, limit, query: query.ftsearch, operator: query.operator });
       } else reject('Invalid or Insufficient Parameters');
       p.then((res) => {

@@ -12,6 +12,7 @@
       }"
       class="elevation-1"
       loading-text="Loading... Please wait"
+      no-data-text="No results found corresponding to your query"
     >
       <template v-slot:top="{ pagination, options, updateOptions }">
         <v-data-footer
@@ -152,6 +153,7 @@ export default {
       ]),
       getRecords() {
         this.loading = true;
+        console.log("loading", this.loading, this.pagination);
         let action = "";
         if(this.$route.name == 'query') action = "get";
         if(this.$route.name == 'search') action = "search";
@@ -169,13 +171,17 @@ export default {
           ),
         }).then((res) => {
           this.loading = false;
+          console.log("loading", this.loading, this.pagination);
           this.data = res.body;
           this.totalHits = parseInt(res.headers['x-total-count'], 10);
         }).catch((err) => {
+          this.loading = false;
+          console.log("loading", this.loading, this.pagination);
           if (err.response && err.response.data && err.response.data.detail === 'Invalid page.') {
             this.pagination.page -= 1;
             this.getRecords();
           }
+          else this.data = [];
         });
       },
       deleteRequest(rec) {

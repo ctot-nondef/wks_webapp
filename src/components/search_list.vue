@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <v-container grid-list-md >
-      <fundamentcard :caption="$route.params.entity">
+      <fundamentcard caption="Text Search">
         <div slot="content">
           <v-layout justify-center column fill-height>
             <v-flex xs12 v-if="$store.state.api.loggedin">
@@ -14,7 +14,7 @@
               </v-layout>
             </v-flex>
             <v-flex xs12>
-              <filterlist :entitytype="$route.params.entity" :filter="query" @update="updateParams($event)"></filterlist>
+              <filterlist :entitytype="$route.params.entity" :filter="query" @update="updateParams($event)" fixedtype></filterlist>
             </v-flex>
             <v-flex xs12>
               <list ref="genericlist" :entitytype="$route.params.entity" :filter="query" ></list>
