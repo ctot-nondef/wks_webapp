@@ -35,6 +35,15 @@ function deleteProps(obj, props) {
   return r;
 }
 
+const $config = {
+  withCredentials: true,
+  headers: {
+    'X-Requested-With': 'XMLHttpRequest',
+    'cache-control': 'no-cache, must-revalidate, post-check=0, pre-check=0',
+    'pragma': 'no-cache',
+  },
+};
+
 const state = {
   apiclient: {},
   init: false,
@@ -53,18 +62,6 @@ const state = {
   p: ['user', 'token', 'loggedin', 'refreshtoken'],
   listheaders: {},
   filters: {},
-};
-
-const $config = {
-  withCredentials: true,
-  headers: {
-    'X-Requested-With': 'XMLHttpRequest',
-    'cache-control': 'no-cache, must-revalidate, post-check=0, pre-check=0',
-    // 'cache-control': 'max-age=0',
-    // 'expires': '0',
-    // 'expires': 'Tue, 01 Jan 1980 1:00:00 GMT',
-    pragma: 'no-cache',
-  },
 };
 
 /* eslint no-param-reassign: ["error", { "props": false }] */
@@ -210,6 +207,7 @@ const actions = {
     });
   },
   refreshtoken({ state, commit }) {
+    //TODO check actual token expiry date
     state.apiclient.apis.User.UserController_refreshAccessToken(
         null,
         {
@@ -302,7 +300,6 @@ const actions = {
     });
   },
   async search({ state, commit, dispatch }, { type, sort, skip, limit, query }) {
-    console.log(type);
     await dispatch('refreshtoken');
     let p = {};
     // eslint-disable-next-line no-param-reassign

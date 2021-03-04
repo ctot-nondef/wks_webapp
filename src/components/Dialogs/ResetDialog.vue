@@ -37,6 +37,7 @@ export default {
     ]),
     ...mapGetters('api', [
       'init',
+      'getClient',
     ]),
   },
   methods: {
@@ -50,7 +51,7 @@ export default {
       this.closeDialog('resetDialog');
     },
     login() {
-      this.$store.state.api.apiclient.apis.User.UserController_forgotPassword(
+      this.getClient.User.UserController_forgotPassword(
       null,
       { // Options object
         requestBody: {

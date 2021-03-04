@@ -46,6 +46,7 @@ export default {
     }),
     ...mapMutations('api', [
       'loginMut',
+      'getClient',
     ]),
     ...mapMutations('dialogs', [
       'closeDialog',
@@ -54,7 +55,7 @@ export default {
       this.closeDialog('loginDialog');
     },
     login() {
-      this.$store.state.api.apiclient.apis.User.UserController_login(
+      this.getClient.User.UserController_login(
       null,
       { // Options object
         requestBody: {
