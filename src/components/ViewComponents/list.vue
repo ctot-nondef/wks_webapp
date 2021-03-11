@@ -153,7 +153,6 @@ export default {
       ]),
       getRecords() {
         this.loading = true;
-        console.log("loading", this.loading, JSON.stringify(this.pagination), JSON.stringify(this.data), JSON.stringify(this.totalHits));
         let action = "get";
         if(this.$route.name == 'search') action = "search";
         this[action]({

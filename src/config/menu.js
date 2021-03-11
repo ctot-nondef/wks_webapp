@@ -16,9 +16,23 @@ export default [
     items: '',
   },
   {
-    caption: 'Browse',
+    caption: 'Filter',
     arialabel: '',
-    icon: 'list',
+    icon: 'filter_list',
+    abstract: '',
+    startpage: {
+      name: 'query',
+      params: {
+        lang: 'en',
+        entity: 'entry',
+        query: JSON.stringify({ Kunstgattung: null, Thema: null, Datierung: null, Schule: null, partOf: null })
+      }},
+    items: '',
+  },
+  {
+    caption: 'Collections',
+    arialabel: '',
+    icon: 'collections',
     abstract: '',
     startpage: {
       name: 'query',
@@ -26,20 +40,6 @@ export default [
         lang: 'en',
         entity: 'collect',
         query: JSON.stringify(filters.collect)
-      }},
-    items: '',
-  },
-  {
-    caption: 'Objects',
-    arialabel: '',
-    icon: 'category',
-    abstract: '',
-    startpage: {
-      name: 'query',
-      params: {
-        lang: 'en',
-        entity: 'object',
-        query: JSON.stringify(filters.object),
       }},
     items: '',
   },
@@ -58,6 +58,34 @@ export default [
     items: '',
   },
   {
+    caption: 'Identified Objects',
+    arialabel: '',
+    icon: 'category',
+    abstract: '',
+    startpage: {
+      name: 'query',
+      params: {
+        lang: 'en',
+        entity: 'object',
+        query: JSON.stringify(filters.object),
+      }},
+    items: '',
+  },
+  {
+    caption: 'Transactions',
+    arialabel: '',
+    icon: 'compare_arrows',
+    abstract: '',
+    startpage: {
+      name: 'query',
+      params: {
+        lang: 'en',
+        entity: 'transaction',
+        query: JSON.stringify(filters.transaction),
+      }},
+    items: '',
+  },
+  {
     caption: 'Thesaurus',
     arialabel: '',
     icon: 'device_hub',
@@ -68,6 +96,20 @@ export default [
         lang: 'en',
         entity: 'descriptor',
         query: JSON.stringify(filters.descriptor),
+      }},
+    items: '',
+  },
+  {
+    caption: 'Inventories & Catalogs',
+    arialabel: '',
+    icon: 'chrome_reader_mode',
+    abstract: '',
+    startpage: {
+      name: 'query',
+      params: {
+        lang: 'en',
+        entity: 'inventory',
+        query: JSON.stringify(filters.inventory),
       }},
     items: '',
   },

@@ -9,74 +9,18 @@
       <v-container grid-list-md v-if="$store.state.api.loggedin">
         <v-layout justify-space-around row wrap>
           <fundamentsectiondiv icon="description" caption="Sammlungsdaten"></fundamentsectiondiv>
-          <v-flex xs12 sm3>
+          <v-flex xs12 sm3
+            v-for="(item, i) in $store.state.app.config.menu"
+            :key="i"
+          >
             <fundamentcard
-              caption="Search"
-              :link="{ name: 'entries', params: { lang: 'en' }}"
+              :caption="item.caption"
+              :link="item.startpage"
             >
               <template v-slot:content>
               </template>
             </fundamentcard>
           </v-flex>
-          <v-flex xs12 sm3>
-            <fundamentcard
-                caption="Collections"
-                :link="{ name: 'collections', params: { lang: 'en' }}"
-            >
-              <template v-slot:content>
-              </template>
-            </fundamentcard>
-          </v-flex>
-          <v-flex xs12 sm3>
-            <fundamentcard
-                caption="Entries"
-                :link="{ name: 'entries', params: { lang: 'en' }}"
-            >
-              <template v-slot:content>
-              </template>
-            </fundamentcard>
-          </v-flex>
-          <v-flex xs12 sm3>
-            <fundamentcard
-              caption="Identified Objects"
-              :link="{ name: 'objects', params: { lang: 'en' }}"
-            >
-              <p class="card-text"></p>
-            </fundamentcard>
-          </v-flex>
-          <v-flex xs12 sm3>
-            <fundamentcard
-                caption="Actors"
-                :link="{ name: 'actors', params: { lang: 'en' }}"
-            >
-              <p class="card-text"></p>
-            </fundamentcard>
-          </v-flex>
-          <v-flex xs12 sm3>
-            <fundamentcard
-                caption="Transactions"
-                link=""
-            >
-              <p class="card-text"></p>
-            </fundamentcard>
-          </v-flex>
-          <v-flex xs12 sm3>
-            <fundamentcard
-                caption="Inventories & Catalogs"
-                link=""
-            >
-              <p class="card-text"></p>
-            </fundamentcard>
-          </v-flex>
-          <v-flex xs12 sm3>
-            <fundamentcard
-                caption="Filter"
-                link=""
-            >
-              <p class="card-text"></p>
-            </fundamentcard>
-          </v-flex>
-
         </v-layout>
       </v-container>
       <v-container  v-if="!$store.state.api.loggedin">
