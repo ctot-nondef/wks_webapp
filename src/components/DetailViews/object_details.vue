@@ -21,14 +21,6 @@
          :item="item.originalTitle"
         />
       </v-col>
-      <!-- entry part of -->
-      <v-col cols="6">
-        <singleview
-         icon="account_tree"
-         title="Part Of"
-         :item="item.partOf.name"
-        />
-      </v-col>
       <!-- collect creator -->
       <v-col cols="6">
         <listview
@@ -59,9 +51,23 @@
           :expanded="intexpanded"
         />
       </v-col>
+      <!-- entry dimensions -->
+      <v-col cols="6">
+        <listview
+            icon="height"
+            title="Dimensions"
+            :items="item.dimensions"
+            :paths="{
+            itemtitle: 'aspect.name',
+            itemsubtitle: 'unit.name',
+            itemcontent: 'amount',
+            collapsed: 'aspect.name',
+          }"
+            :expanded="intexpanded"
+        />
+      </v-col>
       <!-- collect time -->
-      <v-col cols="4">
-
+      <v-col cols="6">
         <singleview
          icon="calendar_today"
          title="Creation Date Start"
@@ -69,40 +75,15 @@
         />
       </v-col>
       <!-- collect place -->
-      <v-col cols="4">
+      <v-col cols="6">
         <singleview
          icon="calendar_today"
          title="Creation Date End"
          :item="item.created_end | formatDate"
         />
       </v-col>
-      <!-- entry dimensions -->
-      <v-col cols="4">
-        <listview
-         icon="height"
-         title="Dimensions"
-         :items="item.dimensions"
-         :paths="{
-            itemtitle: 'aspect.name',
-            itemsubtitle: 'unit.name',
-            itemcontent: 'amount',
-            collapsed: 'aspect.name',
-          }"
-         :expanded="intexpanded"
-        />
-      </v-col>
-      <!-- entry acquisition -->
-      <v-label>Acquisition</v-label>
-      <v-col cols="12">
-        <transactiondetails v-if="item.acquisition_ref" :id="item.acquisition_ref" :expanded="intexpanded" />
-      </v-col>
-      <!-- entry destitution -->
-      <v-label>Destitution</v-label>
-      <v-col cols="12">
-        <transactiondetails v-if="item.destitution_ref" :id="item.destitution_ref" :expanded="intexpanded" />
-      </v-col>
     </v-row>
-    <editdialog title="Create Inventory" ref="createdialog" @close="refresh" v-if="$store.state.api.loggedin">
+    <editdialog :title="`Edit ${item.name}`" ref="createdialog" @close="refresh" v-if="$store.state.api.loggedin">
       <template slot="form" slot-scope="props">
         <component :is="formLoader" :value="props.item" @input="props.item=$event"></component>
       </template>
@@ -147,7 +128,7 @@
     mixins: [filters],
     data() {
       return {
-        type: 'entry',
+        type: 'object',
         item: {},
         loading: false,
         intexpanded: true,

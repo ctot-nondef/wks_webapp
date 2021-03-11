@@ -42,6 +42,8 @@
         'get',
       ]),
       getEntity(type, id) {
+        // eslint-disable-next-line no-console
+        console.log(type,id);
          this.get({ type, id }).then((res) => {
            this.view = res.body;
         });
