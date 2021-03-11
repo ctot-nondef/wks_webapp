@@ -38,6 +38,7 @@ export default {
     ]),
     ...mapGetters('api', [
       'init',
+      'getClient',
     ]),
   },
   methods: {
@@ -46,7 +47,6 @@ export default {
     }),
     ...mapMutations('api', [
       'loginMut',
-      'getClient',
     ]),
     ...mapMutations('dialogs', [
       'closeDialog',

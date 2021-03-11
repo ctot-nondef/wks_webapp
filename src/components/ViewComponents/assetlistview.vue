@@ -25,7 +25,7 @@
       dense
       class="elevation-1"
     >
-      <v-list-item v-for="(item, index) in items" :key="index" :href="`${$store.state.api.url}/${item.ref.path}`" target="_blank">
+      <v-list-item v-for="(item, index) in items" :key="index" :href="`${$store.state.api.url}/assetrefs/full/${item.ref.path.split('/').splice(-1,1)}`" target="_blank">
         <v-list-item-avatar>
           <img :src="`${$store.state.api.url}/assetrefs/thumb/${item.ref.name.split('.')[0]}.jpg`">
         </v-list-item-avatar>

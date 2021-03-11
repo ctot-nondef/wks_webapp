@@ -153,9 +153,8 @@ export default {
       ]),
       getRecords() {
         this.loading = true;
-        console.log("loading", this.loading, this.pagination);
-        let action = "";
-        if(this.$route.name == 'query') action = "get";
+        console.log("loading", this.loading, JSON.stringify(this.pagination), JSON.stringify(this.data), JSON.stringify(this.totalHits));
+        let action = "get";
         if(this.$route.name == 'search') action = "search";
         this[action]({
           type: this.entitytype,
@@ -171,12 +170,12 @@ export default {
           ),
         }).then((res) => {
           this.loading = false;
-          console.log("loading", this.loading, this.pagination);
+          console.log("loadingfinished", this.loading, JSON.stringify(this.pagination));
           this.data = res.body;
           this.totalHits = parseInt(res.headers['x-total-count'], 10);
         }).catch((err) => {
           this.loading = false;
-          console.log("loading", this.loading, this.pagination);
+          console.log("loadingfinished", this.loading, JSON.stringify(this.pagination));
           if (err.response && err.response.data && err.response.data.detail === 'Invalid page.') {
             this.pagination.page -= 1;
             this.getRecords();
