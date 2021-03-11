@@ -23,6 +23,14 @@
               </v-list-item>
             </v-list>
             <v-list dense>
+              <v-list-item value="true" :to="{ name: 'start', params: { lang: 'en' } }" class="navtile">
+                <v-list-item-content>
+                  <v-icon>home</v-icon>
+                </v-list-item-content>
+                <v-list-item-content >
+                  <v-list-item-title class="toolbarcaption">Home</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
               <v-list-item
                 value="true"
                 v-for="(item, i) in $store.state.app.config.menu"

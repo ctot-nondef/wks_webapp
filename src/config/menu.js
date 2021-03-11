@@ -2,18 +2,6 @@ import filters from "./default_filters";
 
 export default [
   {
-    caption: 'Home',
-    arialabel: '',
-    icon: 'home',
-    abstract: '',
-    startpage: {
-      name: 'start',
-      params: {
-        lang: 'en' },
-    },
-    items: '',
-  },
-  {
     caption: 'Search',
     arialabel: '',
     icon: 'search',
