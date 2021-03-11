@@ -225,6 +225,8 @@ const actions = {
     });
   },
   async get({ state, commit, dispatch }, { type, id, sort, skip, limit, query, populate }) {
+    // eslint-disable-next-line no-param-reassign
+    type = type.toLowerCase();
     await dispatch('refreshtoken');
     let p = {};
     // eslint-disable-next-line no-param-reassign
@@ -232,7 +234,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       if (type && id) {
         commit('setLoading', `Getting ${type} ${id} from Database`);
-        p = state.apiclient.apis[type][`get_api_v1_${type}__id_`]({ id, $config, populate });
+        p = state.apiclient.apis[type.toLowerCase()][`get_api_v1_${type}__id_`]({ id, $config, populate });
       } else if (type && !id) {
         commit('setLoading', `Getting Queryset of ${type} from Database`);
         p = state.apiclient.apis[type][`get_api_v1_${type}`]({ sort, skip, limit, query: cleanFilter(query), populate, $config });
@@ -248,6 +250,8 @@ const actions = {
     });
   },
   async post({ state, commit, dispatch, getters }, { type, id, body }) {
+    // eslint-disable-next-line no-param-reassign
+    type = type.toLowerCase();
     await dispatch('refreshtoken');
     let p = {};
     const params = {
@@ -280,6 +284,8 @@ const actions = {
     });
   },
   async delete({ state, commit, dispatch }, { type, id }) {
+    // eslint-disable-next-line no-param-reassign
+    type = type.toLowerCase();
     await dispatch('refreshtoken');
     let p = {};
     return new Promise((resolve, reject) => {

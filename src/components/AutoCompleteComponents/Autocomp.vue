@@ -145,7 +145,8 @@ export default {
         requestparams.query = queryparams;
         this.get(requestparams)
         .then((res) => {
-          if (Array.isArray(res.data)) this.items = res.body;
+          console.log(res);
+          if (Array.isArray(res.body)) this.items = res.body;
           this.loading = false;
         })
         .catch(() => {
