@@ -154,7 +154,7 @@ export default {
       getRecords() {
         this.loading = true;
         let action = "get";
-        if(this.$route.name == 'search') action = "search";
+        if(this.$route.name === 'search') action = "search";
         this[action]({
           type: this.entitytype,
           sort: this.pagination.sortDesc[0] ? `-${this.pagination.sortBy[0]}` : this.pagination.sortBy[0],

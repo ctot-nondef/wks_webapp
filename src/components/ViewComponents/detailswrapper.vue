@@ -43,7 +43,7 @@
       ]),
       getEntity(type, id) {
          this.get({ type, id }).then((res) => {
-           this.view = res.data;
+           this.view = res.body;
         });
       },
     },

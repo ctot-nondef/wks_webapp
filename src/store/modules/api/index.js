@@ -232,7 +232,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       if (type && id) {
         commit('setLoading', `Getting ${type} ${id} from Database`);
-        p = state.apiclient.apis[type][`get_api_v1_${type}`]({ id, $config, populate });
+        p = state.apiclient.apis[type][`get_api_v1_${type}__id_`]({ id, $config, populate });
       } else if (type && !id) {
         commit('setLoading', `Getting Queryset of ${type} from Database`);
         p = state.apiclient.apis[type][`get_api_v1_${type}`]({ sort, skip, limit, query: cleanFilter(query), populate, $config });
