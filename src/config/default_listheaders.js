@@ -1,6 +1,7 @@
 export default {
   collect: [
     { text: 'Name', value: 'name', path: 'name' },
+    { text: 'Creator', value: 'creator.id', path: 'creator[0].id.name' },
     { text: 'Actions' },
   ],
   inventory: [
@@ -15,6 +16,7 @@ export default {
   ],
   object: [
     { text: 'Name', value: 'name', path: 'name' },
+    { text: 'Creator', value: 'creator.id', path: 'creator[0].id.name' },
     { text: 'Original Title', value: 'originalTitle', path: 'originalTitle' },
     { text: 'Actions' },
   ],
