@@ -55,7 +55,7 @@
       <v-flex xs12>
         <v-list two-line>
           <template v-for="(item, index) in collection.documents">
-            <v-list-item :key="item._id" :href="`${$store.state.api.url}/assetrefs/full/${item.ref.name}`" target="_blank">
+            <v-list-item :key="item._id" :href="`${$store.state.api.url}/assetrefs/full/${item.ref.name.split('.')[0]}.pdf`" target="_blank">
               <v-list-item-avatar>
                 <img :src="`${$store.state.api.url}/assetrefs/thumb/${item.ref.name.split('.')[0]}.jpg`">
               </v-list-item-avatar>
