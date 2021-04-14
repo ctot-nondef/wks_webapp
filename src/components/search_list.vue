@@ -17,7 +17,7 @@
               <filterlist :entitytype="$route.params.entity" :filter="query" @update="updateParams($event)" fixedtype></filterlist>
             </v-flex>
             <v-flex xs12>
-              <list ref="genericlist" :entitytype="$route.params.entity" :filter="query" ></list>
+              <list ref="genericlist" :entitytype="$route.params.entity" :headers="headers[$route.params.entity]" :filter="query" ></list>
             </v-flex>
           </v-layout>
         </div>
@@ -49,6 +49,14 @@
       return {
         query: { ftsearch: ''},
         pagination: {},
+        headers: {
+          entry: [
+            { text: 'Name', value: 'name', path: 'name' },
+            { text: 'Creator', value: 'creator.id', path: 'creatorid[0].name' },
+            { text: 'Original Title', value: 'originalTitle', path: 'originalTitle' },
+            { text: 'Actions' },
+          ],
+        }
       };
     },
     methods: {
