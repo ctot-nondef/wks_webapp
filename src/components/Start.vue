@@ -14,7 +14,7 @@
             :key="i"
           >
             <fundamentcard
-              :caption="item.caption"
+              :caption="`${item.caption} (${counts[item.startpage.params.entity]})`"
               :link="item.startpage"
             >
               <template v-slot:content>
@@ -61,6 +61,15 @@ export default {
   name: 'start',
   data() {
     return {
+      counts: {
+        entry: 0,
+        collect: 0,
+        actor: 0,
+        object: 0,
+        transaction: 0,
+        descriptor: 0,
+        inventory: 0,
+      }
     };
   },
   methods: {
@@ -69,6 +78,14 @@ export default {
       'openDialog'
     ]),
   },
+  mounted() {
+    Object.keys(this.counts).forEach((id) => {
+      this.$store.state.api.apiclient.apis[id][`get_api_v1_${id}_count`]()
+          .then(c => {
+            this.counts[id] = c.body.count;
+          });
+    })
+  }
 };
 </script>
 

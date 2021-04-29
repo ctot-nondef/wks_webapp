@@ -33,6 +33,33 @@
         />
       </v-flex>
     </v-layout>
+    <!-- descriptor labels -->
+    <v-layout justify-end row fill-height>
+      <v-flex xs12>
+        <formlistcomponent
+            :items.sync="descriptor.labels"
+            :itemprops="$store.state.api.schemas.descriptor.properties.labels.items.properties"
+            label="Labels"
+            nodatamessage="No labels added"
+        >
+          <template slot="form" slot-scope="props">
+            <v-layout justify-end row fill-height wrap>
+              <v-flex xs6>
+                <v-select
+                    v-model="props.newitem.lang"
+                    filled
+                    label="Language"
+                    :items="['en','de','un']"
+                />
+              </v-flex>
+              <v-flex xs6>
+                <v-text-field v-model="props.newitem.label" filled label="Label" />
+              </v-flex>
+            </v-layout>
+          </template>
+        </formlistcomponent>
+      </v-flex>
+    </v-layout>
     <v-layout justify-end row fill-height>
       <v-flex xs12>
         <!-- descriptor description -->
@@ -114,6 +141,9 @@ export default {
       if (this.value) this.descriptor = Object.assign(this.value, this.descriptor);
       if (!this.descriptor.relations) {
         this.$set(this.descriptor, 'relations', []);
+      }
+      if (!this.descriptor.labels) {
+        this.$set(this.descriptor, 'labels', []);
       }
     },
     importentity(e) {

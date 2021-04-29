@@ -35,13 +35,11 @@
       </v-flex>
     </v-layout>
     <v-layout justify-start row fill-height>
-      <v-flex xs5>
+      <v-flex xs6>
         <!-- actor begin of existence -->
         <datecomponent :date.sync="actor.beginOfExistence" label="Begin of Existence"/>
       </v-flex>
-    </v-layout>
-    <v-layout justify-start row fill-height>
-      <v-flex xs5>
+      <v-flex xs6>
         <!-- actor end of existence -->
         <datecomponent :date.sync="actor.endOfExistence" label="End of Existence"/>
       </v-flex>
