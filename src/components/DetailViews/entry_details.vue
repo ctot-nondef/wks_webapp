@@ -37,7 +37,7 @@
         />
       </v-col>
       <!-- collect classification -->
-      <v-col cols="6">
+      <v-col cols="4">
         <listview
           icon="device_hub"
           title="Classification"
@@ -52,7 +52,7 @@
         />
       </v-col>
       <!-- entry dimensions -->
-      <v-col cols="6">
+      <v-col cols="4">
         <listview
             icon="height"
             title="Dimensions"
@@ -63,6 +63,15 @@
             itemcontent: 'amount',
             collapsed: 'aspect.name',
           }"
+            :expanded="intexpanded"
+        />
+      </v-col>
+      <!-- entry assets -->
+      <v-col cols="4">
+        <assetlistview
+            icon="attach_file"
+            title="Documents"
+            :items="item.images"
             :expanded="intexpanded"
         />
       </v-col>

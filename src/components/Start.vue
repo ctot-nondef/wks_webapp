@@ -14,7 +14,8 @@
             :key="i"
           >
             <fundamentcard
-              :caption="`${item.caption} (${counts[item.startpage.params.entity]})`"
+              :buttoncaption="`More (${counts[item.startpage.params.entity]})`"
+              :caption="`${item.caption}`"
               :link="item.startpage"
             >
               <template v-slot:content>

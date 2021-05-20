@@ -58,7 +58,7 @@ export default [
     items: '',
   },
   {
-    caption: 'Identified Objects',
+    caption: 'Objects',
     arialabel: '',
     icon: 'category',
     abstract: '',
@@ -66,8 +66,8 @@ export default [
       name: 'query',
       params: {
         lang: 'en',
-        entity: 'object',
-        query: JSON.stringify(filters.object),
+        entity: 'entry',
+        query: JSON.stringify(filters.entry),
       }},
     items: '',
   },

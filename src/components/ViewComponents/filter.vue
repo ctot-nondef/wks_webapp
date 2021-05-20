@@ -2,9 +2,9 @@
   <div class="">
     <v-card color="grey lighten-2" class="pa-4 mb-3">
       <v-select
-        v-if="!fixedtype"
+        v-if="availableTypes && availableTypes.length > 0 && availableTypes.includes(entitytype)"
         :value="entitytype"
-        :items="types"
+        :items="availableTypes"
         label="Type"
         @input="$emit('update', { type: $event, filter: filter })"
       />
@@ -125,6 +125,10 @@ export default {
       },
       entitytype: {
         type: String,
+        default: () => null,
+      },
+      availableTypes: {
+        type: Array,
         default: () => null,
       },
       filter: {

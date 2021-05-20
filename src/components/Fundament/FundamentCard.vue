@@ -19,7 +19,7 @@
           class="primary"
           :to="link"
           >
-        More</v-btn>
+          {{ buttoncaption || 'More' }}</v-btn>
       </v-card-actions>
     </v-card>
   </transition>
@@ -36,6 +36,7 @@
       'src',
       'caption',
       'link',
+      'buttoncaption'
     ],
     name: 'FundamentCard',
   };

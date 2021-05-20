@@ -25,13 +25,20 @@
       dense
       class="elevation-1"
     >
-      <v-list-item v-for="(item, index) in items" :key="index" :href="`${$store.state.api.url}/assetrefs/full/${item.ref.path.split('/').splice(-1,1)}`" target="_blank">
-        <v-list-item-avatar>
+      <v-list-item v-for="(item, index) in items" :href="`${$store.state.api.url}/assetrefs/full/${item.reference ? item.reference.name.split('.')[0] : item.ref.name.split('.')[0] }.jpg`" :key="index">
+        <v-list-item-avatar v-if="item.ref">
           <img :src="`${$store.state.api.url}/assetrefs/thumb/${item.ref.name.split('.')[0]}.jpg`">
         </v-list-item-avatar>
-        <v-list-item-content>
+        <v-list-item-content v-if="item.ref" :href="`${$store.state.api.url}/assetrefs/full/${item.reference.name.split('.')[0]}.jpg`" target="_blank">
           <v-list-item-title v-html="item.ref.name"/>
           <v-list-item-subtitle v-html="item.ref.path"/>
+        </v-list-item-content>
+        <v-list-item-avatar v-if="item.reference">
+          <img :src="`${$store.state.api.url}/assetrefs/thumb/${item.reference.name.split('.')[0]}.jpg`">
+        </v-list-item-avatar>
+        <v-list-item-content v-if="item.reference" :href="`${$store.state.api.url}/assetrefs/full/${item.reference.name.split('.')[0]}.jpg`" target="_blank">
+          <v-list-item-title v-html="item.reference.name"/>
+          <v-list-item-subtitle v-html="item.reference.path"/>
         </v-list-item-content>
       </v-list-item>
     </v-list>
