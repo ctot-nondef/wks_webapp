@@ -55,9 +55,9 @@
       <v-flex xs12>
         <v-list two-line>
           <template v-for="(item, index) in collection.documents">
-            <v-list-item :key="item._id" :href="`${$store.state.api.url}/assetrefs/full/${item.ref.name.split('.')[0]}.pdf`" target="_blank">
+            <v-list-item :key="item._id" :href="`${$store.state.api.url}/assetref/full/${item.ref.name.split('.')[0]}.pdf`" target="_blank">
               <v-list-item-avatar>
-                <img :src="`${$store.state.api.url}/assetrefs/thumb/${item.ref.name.split('.')[0]}.jpg`">
+                <img :src="`${$store.state.api.url}/assetref/thumb/${item.ref.name.split('.')[0]}.jpg`">
               </v-list-item-avatar>
               <v-list-item-content>
                 <v-list-item-title v-html="item.ref.name"/>
@@ -263,7 +263,7 @@ export default {
         fr.readAsDataURL(files[0]);
         fr.addEventListener('load', () => {
           this.imageFile = files[0];
-          this.$store.state.api.apiclient.apis.Assetrefs.AssetsController_uploadFile(
+          this.$store.state.api.apiclient.apis.assetref.AssetsController_uploadFile(
               null,
               {
                 requestBody: {

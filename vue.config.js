@@ -3,7 +3,7 @@ module.exports = {
     "vuetify"
   ],
 
-  publicPath: '/dbneu/',
+  publicPath: '/db/',
   outputDir: undefined,
   assetsDir: undefined,
   runtimeCompiler: undefined,

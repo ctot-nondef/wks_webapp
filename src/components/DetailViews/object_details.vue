@@ -67,7 +67,7 @@
         />
       </v-col>
       <!-- collect time -->
-      <v-col cols="6">
+      <v-col cols="4">
         <singleview
          icon="calendar_today"
          title="Creation Date Start"
@@ -75,11 +75,20 @@
         />
       </v-col>
       <!-- collect place -->
-      <v-col cols="6">
+      <v-col cols="4">
         <singleview
          icon="calendar_today"
          title="Creation Date End"
          :item="item.created_end | formatDate"
+        />
+      </v-col>
+      <!-- collect assets -->
+      <v-col cols="4">
+        <assetlistview
+            icon="attach_file"
+            title="Documents"
+            :items="item.images"
+            :expanded="intexpanded"
         />
       </v-col>
     </v-row>
