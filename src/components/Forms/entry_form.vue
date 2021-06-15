@@ -46,7 +46,7 @@
                 label="Künstler"
                 :displayitemprops="autcompdisplayprops_actor"
                 :multiple="false"
-                @input="simpleprops.newitems[0] = {id: $event, role: {name: 'Künstler', _id: '5c90a0119ca403074db617e5'}, note: 'entered via quickform'}" />
+                @input="simpleprops.newitems[0] = {id: $event, role: {name: 'Künstler', _id: '5c90a0119ca403074db617e5'}, note: ''}; entry.created_start = $event.beginOfExistence; entry.created_end = $event.endOfExistence;" />
             </v-flex>
           </template>
         </formlistcomponent>

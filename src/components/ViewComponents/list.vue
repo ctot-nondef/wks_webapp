@@ -27,15 +27,18 @@
         <tbody>
         <tr v-for="(item, index) in items" :key="index">
           <td v-for="column in currentHeaders" :key="column.path">
-            <span v-if="_.get(item, column.path)">
+            <span v-if="_.get(item, column.path) && column.text === 'Date'">
+              {{ _.get(item, column.path) | formatDate }}
+            </span>
+            <span v-else-if="_.get(item, column.path)">
               {{ _.get(item, column.path) }}
             </span>
             <span v-else-if="column.text === 'Actions'">
-              <v-btn v-if="entitytype !== 'transaction'" fab dark small :to="{ name: 'single', params: { type: entitytype, id:  item._id  }}" color="primary">
+              <v-btn fab dark small :to="{ name: 'single', params: { type: entitytype, id:  item._id  }}" color="primary">
                 <v-icon dark>collections_bookmark</v-icon>
               </v-btn>
               <span>
-                <v-btn v-if="entitytype === 'transaction'" fab dark small color="primary" @click="$emit('select', item)">
+                <v-btn v-if="entitytype === 'transaction'" fab dark small color="secondary" @click="$emit('select', item)">
                   <v-icon dark>collections_bookmark</v-icon>
                 </v-btn>
                 <v-btn fab dark small color="warning" class="ml-1"  @click="$refs.editdialog.getItem(entitytype, item._id)" v-if="$store.state.api.loggedin">
@@ -80,6 +83,7 @@
 <script>
   /* eslint-disable no-underscore-dangle,no-param-reassign */
 import { mapGetters, mapActions } from 'vuex';
+import filters from '../../helpers/filters';
 
 import editdialog from '../Dialogs/editDialog';
 
@@ -118,6 +122,7 @@ export default {
         q: {},
       };
     },
+    mixins: [filters],
     watch: {
       pagination: {
         handler() {
