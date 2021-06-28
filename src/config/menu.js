@@ -11,7 +11,7 @@ export default [
       params: {
         lang: 'en',
         entity: 'entry',
-        query: JSON.stringify({ ftsearch: '', operator: '$or'}),
+        query: JSON.stringify({ ftsearch: '', operator: '$or', partOf: null, Schule: null}),
       }},
     items: '',
   },

@@ -17,7 +17,7 @@ function cleanFilter(f) {
   Object.keys(f).forEach((key) => {
     if (typeof f[key] === 'string' && f[key] !== '' && f[key] !== null) cf[key] = f[key];
     if (typeof f[key] === 'object' && f[key] !== null) {
-      ['$eq', '$gt', '$gte', '$lt', '$lte', '$ne', '$regex'].forEach((op) => {
+      ['$eq', '$gt', '$gte', '$lt', '$lte', '$ne', '$regex', '$size'].forEach((op) => {
         if (f[key][op] && f[key][op] !== '' && f[key][op] !== null) cf[key] = f[key];
       });
       if (f[key]._id) cf[key] = f[key];
@@ -225,6 +225,7 @@ const actions = {
     });
   },
   async get({ state, commit, dispatch }, { type, id, sort, skip, limit, query, populate }) {
+    console.log(query);
     // eslint-disable-next-line no-param-reassign
     type = type.toLowerCase();
     await dispatch('refreshtoken');

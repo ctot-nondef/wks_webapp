@@ -123,7 +123,7 @@ export default {
       querySelections() {
         this.loading = true;
         let filterval = '';
-        const queryparams = { name: { $regex: this.search || '' } };
+        const queryparams = { name: { $regex: this.search || 'a' } };
         const requestparams = {
           type: this.entity,
         };
@@ -187,6 +187,9 @@ export default {
         return newvalue;
       },
     },
+    mounted() {
+      this.querySelections();
+    }
 };
 </script>
 <style>

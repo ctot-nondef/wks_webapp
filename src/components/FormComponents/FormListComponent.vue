@@ -67,9 +67,9 @@
     </v-data-table>
     <!-- list display if array of strings -->
     <v-list two-line v-if="!itemprops && citems.length >= 1">
-      <v-list-item v-for="(item, index) in items" v-bind:key="index">
+      <v-list-item three-line v-for="(item, index) in items" v-bind:key="index">
         <v-list-item-content>
-          <v-list-item-title v-if="typeof item === 'string'" v-text="item"></v-list-item-title>
+          <v-list-item-subtitle v-if="typeof item === 'string'" v-text="item"></v-list-item-subtitle>
         </v-list-item-content>
         <v-btn fab dark small color="error" @click="removeItem(index,items)">
           <v-icon dark>delete</v-icon>
