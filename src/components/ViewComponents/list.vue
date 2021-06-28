@@ -11,9 +11,15 @@
         'items-per-page-options': [10, 20, 50, 100, 250],
       }"
       class="elevation-1"
-      loading-text="Loading... Please wait"
-      no-data-text="No results found corresponding to your query"
+      :loading-text="loadingText"
+      :no-data-text="noDataText"
     >
+      <template v-slot:progress>
+            <v-progress-linear
+                slot="progress"
+                indeterminate
+            ></v-progress-linear>
+      </template>
       <template v-slot:top="{ pagination, options, updateOptions }">
         <v-data-footer
             :pagination="pagination"
@@ -110,12 +116,14 @@ export default {
     },
     data() {
       return {
+        loadingText: "Please wait, query is being processed...",
+        noDataText: "No results found corresponding to your query.",
         data: [],
         deleteDialog: {
           status: false,
           rec: null,
         },
-        loading: false,
+        loading: true,
         itemOptions: [10, 20, 50, 100, 250],
         totalHits: 0,
         pagination: {},
