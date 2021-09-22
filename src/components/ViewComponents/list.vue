@@ -143,8 +143,30 @@ export default {
           if (f) {
             this.q = {'$and': []};
             Object.keys(f).forEach((key) => {
-              if(key.match(/^(Kunstgattung|Thema|Datierung|Schule)$/) && f[key]) this.q['$and'].push({'classification.descriptor': f[key]._id})
-              else this.q[key] = f[key];
+              if(key.match(/^(Kunstgattung|Thema|Datierung|Schule)$/) && f[key]) {
+                if(Array.isArray(f[key]) && f[key].length > 0) {
+                  const qarray = { '$or': [] };
+                  f[key].forEach((e) => qarray['$or'].push({'classification.descriptor': e._id}))
+                  this.q['$and'].push(qarray);
+                }
+                else this.q['$and'].push({'classification.descriptor': f[key]._id})
+              }
+              else if(Array.isArray(f[key]) && f[key].length > 0) {
+                const qarray = { '$or': [] };
+                f[key].forEach((e) => qarray['$or'].push({[key]: e._id}))
+                this.q['$and'].push(qarray);
+              }
+              else if(key === 'fti') {
+                const terms = f[key].match(/(".*?"|[^"\s]+)(?=\s*|\s*$)/g);
+                const ftiq = [];
+                terms.forEach(t => {
+                  ftiq.push({
+                    fti: { "$regex": t.replace(/['"]+/g, ''), '$options':'i'}
+                  });
+                });
+                this.q['$and'].push({ [f.ftioperator]:ftiq })
+              }
+              else if(f[key] && f[key] !== null && key !== 'ftioperator') this.q['$and'].push({[key]: f[key]._id ? f[key]._id : f[key]})
             });
           }
           this.getRecords();
@@ -166,9 +188,7 @@ export default {
       ]),
       getRecords() {
         this.loading = true;
-        let action = "get";
-        if(this.$route.name === 'search') action = "search";
-        this[action]({
+        this.get({
           type: this.entitytype,
           sort: this.pagination.sortDesc[0] ? `-${this.pagination.sortBy[0]}` : this.pagination.sortBy[0],
           limit: this.pagination.itemsPerPage,

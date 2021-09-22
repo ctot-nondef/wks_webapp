@@ -32,7 +32,7 @@
   /* eslint-disable no-param-reassign,no-underscore-dangle */
   import fundamentcard from './Fundament/FundamentCard';
   import list from './ViewComponents/list';
-  import filterlist from './ViewComponents/filter';
+  import filterlist from './FilterComponents/filter';
   import editdialog from './Dialogs/editDialog';
 
   /* eslint no-unused-vars: ["error", {"args": "none"}] */
@@ -52,7 +52,7 @@
         headers: {
           entry: [
             { text: 'Name', value: 'name', path: 'name' },
-            { text: 'Creator', value: 'creator.id', path: 'creatorid[0].name' },
+            { text: 'Creator', value: 'creator.id', path: 'creator[0].id.name' },
             { text: 'Original Title', value: 'originalTitle', path: 'originalTitle' },
             { text: 'Actions' },
           ],

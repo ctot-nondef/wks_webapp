@@ -15,5 +15,5 @@ export default {
   filters,
   headers,
   repo: '',
-  api: 'https://wks.acdh-dev.oeaw.ac.at/',
+  api: 'http://localhost:3000',
 };

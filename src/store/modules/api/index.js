@@ -16,7 +16,7 @@ function cleanFilter(f) {
   const cf = {};
   Object.keys(f).forEach((key) => {
     if (typeof f[key] === 'string' && f[key] !== '' && f[key] !== null) cf[key] = f[key];
-    if (typeof f[key] === 'object' && f[key] !== null) {
+    else if (typeof f[key] === 'object' && f[key] !== null) {
       ['$eq', '$gt', '$gte', '$lt', '$lte', '$ne', '$regex', '$size'].forEach((op) => {
         if (f[key][op] && f[key][op] !== '' && f[key][op] !== null) cf[key] = f[key];
       });
@@ -308,13 +308,15 @@ const actions = {
   },
   async search({ state, commit, dispatch }, { type, sort, skip, limit, query }) {
     await dispatch('refreshtoken');
+    let facets = deleteProps(query, ['fti', 'operator']);
+    console.log(facets);
     let p = {};
     // eslint-disable-next-line no-param-reassign
     if(!sort) sort = 'name';
     return new Promise((resolve, reject) => {
-      if (type && query && query.ftsearch) {
-        commit('setLoading', `Searching ${type} with ${query.ftsearch} from Database`);
-        p = state.apiclient.apis.Root.SchemasController_search({ type, $config, sort, skip, limit, query: query.ftsearch, operator: query.operator });
+      if (type && query && query.fti) {
+        commit('setLoading', `Searching ${type} with ${query.fti} from Database`);
+        p = state.apiclient.apis.Root.SchemasController_search({ type, $config, sort, skip, limit, query: query.fti, operator: query.operator, facets: JSON.stringify(facets) });
       } else reject('Invalid or Insufficient Parameters');
       p.then((res) => {
         commit('setLoadingFinished');

@@ -25,15 +25,15 @@
       <v-flex xs12>
         <formlistcomponent :items.sync="object.creator" :itemprops="$store.state.api.schemas.object.properties.creator.items.properties" :listitemstyletypes="creatoritemstyletypes" label="Creator" nodatamessage="No creators added">
           <template slot="form" slot-scope="props">
-          <v-flex xs5>
-              <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"/>
-          </v-flex>
             <v-flex xs5>
-              <autocomp entity="Actor" v-model="props.newitem.id" label="Collector" :multiple="false"/>
-          </v-flex>
-          <v-flex xs12>
-          <v-textarea height="200" v-model="props.newitem.note" label="Note" />
-          </v-flex>
+                <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"/>
+            </v-flex>
+              <v-flex xs5>
+                <autocomp entity="Actor" v-model="props.newitem.id" label="Collector" :multiple="false"/>
+            </v-flex>
+            <v-flex xs12>
+              <v-textarea height="200" v-model="props.newitem.note" label="Note" />
+            </v-flex>
           </template>
         </formlistcomponent>
       </v-flex>

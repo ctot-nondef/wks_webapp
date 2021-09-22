@@ -126,6 +126,7 @@ export default {
         const queryparams = { name: { $regex: this.search || 'a' } };
         const requestparams = {
           type: this.entity,
+          limit: 20,
         };
         if (this.filter) {
           filterval = this.filterDescriptors(this.filter);
