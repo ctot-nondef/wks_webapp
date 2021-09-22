@@ -1,18 +1,9 @@
 <template>
   <div class="">
-    <v-container grid-list-md >
+    <div style="width: 100%" grid-list-md >
       <fundamentcard caption="Text Search">
         <div slot="content">
           <v-layout justify-center column fill-height>
-            <v-flex xs12 v-if="$store.state.api.loggedin">
-              <v-layout justify-end row fill-height>
-                <v-btn fab dark small
-                       color="warning"
-                       @click="$refs.createdialog.newItem($route.params.entity, {})">
-                  <v-icon dark>add</v-icon>
-                </v-btn>
-              </v-layout>
-            </v-flex>
             <v-flex xs12>
               <filterlist :entitytype="$route.params.entity" :filter="query" @update="updateParams($event)" fixedtype></filterlist>
             </v-flex>
@@ -24,7 +15,7 @@
       </fundamentcard>
       <editdialog :title="`Create ${$route.params.entity}`" ref="createdialog" @close="$refs.genericlist.getRecords()">
       </editdialog>
-    </v-container>
+    </div>
   </div>
 </template>
 
@@ -47,7 +38,7 @@
     },
     data() {
       return {
-        query: { ftsearch: ''},
+        query: { fti: ''},
         pagination: {},
         headers: {
           entry: [
@@ -56,7 +47,7 @@
             { text: 'Original Title', value: 'originalTitle', path: 'originalTitle' },
             { text: 'Actions' },
           ],
-        }
+        },
       };
     },
     methods: {
