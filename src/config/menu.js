@@ -11,7 +11,7 @@ export default [
       params: {
         lang: 'en',
         entity: 'entry',
-        query: JSON.stringify({ fti: '', ftioperator: '$or', partOf: null, Schule: null}),
+        query: JSON.stringify({ fti: '', ftioperator: '$or', Kunstgattung: null, Schule: null, Datierung: null, partOf: null }),
       }},
     items: '',
   },
