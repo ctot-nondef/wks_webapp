@@ -14,12 +14,6 @@
       :loading-text="loadingText"
       :no-data-text="noDataText"
     >
-      <template v-slot:progress>
-            <v-progress-linear
-                slot="progress"
-                indeterminate
-            ></v-progress-linear>
-      </template>
       <template v-slot:top="{ pagination, options, updateOptions }">
         <v-data-footer
             :pagination="pagination"

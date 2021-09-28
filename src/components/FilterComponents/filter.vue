@@ -10,11 +10,6 @@
       />
       <v-layout justify-start row wrap fill-height>
         <v-flex xs12 v-for="(value, path) in filter" :key="path">
-          <logical-group
-              v-if="path === '$and' || path === '$or'"
-              :key="path"
-              :value="value"
-          >a</logical-group>
           <!-- text field for fulltext search -->
           <v-text-field
               v-if="path == 'fti'"
@@ -42,71 +37,71 @@
             ></v-radio>
           </v-radio-group>
         </v-flex>
-        <v-flex xs6 v-for="(value, path, index) in filter" :key="index">
-          <autocomp
-              v-if="entitytype === 'entry' && path === 'Kunstgattung'"
-              entity="descriptor"
+          <v-flex xs6 v-for="(value, path, index) in filter" :key="index" v-show="showFacets">
+            <autocomp
+                v-if="entitytype === 'entry' && path === 'Kunstgattung'"
+                entity="descriptor"
+                :value="value"
+                :label="path"
+                clearable
+                @click:clear="value['$regex'] = null"
+                @input="updateFilter({ key: `${path}`, value: $event })"/>
+            <autocomp
+                v-else-if="entitytype === 'entry' && path === 'Thema'"
+                entity="descriptor"
+                :value="value"
+                :label="path"
+                clearable
+                @click:clear="value['$regex'] = null"
+                @input="updateFilter({ key: `${path}`, value: $event })"/>
+            <autocomp
+                v-else-if="entitytype === 'entry' && path === 'Datierung'"
+                entity="descriptor"
+                :value="value"
+                :label="path"
+                clearable
+                @click:clear="value['$regex'] = null"
+                @input="updateFilter({ key: `${path}`, value: $event })"/>
+            <autocomp
+                v-else-if="entitytype === 'entry' && path === 'Schule'"
+                entity="descriptor"
+                :value="value"
+                :label="path"
+                clearable
+                @click:clear="value['$regex'] = null"
+                @input="updateFilter({ key: `${path}`, value: $event })"/>
+            <!-- text field for regex query -->
+            <v-text-field
+              v-else-if="getFieldType({type: entitytype, name: path}) === 'string' && path !== 'fti'"
+              :value="value['$regex']"
+              filled
+              :label="path"
+              clearable
+              @click:clear="value['$regex'] = ''"
+              @input="updateFilter({ key: `${path}.$regex`, value: $event })"/>
+            <!-- descriptor/actor class select -->
+            <v-select
+              v-else-if="getFieldType({type: entitytype, name: path}) === 'class_descriptor'"
+              :value="value"
+              :items="$store.state.api.classes[entitytype.charAt(0).toUpperCase() + entitytype.slice(1)]"
+              item-text="_labels[4].label"
+              item-value="_id"
+              label="Type"
+              clearable
+              @click:clear="value = {}"
+              filled
+              @input="updateFilter({ key: `${path}`, value: $event })"/>
+            <!-- simple xref select -->
+            <autocomp
+              v-else-if="getFieldType({type: entitytype, name: path}).match(/xref_(.*)/)"
+              :entity="getFieldType({type: entitytype, name: path}).split('_')[1]"
               :value="value"
               :label="path"
+              :multiple="true"
               clearable
               @click:clear="value['$regex'] = null"
               @input="updateFilter({ key: `${path}`, value: $event })"/>
-          <autocomp
-              v-else-if="entitytype === 'entry' && path === 'Thema'"
-              entity="descriptor"
-              :value="value"
-              :label="path"
-              clearable
-              @click:clear="value['$regex'] = null"
-              @input="updateFilter({ key: `${path}`, value: $event })"/>
-          <autocomp
-              v-else-if="entitytype === 'entry' && path === 'Datierung'"
-              entity="descriptor"
-              :value="value"
-              :label="path"
-              clearable
-              @click:clear="value['$regex'] = null"
-              @input="updateFilter({ key: `${path}`, value: $event })"/>
-          <autocomp
-              v-else-if="entitytype === 'entry' && path === 'Schule'"
-              entity="descriptor"
-              :value="value"
-              :label="path"
-              clearable
-              @click:clear="value['$regex'] = null"
-              @input="updateFilter({ key: `${path}`, value: $event })"/>
-          <!-- text field for regex query -->
-          <v-text-field
-            v-else-if="getFieldType({type: entitytype, name: path}) === 'string' && path !== 'fti'"
-            :value="value['$regex']"
-            filled
-            :label="path"
-            clearable
-            @click:clear="value['$regex'] = ''"
-            @input="updateFilter({ key: `${path}.$regex`, value: $event })"/>
-          <!-- descriptor/actor class select -->
-          <v-select
-            v-else-if="getFieldType({type: entitytype, name: path}) === 'class_descriptor'"
-            :value="value"
-            :items="$store.state.api.classes[entitytype.charAt(0).toUpperCase() + entitytype.slice(1)]"
-            item-text="_labels[4].label"
-            item-value="_id"
-            label="Type"
-            clearable
-            @click:clear="value = {}"
-            filled
-            @input="updateFilter({ key: `${path}`, value: $event })"/>
-          <!-- simple xref select -->
-          <autocomp
-            v-else-if="getFieldType({type: entitytype, name: path}).match(/xref_(.*)/)"
-            :entity="getFieldType({type: entitytype, name: path}).split('_')[1]"
-            :value="value"
-            :label="path"
-            :multiple="true"
-            clearable
-            @click:clear="value['$regex'] = null"
-            @input="updateFilter({ key: `${path}`, value: $event })"/>
-        </v-flex>
+          </v-flex>
       </v-layout>
     </v-card>
     </div>
@@ -116,14 +111,12 @@
   /* eslint-disable no-underscore-dangle,no-param-reassign,arrow-body-style */
 import { mapGetters } from 'vuex';
 import autocomp from '../AutoCompleteComponents/Autocomp'
-import logicalGroup from "./logicalGroup";
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 /* eslint no-console: ["error", { allow: ["log"] }] */
 
 export default {
     components: {
-      logicalGroup,
       autocomp,
     },
     props: {
@@ -186,6 +179,11 @@ export default {
         'getFieldType',
         'types',
       ]),
+      showFacets: function() {
+        if(this.$route.name === 'search' && this.filter.fti.length > 0) return true
+        else if (this.$route.name !== 'search') return true
+        return false;
+      },
     },
 };
 </script>
