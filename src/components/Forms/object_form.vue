@@ -1,9 +1,5 @@
 <template>
   <div class="">
-    <!-- object identifiers -->
-    <v-layout justify-end row fill-height>
-      <chips :items="object.identifier"/>
-    </v-layout>
     <!-- object name -->
     <v-layout justify-start row fill-height>
       <v-flex xs10>
@@ -160,7 +156,25 @@
     <!-- object description -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
-        <v-textarea height="200" v-model="object.description" label="Description" />
+        <v-textarea height="200" v-model="object.description" label="Description" filled/>
+      </v-flex>
+    </v-layout>
+    <!-- object provenance -->
+    <v-layout justify-start row fill-height>
+      <v-flex xs12>
+        <v-textarea height="200" v-model="object.provinience" label="Provenance"  filled/>
+      </v-flex>
+    </v-layout>
+    <!-- object identifier -->
+    <v-layout justify-start row fill-height>
+      <v-flex xs12>
+        <formlistcomponent v-if="object.identifier" :items.sync="object.identifier" :listitemstyletypes="['title']" label="Identifier" nodatamessage="No identifiers added">
+          <template slot="form" slot-scope="props">
+            <v-flex xs12>
+              <v-textarea height="50" width="100%" v-model="props.newitem.textval" label="New Identifier"/>
+            </v-flex>
+          </template>
+        </formlistcomponent>
       </v-flex>
     </v-layout>
     <!-- object images -->
@@ -186,7 +200,6 @@
         <input type="file" style="display: none" ref="image" accept="image/jpeg" @change="onFilePicked">
       </v-flex>
     </v-layout>
-    <!-- object references zotero?-->
     <!-- object comments -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>
@@ -204,7 +217,6 @@
 <script>
 import autocomp from '../AutoCompleteComponents/Autocomp';
 import formlistcomponent from '../FormComponents/FormListComponent';
-import chips from '../FormComponents/Chips';
 import datecomponent from '../FormComponents/DateComponent';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
@@ -213,7 +225,6 @@ export default {
     autocomp,
     formlistcomponent,
     datecomponent,
-    chips,
   },
   props: [
     'value',

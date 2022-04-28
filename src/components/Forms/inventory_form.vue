@@ -183,6 +183,18 @@
         </formlistcomponent>
       </v-flex>
     </v-layout>
+    <!-- inventory identifiers -->
+    <v-layout justify-start row fill-height>
+      <v-flex xs12>
+        <formlistcomponent v-if="inventory.identifier" :items.sync="inventory.identifier" :listitemstyletypes="['title']" label="Identifier" nodatamessage="No identifiers added">
+          <template slot="form" slot-scope="props">
+            <v-flex xs12>
+              <v-textarea height="50" width="100%" v-model="props.newitem.textval" label="New Identifier"/>
+            </v-flex>
+          </template>
+        </formlistcomponent>
+      </v-flex>
+    </v-layout>
      <!-- inventory comments -->
     <v-layout justify-start row fill-height>
       <v-flex xs12>

@@ -63,6 +63,7 @@ export default {
       'icon',
       'clickevent',
       'displayitemprops',
+      'defaultitems',
     ],
     data() {
       return {
@@ -123,7 +124,7 @@ export default {
       querySelections() {
         this.loading = true;
         let filterval = '';
-        const queryparams = { name: { $regex: this.search || 'a' } };
+        const queryparams = { name: { $regex: this.search || null } };
         const requestparams = {
           type: this.entity,
           limit: 20,
