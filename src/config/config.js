@@ -3,7 +3,6 @@ import headers from "./default_listheaders";
 import menu from "./menu";
 
 export default {
-  logo: '/static/fundament_logo.svg',
   title: 'VCHC Project DB',
   color: 'primary',
   homestate: {
@@ -15,5 +14,5 @@ export default {
   filters,
   headers,
   repo: '',
-  api: 'https://wks.acdh-dev.oeaw.ac.at',
+  api: 'https://wks.acdh.oeaw.ac.at/',
 };

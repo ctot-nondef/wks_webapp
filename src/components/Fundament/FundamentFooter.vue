@@ -6,15 +6,15 @@
           <v-icon >message</v-icon> CONTACT
         </v-flex>
         <v-flex xs12 sm2 md1 class="mr-4">
-          <a href="https://www.oeaw.ac.at/acdh/acdh-home/" target="_blank" rel="noopener" aria-label="ACDH">
-            <img :src="require('../../assets/acdh_logo.png')" alt="ACDH" title="Austrian Center for Digital Humanities">
+          <a href="https://www.oeaw.ac.at/acdh/" target="_blank" rel="noopener" aria-label="ACDH">
+            <img :src="require('../../assets/acdh_logo.png')" alt="ACDH" title="Austrian Centre for Digital Humanities and Cultural Heritage">
           </a>
         </v-flex>
         <v-flex xs12 sm3>
             <p>
-              ACDH-ÖAW
+              ACDH-CH
               <br>
-              Austrian Centre for Digital Humanities
+              Austrian Centre for Digital Humanities and Cultural Heritage
               <br>
               Austrian Academy of Sciences
             </p>
