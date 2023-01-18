@@ -3,7 +3,7 @@ import headers from "./default_listheaders";
 import menu from "./menu";
 
 export default {
-  title: 'VCHC Project DB',
+  title: process.env.APP_TITLE,
   color: 'primary',
   homestate: {
     name: 'start',
@@ -14,5 +14,5 @@ export default {
   filters,
   headers,
   repo: '',
-  api: 'https://wks.acdh.oeaw.ac.at/',
+  api: process.env.BACKEND_API,
 };
