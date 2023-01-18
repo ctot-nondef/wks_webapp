@@ -5,9 +5,7 @@
       </v-card-media>
       <v-card-title primary-title>
         <div>
-          <h3 class="headline" v-text="caption">
-            <slot name="caption"/>
-          </h3>
+          <h3 class="headline" v-text="caption"/>
         </div>
       </v-card-title>
       <div class="content">
