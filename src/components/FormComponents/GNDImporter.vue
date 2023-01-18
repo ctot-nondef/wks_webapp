@@ -1,10 +1,37 @@
 <template>
-  <v-card color="white lighten-2" class="pa-4 mb-4">
-    <v-select v-model="itype" :items="itypes" label="Type"/>
-    <autocompgnd :value="ientity" :type="itype" :multiple="false" @input="ientity=$event"/>
-    <v-layout justify-end row fill-height>
-      <v-btn color="warning" @click="importentity()">Import</v-btn>
-      <v-btn color="primary" text @click.native="ientity=[]">Clear</v-btn>
+  <v-card
+    color="white lighten-2"
+    class="pa-4 mb-4"
+  >
+    <v-select
+      v-model="itype"
+      :items="itypes"
+      label="Type"
+    />
+    <autocompgnd
+      :value="ientity"
+      :type="itype"
+      :multiple="false"
+      @input="ientity=$event"
+    />
+    <v-layout
+      justify-end
+      row
+      fill-height
+    >
+      <v-btn
+        color="warning"
+        @click="importentity()"
+      >
+        Import
+      </v-btn>
+      <v-btn
+        color="primary"
+        text
+        @click.native="ientity=[]"
+      >
+        Clear
+      </v-btn>
     </v-layout>
   </v-card>
 </template>
@@ -17,10 +44,10 @@
   /* eslint no-unused-vars: ["error", {"args": "none"}] */
   /* eslint no-console: ["error", { allow: ["log"] }] */
   export default {
-    mixins: [importmaps],
     components: {
       autocompgnd,
     },
+    mixins: [importmaps],
     props: {
       itypes: {
         type: Array,
@@ -32,6 +59,9 @@
         ientity: [],
         itype: '',
       };
+    },
+    mounted() {
+      this.itype = this.itypes[0];
     },
     methods: {
       importentity() {
@@ -58,9 +88,6 @@
         }];
         return res;
       },
-    },
-    mounted() {
-      this.itype = this.itypes[0];
     },
   };
 </script>

@@ -1,39 +1,71 @@
 <template>
   <div class="main-footer mt-5">
     <v-container grid-list-md>
-      <v-layout row wrap justify-space-between>
-        <v-flex xs12 class="footer-sep mt-3">
-          <v-icon >message</v-icon> CONTACT
+      <v-layout
+        row
+        wrap
+        justify-space-between
+      >
+        <v-flex
+          xs12
+          class="footer-sep mt-3"
+        >
+          <v-icon>message</v-icon> CONTACT
         </v-flex>
-        <v-flex xs12 sm2 md1 class="mr-4">
-          <a href="https://www.oeaw.ac.at/acdh/" target="_blank" rel="noopener" aria-label="ACDH">
-            <img :src="require('../../assets/acdh_logo.png')" alt="ACDH" title="Austrian Centre for Digital Humanities and Cultural Heritage">
+        <v-flex
+          xs12
+          sm2
+          md1
+          class="mr-4"
+        >
+          <a
+            href="https://www.oeaw.ac.at/acdh/"
+            target="_blank"
+            rel="noopener"
+            aria-label="ACDH"
+          >
+            <img
+              :src="require('../../assets/acdh_logo.png')"
+              alt="ACDH"
+              title="Austrian Centre for Digital Humanities and Cultural Heritage"
+            >
           </a>
         </v-flex>
-        <v-flex xs12 sm3>
-            <p>
-              ACDH-CH
-              <br>
-              Austrian Centre for Digital Humanities and Cultural Heritage
-              <br>
-              Austrian Academy of Sciences
-            </p>
-            <p>
-              Sonnenfelsgasse 19,
-              <br>
-              1010 Vienna
-            </p>
-            <p>
-              T: +43 1 51581-2200
-              <br>
-              E: <a href="javascript:linkTo_UnCryptMailto('nbjmup;bdeiApfbx/bd/bu');">acdh(at)oeaw.ac.at</a>
-            </p>
+        <v-flex
+          xs12
+          sm3
+        >
+          <p>
+            ACDH-CH
+            <br>
+            Austrian Centre for Digital Humanities and Cultural Heritage
+            <br>
+            Austrian Academy of Sciences
+          </p>
+          <p>
+            Sonnenfelsgasse 19,
+            <br>
+            1010 Vienna
+          </p>
+          <p>
+            T: +43 1 51581-2200
+            <br>
+            E: <a href="javascript:linkTo_UnCryptMailto('nbjmup;bdeiApfbx/bd/bu');">acdh(at)oeaw.ac.at</a>
+          </p>
         </v-flex>
-        <v-spacer></v-spacer>
-        <v-flex xs12 sm3>
+        <v-spacer />
+        <v-flex
+          xs12
+          sm3
+        >
           <h3>HELPDESK</h3>
           <p>ACDH runs a helpdesk offering advice for questions related to various digital humanities topics.</p>
-          <p><a class="helpdesk-button" href="javascript:linkTo_UnCryptMailto('nbjmup;bdeiApfbx/bd/bu');">ASK US!</a></p>
+          <p>
+            <a
+              class="helpdesk-button"
+              href="javascript:linkTo_UnCryptMailto('nbjmup;bdeiApfbx/bd/bu');"
+            >ASK US!</a>
+          </p>
         </v-flex>
       </v-layout>
     </v-container>
@@ -46,11 +78,11 @@
 <script>
 
   export default {
+    name: 'FundamentFooter',
     data() {
       return {
       };
     },
-    name: 'FundamentFooter',
   };
 </script>
 <style media="screen">

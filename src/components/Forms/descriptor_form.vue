@@ -1,11 +1,23 @@
 <template>
   <div class="">
-    <v-layout justify-end row fill-height>
+    <v-layout
+      justify-end
+      row
+      fill-height
+    >
       <v-flex xs12>
-        <gndimporter @importentity="importentity($event)" :itypes="['PlaceOrGeographicName','SubjectHeading']" targettype="actor"/>
+        <gndimporter
+          :itypes="['PlaceOrGeographicName','SubjectHeading']"
+          targettype="actor"
+          @importentity="importentity($event)"
+        />
       </v-flex>
     </v-layout>
-    <v-layout justify-end row fill-height>
+    <v-layout
+      justify-end
+      row
+      fill-height
+    >
       <!-- descriptor identifiers -->
       <v-flex xs12>
         <v-combobox
@@ -17,10 +29,17 @@
         />
       </v-flex>
     </v-layout>
-    <v-layout justify-end row fill-height>
+    <v-layout
+      justify-end
+      row
+      fill-height
+    >
       <v-flex xs6>
-         <!-- Descriptor name -->
-        <v-text-field v-model="descriptor.name" label="Name" />
+        <!-- Descriptor name -->
+        <v-text-field
+          v-model="descriptor.name"
+          label="Name"
+        />
       </v-flex>
       <v-flex xs6>
         <!-- descriptor instanceOf -->
@@ -34,52 +53,102 @@
       </v-flex>
     </v-layout>
     <!-- descriptor labels -->
-    <v-layout justify-end row fill-height>
+    <v-layout
+      justify-end
+      row
+      fill-height
+    >
       <v-flex xs12>
         <formlistcomponent
-            :items.sync="descriptor.labels"
-            :itemprops="$store.state.api.schemas.descriptor.properties.labels.items.properties"
-            label="Labels"
-            nodatamessage="No labels added"
+          :items.sync="descriptor.labels"
+          :itemprops="$store.state.api.schemas.descriptor.properties.labels.items.properties"
+          label="Labels"
+          nodatamessage="No labels added"
         >
-          <template slot="form" slot-scope="props">
-            <v-layout justify-end row fill-height wrap>
+          <template
+            slot="form"
+            slot-scope="props"
+          >
+            <v-layout
+              justify-end
+              row
+              fill-height
+              wrap
+            >
               <v-flex xs6>
                 <v-select
-                    v-model="props.newitem.lang"
-                    filled
-                    label="Language"
-                    :items="['en','de','un']"
+                  v-model="props.newitem.lang"
+                  filled
+                  label="Language"
+                  :items="['en','de','un']"
                 />
               </v-flex>
               <v-flex xs6>
-                <v-text-field v-model="props.newitem.label" filled label="Label" />
+                <v-text-field
+                  v-model="props.newitem.label"
+                  filled
+                  label="Label"
+                />
               </v-flex>
             </v-layout>
           </template>
         </formlistcomponent>
       </v-flex>
     </v-layout>
-    <v-layout justify-end row fill-height>
+    <v-layout
+      justify-end
+      row
+      fill-height
+    >
       <v-flex xs12>
         <!-- descriptor description -->
-        <v-textarea height="200" v-model="descriptor.description" label="Description"/>
+        <v-textarea
+          v-model="descriptor.description"
+          height="200"
+          label="Description"
+        />
       </v-flex>
     </v-layout>
-    <v-layout justify-end row fill-height>
+    <v-layout
+      justify-end
+      row
+      fill-height
+    >
       <v-flex xs12>
         <!-- descriptor relations -->
-        <formlistcomponent :items.sync="descriptor.relations" :itemprops="$store.state.api.schemas.descriptor.properties.relations.items.properties" :listitemstyletypes="relationitemstyletypes" label="Related Descriptors" nodatamessage="No relations added">
-          <template slot="form" slot-scope="props">
-          <v-flex xs2>
-            <v-select :items="$store.state.api.schemas.actor.properties.relations.items.properties.kind.enum" label="Relation Type" v-model='props.newitem.kind'/>
-          </v-flex>
+        <formlistcomponent
+          :items.sync="descriptor.relations"
+          :itemprops="$store.state.api.schemas.descriptor.properties.relations.items.properties"
+          :listitemstyletypes="relationitemstyletypes"
+          label="Related Descriptors"
+          nodatamessage="No relations added"
+        >
+          <template
+            slot="form"
+            slot-scope="props"
+          >
+            <v-flex xs2>
+              <v-select
+                v-model="props.newitem.kind"
+                :items="$store.state.api.schemas.actor.properties.relations.items.properties.kind.enum"
+                label="Relation Type"
+              />
+            </v-flex>
             <v-flex x12>
-          <autocomp entity="Descriptor" v-model="props.newitem.target"  label="Descriptor" :multiple="false"/>
-          </v-flex>
-          <v-flex xs10>
-            <v-textarea height="200" v-model="props.newitem.annotation" label="Annotation" />
-          </v-flex>
+              <autocomp
+                v-model="props.newitem.target"
+                entity="Descriptor"
+                label="Descriptor"
+                :multiple="false"
+              />
+            </v-flex>
+            <v-flex xs10>
+              <v-textarea
+                v-model="props.newitem.annotation"
+                height="200"
+                label="Annotation"
+              />
+            </v-flex>
           </template>
         </formlistcomponent>
       </v-flex>
@@ -133,6 +202,10 @@ export default {
       },
     },
   },
+  mounted() {
+    this.initVals();
+    this.returnObject();
+  },
   methods: {
     returnObject() {
       this.$emit('input', this.descriptor);
@@ -154,10 +227,6 @@ export default {
       });
       this.returnObject();
     },
-  },
-  mounted() {
-    this.initVals();
-    this.returnObject();
   },
 };
 </script>

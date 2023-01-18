@@ -1,7 +1,13 @@
 <template>
   <div>
-    <v-chip outlined color="primary" small v-for="(item,index) in items" v-bind:key="index">
-      {{item}}
+    <v-chip
+      v-for="(item,index) in items"
+      :key="index"
+      outlined
+      color="primary"
+      small
+    >
+      {{ item }}
     </v-chip>
   </div>
 </template>

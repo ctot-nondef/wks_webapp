@@ -4,7 +4,11 @@
       <!-- toolbar -->
       <v-col cols="12">
         <v-row justify="end">
-          <v-btn icon ripple @click="intexpanded = !intexpanded">
+          <v-btn
+            icon
+            ripple
+            @click="intexpanded = !intexpanded"
+          >
             <v-icon>{{ intexpanded ? "expand_less" : "expand_more" }}</v-icon>
           </v-btn>
         </v-row>
@@ -12,74 +16,94 @@
       <!-- actor identifiers -->
       <v-col cols="4">
         <listview
-            icon="code"
-            title="Identifiers"
-            :items="item.identifier"
-            :expanded="intexpanded"
+          icon="code"
+          title="Identifiers"
+          :items="item.identifier"
+          :expanded="intexpanded"
         />
       </v-col>
       <!-- actor begin of Existence -->
       <v-col cols="4">
         <singleview
-            icon="logout"
-            title="Begin of Existence"
-            :item="item.beginOfExistence| formatDate"
+          icon="logout"
+          title="Begin of Existence"
+          :item="item.beginOfExistence| formatDate"
         />
       </v-col>
       <!-- actor end of Existence -->
       <v-col cols="4">
         <singleview
-            icon="login"
-            title="End of Existence"
-            :item="item.endOfExistence| formatDate"
+          icon="login"
+          title="End of Existence"
+          :item="item.endOfExistence| formatDate"
         />
       </v-col>
       <!-- actor description -->
       <v-col cols="12">
         <singleview
-            icon="login"
-            title="Description"
-            :item="item.description"
+          icon="login"
+          title="Description"
+          :item="item.description"
         />
       </v-col>
       <!-- actor description -->
       <v-col cols="12">
         <v-simple-table>
-          <template v-slot:default>
+          <template #default>
             <thead>
-            <tr>
-              <th class="text-left">
-                Name
-              </th>
-              <th class="text-left">
-                Original Title
-              </th>
-              <th class="text-left">
-                Link
-              </th>
-            </tr>
+              <tr>
+                <th class="text-left">
+                  Name
+                </th>
+                <th class="text-left">
+                  Original Title
+                </th>
+                <th class="text-left">
+                  Link
+                </th>
+              </tr>
             </thead>
             <tbody>
-            <tr
+              <tr
                 v-for="item in [...item.entry_creator_id, ...item.collect_creator_id, ...item.actor_relations_target]"
                 :key="item.name"
-            >
-              <td>{{ item.name }}</td>
-              <td>{{ item.originalTitle }}</td>
-              <td>
-                <v-btn fab dark small color="primary" :to="{ name: 'single', params: { type: 'entry', id:  item._id  }}">
-                  <v-icon dark>collections_bookmark</v-icon>
-                </v-btn>
-              </td>
-            </tr>
+              >
+                <td>{{ item.name }}</td>
+                <td>{{ item.originalTitle }}</td>
+                <td>
+                  <v-btn
+                    fab
+                    dark
+                    small
+                    color="primary"
+                    :to="{ name: 'single', params: { type: 'entry', id: item._id }}"
+                  >
+                    <v-icon dark>
+                      collections_bookmark
+                    </v-icon>
+                  </v-btn>
+                </td>
+              </tr>
             </tbody>
           </template>
         </v-simple-table>
       </v-col>
     </v-row>
-    <editdialog title="Create Inventory" ref="createdialog" @close="refresh" v-if="$store.state.api.loggedin">
-      <template slot="form" slot-scope="props">
-        <component :is="formLoader" :value="props.item" @input="props.item=$event"></component>
+    <editdialog
+      v-if="$store.state.api.loggedin"
+      ref="createdialog"
+      title="Create Inventory"
+      @close="refresh"
+    >
+      <template
+        slot="form"
+        slot-scope="props"
+      >
+        <component
+          :is="formLoader"
+          :value="props.item"
+          @input="props.item=$event"
+        />
       </template>
     </editdialog>
   </v-container>
@@ -105,6 +129,7 @@ export default {
     list,
     editdialog,
   },
+  mixins: [filters],
   props: {
     id: {
       type: String,
@@ -119,7 +144,6 @@ export default {
       default: () => false,
     },
   },
-  mixins: [filters],
   data() {
     return {
       type: 'actor',

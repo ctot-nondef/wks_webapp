@@ -15,30 +15,49 @@
           <span class="body-2">{{ `${items.length} files attached` || "n/a" }}</span>
         </v-list-item-content>
         <v-list-item-action v-if="expandable">
-          <v-btn icon :disabled="items.length <= 0"  @click="intexpanded = !intexpanded"><v-icon>{{ intexpanded ? "expand_less" : "expand_more"  }}</v-icon></v-btn>
+          <v-btn
+            icon
+            :disabled="items.length <= 0"
+            @click="intexpanded = !intexpanded"
+          >
+            <v-icon>{{ intexpanded ? "expand_less" : "expand_more" }}</v-icon>
+          </v-btn>
         </v-list-item-action>
       </v-list-item>
     </v-list>
-    <v-divider></v-divider>
+    <v-divider />
     <v-list
       v-if="intexpanded && (items.length > 0)"
       dense
       class="elevation-1"
     >
-      <v-list-item v-for="(item, index) in items" :href="`${$store.state.api.url}/assetref/full/${item.reference ? item.reference.name : item.ref.name }`" :key="index" target="_blank">
+      <v-list-item
+        v-for="(item, index) in items"
+        :key="index"
+        :href="`${$store.state.api.url}/assetref/full/${item.reference ? item.reference.name : item.ref.name }`"
+        target="_blank"
+      >
         <v-list-item-avatar v-if="item.ref">
           <img :src="`${$store.state.api.url}/assetref/thumb/${item.ref.name.split('.')[0]}.jpg`">
         </v-list-item-avatar>
-        <v-list-item-content v-if="item.ref" :href="`${$store.state.api.url}/assetref/full/${item.ref.name.split('.')[0]}.jpg`" target="_blank">
-          <v-list-item-title v-html="item.ref.name"/>
-          <v-list-item-subtitle v-html="item.ref.path"/>
+        <v-list-item-content
+          v-if="item.ref"
+          :href="`${$store.state.api.url}/assetref/full/${item.ref.name.split('.')[0]}.jpg`"
+          target="_blank"
+        >
+          <v-list-item-title v-html="item.ref.name" />
+          <v-list-item-subtitle v-html="item.ref.path" />
         </v-list-item-content>
         <v-list-item-avatar v-if="item.reference">
           <img :src="`${$store.state.api.url}/assetref/thumb/${item.reference.name.split('.')[0]}.jpg`">
         </v-list-item-avatar>
-        <v-list-item-content v-if="item.reference" :href="`${$store.state.api.url}/assetref/full/${item.reference.name.split('.')[0]}.jpg`" target="_blank">
-          <v-list-item-title v-html="item.reference.name"/>
-          <v-list-item-subtitle v-html="item.reference.path"/>
+        <v-list-item-content
+          v-if="item.reference"
+          :href="`${$store.state.api.url}/assetref/full/${item.reference.name.split('.')[0]}.jpg`"
+          target="_blank"
+        >
+          <v-list-item-title v-html="item.reference.name" />
+          <v-list-item-subtitle v-html="item.reference.path" />
         </v-list-item-content>
       </v-list-item>
     </v-list>

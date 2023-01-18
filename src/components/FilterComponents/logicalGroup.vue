@@ -1,8 +1,9 @@
 <template>
   <v-row>
-    <slot name="filter" :value="Object.values(value)[0]">
-
-    </slot>
+    <slot
+      name="filter"
+      :value="Object.values(value)[0]"
+    />
     <v-btn-toggle v-model="Object.keys(value)[0]">
       <v-btn>
         <v-icon>mdi-set-center</v-icon>

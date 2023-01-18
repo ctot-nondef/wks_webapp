@@ -1,8 +1,8 @@
 <template lang="html">
   <div>
-      <logindialog></logindialog>
-      <logoutdialog></logoutdialog>
-      <resetdialog></resetdialog>
+    <logindialog />
+    <logoutdialog />
+    <resetdialog />
   </div>
 </template>
 

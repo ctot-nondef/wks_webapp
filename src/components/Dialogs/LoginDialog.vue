@@ -1,23 +1,43 @@
 <template lang="html">
-    <v-dialog v-model="loginDialog.status" id="askForStore" max-width="500px">
-      <v-card>
-        <v-card-title>
-          VCHC DATABASE LOGIN
-        </v-card-title>
-        <v-card-text>
-          <v-text-field v-model="username" type="text" label="Email"/>
-          <v-text-field v-model="password" type="password" label="Password"/>
-        </v-card-text>
-        <v-card-actions>
-        <v-btn @click="login" large color="primary">
+  <v-dialog
+    id="askForStore"
+    v-model="loginDialog.status"
+    max-width="500px"
+  >
+    <v-card>
+      <v-card-title>
+        VCHC DATABASE LOGIN
+      </v-card-title>
+      <v-card-text>
+        <v-text-field
+          v-model="username"
+          type="text"
+          label="Email"
+        />
+        <v-text-field
+          v-model="password"
+          type="password"
+          label="Password"
+        />
+      </v-card-text>
+      <v-card-actions>
+        <v-btn
+          large
+          color="primary"
+          @click="login"
+        >
           LOGIN
         </v-btn>
-        <v-btn @click="discard" large color="secondary">
+        <v-btn
+          large
+          color="secondary"
+          @click="discard"
+        >
           CANCEL
         </v-btn>
       </v-card-actions>
-      </v-card>
-    </v-dialog>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>

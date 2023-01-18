@@ -7,15 +7,30 @@
         </v-col>
       </v-row>
       <v-row align="start">
-        <v-col cols="12" sm="4">
-          <v-text-field v-model="password" type="password" label="Password"/>
+        <v-col
+          cols="12"
+          sm="4"
+        >
+          <v-text-field
+            v-model="password"
+            type="password"
+            label="Password"
+          />
         </v-col>
-        <v-col cols="12" sm="4">
-          <v-btn @click="reset" large color="primary" :disabled="!verified">
+        <v-col
+          cols="12"
+          sm="4"
+        >
+          <v-btn
+            large
+            color="primary"
+            :disabled="!verified"
+            @click="reset"
+          >
             RESET PASSWORD
           </v-btn>
         </v-col>
-        <v-col></v-col>
+        <v-col />
       </v-row>
     </v-container>
   </div>
@@ -25,9 +40,9 @@
 import {mapGetters, mapMutations} from 'vuex';
 
 export default {
+  name: 'ResetPassword',
   components: {
   },
-  name: 'resetPassword',
   data() {
     return {
       email: "",

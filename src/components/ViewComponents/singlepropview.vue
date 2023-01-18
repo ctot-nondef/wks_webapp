@@ -1,6 +1,9 @@
 <template>
   <div>
-    <v-list class="elevation-1" height="70">
+    <v-list
+      class="elevation-1"
+      height="70"
+    >
       <v-list-item>
         <v-list-item-avatar>
           <v-icon>{{ icon }}</v-icon>
@@ -8,7 +11,7 @@
         <v-list-item-content>
           <span class="body-2 font-weight-light">{{ title }}</span>
         </v-list-item-content>
-        <v-list-item-content >
+        <v-list-item-content>
           <span class="body-2">{{ intitem }}</span>
         </v-list-item-content>
       </v-list-item>

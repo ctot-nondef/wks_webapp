@@ -1,7 +1,7 @@
 <template>
   <v-flex xs12>
     <div class="text-xs-center pb-2 mb-1 sec">
-      <v-icon>{{icon}}</v-icon>{{caption}}
+      <v-icon>{{ icon }}</v-icon>{{ caption }}
     </div>
   </v-flex>
 </template>
@@ -9,15 +9,15 @@
 <script>
 
   export default {
-    data() {
-      return {
-      };
-    },
+    name: 'FundamentSectionDiv',
     props: [
       'icon',
       'caption',
     ],
-    name: 'FundamentSectionDiv',
+    data() {
+      return {
+      };
+    },
   };
 </script>
 <style scoped>

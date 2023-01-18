@@ -1,23 +1,37 @@
 <template>
-  <transition appear :duration="250" name="fadeLeft">
-    <v-card class="border-top mb-3" height="100%">
-      <v-card-media :src="src" v-if="src" height="200px">
-      </v-card-media>
+  <transition
+    appear
+    :duration="250"
+    name="fadeLeft"
+  >
+    <v-card
+      class="border-top mb-3"
+      height="100%"
+    >
+      <v-card-media
+        v-if="src"
+        :src="src"
+        height="200px"
+      />
       <v-card-title primary-title>
         <div>
-          <h3 class="headline" v-text="caption"/>
+          <h3
+            class="headline"
+            v-text="caption"
+          />
         </div>
       </v-card-title>
       <div class="content">
-        <slot name="content"/>
+        <slot name="content" />
       </div>
       <v-card-actions v-if="link">
         <v-btn
           text
           class="primary"
           :to="link"
-          >
-          {{ buttoncaption || 'More' }}</v-btn>
+        >
+          {{ buttoncaption || 'More' }}
+        </v-btn>
       </v-card-actions>
     </v-card>
   </transition>
@@ -26,17 +40,17 @@
 <script>
 
   export default {
-    data() {
-      return {
-      };
-    },
+    name: 'FundamentCard',
     props: [
       'src',
       'caption',
       'link',
       'buttoncaption'
     ],
-    name: 'FundamentCard',
+    data() {
+      return {
+      };
+    },
   };
 </script>
 <style scoped>

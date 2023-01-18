@@ -2,10 +2,17 @@
   <div class="">
     <v-container grid-list-md>
       <fundamentcard :caption="view.name">
-        <div slot="content" >
-          <v-layout justify-center column fill-height>
+        <div slot="content">
+          <v-layout
+            justify-center
+            column
+            fill-height
+          >
             <v-flex xs12>
-              <component :is="detailLoader" :id="id" ></component>
+              <component
+                :is="detailLoader"
+                :id="id"
+              />
             </v-flex>
           </v-layout>
         </div>
@@ -49,13 +56,13 @@
         });
       },
     },
-    watch: {
-
-    },
     computed: {
       detailLoader() {
         return () => import(/* webpackMode: "eager" */ `../DetailViews/${this.type}_details`);
       },
+    },
+    watch: {
+
     },
     created() {
       this.getEntity(this.type, this.id);

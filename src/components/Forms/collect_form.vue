@@ -1,17 +1,34 @@
 <template>
   <div class="">
     <!-- collection identifiers -->
-    <v-layout justify-end row fill-height>
-        <chips :items="collection.identifier"/>
+    <v-layout
+      justify-end
+      row
+      fill-height
+    >
+      <chips :items="collection.identifier" />
     </v-layout>
     <!-- collection name -->
-    <v-layout justify-start row fill-height>
+    <v-layout
+      justify-start
+      row
+      fill-height
+    >
       <v-flex xs10>
-        <v-text-field v-model="collection.name" label="Name" filled class="nameinput" />
+        <v-text-field
+          v-model="collection.name"
+          label="Name"
+          filled
+          class="nameinput"
+        />
       </v-flex>
     </v-layout>
     <!-- collection creators -->
-    <v-layout justify-end row fill-height>
+    <v-layout
+      justify-end
+      row
+      fill-height
+    >
       <v-flex xs12>
         <formlistcomponent
           :items.sync="collection.creator"
@@ -19,16 +36,41 @@
           label="Creator"
           nodatamessage="No creators added"
         >
-          <template slot="form" slot-scope="props">
-            <v-layout justify-end row fill-height wrap>
+          <template
+            slot="form"
+            slot-scope="props"
+          >
+            <v-layout
+              justify-end
+              row
+              fill-height
+              wrap
+            >
               <v-flex xs6>
-                <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"/>
+                <autocomp
+                  v-model="props.newitem.role"
+                  entity="Descriptor"
+                  filter="ROLE"
+                  label="Role"
+                  :multiple="false"
+                />
               </v-flex>
               <v-flex xs6>
-                <autocomp entity="Actor" v-model="props.newitem.id" label="Collector" :multiple="false" :displayitemprops="autcompdisplayprops" />
+                <autocomp
+                  v-model="props.newitem.id"
+                  entity="Actor"
+                  label="Collector"
+                  :multiple="false"
+                  :displayitemprops="autcompdisplayprops"
+                />
               </v-flex>
               <v-flex xs12>
-                <v-textarea height="200" v-model="props.newitem.note" filled label="Note" />
+                <v-textarea
+                  v-model="props.newitem.note"
+                  height="200"
+                  filled
+                  label="Note"
+                />
               </v-flex>
             </v-layout>
           </template>
@@ -36,84 +78,189 @@
       </v-flex>
     </v-layout>
     <!-- collection places, times -->
-    <v-layout justify-end row fill-height>
+    <v-layout
+      justify-end
+      row
+      fill-height
+    >
       <v-flex xs6>
-        <autocomp entity="Descriptor" filter="GEOKEYW" v-model="collection.place" label="Place" :multiple="true" />
+        <autocomp
+          v-model="collection.place"
+          entity="Descriptor"
+          filter="GEOKEYW"
+          label="Place"
+          :multiple="true"
+        />
       </v-flex>
       <v-flex xs6>
-        <autocomp entity="Descriptor" filter="PERIOD" v-model="collection.time" label="Time" :multiple="true" />
+        <autocomp
+          v-model="collection.time"
+          entity="Descriptor"
+          filter="PERIOD"
+          label="Time"
+          :multiple="true"
+        />
       </v-flex>
     </v-layout>
     <!-- collection description -->
-    <v-layout justify-end row fill-height>
+    <v-layout
+      justify-end
+      row
+      fill-height
+    >
       <v-flex xs12>
-        <v-textarea height="200" v-model="collection.description" filled label="Description" />
+        <v-textarea
+          v-model="collection.description"
+          height="200"
+          filled
+          label="Description"
+        />
       </v-flex>
     </v-layout>
     <!-- collection documents -->
-    <v-layout justify-end row fill-height>
+    <v-layout
+      justify-end
+      row
+      fill-height
+    >
       <v-flex xs12>
         <v-list two-line>
           <template v-for="(item, index) in collection.documents">
-            <v-list-item :key="item._id" :href="`${$store.state.api.url}/assetref/full/${item.ref.name.split('.')[0]}.pdf`" target="_blank">
+            <v-list-item
+              :key="item._id"
+              :href="`${$store.state.api.url}/assetref/full/${item.ref.name.split('.')[0]}.pdf`"
+              target="_blank"
+            >
               <v-list-item-avatar>
                 <img :src="`${$store.state.api.url}/assetref/thumb/${item.ref.name.split('.')[0]}.jpg`">
               </v-list-item-avatar>
               <v-list-item-content>
-                <v-list-item-title v-html="item.ref.name"/>
-                <v-list-item-subtitle v-html="item.ref.path"/>
+                <v-list-item-title v-html="item.ref.name" />
+                <v-list-item-subtitle v-html="item.ref.path" />
               </v-list-item-content>
-              <v-btn fab dark small color="error" @click="removeimage(index)">
-                <v-icon dark>delete</v-icon>
+              <v-btn
+                fab
+                dark
+                small
+                color="error"
+                @click="removeimage(index)"
+              >
+                <v-icon dark>
+                  delete
+                </v-icon>
               </v-btn>
             </v-list-item>
           </template>
         </v-list>
-        <v-text-field label="Select PDF Document" filled @click='pickFile' v-model='imageName' prepend-icon='attach_file'/>
-        <input type="file" style="display: none" ref="image" accept="application/pdf" @change="onFilePicked">
+        <v-text-field
+          v-model="imageName"
+          label="Select PDF Document"
+          filled
+          prepend-icon="attach_file"
+          @click="pickFile"
+        />
+        <input
+          ref="image"
+          type="file"
+          style="display: none"
+          accept="application/pdf"
+          @change="onFilePicked"
+        >
       </v-flex>
     </v-layout>
     <!-- collection classifications -->
-    <v-layout justify-end row fill-height>
+    <v-layout
+      justify-end
+      row
+      fill-height
+    >
       <v-flex xs12>
         <formlistcomponent
           :items.sync="collection.classification"
           :itemprops="$store.state.api.schemas.collect.properties.classification.items.properties"
           label="Classification"
-          nodatamessage="No classifications added">
-          <template slot="form" slot-scope="props">
-          <v-layout justify-end row fill-height wrap>
-            <v-flex xs6>
-                <autocomp entity="Descriptor" filter="KEYWORD" v-model="props.newitem.aspect" label="Aspect" :multiple="false"/>
-            </v-flex>
-            <v-flex xs6>
-              <autocomp entity="Descriptor" v-model="props.newitem.descriptor" label="Descriptor" :multiple="false"/>
-            </v-flex>
-            <v-flex xs12>
-              <v-textarea height="200" filled v-model="props.newitem.note" label="Note" />
-            </v-flex>
-          </v-layout>
+          nodatamessage="No classifications added"
+        >
+          <template
+            slot="form"
+            slot-scope="props"
+          >
+            <v-layout
+              justify-end
+              row
+              fill-height
+              wrap
+            >
+              <v-flex xs6>
+                <autocomp
+                  v-model="props.newitem.aspect"
+                  entity="Descriptor"
+                  filter="KEYWORD"
+                  label="Aspect"
+                  :multiple="false"
+                />
+              </v-flex>
+              <v-flex xs6>
+                <autocomp
+                  v-model="props.newitem.descriptor"
+                  entity="Descriptor"
+                  label="Descriptor"
+                  :multiple="false"
+                />
+              </v-flex>
+              <v-flex xs12>
+                <v-textarea
+                  v-model="props.newitem.note"
+                  height="200"
+                  filled
+                  label="Note"
+                />
+              </v-flex>
+            </v-layout>
           </template>
         </formlistcomponent>
       </v-flex>
     </v-layout>
     <!-- collection beginn/end of existence -->
-    <v-layout justify-start row fill-height>
+    <v-layout
+      justify-start
+      row
+      fill-height
+    >
       <v-flex xs6>
-        <datecomponent v-bind:date.sync="collection.beginOfExistence" label="Begin of Existence"/>
+        <datecomponent
+          :date.sync="collection.beginOfExistence"
+          label="Begin of Existence"
+        />
       </v-flex>
       <v-flex xs6>
-        <datecomponent v-bind:date.sync="collection.endOfExistence" label="End of Existence"/>
+        <datecomponent
+          :date.sync="collection.endOfExistence"
+          label="End of Existence"
+        />
       </v-flex>
     </v-layout>
     <!-- collection destitution -->
-    <v-layout justify-start row fill-height>
+    <v-layout
+      justify-start
+      row
+      fill-height
+    >
       <v-flex xs12>
-        <v-textarea height="200" filled v-model="collection.destitution" label="Destitution" />
+        <v-textarea
+          v-model="collection.destitution"
+          height="200"
+          filled
+          label="Destitution"
+        />
       </v-flex>
     </v-layout>
     <!-- collection references zotero -->
-    <v-layout justify-end row fill-height>
+    <v-layout
+      justify-end
+      row
+      fill-height
+    >
       <v-flex xs12>
         <formlistcomponent
           :items.sync="collection.references"
@@ -121,16 +268,40 @@
           label="Bibliograpic References"
           nodatamessage="No Bibliograpic References added"
         >
-          <template slot="form" slot-scope="props">
-            <v-layout justify-end row fill-height wrap>
+          <template
+            slot="form"
+            slot-scope="props"
+          >
+            <v-layout
+              justify-end
+              row
+              fill-height
+              wrap
+            >
               <v-flex xs6>
-                  <v-text-field filled label="Zotero Reference URI" @click='zoterodialog=true' v-model='props.newitem.ref' prepend-icon='attach_file'/>
+                <v-text-field
+                  v-model="props.newitem.ref"
+                  filled
+                  label="Zotero Reference URI"
+                  prepend-icon="attach_file"
+                  @click="zoterodialog=true"
+                />
               </v-flex>
               <v-flex xs6>
-                  <v-text-field filled v-model="props.newitem.pageno" label="Page Number/Range" type="number"/>
+                <v-text-field
+                  v-model="props.newitem.pageno"
+                  filled
+                  label="Page Number/Range"
+                  type="number"
+                />
               </v-flex>
               <v-flex xs12>
-                <v-textarea height="200" filled v-model="props.newitem.note" label="Note" />
+                <v-textarea
+                  v-model="props.newitem.note"
+                  height="200"
+                  filled
+                  label="Note"
+                />
               </v-flex>
             </v-layout>
           </template>
@@ -138,46 +309,78 @@
       </v-flex>
     </v-layout>
     <!-- collection comments -->
-    <v-layout justify-start row fill-height>
+    <v-layout
+      justify-start
+      row
+      fill-height
+    >
       <v-flex xs12>
         <formlistcomponent
           :items.sync="collection.comments"
           label="Comments"
-          nodatamessage="No comments added">
-          <template slot="form" slot-scope="props">
-          <v-flex xs12>
-              <v-textarea height="200" filled v-model="props.newitem.textval" label="New Comment"/>
-          </v-flex>
+          nodatamessage="No comments added"
+        >
+          <template
+            slot="form"
+            slot-scope="props"
+          >
+            <v-flex xs12>
+              <v-textarea
+                v-model="props.newitem.textval"
+                height="200"
+                filled
+                label="New Comment"
+              />
+            </v-flex>
           </template>
         </formlistcomponent>
       </v-flex>
     </v-layout>
     <!-- zotero ref selection popup -->
-    <v-layout column justify-space-between>
+    <v-layout
+      column
+      justify-space-between
+    >
       <v-dialog
         v-model="zoterodialog"
-        @keydown.esc="zoterodialog=false"
         fullscreen
         hide-overlay
         transition="dialog-bottom-transition"
-        >
+        @keydown.esc="zoterodialog=false"
+      >
         <v-card>
-          <v-toolbar dark color="primary">
-            <v-btn icon dark @click.native="zoterodialog=false">
+          <v-toolbar
+            dark
+            color="primary"
+          >
+            <v-btn
+              icon
+              dark
+              @click.native="zoterodialog=false"
+            >
               <v-icon>close</v-icon>
             </v-btn>
             <v-toolbar-title>Select Zotero Reference</v-toolbar-title>
-            <v-spacer/>
-            <v-toolbar-items>
-            </v-toolbar-items>
-            <v-menu bottom right offset-y>
-              <v-btn dark icon>
+            <v-spacer />
+            <v-toolbar-items />
+            <v-menu
+              bottom
+              right
+              offset-y
+            >
+              <v-btn
+                dark
+                icon
+              >
                 <v-icon>more_vert</v-icon>
               </v-btn>
             </v-menu>
           </v-toolbar>
-          <v-container grid-list-md text-xs-center>
-            <zoterolist @selectref="pickZoteroRef($event)"/>
+          <v-container
+            grid-list-md
+            text-xs-center
+          >
+            <zoterolist @selectref="pickZoteroRef($event)" />
           </v-container>
         </v-card>
       </v-dialog>
@@ -194,7 +397,6 @@ import HELPERS from '../../helpers';
 
 /* eslint no-unused-vars: ["error", {"args": "none"}] */
 export default {
-  mixins: [HELPERS],
   components: {
     autocomp,
     formlistcomponent,
@@ -202,6 +404,7 @@ export default {
     chips,
     zoterolist,
   },
+  mixins: [HELPERS],
   props: [
     'value',
   ],
@@ -244,6 +447,10 @@ export default {
         this.returnObject();
       },
     },
+  },
+  mounted() {
+    this.initVals();
+    this.returnObject();
   },
   methods: {
     returnObject() {
@@ -309,10 +516,6 @@ export default {
         this.$set(this.collection, 'comments', []);
       }
     },
-  },
-  mounted() {
-    this.initVals();
-    this.returnObject();
   },
 };
 </script>

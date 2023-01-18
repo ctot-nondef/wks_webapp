@@ -1,49 +1,70 @@
 <template>
-<div>
+  <div>
     <v-autocomplete
+      v-model="select"
       :loading="loading"
       :items="items"
       :search-input.sync="search"
       :label="label"
-      flat chips
-      v-model="select"
+      flat
+      chips
       item-text="name"
       item-value="_id"
       cache-items
       return-object
-      @input="$emit('input', select)"
       :multiple="multiple"
       :append-outer-icon="icon"
-      @click:append-outer="runfunc"
       hide-selected
       hide-no-data
       filled
+      @input="$emit('input', select)"
+      @click:append-outer="runfunc"
+    >
+      <template
+        slot="selection"
+        slot-scope="data"
       >
-    <template slot="selection" slot-scope="data">
         <template v-if="multiple">
-          <v-chip :input-value="data.selected" close class="chip--select-multi" @click:close="remove(data.item)" color="white">
+          <v-chip
+            :input-value="data.selected"
+            close
+            class="chip--select-multi"
+            color="white"
+            @click:close="remove(data.item)"
+          >
             {{ data.item.name }}
           </v-chip>
         </template>
         <template v-else>
-         {{ data.item.name }}
+          {{ data.item.name }}
         </template>
       </template>
-      <template slot="item" slot-scope="data">
+      <template
+        slot="item"
+        slot-scope="data"
+      >
         <template v-if="typeof data.item !== 'object'">
-          <v-list-item-content v-text="data.item"></v-list-item-content>
+          <v-list-item-content v-text="data.item" />
         </template>
         <template v-else>
           <v-list-item-content class="listcontent">
-            <v-list-item-title v-html="data.item.name"></v-list-item-title>
-            <v-list-item-subtitle class="subpropwrapper" v-for="(prop,propname) in displayitemprops" :key="propname" >
-              <span class="subprop" v-for="(subprop,index) in prop" :key="index">{{getItemPropFromPath(data.item,index,subprop['path']) | renderProps}}</span>
+            <v-list-item-title v-html="data.item.name" />
+            <v-list-item-subtitle
+              v-for="(prop,propname) in displayitemprops"
+              :key="propname"
+              class="subpropwrapper"
+            >
+              <span
+                v-for="(subprop,index) in prop"
+                :key="index"
+                class="subprop"
+              >{{ getItemPropFromPath(data.item,index,subprop['path']) | renderProps }}</span>
             </v-list-item-subtitle>
           </v-list-item-content>
         </template>
       </template>
     </v-autocomplete>
-    </div>
+  </div>
 </template>
 
 <script>

@@ -1,9 +1,22 @@
 <template>
   <div class="">
     <v-flex xs12>
-      <v-layout justify-end row fill-height>
-        <v-btn fab dark small color="warning" @click="edituser($store.state.api.user.username)" :disabled="true">
-          <v-icon dark>edit</v-icon>
+      <v-layout
+        justify-end
+        row
+        fill-height
+      >
+        <v-btn
+          fab
+          dark
+          small
+          color="warning"
+          :disabled="true"
+          @click="edituser($store.state.api.user.username)"
+        >
+          <v-icon dark>
+            edit
+          </v-icon>
         </v-btn>
       </v-layout>
     </v-flex>
@@ -19,45 +32,98 @@
       }"
       class="elevation-1"
     >
-      <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
-      <template slot="items" slot-scope="props" >
-          <td>{{ props.item.username }}</td>
-          <td>{{ props.item.firstName }}</td>
-          <td>{{ props.item.lastName }}</td>
-          <td>
-            <span>
-              <v-btn fab dark small color="warning" @click="edituser(props.item._id)">
-                <v-icon dark>edit</v-icon>
-              </v-btn>
-              <v-btn fab dark small color="error" @click="deleteuser(props.item._id)">
-                <v-icon dark>delete</v-icon>
-              </v-btn>
-            </span>
-          </td>
+      <v-progress-linear
+        slot="progress"
+        color="blue"
+        indeterminate
+      />
+      <template
+        slot="items"
+        slot-scope="props"
+      >
+        <td>{{ props.item.username }}</td>
+        <td>{{ props.item.firstName }}</td>
+        <td>{{ props.item.lastName }}</td>
+        <td>
+          <span>
+            <v-btn
+              fab
+              dark
+              small
+              color="warning"
+              @click="edituser(props.item._id)"
+            >
+              <v-icon dark>edit</v-icon>
+            </v-btn>
+            <v-btn
+              fab
+              dark
+              small
+              color="error"
+              @click="deleteuser(props.item._id)"
+            >
+              <v-icon dark>delete</v-icon>
+            </v-btn>
+          </span>
+        </td>
       </template>
     </v-data-table>
-    <v-layout column justify-space-between>
+    <v-layout
+      column
+      justify-space-between
+    >
       <v-dialog
         v-model="userdialog"
-        @keydown.esc="userdialog=false"
         fullscreen
         hide-overlay
         transition="dialog-bottom-transition"
         scrollable
-        >
+        @keydown.esc="userdialog=false"
+      >
         <v-card>
-          <v-toolbar dark color="primary">
-            <v-btn icon dark @click.native="userdialog=false">
+          <v-toolbar
+            dark
+            color="primary"
+          >
+            <v-btn
+              icon
+              dark
+              @click.native="userdialog=false"
+            >
               <v-icon>close</v-icon>
             </v-btn>
             <v-toolbar-title>Edit user</v-toolbar-title>
           </v-toolbar>
-          <v-container grid-list-md text-xs-center>
-            <v-card color="grey lighten-2" class="pa-4">
-              <userform :value="cedit" @input="cedits=$event"></userform>
-              <v-layout justify-end row fill-height>
-                <v-btn color="warning" @click="saveuser()">Save</v-btn>
-                <v-btn color="primary" text @click.native="userdialog=false">Discard</v-btn>
+          <v-container
+            grid-list-md
+            text-xs-center
+          >
+            <v-card
+              color="grey lighten-2"
+              class="pa-4"
+            >
+              <userform
+                :value="cedit"
+                @input="cedits=$event"
+              />
+              <v-layout
+                justify-end
+                row
+                fill-height
+              >
+                <v-btn
+                  color="warning"
+                  @click="saveuser()"
+                >
+                  Save
+                </v-btn>
+                <v-btn
+                  color="primary"
+                  text
+                  @click.native="userdialog=false"
+                >
+                  Discard
+                </v-btn>
               </v-layout>
             </v-card>
           </v-container>

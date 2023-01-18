@@ -1,45 +1,92 @@
 <template>
   <div class="">
-    <v-container grid-list-md v-if="$store.state.api.loggedin">
+    <v-container
+      v-if="$store.state.api.loggedin"
+      grid-list-md
+    >
       <fundamentcard caption="users">
         <div slot="content">
-          <v-layout justify-center column fill-height>
+          <v-layout
+            justify-center
+            column
+            fill-height
+          >
             <v-flex xs12>
-              <userlist ref="userlist"></userlist>
+              <userlist ref="userlist" />
             </v-flex>
           </v-layout>
         </div>
       </fundamentcard>
-      <v-layout column justify-space-between>
+      <v-layout
+        column
+        justify-space-between
+      >
         <v-dialog
           v-model="userdialog"
-          @keydown.esc="userdialog=false"
           fullscreen
           hide-overlay
           transition="dialog-bottom-transition"
           scrollable
-          >
+          @keydown.esc="userdialog=false"
+        >
           <v-card>
-            <v-toolbar dark color="primary">
-              <v-btn icon dark @click.native="userdialog=false">
+            <v-toolbar
+              dark
+              color="primary"
+            >
+              <v-btn
+                icon
+                dark
+                @click.native="userdialog=false"
+              >
                 <v-icon>close</v-icon>
               </v-btn>
               <v-toolbar-title>Create user</v-toolbar-title>
-              <v-spacer></v-spacer>
-              <v-toolbar-items>
-              </v-toolbar-items>
-              <v-menu bottom right offset-y>
-                <v-btn dark icon>
+              <v-spacer />
+              <v-toolbar-items />
+              <v-menu
+                bottom
+                right
+                offset-y
+              >
+                <v-btn
+                  dark
+                  icon
+                >
                   <v-icon>more_vert</v-icon>
                 </v-btn>
               </v-menu>
             </v-toolbar>
-            <v-container grid-list-md text-xs-center>
-              <v-card color="grey lighten-2" class="pa-4">
-                <userform :value="newuser" @input="newuser=$event"></userform>
-                <v-layout justify-end row fill-height>
-                  <v-btn color="warning" @click="adduser()">Save</v-btn>
-                  <v-btn color="primary" text @click.native="userdialog=false">Discard</v-btn>
+            <v-container
+              grid-list-md
+              text-xs-center
+            >
+              <v-card
+                color="grey lighten-2"
+                class="pa-4"
+              >
+                <userform
+                  :value="newuser"
+                  @input="newuser=$event"
+                />
+                <v-layout
+                  justify-end
+                  row
+                  fill-height
+                >
+                  <v-btn
+                    color="warning"
+                    @click="adduser()"
+                  >
+                    Save
+                  </v-btn>
+                  <v-btn
+                    color="primary"
+                    text
+                    @click.native="userdialog=false"
+                  >
+                    Discard
+                  </v-btn>
                 </v-layout>
               </v-card>
             </v-container>
@@ -47,7 +94,10 @@
         </v-dialog>
       </v-layout>
     </v-container>
-    <v-container grid-list-md v-if="!$store.state.api.loggedin">
+    <v-container
+      v-if="!$store.state.api.loggedin"
+      grid-list-md
+    >
       Bitte loggen Sie sich ein um die Datenbank zu benutzen.
     </v-container>
   </div>
@@ -66,12 +116,12 @@ import userform from './Forms/user_form';
 /* eslint no-console: ["error", { allow: ["log"] }] */
 
 export default {
-  mixins: [HELPERS],
   components: {
     fundamentcard,
     userlist,
     userform,
   },
+  mixins: [HELPERS],
   data() {
     return {
       userdialog: false,

@@ -3,8 +3,8 @@
     v-model="state"
     label="Select"
     :items="states"
-    @input.native="loadStates"
     autocomplete
+    @input.native="loadStates"
   />
 </template>
 

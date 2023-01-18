@@ -2,10 +2,19 @@
   <div>
     <v-col cols="12">
       <v-row justify="end">
-        <v-btn icon ripple @click="intexpanded = !intexpanded" ><v-icon>{{ intexpanded ? "expand_less" : "expand_more"  }}</v-icon></v-btn>
+        <v-btn
+          icon
+          ripple
+          @click="intexpanded = !intexpanded"
+        >
+          <v-icon>{{ intexpanded ? "expand_less" : "expand_more" }}</v-icon>
+        </v-btn>
       </v-row>
     </v-col>
-    <v-layout row wrap>
+    <v-layout
+      row
+      wrap
+    >
       <v-flex xs4>
         <singleview
           icon="calendar_today"
@@ -82,6 +91,7 @@
       listview,
       singleview,
     },
+    mixins: [filters],
     props: {
       id: {
         type: String,
@@ -92,7 +102,6 @@
         default: () => true,
       },
     },
-    mixins: [filters],
     data() {
       return {
         item: {},

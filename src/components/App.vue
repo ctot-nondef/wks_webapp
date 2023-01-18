@@ -1,12 +1,12 @@
 <template>
-    <div>
-      <fundamentnav></fundamentnav>
-      <v-main v-if="$store.state.api.init" >
-        <router-view name="Content"/>
-        <fundamentfooter></fundamentfooter>
-      </v-main>
-      <dialogs></dialogs>
-    </div>
+  <div>
+    <fundamentnav />
+    <v-main v-if="$store.state.api.init">
+      <router-view name="Content" />
+      <fundamentfooter />
+    </v-main>
+    <dialogs />
+  </div>
 </template>
 
 <script>
@@ -21,16 +21,23 @@ import HELPERS from '../helpers';
 import config from '../config/config';
 
 export default {
-  mixins: [HELPERS],
-  data() {
-    return {
-    };
-  },
   name: 'App',
   components: {
     fundamentnav,
     fundamentfooter,
     dialogs,
+  },
+  mixins: [HELPERS],
+  data() {
+    return {
+    };
+  },
+  beforeCreate() {
+    const pstate = HELPERS.methods.getLatestSession();
+    HELPERS.methods.deleteOldSessions();
+    this.$store.commit('app/setConfig', config);
+    this.$store.dispatch('app/init', pstate);
+    this.$store.dispatch('api/init', { pstate, config, vm: this });
   },
   methods: {
     ...mapActions('api', {
@@ -42,13 +49,6 @@ export default {
     ...mapMutations('app', [
       'setConfig',
     ]),
-  },
-  beforeCreate() {
-    const pstate = HELPERS.methods.getLatestSession();
-    HELPERS.methods.deleteOldSessions();
-    this.$store.commit('app/setConfig', config);
-    this.$store.dispatch('app/init', pstate);
-    this.$store.dispatch('api/init', { pstate, config, vm: this });
   },
 };
 </script>

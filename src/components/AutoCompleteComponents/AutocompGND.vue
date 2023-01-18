@@ -1,40 +1,56 @@
 <template>
-    <v-autocomplete
-      :loading="loading"
-      :items="items"
-      :search-input.sync="search"
-      v-model="select"
-      :label="label"
-      flat
-      hide-no-data
-      item-text="label"
-      return-object
-      @input="$emit('input', select)"
-      :multiple="multiple"
-      >
-      <template slot="selection" slot-scope="data">
-        <template v-if="multiple">
-          <v-chip :input-value="data.selected" close class="chip--select-multi" color="white">
-            {{ data.item.label }}
-          </v-chip>
-        </template>
-        <template v-else>
+  <v-autocomplete
+    v-model="select"
+    :loading="loading"
+    :items="items"
+    :search-input.sync="search"
+    :label="label"
+    flat
+    hide-no-data
+    item-text="label"
+    return-object
+    :multiple="multiple"
+    @input="$emit('input', select)"
+  >
+    <template
+      slot="selection"
+      slot-scope="data"
+    >
+      <template v-if="multiple">
+        <v-chip
+          :input-value="data.selected"
+          close
+          class="chip--select-multi"
+          color="white"
+        >
           {{ data.item.label }}
-        </template>
+        </v-chip>
       </template>
-      <template slot="item" slot-scope="data">
-        <template>
-            <v-list-item-avatar>
-                 <img v-if="data.item.image" :src="data.item.image">
-                 <v-icon v-if="!data.item.image">person</v-icon>
-               </v-list-item-avatar>
-            <v-list-item-content>
-            <v-list-item-title v-html="data.item.label"></v-list-item-title>
-            <v-list-item-subtitle v-html="data.item.category"></v-list-item-subtitle>
-          </v-list-item-content>
-        </template>
+      <template v-else>
+        {{ data.item.label }}
       </template>
-    </v-autocomplete>
+    </template>
+    <template
+      slot="item"
+      slot-scope="data"
+    >
+      <template>
+        <v-list-item-avatar>
+          <img
+            v-if="data.item.image"
+            :src="data.item.image"
+          >
+          <v-icon v-if="!data.item.image">
+            person
+          </v-icon>
+        </v-list-item-avatar>
+        <v-list-item-content>
+          <v-list-item-title v-html="data.item.label" />
+          <v-list-item-subtitle v-html="data.item.category" />
+        </v-list-item-content>
+      </template>
+    </template>
+  </v-autocomplete>
 </template>
 
 <script>

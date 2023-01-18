@@ -1,11 +1,23 @@
 <template>
   <div class="">
-    <v-layout justify-end row fill-height>
+    <v-layout
+      justify-end
+      row
+      fill-height
+    >
       <v-flex xs12>
-        <gndimporter @importentity="importentity($event)" :itypes="['Person','CorporateBody']" targettype="actor"/>
+        <gndimporter
+          :itypes="['Person','CorporateBody']"
+          targettype="actor"
+          @importentity="importentity($event)"
+        />
       </v-flex>
     </v-layout>
-    <v-layout justify-end row fill-height>
+    <v-layout
+      justify-end
+      row
+      fill-height
+    >
       <!-- actor identifiers -->
       <v-flex xs12>
         <v-combobox
@@ -17,10 +29,17 @@
         />
       </v-flex>
     </v-layout>
-    <v-layout justify-start row fill-height>
+    <v-layout
+      justify-start
+      row
+      fill-height
+    >
       <v-flex xs6>
         <!-- actor name -->
-        <v-text-field v-model="actor.name" label="Name" />
+        <v-text-field
+          v-model="actor.name"
+          label="Name"
+        />
       </v-flex>
       <v-flex xs6>
         <!-- actor instanceOf -->
@@ -34,43 +53,82 @@
         />
       </v-flex>
     </v-layout>
-    <v-layout justify-start row fill-height>
+    <v-layout
+      justify-start
+      row
+      fill-height
+    >
       <v-flex xs6>
         <!-- actor begin of existence -->
-        <datecomponent :date.sync="actor.beginOfExistence" label="Begin of Existence"/>
+        <datecomponent
+          :date.sync="actor.beginOfExistence"
+          label="Begin of Existence"
+        />
       </v-flex>
       <v-flex xs6>
         <!-- actor end of existence -->
-        <datecomponent :date.sync="actor.endOfExistence" label="End of Existence"/>
+        <datecomponent
+          :date.sync="actor.endOfExistence"
+          label="End of Existence"
+        />
       </v-flex>
     </v-layout>
-    <v-layout justify-start row fill-height>
+    <v-layout
+      justify-start
+      row
+      fill-height
+    >
       <v-flex xs12>
         <!-- actor description -->
-        <v-textarea height="200" v-model="actor.description" label="Description" />
+        <v-textarea
+          v-model="actor.description"
+          height="200"
+          label="Description"
+        />
       </v-flex>
     </v-layout>
-    <v-layout justify-start row fill-height>
+    <v-layout
+      justify-start
+      row
+      fill-height
+    >
       <v-flex xs12>
         <!-- actor related actors -->
         <formlistcomponent
-                :items.sync="actor.relations"
-                :itemprops="$store.state.api.schemas.actor.properties.relations.items.properties"
-                :listitemstyletypes="relationitemstyletypes"
-                label="Related Actors"
-                nodatamessage="No relations added">
-            <template slot="form" slot-scope="props">
+          :items.sync="actor.relations"
+          :itemprops="$store.state.api.schemas.actor.properties.relations.items.properties"
+          :listitemstyletypes="relationitemstyletypes"
+          label="Related Actors"
+          nodatamessage="No relations added"
+        >
+          <template
+            slot="form"
+            slot-scope="props"
+          >
             <v-flex xs2>
-              <v-select :items="$store.state.api.schemas.actor.properties.relations.items.properties.kind.enum" label="Relation Type" v-model='props.newitem.kind'/>
+              <v-select
+                v-model="props.newitem.kind"
+                :items="$store.state.api.schemas.actor.properties.relations.items.properties.kind.enum"
+                label="Relation Type"
+              />
             </v-flex>
             <v-flex x12>
-              <autocomp entity="Actor" v-model="props.newitem.target"  label="Actor" :multiple="false"/>
+              <autocomp
+                v-model="props.newitem.target"
+                entity="Actor"
+                label="Actor"
+                :multiple="false"
+              />
             </v-flex>
             <v-flex xs10>
-              <v-textarea height="200" v-model="props.newitem.annotation" label="Annotation" />
+              <v-textarea
+                v-model="props.newitem.annotation"
+                height="200"
+                label="Annotation"
+              />
             </v-flex>
-            </template>
-          </formlistcomponent>
+          </template>
+        </formlistcomponent>
       </v-flex>
     </v-layout>
   </div>
@@ -126,6 +184,10 @@ export default {
       },
     },
   },
+  mounted() {
+    this.initVals();
+    this.returnObject();
+  },
   methods: {
     returnObject() {
       this.$emit('input', this.actor);
@@ -144,10 +206,6 @@ export default {
       });
       this.returnObject();
     },
-  },
-  mounted() {
-    this.initVals();
-    this.returnObject();
   },
 };
 </script>

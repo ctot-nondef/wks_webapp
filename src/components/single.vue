@@ -1,5 +1,9 @@
 <template>
-  <detailswrapper :id="$route.params.id"  :type="$route.params.type" :key="componentKey"></detailswrapper>
+  <detailswrapper
+    :id="$route.params.id"
+    :key="componentKey"
+    :type="$route.params.type"
+  />
 </template>
 <script>
   import detailswrapper from "./ViewComponents/detailswrapper";
@@ -13,15 +17,15 @@
         componentKey: 0,
       };
     },
-    methods: {
-      forceRerender() {
-        this.componentKey += 1;
-      }
-    },
     watch: {
       '$route.params.id': function () {
         this.forceRerender();
       },
+    },
+    methods: {
+      forceRerender() {
+        this.componentKey += 1;
+      }
     },
   };
 </script>

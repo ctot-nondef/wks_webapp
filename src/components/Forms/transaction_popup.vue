@@ -1,20 +1,31 @@
 <template>
-  <v-layout column justify-space-between>
+  <v-layout
+    column
+    justify-space-between
+  >
     <v-dialog
       v-model="transactiondialog"
-      @keydown.esc="transactiondialog=false"
       fullscreen
       hide-overlay
       transition="dialog-bottom-transition"
+      @keydown.esc="transactiondialog=false"
     >
       <v-card>
-        <v-toolbar tabs dark color="primary" >
-          <v-btn icon dark @click.native="transactiondialog=false">
+        <v-toolbar
+          tabs
+          dark
+          color="primary"
+        >
+          <v-btn
+            icon
+            dark
+            @click.native="transactiondialog=false"
+          >
             <v-icon>close</v-icon>
           </v-btn>
           <v-toolbar-title>Select or create Transaction</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <template v-slot:extension>
+          <v-spacer />
+          <template #extension>
             <v-tabs
               v-model="tabs"
               fixed-tabs
@@ -29,19 +40,55 @@
             </v-tabs>
           </template>
         </v-toolbar>
-        <v-container grid-list-md text-xs-center>
-          <v-tabs-items v-model="tabs" class="white elevation-1">
-            <v-tab-item key="1" value="select">
+        <v-container
+          grid-list-md
+          text-xs-center
+        >
+          <v-tabs-items
+            v-model="tabs"
+            class="white elevation-1"
+          >
+            <v-tab-item
+              key="1"
+              value="select"
+            >
               <v-card>
-                <list ref="transactionlist" entitytype="transaction" :headers="listheaders" @select="selectTransactionRef($event)" ></list>
+                <list
+                  ref="transactionlist"
+                  entitytype="transaction"
+                  :headers="listheaders"
+                  @select="selectTransactionRef($event)"
+                />
               </v-card>
             </v-tab-item>
-            <v-tab-item key="2" value="create">
+            <v-tab-item
+              key="2"
+              value="create"
+            >
               <v-card>
-                <transactionform v-if="$store.state.api.schemas.transaction" :value="newtransaction" @input="newtransaction=$event" ></transactionform>
-                <v-layout justify-end row fill-height>
-                  <v-btn color="warning" @click="createAndSelect()">Save & Select</v-btn>
-                  <v-btn color="primary" text @click.native="newtransaction={}">Clear Form</v-btn>
+                <transactionform
+                  v-if="$store.state.api.schemas.transaction"
+                  :value="newtransaction"
+                  @input="newtransaction=$event"
+                />
+                <v-layout
+                  justify-end
+                  row
+                  fill-height
+                >
+                  <v-btn
+                    color="warning"
+                    @click="createAndSelect()"
+                  >
+                    Save & Select
+                  </v-btn>
+                  <v-btn
+                    color="primary"
+                    text
+                    @click.native="newtransaction={}"
+                  >
+                    Clear Form
+                  </v-btn>
                 </v-layout>
               </v-card>
             </v-tab-item>
@@ -60,7 +107,7 @@
   import list from '../ViewComponents/list';
 
   export default {
-    name: 'transaction_popup',
+    name: 'TransactionPopup',
     components: {
       transactionform,
       list,

@@ -6,20 +6,21 @@
     :nudge-right="40"
     transition="scale-transition"
     offset-y
-    min-width="290px">
-    <template v-slot:activator="{ on }">
+    min-width="290px"
+  >
+    <template #activator="{ on }">
       <v-text-field
         v-model="computedDateFormatted"
         :label="label"
         prepend-icon="event"
         hint="YYYY\MM\DD format"
         persistent-hint
-        @blur="dateval = parseDate(dateFormatted)"
-        v-on="on"
         filled
         clearable
-        @click:clear="save(null)">
-      </v-text-field>
+        @blur="dateval = parseDate(dateFormatted)"
+        v-on="on"
+        @click:clear="save(null)"
+      />
     </template>
   </v-menu>
 </template>

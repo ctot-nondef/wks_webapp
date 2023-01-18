@@ -1,26 +1,56 @@
 <template>
   <div class="">
     <!-- transaction date -->
-    <v-layout justify-start row fill-height>
+    <v-layout
+      justify-start
+      row
+      fill-height
+    >
       <v-flex xs5>
-        <datecomponent v-bind:date.sync="transaction.date" label="Created Start" />
+        <datecomponent
+          :date.sync="transaction.date"
+          label="Created Start"
+        />
       </v-flex>
     </v-layout>
     <!-- transaction price -->
-    <v-layout justify-end row fill-height>
+    <v-layout
+      justify-end
+      row
+      fill-height
+    >
       <v-flex xs12>
         <formlistcomponent
           :items.sync="transaction.price"
           :itemprops="$store.state.api.schemas.transaction.properties.price.items.properties"
           label="Price"
-          nodatamessage="No price values added">
-          <template slot="form" slot-scope="props">
-            <v-layout justify-end row fill-height wrap>
+          nodatamessage="No price values added"
+        >
+          <template
+            slot="form"
+            slot-scope="props"
+          >
+            <v-layout
+              justify-end
+              row
+              fill-height
+              wrap
+            >
               <v-flex xs6>
-                <v-text-field filled v-model="props.newitem.amount" label="Numerical Amount" type="number"/>
+                <v-text-field
+                  v-model="props.newitem.amount"
+                  filled
+                  label="Numerical Amount"
+                  type="number"
+                />
               </v-flex>
               <v-flex xs6>
-                <autocomp entity="Descriptor" v-model="props.newitem.currency" label="Currency" :multiple="false"/>
+                <autocomp
+                  v-model="props.newitem.currency"
+                  entity="Descriptor"
+                  label="Currency"
+                  :multiple="false"
+                />
               </v-flex>
             </v-layout>
           </template>
@@ -28,7 +58,11 @@
       </v-flex>
     </v-layout>
     <!-- transaction actor -->
-    <v-layout justify-end row fill-height>
+    <v-layout
+      justify-end
+      row
+      fill-height
+    >
       <v-flex xs12>
         <formlistcomponent
           :items.sync="transaction.actor"
@@ -36,16 +70,40 @@
           label="Actor"
           nodatamessage="No actors specified added"
         >
-          <template slot="form" slot-scope="props">
-            <v-layout justify-end row fill-height wrap>
+          <template
+            slot="form"
+            slot-scope="props"
+          >
+            <v-layout
+              justify-end
+              row
+              fill-height
+              wrap
+            >
               <v-flex xs6>
-                <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"/>
+                <autocomp
+                  v-model="props.newitem.role"
+                  entity="Descriptor"
+                  filter="ROLE"
+                  label="Role"
+                  :multiple="false"
+                />
               </v-flex>
               <v-flex xs6>
-                <autocomp entity="Actor" v-model="props.newitem.id" label="Actor" :multiple="false"/>
+                <autocomp
+                  v-model="props.newitem.id"
+                  entity="Actor"
+                  label="Actor"
+                  :multiple="false"
+                />
               </v-flex>
               <v-flex xs12>
-                <v-textarea height="200" v-model="props.newitem.note" filled label="Note" />
+                <v-textarea
+                  v-model="props.newitem.note"
+                  height="200"
+                  filled
+                  label="Note"
+                />
               </v-flex>
             </v-layout>
           </template>
@@ -53,13 +111,28 @@
       </v-flex>
     </v-layout>
     <!-- transaction comments -->
-    <v-layout justify-start row fill-height>
+    <v-layout
+      justify-start
+      row
+      fill-height
+    >
       <v-flex xs12>
-        <formlistcomponent :items.sync="transaction.comments" label="Comments" nodatamessage="No comments added">
-          <template slot="form" slot-scope="props">
-          <v-flex xs5>
-              <v-textarea height="200" v-model="props.newitem.textval" label="New Comment"/>
-          </v-flex>
+        <formlistcomponent
+          :items.sync="transaction.comments"
+          label="Comments"
+          nodatamessage="No comments added"
+        >
+          <template
+            slot="form"
+            slot-scope="props"
+          >
+            <v-flex xs5>
+              <v-textarea
+                v-model="props.newitem.textval"
+                height="200"
+                label="New Comment"
+              />
+            </v-flex>
           </template>
         </formlistcomponent>
       </v-flex>
@@ -107,6 +180,10 @@ export default {
       },
     },
   },
+  mounted() {
+    this.initVals();
+    this.returnObject();
+  },
   methods: {
     returnObject() {
       this.$emit('input', this.transaction);
@@ -127,10 +204,6 @@ export default {
         this.$set(this.transaction, 'comments', []);
       }
     },
-  },
-  mounted() {
-    this.initVals();
-    this.returnObject();
   },
 };
 </script>

@@ -1,6 +1,10 @@
 <template>
   <div>
-    <transition :duration="200" name="slideLeft" mode="out-in">
+    <transition
+      :duration="200"
+      name="slideLeft"
+      mode="out-in"
+    >
       <v-navigation-drawer
         v-if="$store.state.app.drawer"
         :mini-variant="$store.state.app.miniVariant"
@@ -8,66 +12,101 @@
         :class="$store.state.app.config.color"
         dark
         app
-        >
+      >
         <v-container
-           fill-height
-           @mouseover.stop="setNavDrawerMaxi()"
-           @mouseleave.stop="setNavDrawerMini()"
+          fill-height
+          @mouseover.stop="setNavDrawerMaxi()"
+          @mouseleave.stop="setNavDrawerMini()"
         >
-          <v-layout column justify-space-between>
+          <v-layout
+            column
+            justify-space-between
+          >
             <v-list>
               <v-list-item>
-                <v-btn icon @click.stop="toggleNavDrawerClipped()">
-                  <v-icon v-html="$store.state.app.drawerclipped?'first_page':'last_page'" v-if="!$store.state.app.miniVariant"></v-icon>
+                <v-btn
+                  icon
+                  @click.stop="toggleNavDrawerClipped()"
+                >
+                  <v-icon
+                    v-if="!$store.state.app.miniVariant"
+                    v-html="$store.state.app.drawerclipped?'first_page':'last_page'"
+                  />
                 </v-btn>
               </v-list-item>
             </v-list>
             <v-list dense>
-              <v-list-item value="true" :to="{ name: 'start', params: { lang: 'en' } }" class="navtile">
+              <v-list-item
+                value="true"
+                :to="{ name: 'start', params: { lang: 'en' } }"
+                class="navtile"
+              >
                 <v-list-item-content>
                   <v-icon>home</v-icon>
                 </v-list-item-content>
-                <v-list-item-content >
-                  <v-list-item-title class="toolbarcaption">Home</v-list-item-title>
+                <v-list-item-content>
+                  <v-list-item-title class="toolbarcaption">
+                    Home
+                  </v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
               <v-list-item
-                value="true"
                 v-for="(item, i) in $store.state.app.config.menu"
                 :key="i"
+                value="true"
                 :to="item.startpage"
                 class="navtile"
-                >
-                  <v-list-item-content>
-                    <v-icon>{{ item.icon }}</v-icon>
-                  </v-list-item-content>
-                  <v-list-item-content >
-                    <v-list-item-title class="toolbarcaption">{{item.caption}}</v-list-item-title>
-                  </v-list-item-content>
+              >
+                <v-list-item-content>
+                  <v-icon>{{ item.icon }}</v-icon>
+                </v-list-item-content>
+                <v-list-item-content>
+                  <v-list-item-title class="toolbarcaption">
+                    {{ item.caption }}
+                  </v-list-item-title>
+                </v-list-item-content>
               </v-list-item>
-              <v-list-item value="true" @click.stop="openDialog('loginDialog')" v-if="!$store.state.api.loggedin" class="navtile">
-                  <v-list-item-content>
-                    <v-icon>input</v-icon>
-                  </v-list-item-content>
-                  <v-list-item-content >
-                    <v-list-item-title class="toolbarcaption">LOGIN</v-list-item-title>
-                  </v-list-item-content>
+              <v-list-item
+                v-if="!$store.state.api.loggedin"
+                value="true"
+                class="navtile"
+                @click.stop="openDialog('loginDialog')"
+              >
+                <v-list-item-content>
+                  <v-icon>input</v-icon>
+                </v-list-item-content>
+                <v-list-item-content>
+                  <v-list-item-title class="toolbarcaption">
+                    LOGIN
+                  </v-list-item-title>
+                </v-list-item-content>
               </v-list-item>
-              <v-list-item value="true" @click.stop="openDialog('logoutDialog')" v-if="$store.state.api.loggedin" class="navtile">
-                  <v-list-item-content>
-                    <v-icon>power_settings_new</v-icon>
-                  </v-list-item-content>
-                  <v-list-item-content >
-                    <v-list-item-title class="toolbarcaption">LOGOUT</v-list-item-title>
-                  </v-list-item-content>
+              <v-list-item
+                v-if="$store.state.api.loggedin"
+                value="true"
+                class="navtile"
+                @click.stop="openDialog('logoutDialog')"
+              >
+                <v-list-item-content>
+                  <v-icon>power_settings_new</v-icon>
+                </v-list-item-content>
+                <v-list-item-content>
+                  <v-list-item-title class="toolbarcaption">
+                    LOGOUT
+                  </v-list-item-title>
+                </v-list-item-content>
               </v-list-item>
             </v-list>
             <v-list dense>
               <v-list-item>
                 <router-link :to="{ name: 'start' }">
                   <div class="logo">
-                    <h5 style="font-weight: 200; padding: 0px; margin: 0px;letter-spacing: 3px!important; line-height:25px;text-decoration-line: none!important;">VC</h5>
-                    <h5 style="font-weight: 800; padding: 0px; margin: 0px;letter-spacing: 2px!important; line-height:25px;text-decoration-line: none!important;">HC</h5>
+                    <h5 style="font-weight: 200; padding: 0px; margin: 0px;letter-spacing: 3px!important; line-height:25px;text-decoration-line: none!important;">
+                      VC
+                    </h5>
+                    <h5 style="font-weight: 800; padding: 0px; margin: 0px;letter-spacing: 2px!important; line-height:25px;text-decoration-line: none!important;">
+                      HC
+                    </h5>
                   </div>
                   Database
                 </router-link>
@@ -87,11 +126,11 @@ import { mapActions, mapMutations } from 'vuex';
 /* eslint no-return-assign: "off" */
 
 export default {
+  name: 'FundamentNav',
   data() {
     return {
     };
   },
-  name: 'FundamentNav',
   methods: {
     ...mapMutations('JSONschema', [
       'constructJSONschema',

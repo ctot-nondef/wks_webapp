@@ -4,12 +4,24 @@
       <!-- toolbar -->
       <v-col cols="12">
         <v-row justify="end">
-          <v-btn icon ripple @click="intexpanded = !intexpanded" ><v-icon>{{ intexpanded ? "expand_less" : "expand_more"  }}</v-icon></v-btn>
-          <v-btn fab dark small
-                 color="warning"
-                 @click="$refs.createdialog.getItem( type , item._id)"
-                 v-if="$store.state.api.loggedin">
-            <v-icon dark>edit</v-icon>
+          <v-btn
+            icon
+            ripple
+            @click="intexpanded = !intexpanded"
+          >
+            <v-icon>{{ intexpanded ? "expand_less" : "expand_more" }}</v-icon>
+          </v-btn>
+          <v-btn
+            v-if="$store.state.api.loggedin"
+            fab
+            dark
+            small
+            color="warning"
+            @click="$refs.createdialog.getItem( type , item._id)"
+          >
+            <v-icon dark>
+              edit
+            </v-icon>
           </v-btn>
         </v-row>
       </v-col>
@@ -81,26 +93,49 @@
       <!-- collect inventories attached -->
       <v-col cols="12">
         <v-row justify="end">
-<!--          <v-btn fab dark small
+          <!--          <v-btn fab dark small
                  color="primary"
                  :to="{ name: 'query', params: { lang: 'en', entity: 'entry', query: '{name:{ $regex: null}}'}} ">
           <v-icon dark>add</v-icon>
           </v-btn>-->
-          <v-btn fab dark small
-                 color="warning"
-                 @click="$refs.createdialog.newItem( 'entry', { partOf: {_id: item._id, name: item.name } })"
-                 v-if="$store.state.api.loggedin">
-            <v-icon dark>add</v-icon>
+          <v-btn
+            v-if="$store.state.api.loggedin"
+            fab
+            dark
+            small
+            color="warning"
+            @click="$refs.createdialog.newItem( 'entry', { partOf: {_id: item._id, name: item.name } })"
+          >
+            <v-icon dark>
+              add
+            </v-icon>
           </v-btn>
         </v-row>
       </v-col>
       <v-col cols="12">
-        <list ref="entrylist" entitytype="entry" :headers="listheaders" :filter="{ partOf: this.$route.params.id }"></list>
+        <list
+          ref="entrylist"
+          entitytype="entry"
+          :headers="listheaders"
+          :filter="{ partOf: $route.params.id }"
+        />
       </v-col>
     </v-row>
-    <editdialog title="Create Inventory" ref="createdialog" @close="refresh" v-if="$store.state.api.loggedin">
-      <template slot="form" slot-scope="props">
-        <component :is="formLoader" :value="props.item" @input="props.item=$event"></component>
+    <editdialog
+      v-if="$store.state.api.loggedin"
+      ref="createdialog"
+      title="Create Inventory"
+      @close="refresh"
+    >
+      <template
+        slot="form"
+        slot-scope="props"
+      >
+        <component
+          :is="formLoader"
+          :value="props.item"
+          @input="props.item=$event"
+        />
       </template>
     </editdialog>
   </v-container>
@@ -124,6 +159,7 @@
       list,
       editdialog,
     },
+    mixins: [filters],
     props: {
       id: {
         type: String,
@@ -138,7 +174,6 @@
         default: () => false,
       },
     },
-    mixins: [filters],
     data() {
       return {
         type: 'inventory',

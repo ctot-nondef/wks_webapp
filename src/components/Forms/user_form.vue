@@ -1,27 +1,47 @@
 <template>
   <div class="">
-    <v-layout justify-start row fill-height>
+    <v-layout
+      justify-start
+      row
+      fill-height
+    >
       <v-flex xs6>
-        <v-text-field v-model="user.firstName" label="First Name" @input="returnObject()"/>
+        <v-text-field
+          v-model="user.firstName"
+          label="First Name"
+          @input="returnObject()"
+        />
       </v-flex>
       <v-flex xs6>
-        <v-text-field v-model="user.lastName" label="Last Name" @input="returnObject()"/>
+        <v-text-field
+          v-model="user.lastName"
+          label="Last Name"
+          @input="returnObject()"
+        />
       </v-flex>
     </v-layout>
-    <v-layout justify-start row fill-height>
+    <v-layout
+      justify-start
+      row
+      fill-height
+    >
       <v-flex xs6>
-        <v-text-field v-model="user.email" label="Email" @input="returnObject()"/>
+        <v-text-field
+          v-model="user.email"
+          label="Email"
+          @input="returnObject()"
+        />
       </v-flex>
       <v-flex xs6>
         <v-text-field
           v-model="user.password"
           label="Password"
-          @input="returnObject()"
           :append-icon="showPwd ? 'visibility' : 'visibility_off'"
           :rules="[rules.required, rules.min]"
           :type="showPwd ? 'text' : 'password'"
           hint="At least 8 characters"
           counter
+          @input="returnObject()"
           @click:append="showPwd = !showPwd"
         />
       </v-flex>
@@ -57,12 +77,12 @@ export default {
       this.user = val;
     },
   },
+  created() {
+  },
   methods: {
     returnObject() {
       this.$emit('input', this.user);
     },
-  },
-  created() {
   },
 };
 </script>

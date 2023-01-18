@@ -1,20 +1,40 @@
 <template>
   <div class="">
-    <div style="width: 100%" grid-list-md >
+    <div
+      style="width: 100%"
+      grid-list-md
+    >
       <fundamentcard caption="Text Search">
         <div slot="content">
-          <v-layout justify-center column fill-height>
+          <v-layout
+            justify-center
+            column
+            fill-height
+          >
             <v-flex xs12>
-              <filterlist :entitytype="$route.params.entity" :filter="query" @update="updateParams($event)" fixedtype></filterlist>
+              <filterlist
+                :entitytype="$route.params.entity"
+                :filter="query"
+                fixedtype
+                @update="updateParams($event)"
+              />
             </v-flex>
             <v-flex xs12>
-              <list ref="genericlist" :entitytype="$route.params.entity" :headers="headers[$route.params.entity]" :filter="query" ></list>
+              <list
+                ref="genericlist"
+                :entitytype="$route.params.entity"
+                :headers="headers[$route.params.entity]"
+                :filter="query"
+              />
             </v-flex>
           </v-layout>
         </div>
       </fundamentcard>
-      <editdialog :title="`Create ${$route.params.entity}`" ref="createdialog" @close="$refs.genericlist.getRecords()">
-      </editdialog>
+      <editdialog
+        ref="createdialog"
+        :title="`Create ${$route.params.entity}`"
+        @close="$refs.genericlist.getRecords()"
+      />
     </div>
   </div>
 </template>
@@ -50,6 +70,16 @@
         },
       };
     },
+    watch: {
+      '$route.params': {
+        handler() { this.parseQuery(); },
+        immediate: true,
+        deep: true,
+      },
+    },
+    mounted() {
+      this.parseQuery();
+    },
     methods: {
       parseQuery() {
         try {
@@ -79,16 +109,6 @@
         });
         this.parseQuery();
       },
-    },
-    watch: {
-      '$route.params': {
-        handler() { this.parseQuery(); },
-        immediate: true,
-        deep: true,
-      },
-    },
-    mounted() {
-      this.parseQuery();
     },
   };
 </script>

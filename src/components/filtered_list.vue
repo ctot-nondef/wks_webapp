@@ -1,29 +1,58 @@
 <template>
   <div class="">
-    <v-container grid-list-md >
+    <v-container grid-list-md>
       <fundamentcard :caption="$route.params.entity">
         <div slot="content">
-          <v-layout justify-center column fill-height>
-            <v-flex xs12 v-if="$store.state.api.loggedin">
-              <v-layout justify-end row fill-height>
-                <v-btn fab dark small
-                       color="warning"
-                       @click="$refs.createdialog.newItem($route.params.entity, {})">
-                  <v-icon dark>add</v-icon>
+          <v-layout
+            justify-center
+            column
+            fill-height
+          >
+            <v-flex
+              v-if="$store.state.api.loggedin"
+              xs12
+            >
+              <v-layout
+                justify-end
+                row
+                fill-height
+              >
+                <v-btn
+                  fab
+                  dark
+                  small
+                  color="warning"
+                  @click="$refs.createdialog.newItem($route.params.entity, {})"
+                >
+                  <v-icon dark>
+                    add
+                  </v-icon>
                 </v-btn>
               </v-layout>
             </v-flex>
             <v-flex xs12>
-              <filterlist :availableTypes="['entry','object']" :entitytype="$route.params.entity" :filter="query" @update="updateParams($event)"></filterlist>
+              <filterlist
+                :available-types="['entry','object']"
+                :entitytype="$route.params.entity"
+                :filter="query"
+                @update="updateParams($event)"
+              />
             </v-flex>
             <v-flex xs12>
-              <list ref="genericlist" :entitytype="$route.params.entity" :filter="query" ></list>
+              <list
+                ref="genericlist"
+                :entitytype="$route.params.entity"
+                :filter="query"
+              />
             </v-flex>
           </v-layout>
         </div>
       </fundamentcard>
-      <editdialog :title="`Create ${$route.params.entity}`" ref="createdialog" @close="$refs.genericlist.getRecords()">
-      </editdialog>
+      <editdialog
+        ref="createdialog"
+        :title="`Create ${$route.params.entity}`"
+        @close="$refs.genericlist.getRecords()"
+      />
     </v-container>
   </div>
 </template>
@@ -50,6 +79,16 @@
         query: {},
         pagination: {},
       };
+    },
+    watch: {
+      '$route.params': {
+        handler() { this.parseQuery(); },
+        immediate: true,
+        deep: true,
+      },
+    },
+    mounted() {
+      this.parseQuery();
     },
     methods: {
       parseQuery() {
@@ -80,16 +119,6 @@
         });
         this.parseQuery();
       },
-    },
-    watch: {
-      '$route.params': {
-        handler() { this.parseQuery(); },
-        immediate: true,
-        deep: true,
-      },
-    },
-    mounted() {
-      this.parseQuery();
     },
   };
 </script>

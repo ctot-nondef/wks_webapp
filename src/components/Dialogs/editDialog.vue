@@ -1,30 +1,75 @@
 <template lang="html">
-  <v-layout column justify-space-between>
+  <v-layout
+    column
+    justify-space-between
+  >
     <v-dialog
       v-model="active"
-      @keydown.esc="discard"
       fullscreen
       hide-overlay
       transition="dialog-bottom-transition"
+      @keydown.esc="discard"
     >
       <v-card>
-        <v-toolbar dark color="primary">
-          <v-btn icon dark @click.native="discard">
+        <v-toolbar
+          dark
+          color="primary"
+        >
+          <v-btn
+            icon
+            dark
+            @click.native="discard"
+          >
             <v-icon>close</v-icon>
           </v-btn>
           <v-toolbar-title>{{ title }}</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-toolbar-items>
-          </v-toolbar-items>
-          <v-btn color="warning" @click="saveAsNewItem" :disabled="!nameEdited">Save as New</v-btn>
-          <v-btn color="warning" @click="saveItem" >Save</v-btn>
+          <v-spacer />
+          <v-toolbar-items />
+          <v-btn
+            color="warning"
+            :disabled="!nameEdited"
+            @click="saveAsNewItem"
+          >
+            Save as New
+          </v-btn>
+          <v-btn
+            color="warning"
+            @click="saveItem"
+          >
+            Save
+          </v-btn>
         </v-toolbar>
-        <v-container grid-list-md text-xs-center>
-          <v-card color="grey lighten-2" class="pa-4">
-            <component :is="componentLoader" :value="item" @input="item = Object.assign(item, $event)"/>
-            <v-layout justify-end row fill-height>
-              <v-btn color="warning" @click="saveItem">Save</v-btn>
-              <v-btn color="primary" text @click.native="discard">Discard</v-btn>
+        <v-container
+          grid-list-md
+          text-xs-center
+        >
+          <v-card
+            color="grey lighten-2"
+            class="pa-4"
+          >
+            <component
+              :is="componentLoader"
+              :value="item"
+              @input="item = Object.assign(item, $event)"
+            />
+            <v-layout
+              justify-end
+              row
+              fill-height
+            >
+              <v-btn
+                color="warning"
+                @click="saveItem"
+              >
+                Save
+              </v-btn>
+              <v-btn
+                color="primary"
+                text
+                @click.native="discard"
+              >
+                Discard
+              </v-btn>
             </v-layout>
           </v-card>
         </v-container>

@@ -14,52 +14,95 @@
       :loading-text="loadingText"
       :no-data-text="noDataText"
     >
-      <template v-slot:top="{ pagination, options, updateOptions }">
+      <template #top="{ pagination, options, updateOptions }">
         <v-data-footer
-            :pagination="pagination"
-            :options="options"
-            @update:options="updateOptions"
-            items-per-page-text="$vuetify.dataTable.itemsPerPageText"
-            :showFirstLastPage="true"
-            :items-per-page-options="[10, 20, 50, 100, 250]"/>
+          :pagination="pagination"
+          :options="options"
+          items-per-page-text="$vuetify.dataTable.itemsPerPageText"
+          :show-first-last-page="true"
+          :items-per-page-options="[10, 20, 50, 100, 250]"
+          @update:options="updateOptions"
+        />
       </template>
-      <template v-slot:body="{ items }">
+      <template #body="{ items }">
         <tbody>
-        <tr v-for="(item, index) in items" :key="index">
-          <td v-for="column in currentHeaders" :key="column.path">
-            <span v-if="_.get(item, column.path) && column.text === 'Date'">
-              {{ _.get(item, column.path) | formatDate }}
-            </span>
-            <span v-else-if="_.get(item, column.path)">
-              {{ _.get(item, column.path) }}
-            </span>
-            <span v-else-if="column.text === 'Actions'">
-              <v-btn fab dark small :to="{ name: 'single', params: { type: entitytype, id:  item._id  }}" color="primary">
-                <v-icon dark>collections_bookmark</v-icon>
-              </v-btn>
-              <span>
-                <v-btn v-if="entitytype === 'transaction'" fab dark small color="secondary" @click="$emit('select', item)">
+          <tr
+            v-for="(item, index) in items"
+            :key="index"
+          >
+            <td
+              v-for="column in currentHeaders"
+              :key="column.path"
+            >
+              <span v-if="_.get(item, column.path) && column.text === 'Date'">
+                {{ _.get(item, column.path) | formatDate }}
+              </span>
+              <span v-else-if="_.get(item, column.path)">
+                {{ _.get(item, column.path) }}
+              </span>
+              <span v-else-if="column.text === 'Actions'">
+                <v-btn
+                  fab
+                  dark
+                  small
+                  :to="{ name: 'single', params: { type: entitytype, id: item._id }}"
+                  color="primary"
+                >
                   <v-icon dark>collections_bookmark</v-icon>
                 </v-btn>
-                <v-btn fab dark small color="warning" class="ml-1"  @click="$refs.editdialog.getItem(entitytype, item._id)" v-if="$store.state.api.loggedin">
-                  <v-icon dark>edit</v-icon>
-                </v-btn>
-                <v-btn fab dark small color="error" class="ml-1"  @click="deleteRequest(item)" v-if="$store.state.api.loggedin">
-                  <v-icon dark>delete</v-icon>
-                </v-btn>
+                <span>
+                  <v-btn
+                    v-if="entitytype === 'transaction'"
+                    fab
+                    dark
+                    small
+                    color="secondary"
+                    @click="$emit('select', item)"
+                  >
+                    <v-icon dark>collections_bookmark</v-icon>
+                  </v-btn>
+                  <v-btn
+                    v-if="$store.state.api.loggedin"
+                    fab
+                    dark
+                    small
+                    color="warning"
+                    class="ml-1"
+                    @click="$refs.editdialog.getItem(entitytype, item._id)"
+                  >
+                    <v-icon dark>edit</v-icon>
+                  </v-btn>
+                  <v-btn
+                    v-if="$store.state.api.loggedin"
+                    fab
+                    dark
+                    small
+                    color="error"
+                    class="ml-1"
+                    @click="deleteRequest(item)"
+                  >
+                    <v-icon dark>delete</v-icon>
+                  </v-btn>
+                </span>
               </span>
-            </span>
-            <span v-else-if="!_.get(item, column.path)">
-              n/a
-            </span>
-          </td>
-        </tr>
+              <span v-else-if="!_.get(item, column.path)">
+                n/a
+              </span>
+            </td>
+          </tr>
         </tbody>
       </template>
     </v-data-table>
-    <editdialog :title="`Edit ${entitytype}`" ref="editdialog" @close="getRecords()">
-    </editdialog>
-    <v-dialog v-model="deleteDialog.status" v-if="deleteDialog.rec" max-width="500px">
+    <editdialog
+      ref="editdialog"
+      :title="`Edit ${entitytype}`"
+      @close="getRecords()"
+    />
+    <v-dialog
+      v-if="deleteDialog.rec"
+      v-model="deleteDialog.status"
+      max-width="500px"
+    >
       <v-card>
         <v-card-title>
           CONFIRM DELETION
@@ -68,10 +111,18 @@
           Do you really want to delete record <b>{{ deleteDialog.rec.name }}</b>
         </v-card-text>
         <v-card-actions>
-          <v-btn @click="deleteConfirm(deleteDialog.rec._id)" large color="error">
+          <v-btn
+            large
+            color="error"
+            @click="deleteConfirm(deleteDialog.rec._id)"
+          >
             DELETE
           </v-btn>
-          <v-btn @click="deleteDialog.status = false" large color="secondary">
+          <v-btn
+            large
+            color="secondary"
+            @click="deleteDialog.status = false"
+          >
             CANCEL
           </v-btn>
         </v-card-actions>
@@ -94,6 +145,7 @@ export default {
     components: {
       editdialog,
     },
+    mixins: [filters],
     props: {
       entitytype: {
         type: String,
@@ -124,7 +176,6 @@ export default {
         q: {},
       };
     },
-    mixins: [filters],
     watch: {
       pagination: {
         handler() {

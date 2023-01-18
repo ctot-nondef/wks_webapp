@@ -1,27 +1,57 @@
 <template>
   <div class="">
     <!-- inventory identifiers -->
-    <v-layout justify-end row fill-height>
-      <chips :items="inventory.identifier"/>
+    <v-layout
+      justify-end
+      row
+      fill-height
+    >
+      <chips :items="inventory.identifier" />
     </v-layout>
     <!-- inventory name -->
-    <v-layout justify-start row fill-height>
+    <v-layout
+      justify-start
+      row
+      fill-height
+    >
       <v-flex xs10>
-        <v-text-field v-model="inventory.name" filled class="nameinput" label="Name" />
+        <v-text-field
+          v-model="inventory.name"
+          filled
+          class="nameinput"
+          label="Name"
+        />
       </v-flex>
     </v-layout>
     <!-- inventory partOf -->
     <!-- inventory place -->
-    <v-layout justify-start row fill-height>
+    <v-layout
+      justify-start
+      row
+      fill-height
+    >
       <v-flex xs6>
-        <simpleautocompwrapper entity="Collect" v-model="inventory.partOf" label="Part Of Collection"/>
+        <simpleautocompwrapper
+          v-model="inventory.partOf"
+          entity="Collect"
+          label="Part Of Collection"
+        />
       </v-flex>
       <v-flex xs6>
-        <simpleautocompwrapper entity="Descriptor" filter="GEOKEYW" v-model="inventory.place" label="Place"/>
+        <simpleautocompwrapper
+          v-model="inventory.place"
+          entity="Descriptor"
+          filter="GEOKEYW"
+          label="Place"
+        />
       </v-flex>
     </v-layout>
     <!-- inventory creators -->
-    <v-layout justify-end row fill-height>
+    <v-layout
+      justify-end
+      row
+      fill-height
+    >
       <v-flex xs12>
         <formlistcomponent
           :items.sync="inventory.creator"
@@ -29,19 +59,43 @@
           :listitemstyletypes="creatoritemstyletypes"
           label="Creator"
           nodatamessage="No creators added"
-          :simpleformavail="true">
-          <template slot="form" slot-scope="props">
+          :simpleformavail="true"
+        >
+          <template
+            slot="form"
+            slot-scope="props"
+          >
             <v-flex xs6>
-                <autocomp entity="Descriptor" filter="ROLE" v-model="props.newitem.role" label="Role" :multiple="false"/>
+              <autocomp
+                v-model="props.newitem.role"
+                entity="Descriptor"
+                filter="ROLE"
+                label="Role"
+                :multiple="false"
+              />
             </v-flex>
             <v-flex xs6>
-              <autocomp entity="Actor" v-model="props.newitem.id" label="Creator" :multiple="false" :displayitemprops="autcompdisplayprops"/>
+              <autocomp
+                v-model="props.newitem.id"
+                entity="Actor"
+                label="Creator"
+                :multiple="false"
+                :displayitemprops="autcompdisplayprops"
+              />
             </v-flex>
             <v-flex xs12>
-              <v-textarea filled height="70"  v-model="props.newitem.note" label="Note" />
+              <v-textarea
+                v-model="props.newitem.note"
+                filled
+                height="70"
+                label="Note"
+              />
             </v-flex>
           </template>
-          <template slot="simpleform" slot-scope="simpleprops">
+          <template
+            slot="simpleform"
+            slot-scope="simpleprops"
+          >
             <v-flex xs6>
               <autocomp
                 entity="Actor"
@@ -84,45 +138,95 @@
     </v-layout>
     <!-- inventory begin of existence -->
     <!-- inventory end of existence -->
-    <v-layout justify-start row fill-height>
+    <v-layout
+      justify-start
+      row
+      fill-height
+    >
       <v-flex xs6>
-        <datecomponent v-bind:date.sync="inventory.beginOfExistence" label="Begin of Existence"/>
+        <datecomponent
+          :date.sync="inventory.beginOfExistence"
+          label="Begin of Existence"
+        />
       </v-flex>
       <v-flex xs6>
-        <datecomponent v-bind:date.sync="inventory.endOfExistence" label="End of Existence"/>
+        <datecomponent
+          :date.sync="inventory.endOfExistence"
+          label="End of Existence"
+        />
       </v-flex>
     </v-layout>
     <!-- inventory documents -->
-    <v-layout justify-end row fill-height>
+    <v-layout
+      justify-end
+      row
+      fill-height
+    >
       <v-flex xs12>
         <v-list two-line>
           <template v-for="(item, index) in inventory.documents">
-            <v-list-item :key="item._id" :href="`${$store.state.api.url}/assetref/full/${item.ref.name.split('.')[0]}.pdf`" target="_blank">
+            <v-list-item
+              :key="item._id"
+              :href="`${$store.state.api.url}/assetref/full/${item.ref.name.split('.')[0]}.pdf`"
+              target="_blank"
+            >
               <v-list-item-avatar>
                 <img :src="`${$store.state.api.url}/assetref/thumb/${item.ref.name.split('.')[0]}.jpg`">
               </v-list-item-avatar>
               <v-list-item-content>
-                <v-list-item-title v-html="item.ref.name"/>
-                <v-list-item-subtitle v-html="item.ref.path"/>
+                <v-list-item-title v-html="item.ref.name" />
+                <v-list-item-subtitle v-html="item.ref.path" />
               </v-list-item-content>
-              <v-btn fab dark small color="error" @click="removeimage(index)">
-                <v-icon dark>delete</v-icon>
+              <v-btn
+                fab
+                dark
+                small
+                color="error"
+                @click="removeimage(index)"
+              >
+                <v-icon dark>
+                  delete
+                </v-icon>
               </v-btn>
             </v-list-item>
           </template>
         </v-list>
-        <v-text-field label="Select PDF Document" filled @click='pickFile' v-model='imageName' prepend-icon='attach_file'/>
-        <input type="file" style="display: none" ref="image" accept="application/pdf" @change="onFilePicked">
+        <v-text-field
+          v-model="imageName"
+          label="Select PDF Document"
+          filled
+          prepend-icon="attach_file"
+          @click="pickFile"
+        />
+        <input
+          ref="image"
+          type="file"
+          style="display: none"
+          accept="application/pdf"
+          @change="onFilePicked"
+        >
       </v-flex>
     </v-layout>
     <!-- inventory transcription -->
-   <v-layout justify-start row fill-height>
-     <v-flex xs12>
-       <v-textarea height="200" v-model="inventory.transcription" label="Transcription"/>
-     </v-flex>
-   </v-layout>
+    <v-layout
+      justify-start
+      row
+      fill-height
+    >
+      <v-flex xs12>
+        <v-textarea
+          v-model="inventory.transcription"
+          height="200"
+          label="Transcription"
+        />
+      </v-flex>
+    </v-layout>
     <!-- inventory classifications -->
-    <v-layout justify-start row fill-height>
+    <v-layout
+      justify-start
+      row
+      fill-height
+    >
       <v-flex xs12>
         <formlistcomponent
           :items.sync="inventory.classification"
@@ -130,21 +234,49 @@
           :listitemstyletypes="classificationitemstyletypes"
           label="Classification"
           nodatamessage="No classifications added"
-          :simpleformavail="true">
-          <template slot="form" slot-scope="props">
-            <v-layout justify-end row fill-height wrap>
+          :simpleformavail="true"
+        >
+          <template
+            slot="form"
+            slot-scope="props"
+          >
+            <v-layout
+              justify-end
+              row
+              fill-height
+              wrap
+            >
               <v-flex xs6>
-                <autocomp entity="Descriptor" filter="KEYWORD" v-model="props.newitem.aspect" label="Aspect" :multiple="false"/>
+                <autocomp
+                  v-model="props.newitem.aspect"
+                  entity="Descriptor"
+                  filter="KEYWORD"
+                  label="Aspect"
+                  :multiple="false"
+                />
               </v-flex>
               <v-flex xs6>
-                <autocomp entity="Descriptor" v-model="props.newitem.descriptor" label="Descriptor" :multiple="false"/>
+                <autocomp
+                  v-model="props.newitem.descriptor"
+                  entity="Descriptor"
+                  label="Descriptor"
+                  :multiple="false"
+                />
               </v-flex>
               <v-flex xs12>
-                <v-textarea height="200" filled v-model="props.newitem.note" label="Note" />
+                <v-textarea
+                  v-model="props.newitem.note"
+                  height="200"
+                  filled
+                  label="Note"
+                />
               </v-flex>
             </v-layout>
           </template>
-          <template slot="simpleform" slot-scope="simpleprops">
+          <template
+            slot="simpleform"
+            slot-scope="simpleprops"
+          >
             <v-flex xs6>
               <autocomp
                 entity="Descriptor"
@@ -184,25 +316,60 @@
       </v-flex>
     </v-layout>
     <!-- inventory identifiers -->
-    <v-layout justify-start row fill-height>
+    <v-layout
+      justify-start
+      row
+      fill-height
+    >
       <v-flex xs12>
-        <formlistcomponent v-if="inventory.identifier" :items.sync="inventory.identifier" :listitemstyletypes="['title']" label="Identifier" nodatamessage="No identifiers added">
-          <template slot="form" slot-scope="props">
+        <formlistcomponent
+          v-if="inventory.identifier"
+          :items.sync="inventory.identifier"
+          :listitemstyletypes="['title']"
+          label="Identifier"
+          nodatamessage="No identifiers added"
+        >
+          <template
+            slot="form"
+            slot-scope="props"
+          >
             <v-flex xs12>
-              <v-textarea height="50" width="100%" v-model="props.newitem.textval" label="New Identifier"/>
+              <v-textarea
+                v-model="props.newitem.textval"
+                height="50"
+                width="100%"
+                label="New Identifier"
+              />
             </v-flex>
           </template>
         </formlistcomponent>
       </v-flex>
     </v-layout>
-     <!-- inventory comments -->
-    <v-layout justify-start row fill-height>
+    <!-- inventory comments -->
+    <v-layout
+      justify-start
+      row
+      fill-height
+    >
       <v-flex xs12>
-        <formlistcomponent v-if="inventory.comments" :items.sync="inventory.comments" :listitemstyletypes="['title']" label="Comments" nodatamessage="No comments added">
-          <template slot="form" slot-scope="props">
-          <v-flex xs5>
-              <v-textarea height="200" v-model="props.newitem.textval" label="New Comment"/>
-          </v-flex>
+        <formlistcomponent
+          v-if="inventory.comments"
+          :items.sync="inventory.comments"
+          :listitemstyletypes="['title']"
+          label="Comments"
+          nodatamessage="No comments added"
+        >
+          <template
+            slot="form"
+            slot-scope="props"
+          >
+            <v-flex xs5>
+              <v-textarea
+                v-model="props.newitem.textval"
+                height="200"
+                label="New Comment"
+              />
+            </v-flex>
           </template>
         </formlistcomponent>
       </v-flex>
@@ -278,6 +445,10 @@ export default {
       },
     },
   },
+  mounted() {
+    this.initVals();
+    this.returnObject();
+  },
   methods: {
     returnObject() {
       this.$emit('input', this.inventory);
@@ -337,10 +508,6 @@ export default {
         this.$set(this.inventory, 'comments', []);
       }
     },
-  },
-  mounted() {
-    this.initVals();
-    this.returnObject();
   },
 };
 </script>
