@@ -1,5 +1,7 @@
 # wks_webapp
 
+Editing App for the database of the [Vienna Center for the History of Collecting](vchc.univie.ac.at)
+
 ## Project setup
 ```
 npm install
@@ -15,15 +17,3 @@ npm run serve
 npm run build
 ```
 
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
